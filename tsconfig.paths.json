@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@columns": [
+        "src/columns"
+      ],
+      "@components": [
+        "src/components"
+      ],
+      "@services": [
+        "src/services"
+      ],
+      "@models": [
+        "src/models"
+      ],
+      "@utils": [
+        "src/utils"
+      ],
+      "@globalContext": [
+        "src/globalContext"
+      ],
+      "@routes/*": [
+        "src/routes/*"
+      ]
+    }
+  }
+}

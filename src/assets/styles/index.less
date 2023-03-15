@@ -1,0 +1,64 @@
+@import "../fonts/stylesheet.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+//
+@import "~perfect-scrollbar/css/perfect-scrollbar.css";
+@import "~glightbox/dist/css/glightbox.css";
+//@import "~line-awesome/dist/line-awesome/css/line-awesome.css";
+@import '~react-nestable/dist/styles/index.css';
+
+@import "/src/components";
+
+.button {
+  @apply px-4 ~'py-2.5' rounded-lg bg-blue-600 text-white hover:bg-blue-400 inline-flex items-center gap-1;
+  &.icon {
+    @apply px-1 py-0 border border-gray-300;
+    > i {
+      @apply text-xl;
+    }
+  }
+  &:disabled,
+  &button[disabled]{
+  @apply bg-blue-300;
+  }
+}
+
+body {
+  font-family: Google Sans, -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Noto Sans,Ubuntu,Droid Sans,Helvetica Neue,sans-serif;
+  @apply text-sm overflow-x-hidden text-gray-500 bg-blue-50;
+  .swal2-close:focus { @apply shadow-none; }
+}
+* > {
+  .loop-intro-x(9);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  @apply mb-0;
+}
+
+.loop-intro-x(@counter) when (@counter > 0) {
+  .loop-intro-x((@counter - 1));    // next iteration
+  .intro-x:nth-child(@{counter}) { @apply translate-x-12; }
+  .-intro-x:nth-child(@{counter}) { @apply -translate-x-12; }
+  .-intro-x:nth-child(@{counter}), .intro-x:nth-child(@{counter}) {
+    opacity: 0;
+    z-index: (10 - @counter);
+    animation: intro-x-animation .4s ease-in-out .33333s;
+    animation-fill-mode: forwards;
+    animation-delay: ~"0.@{counter}s"
+  }
+}
+
+@keyframes intro-x-animation {
+  to { @apply opacity-100 -translate-x-0; }
+}
+
+.ant-btn {
+@apply border border-gray-300 text-sm rounded-lg mr-2 px-2;
+
+  &.ant-btn-primary { @apply bg-blue-500 text-white; }
+}
+.ant-picker-panel-container .ant-picker-panels {
+  @apply overflow-auto ~'max-w-[560px] w-[90vw]';
+}
