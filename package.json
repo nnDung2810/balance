@@ -8,7 +8,10 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "format": "prettier --write \"{src,public}/**/*.{tsx,jsx}\"",
-    "lint": "eslint \"{src,public}/**/*.{tsx,jsx}\" --fix"
+    "lint": "eslint \"{src,public}/**/*.{tsx,jsx}\" --fix",
+    "storybook": "start-storybook -p 6006 -s public",
+    "build-storybook": "build-storybook -s public",
+    "test-storybook": "test-storybook"
   },
   "dependencies": {
     "@editorjs/code": "^2.8.0",
@@ -47,6 +50,7 @@
     "web-vitals": "^3.3.0"
   },
   "devDependencies": {
+    "@mdx-js/react": "^1.6.22",
     "@storybook/addon-a11y": "^6.5.15",
     "@storybook/addon-actions": "^6.5.14",
     "@storybook/addon-essentials": "^6.5.14",
@@ -75,12 +79,30 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-storybook": "^0.6.8",
     "less": "^4.1.3",
+    "less-loader": "^11.1.0",
     "postcss": "^8.4.21",
     "prettier": "^2.8.0",
     "prop-types": "^15.8.1",
+    "storybook-addon-designs": "^6.3.1",
+    "storybook-react-i18next": "^1.1.2",
     "tailwindcss": "^3.2.7",
+    "tsconfig-paths-webpack-plugin": "^4.0.1",
     "typescript": "^4.9.3",
     "vite": "^4.1.0",
-    "vite-tsconfig-paths": "^4.0.7"
+    "vite-plugin-pwa": "^0.14.4",
+    "vite-tsconfig-paths": "^4.0.7",
+    "webpack": "^5.75.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

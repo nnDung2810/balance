@@ -17,8 +17,9 @@ class NestableItem extends Component {
     depth: 0,
   };
 
-  renderCollapseIcon = ({ isCollapsed }) => (
+  renderCollapseIcon = ({ isCollapsed }: any) => (
     <Icon
+      // @ts-ignore
       className={cx('nestable-item-icon', {
         'icon-plus-gray': isCollapsed,
         'icon-minus-gray': !isCollapsed,
@@ -27,7 +28,7 @@ class NestableItem extends Component {
   );
 
   render() {
-    const { item, isCopy, options, index, depth } = this.props;
+    const { item, isCopy, options, index, depth }: any = this.props;
     const {
       dragItem,
       renderItem,
@@ -49,13 +50,13 @@ class NestableItem extends Component {
       if (dragItem) {
         rowProps = {
           ...rowProps,
-          onMouseEnter: (e) => options.onMouseEnter(e, item),
+          onMouseEnter: (e: any) => options.onMouseEnter(e, item),
         };
       } else {
         handlerProps = {
           ...handlerProps,
           draggable: true,
-          onDragStart: (e) => options.onDragStart(e, item),
+          onDragStart: (e: any) => options.onDragStart(e, item),
         };
       }
     }
@@ -106,7 +107,7 @@ class NestableItem extends Component {
 
         {hasChildren && !isCollapsed && (
           <ol className="nestable-list">
-            {item[childrenProp].map((item, i) => {
+            {item[childrenProp].map((item: any, i: number) => {
               return <NestableItem key={i} index={i} depth={depth + 1} item={item} options={options} isCopy={isCopy} />;
             })}
           </ol>

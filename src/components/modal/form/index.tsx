@@ -2,7 +2,8 @@ import React, { useState, forwardRef, useImperativeHandle, useRef, Dispatch, Set
 import { Form as FormAnt } from 'antd';
 import { v4 } from 'uuid';
 
-import { Modal, Form } from '@components';
+import { Modal } from '@components';
+import Form from '../../form';
 import { convertFormValue } from '@utils';
 import { FormModel } from '@models';
 

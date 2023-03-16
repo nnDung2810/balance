@@ -1,5 +1,5 @@
-import { keyToken, keyUser, routerLinks } from '@utils';
-import { AuthService } from '@services';
+import {keyToken, keyUser, linkApi, routerLinks} from '@utils';
+import { AuthService } from '../services/user';
 import { Message } from '@components';
 
 const API = {
@@ -16,6 +16,36 @@ const API = {
       redirect: 'follow',
       referrerPolicy: 'no-referrer',
     } as RequestInit),
+  responsible: async (url: string, config: RequestInit, headers?: RequestInit['headers']) => {
+    if (headers) {
+      config.headers = { ...config.headers, ...headers };
+    }
+    const response = await fetch('http://localhost:3000/api' + url, config);
+    if (response.ok) {
+      return response.json();
+    }
+    const res = await response.json();
+    if (res.message) {
+      await Message.error({ text: res.message });
+    }
+    if (
+      response.status === 401 &&
+      url !== `${routerLinks(AuthService.nameLink, 'api')}/login` &&
+      url !== `${routerLinks(AuthService.nameLink, 'api')}/logout`
+    ) {
+      const accessToken = await AuthService.refresh();
+      if (accessToken) {
+        config.headers = { ...config.headers, Authorization: accessToken };
+        const response = await fetch(linkApi + url, config);
+        return response.json();
+      }
+    }
+    localStorage.removeItem(keyUser);
+    if (url !== `${routerLinks(AuthService.nameLink, 'api')}/login`) {
+      window.location.href = routerLinks('Login');
+    }
+    return false;
+  },
   get: async (url: string, headers?: RequestInit['headers']) => {
     return API.responsible(
       url,
@@ -55,36 +85,6 @@ const API = {
       },
       headers,
     );
-  },
-  responsible: async (url: string, config: RequestInit, headers?: RequestInit['headers']) => {
-    if (headers) {
-      config.headers = { ...config.headers, ...headers };
-    }
-    const response = await fetch('http://localhost:3000/api' + url, config);
-    if (response.ok) {
-      return response.json();
-    }
-    const res = await response.json();
-    if (res.message) {
-      await Message.error({ text: res.message });
-    }
-    if (
-      response.status === 401 &&
-      url !== `${routerLinks(AuthService.nameLink, 'api')}/login` &&
-      url !== `${routerLinks(AuthService.nameLink, 'api')}/logout`
-    ) {
-      const accessToken = await AuthService.refresh();
-      if (accessToken) {
-        config.headers = { ...config.headers, Authorization: accessToken };
-        const response = await fetch('http://localhost:3000/api' + url, config);
-        return response.json();
-      }
-    }
-    localStorage.removeItem(keyUser);
-    if (url !== `${routerLinks(AuthService.nameLink, 'api')}/login`) {
-      window.location.href = routerLinks('Login');
-    }
-    return false;
-  },
+  }
 };
 export default API;

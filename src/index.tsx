@@ -8,9 +8,7 @@ import Router from '@routes/index';
 import i18n from 'i18next';
 import XHR from 'i18next-xhr-backend';
 import { initReactI18next } from 'react-i18next';
-import { reportWebVitals, serviceWorkerRegistration } from '@utils';
-
-// linkApi,
+import { reportWebVitals } from '@utils';
 
 const fallbackLng = localStorage.getItem('i18nextLng');
 if (!fallbackLng) {
@@ -54,6 +52,4 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     </Styling>
   </Suspense>,
 );
-serviceWorkerRegistration.register();
-
 reportWebVitals();

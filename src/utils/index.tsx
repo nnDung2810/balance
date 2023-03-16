@@ -7,7 +7,6 @@ import linearGradient from './echart/linearGradient';
 import withClearCache from './init/clear-cache';
 import reportWebVitals from './init/reportWebVitals';
 import API from './api';
-import * as serviceWorkerRegistration from './init/serviceWorkerRegistration';
 import routerLinks from '../router-links';
 import { keyRole, keyToken, keyUser, linkApi, keyRefreshToken, listStyle } from './variable';
 
@@ -17,7 +16,6 @@ import covertChild from './covertChild';
 export {
   withClearCache,
   reportWebVitals,
-  serviceWorkerRegistration,
   routerLinks,
   keyRole,
   keyToken,

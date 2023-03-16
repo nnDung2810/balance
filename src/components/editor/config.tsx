@@ -13,6 +13,7 @@ import Marker from '@editorjs/marker';
 import Raw from '@editorjs/raw';
 import Delimiter from '@editorjs/delimiter';
 
+import Component from './component/index';
 import Button from './button/index';
 import { API } from '@utils';
 
@@ -91,5 +92,6 @@ export const editorjsConfig: any = {
       },
     },
     button: { class: Button },
+    component: { class: Component },
   },
 };

@@ -6,10 +6,11 @@ import { useNavigate } from 'react-router';
 // import { Rocketchat } from '@rocket.chat/sdk';
 
 import { useAuth } from '@globalContext';
-import { Form, Spin } from '@components';
+import { Spin } from '@components';
+import Form from '../../../components/form';
 import { routerLinks } from '@utils';
 import { ColumnLogin } from '@columns';
-import { AuthService } from '@services';
+import { AuthService } from '../../../services/user';
 // import { urlChat, passChat } from 'variable';
 
 // const realTimeAPI = new Rocketchat({

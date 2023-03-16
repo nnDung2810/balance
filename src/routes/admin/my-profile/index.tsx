@@ -3,8 +3,10 @@ import { Form as FormAnt } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 import { useAuth } from '@globalContext';
-import { Form, Spin } from '@components';
-import { AuthService, CodeTypeService } from '@services';
+import { Spin } from '@components';
+import Form from '../../../components/form';
+import { AuthService } from '../../../services/user';
+import { CodeTypeService } from '../../../services/code/type';
 import { ColumnProfile } from '@columns';
 
 const Page = () => {

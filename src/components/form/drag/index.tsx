@@ -3,7 +3,7 @@ import { Popconfirm, Tooltip } from 'antd';
 import { v4 } from 'uuid';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
-// import Nestable from './Nestable';
+import Nestable from './Nestable';
 
 import { Button, ModalForm } from '@components';
 
@@ -172,16 +172,16 @@ const Component = ({
         <Fragment>
           {renderHeader && renderHeader(items)}
           {items.map((item: any) => !isAllowDrag(item) && renderRow(item))}
-          {/*<Nestable*/}
-          {/*  className={classNames({ disabled: readOnly || disabledDrag })}*/}
-          {/*  maxDepth={maxDepth}*/}
-          {/*  items={items}*/}
-          {/*  collapsed={true}*/}
-          {/*  confirmChange={(item: any) => conditionDrag(item)}*/}
-          {/*  onChange={handChangePosition}*/}
-          {/*  renderItem={({ item, collapseIcon }: any) => isAllowDrag(item) && renderRow(item, collapseIcon)}*/}
-          {/*/>*/}
-          {/*{items.map((item: any) => !!isAllowDrag(item) && renderRow(item))}*/}
+          <Nestable
+            className={classNames({ disabled: readOnly || disabledDrag })}
+            maxDepth={maxDepth}
+            items={items}
+            collapsed={true}
+            confirmChange={(item: any) => conditionDrag(item)}
+            onChange={handChangePosition}
+            renderItem={({ item, collapseIcon }: any) => isAllowDrag(item) && renderRow(item, collapseIcon)}
+          />
+          {items.map((item: any) => !!isAllowDrag(item) && renderRow(item))}
         </Fragment>
       )}
       <ModalForm

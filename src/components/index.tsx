@@ -7,7 +7,6 @@ import Modal from './modal';
 import ModalDrag from './modal/form/drag';
 import ModalForm from './modal/form';
 import { DraggableLayout } from './draggable/layout';
-import Form from './form';
 import FormDrag from './form/drag';
 import Message from './message';
 import { Spin } from './spin';
@@ -24,7 +23,6 @@ export {
   ModalForm,
   DraggableLayout,
   Pagination,
-  Form,
   FormDrag,
   Message,
   Spin,

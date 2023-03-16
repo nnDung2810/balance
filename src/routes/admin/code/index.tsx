@@ -4,7 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { useAuth } from '@globalContext';
 import { DataTable, ModalForm, ModalDrag, Button } from '@components';
 import { ColumnCodeForm, ColumnCodeTable, ColumnCodeTypeForm } from '@columns';
-import { CodeService, CodeTypeService } from '@services';
+import { CodeService } from '@services';
+import { CodeTypeService } from '../../../services/code/type';
 import { keyRole } from '@utils';
 
 const Page = () => {
