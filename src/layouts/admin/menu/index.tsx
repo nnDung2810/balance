@@ -10,13 +10,13 @@ import './index.less';
 const Layout = ({ isCollapsed = false, permission = [] }: any) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const refMenu: any = useRef();
+  const refMenu = useRef<any>();
 
-  const [menuActive, set_menuActive]: any = useState();
+  const [menuActive, set_menuActive] = useState<any>();
   useEffect(() => {
     let linkActive = '';
     listMenu().forEach((item: any) => {
-      if (!linkActive && !!item.children && location.pathname.indexOf(routerLinks(item.name)) > -1) {
+      if (!linkActive && !!item.child && location.pathname.indexOf(routerLinks(item.name)) > -1) {
         linkActive = routerLinks(item.name);
       }
     });
@@ -40,11 +40,35 @@ const Layout = ({ isCollapsed = false, permission = [] }: any) => {
     }
   }, [isCollapsed]);
 
+  const subMenu = (child: any[]) =>
+    child
+      .filter((subItem: any) => !subItem.permission || permission?.includes(subItem.permission))
+      .map((subItem: any, index: number) => (
+        <li
+          key={index}
+          className={classNames('child-item py-2 cursor-pointer', {
+            'bg-white text-blue-500': location.pathname.indexOf(routerLinks(subItem.name)) > -1,
+          })}
+          onClick={() => navigate(routerLinks(subItem.name))}
+        >
+          {subItem.name}
+        </li>
+      ));
+
   return (
     <ul className="menu relative h-[calc(100vh-5rem)]" id={'menu-sidebar'} ref={refMenu}>
       {!!menuActive &&
         listMenu()
-          .filter((item: any) => !item.permission || permission?.includes(item.permission))
+          .filter((item: any) => {
+            if (!item.permission || permission?.includes(item.permission)) {
+              return (
+                !item.child ||
+                item.child.filter((subItem: any) => !subItem.permission || permission?.includes(subItem.permission))
+                  .length > 0
+              );
+            }
+            return false;
+          })
           .map((item: any, index) => {
             if (!item.child) {
               return (
@@ -69,26 +93,7 @@ const Layout = ({ isCollapsed = false, permission = [] }: any) => {
               );
             } else {
               return isCollapsed ? (
-                <Popover
-                  key={index}
-                  placement="rightTop"
-                  trigger={'hover'}
-                  content={
-                    <>
-                      {item.child.map((subItem: any, index: number) => (
-                        <li
-                          key={index}
-                          className={classNames('child-item py-2 cursor-pointer', {
-                            'bg-white text-blue-500': location.pathname.indexOf(routerLinks(subItem.name)) > -1,
-                          })}
-                          onClick={() => navigate(routerLinks(subItem.name))}
-                        >
-                          {subItem.name}
-                        </li>
-                      ))}
-                    </>
-                  }
-                >
+                <Popover key={index} placement="rightTop" trigger={'hover'} content={subMenu(item.child)}>
                   <li className="flex items-center justify-center h-11 m-3 px-2">
                     <i className={classNames('text-3xl block', item.icon)} />
                   </li>
@@ -104,7 +109,7 @@ const Layout = ({ isCollapsed = false, permission = [] }: any) => {
                     defaultActiveKey={menuActive}
                   >
                     <Collapse.Panel
-                      key={index}
+                      key={routerLinks(item.name)}
                       showArrow={!isCollapsed}
                       header={
                         <div
@@ -128,17 +133,7 @@ const Layout = ({ isCollapsed = false, permission = [] }: any) => {
                         </div>
                       }
                     >
-                      {item.child.map((subItem: any, index: number) => (
-                        <li
-                          key={index}
-                          className={classNames('child-item py-2 cursor-pointer', {
-                            'bg-white text-blue-500': location.pathname.indexOf(routerLinks(subItem.name)) > -1,
-                          })}
-                          onClick={() => navigate(routerLinks(subItem.name))}
-                        >
-                          {subItem.name}
-                        </li>
-                      ))}
+                      {subMenu(item.child)}
                     </Collapse.Panel>
                   </Collapse>
                 </li>

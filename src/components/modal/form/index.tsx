@@ -51,7 +51,7 @@ const Hook = forwardRef(
       Delete && (await Delete(id));
       handleChange && (await handleChange());
     };
-    const modal: any = useRef();
+    const modal = useRef<any>();
 
     return (
       <Modal
@@ -85,6 +85,7 @@ const Hook = forwardRef(
                   return false;
                 }
               }
+              await modal?.current?.handleCancel();
               handleChange && (await handleChange(values, data));
               return true;
             })

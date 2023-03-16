@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { PropsWithChildren, useEffect } from 'react';
 import { Select } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 import { useAuth } from '@globalContext';
 import './index.less';
 
-const Layout = ({ children }: any) => {
+const Layout = ({ children }: PropsWithChildren) => {
   const { t, i18n } = useTranslation();
   const { changeLanguage, logout } = useAuth();
 

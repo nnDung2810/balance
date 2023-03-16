@@ -1,5 +1,6 @@
 import ColumnLogin from './auth/login';
 import ColumnRegister from './auth/register';
+import ColumnProfile from './auth/profile';
 
 import ColumnCodeTable from './code/table';
 import ColumnCodeForm from './code/form';
@@ -18,6 +19,7 @@ import ColumnPageForm from './page/form';
 export {
   ColumnLogin,
   ColumnRegister,
+  ColumnProfile,
   ColumnCodeTable,
   ColumnCodeForm,
   ColumnCodeTypeForm,

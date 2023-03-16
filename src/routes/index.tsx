@@ -2,7 +2,7 @@ import React, { useEffect, Suspense } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom';
 
 import { useAuth } from '@globalContext';
-import { Spin } from '@components';
+import { Spin } from '../components/spin';
 import { pages } from './pages';
 
 const Layout = ({ layout: Layout, isPublic = false }: any) => {

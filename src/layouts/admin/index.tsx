@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, PropsWithChildren } from 'react';
 import { Select, Dropdown } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
@@ -14,7 +14,7 @@ import Menu from './menu';
 // import { firebaseConfig } from 'variable';
 import './index.less';
 
-const Layout = ({ children }: any) => {
+const Layout = ({ children }: PropsWithChildren) => {
   const { t, i18n } = useTranslation();
   const { user, changeLanguage } = useAuth();
   const navigate = useNavigate();

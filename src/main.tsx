@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 const Styling = lazy(() => import('./utils/init/styling'));
 import AuthProvider from '@globalContext';
 import { ConfigProvider } from 'antd';
-import { Spin } from '@components';
+import { Spin } from './components/spin';
 import Router from '@routes/index';
 import i18n from 'i18next';
 import XHR from 'i18next-xhr-backend';

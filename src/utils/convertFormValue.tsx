@@ -65,8 +65,9 @@ const Util = (columns: any, values: any, exportData = true) => {
                   case 2:
                     if (values[item.name[0]][item.name[1]]) {
                       if (exportData) {
-                        values[item.name[0]][item.name[1]] =
-                          values[item.name[0]][item.name[1]].format('YYYY-MM-DDTHH:mm:ss[Z]');
+                        values[item.name[0]][item.name[1]] = values[item.name[0]][item.name[1]]
+                          .add(new Date().getTimezoneOffset() / 60, 'hour')
+                          .format('YYYY-MM-DDTHH:mm:ss[Z]');
                       } else {
                         values[item.name[0]][item.name[1]] = dayjs(values[item.name[0]][item.name[1]]);
                       }
@@ -75,8 +76,11 @@ const Util = (columns: any, values: any, exportData = true) => {
                   case 3:
                     if (values[item.name[0]][item.name[1]]) {
                       if (exportData) {
-                        values[item.name[0]][item.name[1]][item.name[2]] =
-                          values[item.name[0]][item.name[1]][item.name[2]].format('YYYY-MM-DDTHH:mm:ss[Z]');
+                        values[item.name[0]][item.name[1]][item.name[2]] = values[item.name[0]][item.name[1]][
+                          item.name[2]
+                        ]
+                          .add(new Date().getTimezoneOffset() / 60, 'hour')
+                          .format('YYYY-MM-DDTHH:mm:ss[Z]');
                       } else {
                         values[item.name[0]][item.name[1]][item.name[2]] = dayjs(
                           values[item.name[0]][item.name[1]][item.name[2]],
@@ -87,7 +91,9 @@ const Util = (columns: any, values: any, exportData = true) => {
                   default:
                     if (values[item.name[0]]) {
                       if (exportData) {
-                        values[item.name[0]] = values[item.name[0]].format('YYYY-MM-DDTHH:mm:ss[Z]');
+                        values[item.name[0]] = values[item.name[0]]
+                          .add(new Date().getTimezoneOffset() / 60, 'hour')
+                          .format('YYYY-MM-DDTHH:mm:ss[Z]');
                       } else {
                         values[item.name[0]] = dayjs(values[item.name[0]]);
                       }
@@ -96,7 +102,9 @@ const Util = (columns: any, values: any, exportData = true) => {
                 }
               } else {
                 if (exportData) {
-                  values[item.name] = values[item.name].format('YYYY-MM-DDTHH:mm:ss[Z]');
+                  values[item.name] = values[item.name]
+                    .add(new Date().getTimezoneOffset() / 60, 'hour')
+                    .format('YYYY-MM-DDTHH:mm:ss[Z]');
                 } else {
                   values[item.name] = dayjs(values[item.name]);
                 }
@@ -111,8 +119,12 @@ const Util = (columns: any, values: any, exportData = true) => {
                     if (values[item.name[0]][item.name[1]]) {
                       if (exportData) {
                         values[item.name[0]][item.name[1]] = [
-                          values[item.name[0]][item.name[1]][0].format('YYYY-MM-DDTHH:mm:ss[Z]'),
-                          values[item.name[0]][item.name[1]][1].format('YYYY-MM-DDTHH:mm:ss[Z]'),
+                          values[item.name[0]][item.name[1]][0]
+                            .add(new Date().getTimezoneOffset() / 60, 'hour')
+                            .format('YYYY-MM-DDTHH:mm:ss[Z]'),
+                          values[item.name[0]][item.name[1]][1]
+                            .add(new Date().getTimezoneOffset() / 60, 'hour')
+                            .format('YYYY-MM-DDTHH:mm:ss[Z]'),
                         ];
                       } else {
                         values[item.name[0]][item.name[1]] = [
@@ -126,8 +138,12 @@ const Util = (columns: any, values: any, exportData = true) => {
                     if (values[item.name[0]][item.name[1]][item.name[2]]) {
                       if (exportData) {
                         values[item.name[0]][item.name[1]][item.name[2]] = [
-                          values[item.name[0]][item.name[1]][item.name[2]][0].format('YYYY-MM-DDTHH:mm:ss[Z]'),
-                          values[item.name[0]][item.name[1]][item.name[2]][1].format('YYYY-MM-DDTHH:mm:ss[Z]'),
+                          values[item.name[0]][item.name[1]][item.name[2]][0]
+                            .add(new Date().getTimezoneOffset() / 60, 'hour')
+                            .format('YYYY-MM-DDTHH:mm:ss[Z]'),
+                          values[item.name[0]][item.name[1]][item.name[2]][1]
+                            .add(new Date().getTimezoneOffset() / 60, 'hour')
+                            .format('YYYY-MM-DDTHH:mm:ss[Z]'),
                         ];
                       } else {
                         values[item.name[0]][item.name[1]][item.name[2]] = [
@@ -141,8 +157,12 @@ const Util = (columns: any, values: any, exportData = true) => {
                     if (values[item.name[0]]) {
                       if (exportData) {
                         values[item.name[0]] = [
-                          values[item.name[0]][0].format('YYYY-MM-DDTHH:mm:ss[Z]'),
-                          values[item.name[0]][1].format('YYYY-MM-DDTHH:mm:ss[Z]'),
+                          values[item.name[0]][0]
+                            .add(new Date().getTimezoneOffset() / 60, 'hour')
+                            .format('YYYY-MM-DDTHH:mm:ss[Z]'),
+                          values[item.name[0]][1]
+                            .add(new Date().getTimezoneOffset() / 60, 'hour')
+                            .format('YYYY-MM-DDTHH:mm:ss[Z]'),
                         ];
                       } else {
                         values[item.name[0]] = [dayjs(values[item.name[0]][0]), dayjs(values[item.name[0]][1])];
@@ -153,8 +173,12 @@ const Util = (columns: any, values: any, exportData = true) => {
               } else {
                 if (exportData) {
                   values[item.name] = [
-                    values[item.name][0].format('YYYY-MM-DDTHH:mm:ss[Z]'),
-                    values[item.name][1].format('YYYY-MM-DDTHH:mm:ss[Z]'),
+                    values[item.name][0]
+                      .add(new Date().getTimezoneOffset() / 60, 'hour')
+                      .format('YYYY-MM-DDTHH:mm:ss[Z]'),
+                    values[item.name][1]
+                      .add(new Date().getTimezoneOffset() / 60, 'hour')
+                      .format('YYYY-MM-DDTHH:mm:ss[Z]'),
                   ];
                 } else {
                   values[item.name] = [dayjs(values[item.name][0]), dayjs(values[item.name][1])];

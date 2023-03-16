@@ -31,8 +31,8 @@ const Component = ({
 }: Type) => {
   const { t } = useTranslation();
   const { formatDate } = useAuth();
-  const [_columns, set_columns]: [FormModel[], any] = useState([]);
-  const timeout: any = useRef();
+  const [_columns, set_columns] = useState<FormModel[]>([]);
+  const timeout = useRef<any>();
   const refLoad = useRef(true);
   const [_render, set_render] = useState(false);
 
@@ -49,11 +49,7 @@ const Component = ({
         _columns.map(({ name, formItem }: FormModel) => ({
           name,
           formItem: {
-            list:
-              formItem?.list?.map(({ value, disabled }: any) => ({
-                value,
-                disabled,
-              })) || [],
+            list: formItem?.list?.map(({ value, disabled }: any) => ({ value, disabled })) || [],
             disabled: formItem?.disabled ? formItem?.disabled(values, form) : false,
           },
         })),
@@ -62,11 +58,7 @@ const Component = ({
         columns.map(({ name, formItem }: FormModel) => ({
           name,
           formItem: {
-            list:
-              formItem?.list?.map(({ value, disabled }: any) => ({
-                value,
-                disabled,
-              })) || [],
+            list: formItem?.list?.map(({ value, disabled }: any) => ({ value, disabled })) || [],
             disabled: formItem?.disabled ? formItem?.disabled(values, form) : false,
           },
         })),
@@ -144,9 +136,7 @@ const Component = ({
       case 'slider':
         return (
           <Slider
-            tooltip={{
-              formatter: (value = 0) => formItem.sliderMarks && formItem.sliderMarks[value],
-            }}
+            tooltip={{ formatter: (value = 0) => formItem.sliderMarks && formItem.sliderMarks[value] }}
             max={formItem.max ? formItem.max : 100}
             min={formItem.min ? formItem.min : 0}
             marks={formItem.sliderMarks}

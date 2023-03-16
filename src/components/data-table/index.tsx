@@ -148,8 +148,8 @@ const Hook = forwardRef(
             ...defaultRequest,
           },
     );
-    const timeoutSearch: any = useRef();
-    const cols: any = useRef();
+    const timeoutSearch = useRef<any>();
+    const cols = useRef<any>();
 
     useEffect(() => {
       return () => {
@@ -233,7 +233,7 @@ const Hook = forwardRef(
         />
       </div>
     );
-    const refInput: any = useRef();
+    const refInput = useRef<any>();
     // noinspection JSUnusedGlobalSymbols
     const getColumnSearchInput = (key: any) => ({
       filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }: any) => (
@@ -411,7 +411,7 @@ const Hook = forwardRef(
     return (
       <div className={classNames(className, 'intro-x')}>
         <div className="sm:flex justify-between mb-2.5">
-          {!!showSearch && (
+          {showSearch ? (
             <div className="relative">
               <input
                 id={idE.current + '_input_search'}
@@ -454,6 +454,8 @@ const Hook = forwardRef(
                 }}
               />
             </div>
+          ) : (
+            <div />
           )}
           {!!leftHeader && <div className={'mt-2 sm:mt-0'}>{leftHeader}</div>}
           {!!rightHeader && <div className={'mt-2 sm:mt-0'}>{rightHeader}</div>}

@@ -12,11 +12,9 @@ import Quote from '@editorjs/quote';
 import Marker from '@editorjs/marker';
 import Raw from '@editorjs/raw';
 import Delimiter from '@editorjs/delimiter';
-import axios from 'axios';
 
-// import Component from './component/index';
 import Button from './button/index';
-import { linkApi, keyToken } from '@utils';
+import { API } from '@utils';
 
 const inlineToolbar = ['bold', 'italic', 'underline', 'link', 'inlineCode', 'marker'];
 export const editorjsConfig: any = {
@@ -63,11 +61,8 @@ export const editorjsConfig: any = {
           async uploadByFile(file) {
             const bodyFormData = new FormData();
             bodyFormData.append('file', file);
-            const res = await axios.post(linkApi + `/auth/upload`, bodyFormData, {
-              headers: {
-                Authorization: 'Bearer ' + localStorage.getItem(keyToken),
-                'Content-Type': 'multipart/form-data',
-              },
+            const res = await API.post(`/auth/upload`, bodyFormData, {
+              'Content-Type': 'multipart/form-data',
             });
 
             return {
@@ -96,6 +91,5 @@ export const editorjsConfig: any = {
       },
     },
     button: { class: Button },
-    // component: { class: Component },
   },
 };

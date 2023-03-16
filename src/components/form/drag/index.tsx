@@ -3,8 +3,7 @@ import { Popconfirm, Tooltip } from 'antd';
 import { v4 } from 'uuid';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
-// @ts-ignore
-import Nestable from './Nestable';
+// import Nestable from './Nestable';
 
 import { Button, ModalForm } from '@components';
 
@@ -106,7 +105,7 @@ const Component = ({
     }
     return array;
   };
-  const modalForm: any = useRef();
+  const modalForm = useRef<any>();
 
   const renderRow: any = (item: any, collapseIcon: any) =>
     (!condition || condition(item)) && (
@@ -141,7 +140,7 @@ const Component = ({
                       changeTitleConfirmDelete && changeTitleConfirmDelete(visible, item, set_titleConfirmDelete)
                     }
                     title={titleConfirmDelete}
-                    icon={<i className="las la-question-circle text-2xl text-yellow-500 absolute -top-0.5 -left-1" />}
+                    icon={<i className="las la-question-circle text-2xl text-yellow-500 relative -top-1.5 left-1" />}
                     okText={t('components.datatable.ok')}
                     cancelText={t('components.datatable.cancel')}
                     onConfirm={() => handleDelete(item?.id, item)}
@@ -173,15 +172,15 @@ const Component = ({
         <Fragment>
           {renderHeader && renderHeader(items)}
           {items.map((item: any) => !isAllowDrag(item) && renderRow(item))}
-          <Nestable
-            className={classNames({ disabled: readOnly || disabledDrag })}
-            maxDepth={maxDepth}
-            items={items}
-            collapsed={true}
-            confirmChange={(item: any) => conditionDrag(item)}
-            onChange={handChangePosition}
-            renderItem={({ item, collapseIcon }: any) => isAllowDrag(item) && renderRow(item, collapseIcon)}
-          />
+          {/*<Nestable*/}
+          {/*  className={classNames({ disabled: readOnly || disabledDrag })}*/}
+          {/*  maxDepth={maxDepth}*/}
+          {/*  items={items}*/}
+          {/*  collapsed={true}*/}
+          {/*  confirmChange={(item: any) => conditionDrag(item)}*/}
+          {/*  onChange={handChangePosition}*/}
+          {/*  renderItem={({ item, collapseIcon }: any) => isAllowDrag(item) && renderRow(item, collapseIcon)}*/}
+          {/*/>*/}
           {/*{items.map((item: any) => !!isAllowDrag(item) && renderRow(item))}*/}
         </Fragment>
       )}

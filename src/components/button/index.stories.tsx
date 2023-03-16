@@ -74,7 +74,7 @@ Primary.args = {
 Primary.play = async ({ canvasElement }: any) => {
   const canvas = within(canvasElement);
   await userEvent.click(canvas.getByText('Primary'));
-  // expect; args
+  // expect;
 };
 /*Primary.parameters = {
   backgrounds: {

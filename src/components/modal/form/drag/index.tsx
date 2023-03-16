@@ -56,7 +56,7 @@ const Hook = forwardRef(
       }
     };
 
-    const modal: any = useRef();
+    const modal = useRef<any>();
 
     return (
       <Modal

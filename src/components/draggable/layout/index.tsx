@@ -78,7 +78,7 @@ export const DraggableLayout = ({ value, onChange }: { value: any; onChange?: an
     });
     return css;
   };
-  const modalFormRef: any = useRef();
+  const modalFormRef = useRef<any>();
 
   return (
     <Fragment>
@@ -185,7 +185,7 @@ export const DraggableLayout = ({ value, onChange }: { value: any; onChange?: an
                   <Popconfirm
                     placement="left"
                     title={t('components.datatable.areYouSureWant')}
-                    icon={<i className="las la-question-circle text-2xl text-yellow-500 absolute -top-0.5 -left-1" />}
+                    icon={<i className="las la-question-circle text-2xl text-yellow-500 relative -top-1.5 left-1" />}
                     onConfirm={() => {
                       list.splice(index, 1);
                       reload();

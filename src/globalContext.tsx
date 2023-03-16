@@ -1,6 +1,5 @@
-import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import React, { PropsWithChildren, useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import axios from 'axios';
 import { ConfigProvider } from 'antd';
 import viVN from 'antd/lib/locale/vi_VN';
 import enUS from 'antd/lib/locale/en_US';
@@ -26,7 +25,7 @@ export const useAuth = () => {
   return useContext(AuthContext);
 };
 
-const GlobalContext = ({ children }: { children: any }) => {
+const GlobalContext = ({ children }: PropsWithChildren) => {
   const [user, set_User] = useState(JSON.parse(localStorage.getItem(keyUser) || '{}'));
   const [title, setTitle] = useState('');
   const [locale, set_locale] = useState<any | undefined>();
@@ -65,13 +64,11 @@ const GlobalContext = ({ children }: { children: any }) => {
 
   const changeLanguage = useCallback(
     (values: any) => {
-      // const isReload = localStorage.getItem('i18nextLng') !== values;
+      if (values) {
+        values = 'en';
+      }
       i18n.changeLanguage(values);
-      // if (isReload) {
-      //   window.location.reload();
-      // }
       localStorage.setItem('i18nextLng', values);
-      axios.defaults.headers.common['Accept-Language'] = values;
       dayjs.locale(values === 'vn' ? 'vi' : values);
       switch (values) {
         case 'vn':
@@ -101,10 +98,6 @@ const GlobalContext = ({ children }: { children: any }) => {
   useEffect(() => {
     changeLanguage(localStorage.getItem('i18nextLng'));
     clearTempLocalStorage();
-    const token = localStorage.getItem(keyToken);
-    if (token) {
-      axios.defaults.headers.common.Authorization = 'Bearer ' + token;
-    }
   }, [user, changeLanguage]);
 
   return (

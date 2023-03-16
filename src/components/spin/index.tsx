@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import classNames from 'classnames';
 
 export const Spin = ({ spinning = true, text = 'Now Loading...', children, className, idElement }: Type) => {
@@ -26,10 +26,9 @@ export const Spin = ({ spinning = true, text = 'Now Loading...', children, class
     </div>
   );
 };
-type Type = {
+type Type = PropsWithChildren<{
   spinning?: boolean;
   text?: string;
-  children: JSX.Element[] | JSX.Element;
   className?: string;
   idElement?: string;
-};
+}>;

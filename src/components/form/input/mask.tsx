@@ -16,7 +16,7 @@ const Component = ({
   onChange,
   ...prop
 }: Type) => {
-  const input: any = useRef();
+  const input = useRef<any>();
 
   useEffect(() => {
     setTimeout(() => {
@@ -27,11 +27,7 @@ const Component = ({
     });
   }, []);
   return (
-    <div
-      className={classNames('ant-input flex items-center', {
-        'border rounded-xl': !!addonBefore || !!addonAfter,
-      })}
-    >
+    <div className={classNames('ant-input flex items-center', { 'border rounded-xl': !!addonBefore || !!addonAfter })}>
       {!!addonBefore && <div>{addonBefore(form, onFirstChange)}</div>}
       <input
         ref={input}

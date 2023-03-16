@@ -1,12 +1,12 @@
 import React, { useState, useEffect, Fragment, useCallback, useRef } from 'react';
 import { TreeSelect, Checkbox, FormInstance } from 'antd';
-import axios from 'axios';
 import { Button } from '@components';
+import { API } from '@utils';
 
 const Component = ({ formItem, placeholder, onChange, value, form, disabled, showSearch = true }: Type) => {
   const [_list, set_list] = useState(formItem.list || []);
   const [checkAll, set_checkAll] = useState(false);
-  const allValue: any = useRef([]);
+  const allValue = useRef<any>([]);
 
   const loadData = useCallback(
     async (fullTextSearch: string) => {
@@ -14,11 +14,16 @@ const Component = ({ formItem, placeholder, onChange, value, form, disabled, sho
         if (!formItem.api.condition || formItem.api.condition(form.getFieldValue)) {
           const url = formItem.api.link(form.getFieldValue);
           if (url) {
-            const { data } = await axios.get(url, {
-              params: formItem.api.params
-                ? formItem.api.params(form.getFieldValue, fullTextSearch)
-                : { fullTextSearch },
-            });
+            const params = formItem.api.params
+              ? formItem.api.params(form.getFieldValue, fullTextSearch)
+              : { fullTextSearch };
+            const { data } = await API.get(
+              url +
+                '?' +
+                Object.keys(params)
+                  .map((key) => key + '=' + encodeURIComponent(params[key]))
+                  .join('&'),
+            );
             const listData = data.data.map(formItem.api.format);
             if (formItem.mode === 'multiple' && value?.length) {
               const array = formItem.api.convertData ? formItem.api.convertData(listData) : listData;

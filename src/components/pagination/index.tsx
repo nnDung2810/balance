@@ -20,8 +20,8 @@ export const Pagination: any = ({
   showSizeChanger = true,
   showTotal = true,
 }: Type) => {
-  const listOfPageItem: any = useRef([]);
-  const [ranges, setRanges]: any = useState([]);
+  const listOfPageItem = useRef<any>([]);
+  const [ranges, setRanges] = useState<any>([]);
   const [lastNumber, set_lastNumber] = useState(0);
   const buildIndexes = useCallback(() => {
     const lastIndex = getLastIndex(total, pageSize);

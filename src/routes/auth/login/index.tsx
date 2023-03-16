@@ -32,6 +32,7 @@ const Page = () => {
     setIsLoading(false);
     if (data) {
       login(data);
+      console.log(data);
       // await realTimeAPI.connect({
       //   protocol: 'ddp',
       //   host: `https://${urlChat}`,

@@ -1,14 +1,11 @@
-import React, { useState, useRef, useEffect, Fragment } from 'react';
-import { Progress, Popconfirm } from 'antd';
+import React, { useState, useRef, useEffect, Fragment, PropsWithChildren } from 'react';
+import { Popconfirm } from 'antd';
 import { useTranslation } from 'react-i18next';
-import axios from 'axios';
-import dayjs from 'dayjs';
 import classNames from 'classnames';
 import { v4 } from 'uuid';
 
-import { useAuth } from '@globalContext';
-import { linkApi } from '@utils';
-import { Avatar, Button, Message, Spin } from '@components';
+import { API, linkApi } from '@utils';
+import { Button, Message, Spin } from '@components';
 
 export const Upload = ({
   value = [],
@@ -28,11 +25,10 @@ export const Upload = ({
   children,
 }: Type) => {
   const { t } = useTranslation();
-  const { formatDate } = useAuth();
   const [isLoading, set_isLoading] = useState(false);
-  const ref: any = useRef();
+  const ref = useRef<any>();
   const [listFiles, set_listFiles] = useState(
-    multiple && typeof value === 'object'
+    multiple && value && typeof value === 'object'
       ? value.map((_item: any) => {
           if (_item.status) return _item;
           return {
@@ -45,18 +41,18 @@ export const Upload = ({
       : value || [],
   );
 
-  const handleDownload = async (file: any) => {
-    const response = await axios.get(file[keyImage], { responseType: 'blob' });
-    const link = document.createElement('a');
-    link.href = window.URL.createObjectURL(new Blob([response.data], { type: response.headers['content-type'] }));
-    link.target = '_blank';
-    link.download = file.fileName || file.name;
-    link.click();
-  };
+  // const handleDownload = async (file: any) => {
+  //   const response = await axios.get(file[keyImage], { responseType: 'blob' });
+  //   const link = document.createElement('a');
+  //   link.href = window.URL.createObjectURL(new Blob([response.data], { type: response.headers['content-type'] }));
+  //   link.target = '_blank';
+  //   link.download = file.fileName || file.name;
+  //   link.click();
+  // };
 
   useEffect(() => {
     const tempData =
-      !multiple && typeof value === 'object'
+      !multiple && value && typeof value === 'object'
         ? value.map((_item: any) => {
             if (_item.status) return _item;
             return {
@@ -132,22 +128,23 @@ export const Upload = ({
           bodyFormData.append('file', file);
 
           try {
-            const { data } = await axios({
-              method,
-              url: action,
-              data: bodyFormData,
-              onUploadProgress: (event: any) => {
-                set_listFiles(
-                  listFiles.map((item: any) => {
-                    if (item.id === dataFile.id) {
-                      item.percent = (event.loaded / event.total) * 100;
-                      item.status = item.percent === 100 ? 'done' : 'uploading';
-                    }
-                    return item;
-                  }),
-                );
-              },
-            });
+            const data = await API.responsible(action, { ...API.init(), method, body: bodyFormData });
+            // const { data } = await axios({
+            //   method,
+            //   url: action,
+            //   data: bodyFormData,
+            //   onUploadProgress: (event: any) => {
+            //     set_listFiles(
+            //       listFiles.map((item: any) => {
+            //         if (item.id === dataFile.id) {
+            //           item.percent = (event.loaded / event.total) * 100;
+            //           item.status = item.percent === 100 ? 'done' : 'uploading';
+            //         }
+            //         return item;
+            //       }),
+            //     );
+            //   },
+            // });
             const files = multiple
               ? listFiles.map((item: any) => {
                   if (item.id === dataFile.id) {
@@ -211,28 +208,32 @@ export const Upload = ({
   };
   return (
     <Spin spinning={isLoading}>
+      {showBtnUpload ? (
+        <div className={classNames({ 'text-right': right }, 'relative inline-block')}>
+          <input type="file" className={'hidden'} accept={accept} multiple={multiple} ref={ref} onChange={onUpload} />
+          <div onClick={() => ref.current.click()}>
+            <Fragment>
+              {children ? (
+                children
+              ) : !listFiles?.length || !listFiles[0][keyImage] ? (
+                <div className="border-dashed border border-gray-300 rounded-2xl w-40 h-40 flex items-center justify-center">
+                  <i className="las la-plus la-3x" />
+                </div>
+              ) : (
+                <img alt={'Align'} className={'rounded-2xl w-40 h-40 flex object-cover'} src={listFiles[0][keyImage]} />
+              )}
+            </Fragment>
+          </div>
+        </div>
+      ) : (
+        <div />
+      )}
       <div
         className={classNames({
           'grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-8 gap-4':
             viewGrid,
         })}
       >
-        {showBtnUpload && (
-          <div className={classNames({ 'text-right': right }, 'relative inline-block')}>
-            <input type="file" className={'hidden'} accept={accept} multiple={multiple} ref={ref} onChange={onUpload} />
-            <div onClick={() => ref.current.click()}>
-              <Fragment>
-                {children ? (
-                  children
-                ) : (
-                  <div className="border-dashed border border-gray-300 rounded-2xl w-40 h-40 flex items-center justify-center">
-                    <i className="las la-plus la-3x" />
-                  </div>
-                )}
-              </Fragment>
-            </div>
-          </div>
-        )}
         {multiple &&
           listFiles.map((file: any, index: number) => (
             <div
@@ -245,9 +246,7 @@ export const Upload = ({
               <div className={'relative'}>
                 <a href={file[keyImage] ? file[keyImage] : file} className="glightbox">
                   <img
-                    className={classNames({
-                      'object-cover object-center h-20 w-20': !viewGrid,
-                    })}
+                    className={classNames({ 'object-cover object-center h-20 w-20': !viewGrid })}
                     src={file[keyImage] ? file[keyImage] : file}
                     alt={file.name}
                   />
@@ -281,7 +280,7 @@ export const Upload = ({
                   <Popconfirm
                     placement="left"
                     title={t('components.datatable.areYouSureWant')}
-                    icon={<i className="las la-question-circle text-2xl text-yellow-500 absolute -top-0.5 -left-1" />}
+                    icon={<i className="las la-question-circle text-2xl text-yellow-500 relative -top-1.5 left-1" />}
                     onConfirm={async () => {
                       if (deleteFile && file?.id) {
                         const data = await deleteFile(file?.id);
@@ -304,7 +303,7 @@ export const Upload = ({
     </Spin>
   );
 };
-type Type = {
+type Type = PropsWithChildren<{
   value?: any[];
   onChange?: (values: any[]) => void;
   deleteFile?: any;
@@ -319,5 +318,4 @@ type Type = {
   accept?: string;
   validation?: (file: any, listFiles: any) => Promise<boolean>;
   viewGrid?: boolean;
-  children?: JSX.Element[] | JSX.Element;
-};
+}>;

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { FormInstance, Select } from 'antd';
-import axios from 'axios';
+import { API } from '@utils';
 
 const Component = ({
   formItem,
@@ -21,11 +21,16 @@ const Component = ({
         if (!formItem.api.condition || formItem.api.condition(form.getFieldValue)) {
           const url = formItem.api.link(form.getFieldValue);
           if (url) {
-            const { data } = await axios.get(url, {
-              params: formItem.api.params
-                ? formItem.api.params(form.getFieldValue, fullTextSearch, value)
-                : { fullTextSearch },
-            });
+            const params = formItem.api.params
+              ? formItem.api.params(form.getFieldValue, fullTextSearch, value)
+              : { fullTextSearch };
+            const { data } = await API.get(
+              url +
+                '?' +
+                Object.keys(params)
+                  .map((key) => key + '=' + encodeURIComponent(params[key]))
+                  .join('&'),
+            );
             set_list(data.data.map(formItem.api.format).filter((item: any) => !!item.value));
           }
         }

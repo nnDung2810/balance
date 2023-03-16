@@ -4,21 +4,19 @@ import { useTranslation } from 'react-i18next';
 import { useAuth } from '@globalContext';
 import { DataTable, ModalForm, ModalDrag, Button } from '@components';
 import { ColumnCodeForm, ColumnCodeTable, ColumnCodeTypeForm } from '@columns';
-import { AuthService, CodeService, CodeTypeService } from '@services';
+import { CodeService, CodeTypeService } from '@services';
 import { keyRole } from '@utils';
 
 const Page = () => {
   const { t } = useTranslation();
-  const { formatDate, setUser, user, timeOut } = useAuth();
+  const { formatDate, user, timeOut } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [listType, set_listType] = useState([]);
 
   useEffect(() => {
     const init = async () => {
-      const { data: user } = await AuthService.profile();
-      setUser(user);
-      await getListType();
       await dataTableRef?.current?.onChange();
+      await getListType();
     };
     if (timeOut.current) {
       clearTimeout(timeOut.current);
@@ -37,9 +35,9 @@ const Page = () => {
     return { data };
   };
 
-  const dataTableRef: any = useRef();
-  const modalFormRef: any = useRef();
-  const modalDragRef: any = useRef();
+  const dataTableRef = useRef<any>();
+  const modalFormRef = useRef<any>();
+  const modalDragRef = useRef<any>();
   return (
     <Fragment>
       <DataTable

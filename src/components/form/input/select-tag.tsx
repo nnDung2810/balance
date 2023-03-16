@@ -1,19 +1,24 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { FormInstance, Select } from 'antd';
-import axios from 'axios';
 
 import { Avatar, Button } from '@components';
+import { API } from '@utils';
 
 const Component = ({ tag, onChange, form, value, disabled, maxTagCount, placeholder, ...prop }: Type) => {
   const [_options, set_options] = useState([]);
   const loadData = useCallback(
     async (fullTextSearch = '', value?: any) => {
       if (tag) {
-        const { data } = await axios.get(tag.api, {
-          params: tag.params
-            ? tag.params(form.getFieldValue, fullTextSearch, value && value.filter((item: any) => !!item))
-            : { fullTextSearch },
-        });
+        const params = tag.params
+          ? tag.params(form.getFieldValue, fullTextSearch, value && value.filter((item: any) => !!item))
+          : { fullTextSearch };
+        const { data } = await API.get(
+          tag.api +
+            '?' +
+            Object.keys(params)
+              .map((key) => key + '=' + encodeURIComponent(params[key]))
+              .join('&'),
+        );
         set_options(
           data?.data?.map((item: any, index: number) => ({
             label: tag.avatar ? (

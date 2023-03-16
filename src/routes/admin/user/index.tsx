@@ -4,12 +4,12 @@ import { useTranslation } from 'react-i18next';
 import { useAuth } from '@globalContext';
 import { DataTable, ModalForm, ModalDrag, Button } from '@components';
 import { ColumnTableUser, ColumnFormUser, ColumnFormUserRole } from '@columns';
-import { UserService, CodeTypeService, UserRoleService, AuthService } from '@services';
+import { UserService, CodeTypeService, UserRoleService } from '@services';
 import { keyRole } from '@utils';
 
 const Page = () => {
   const { t } = useTranslation();
-  const { formatDate, setUser, user, timeOut } = useAuth();
+  const { formatDate, user, timeOut } = useAuth();
 
   const [isLoading, setIsLoading] = useState(false);
   const [listPosition, set_listPosition] = useState([]);
@@ -18,14 +18,9 @@ const Page = () => {
 
   useEffect(() => {
     const init = async () => {
-      const { data: user } = await AuthService.profile();
-      setUser(user);
-      const { data } = await CodeTypeService.getById('POS');
-      const { data: permission } = await UserRoleService.getPermission();
-      set_listPosition(data.items);
-      set_listPermission(permission);
-      await getListRole();
       await dataTableRef?.current?.onChange();
+      const { data } = await CodeTypeService.getById('POS');
+      set_listPosition(data.items);
     };
     if (timeOut.current) {
       clearTimeout(timeOut.current);
@@ -38,12 +33,17 @@ const Page = () => {
   const getListRole = async () => {
     const { data } = await UserRoleService.get();
     set_listRole(data);
+    if (!listPermission.length) {
+      const { data: permission } = await UserRoleService.getPermission();
+      set_listPermission(permission);
+    }
+
     return { data };
   };
 
-  const dataTableRef: any = useRef();
-  const modalFormRef: any = useRef();
-  const modalDragRoleRef: any = useRef();
+  const dataTableRef = useRef<any>();
+  const modalFormRef = useRef<any>();
+  const modalDragRoleRef = useRef<any>();
   return (
     <Fragment>
       <DataTable
@@ -84,6 +84,11 @@ const Page = () => {
         }
       />
       <ModalForm
+        firstRun={async () => {
+          if (!listRole.length) {
+            await getListRole();
+          }
+        }}
         ref={modalFormRef}
         title={(data: any) => (!data?.id ? t('routes.admin.Layout.Add') : t('routes.admin.Layout.Edit'))}
         isLoading={isLoading}

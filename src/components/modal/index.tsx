@@ -1,4 +1,12 @@
-import React, { useState, forwardRef, useImperativeHandle, useRef, Dispatch, SetStateAction } from 'react';
+import React, {
+  useState,
+  forwardRef,
+  useImperativeHandle,
+  useRef,
+  Dispatch,
+  SetStateAction,
+  PropsWithChildren,
+} from 'react';
 import { Modal } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { v4 } from 'uuid';
@@ -24,12 +32,7 @@ const Hook = forwardRef(
     }: Type,
     ref: any,
   ) => {
-    useImperativeHandle(ref, () => ({
-      handleShow,
-      handleCancel,
-      data: data.current,
-      setIsVisible,
-    }));
+    useImperativeHandle(ref, () => ({ handleShow, handleCancel, data: data.current, setIsVisible }));
 
     const { t } = useTranslation();
     const [isVisible, setIsVisible] = useState(false);
@@ -50,8 +53,9 @@ const Hook = forwardRef(
           !!res && handleCancel();
           isLoadingT.current = false;
           return res;
+        } else {
+          handleCancel();
         }
-        handleCancel();
       }
     };
 
@@ -104,7 +108,7 @@ const Hook = forwardRef(
   },
 );
 Hook.displayName = 'HookModal';
-type Type = {
+type Type = PropsWithChildren<{
   title?: (data: any) => string;
   widthModal: number;
   onOk?: (data: any) => Promise<any>;
@@ -116,7 +120,6 @@ type Type = {
   textSubmit?: string;
   className?: string;
   footerCustom?: (handleOk: () => Promise<any>, handleCancel: () => void) => JSX.Element[] | JSX.Element;
-  children: JSX.Element[] | JSX.Element;
   idElement?: string;
-};
+}>;
 export default Hook;

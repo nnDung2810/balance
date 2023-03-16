@@ -1,27 +1,32 @@
-import React, { useEffect, Fragment, useState } from 'react';
+import React, { useEffect, Fragment, useState, useRef } from 'react';
 import { Form as FormAnt } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 import { useAuth } from '@globalContext';
 import { Form, Spin } from '@components';
-import { AuthService } from '@services';
-import { ColumnRegister } from '@columns';
+import { AuthService, CodeTypeService } from '@services';
+import { ColumnProfile } from '@columns';
 
 const Page = () => {
   const { t } = useTranslation();
-  const { user, timeOut } = useAuth();
+  const { user, timeOut, setUser } = useAuth();
   const [form] = FormAnt.useForm();
   const [isLoading, setIsLoading] = useState(true);
-  const [values, setValues] = useState(user);
+  const listPosition = useRef([]);
 
   const submit = async (values: any) => {
-    setValues(values);
+    setIsLoading(true);
+    const { data: user } = await AuthService.putProfile(values);
+    setUser(user);
+    setIsLoading(false);
   };
 
   useEffect(() => {
     const init = async () => {
-      const { data } = await AuthService.profile();
-      setValues(data);
+      const { data: user } = await AuthService.profile();
+      const { data } = await CodeTypeService.getById('POS');
+      listPosition.current = data.items;
+      setUser(user);
       setIsLoading(false);
     };
     if (timeOut.current) {
@@ -29,7 +34,7 @@ const Page = () => {
     }
     timeOut.current = setTimeout(() => {
       init().then();
-    }, 10);
+    }, 100);
   }, []);
 
   return (
@@ -37,13 +42,13 @@ const Page = () => {
       <Spin className="intro-x" spinning={isLoading}>
         <Form
           form={form}
-          className="intro-x"
-          columns={ColumnRegister({ t })}
+          className="intro-x w-[550px] mx-auto"
+          columns={ColumnProfile({ t, listPosition: listPosition.current })}
           textSubmit={t('components.form.modal.save')}
           isShowCancel={true}
           handSubmit={submit}
           disableSubmit={isLoading}
-          values={values}
+          values={user}
         />
       </Spin>
     </Fragment>
