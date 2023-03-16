@@ -47,6 +47,8 @@ const GlobalContext = ({ children }: { children: any }) => {
     // }
     setUser(null);
     localStorage.removeItem(keyUser);
+    localStorage.removeItem(keyToken);
+    localStorage.removeItem(keyRefreshToken);
   };
 
   const setUser = (value: any) => {

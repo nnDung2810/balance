@@ -1,12 +1,12 @@
 import axios from 'axios';
 
 import { Message } from '@components';
-import { routerLinks, keyRefreshToken, keyToken } from '@utils';
+import { routerLinks, keyRefreshToken, keyToken, API } from '@utils';
 
 export const AuthService = {
   nameLink: 'Auth',
   login: async (values: any) => {
-    const { data } = await axios.post(`${routerLinks(AuthService.nameLink, 'api')}/login`, values);
+    const data = await API.post(`${routerLinks(AuthService.nameLink, 'api')}/login`, values);
     if (data) {
       if (data.message) Message.success({ text: data.message });
       const { user, accessToken, refreshToken } = data.data;
@@ -18,21 +18,15 @@ export const AuthService = {
     }
     return false;
   },
-  profile: async () => {
-    const { data } = await axios.get(`${routerLinks(AuthService.nameLink, 'api')}/profile`);
-    return data;
-  },
-  logout: async () => await axios.get(`${routerLinks(AuthService.nameLink, 'api')}/logout`),
+  profile: () => API.get(`${routerLinks(AuthService.nameLink, 'api')}/profile`),
+  logout: () => API.get(`${routerLinks(AuthService.nameLink, 'api')}/logout`),
   refresh: async () => {
-    const { data } = await axios.get(`${routerLinks(AuthService.nameLink, 'api')}/refresh`, {
-      headers: {
-        Authorization: 'Bearer ' + localStorage.getItem(keyRefreshToken),
-      },
+    const data = await API.get(`${routerLinks(AuthService.nameLink, 'api')}/refresh`, {
+      Authorization: 'Bearer ' + localStorage.getItem(keyRefreshToken),
     });
     if (data) {
       const { accessToken } = data.data;
       localStorage.setItem(keyToken, accessToken);
-      axios.defaults.headers.common.Authorization = 'Bearer ' + accessToken;
       return 'Bearer ' + accessToken;
     }
   },
@@ -46,15 +40,12 @@ export const UserService = {
     });
     return data;
   },
-  getById: async (id: string) => {
-    const { data } = await axios.get(`${routerLinks(UserService.nameLink, 'api')}/${id}`);
-    return data;
-  },
+  getById: async (id: string) => API.get(`${routerLinks(UserService.nameLink, 'api')}/${id}`),
   post: async (values: any) => {
     if (values.avatar) {
       values.avatar = values.avatar[0].url;
     }
-    const { data } = await axios.post(routerLinks(UserService.nameLink, 'api'), values);
+    const data = await API.post(routerLinks(UserService.nameLink, 'api'), values);
     if (data.message) Message.success({ text: data.message });
     return data;
   },
@@ -62,12 +53,12 @@ export const UserService = {
     if (values.avatar) {
       values.avatar = values.avatar[0].url;
     }
-    const { data } = await axios.put(`${routerLinks(UserService.nameLink, 'api')}/${id}`, values);
+    const data = await API.put(`${routerLinks(UserService.nameLink, 'api')}/${id}`, values);
     if (data.message) Message.success({ text: data.message });
     return data;
   },
   delete: async (id: string) => {
-    const { data } = await axios.delete(`${routerLinks(UserService.nameLink, 'api')}/${id}`);
+    const data = await API.delete(`${routerLinks(UserService.nameLink, 'api')}/${id}`);
     if (data.message) Message.success({ text: data.message });
     return data;
   },
