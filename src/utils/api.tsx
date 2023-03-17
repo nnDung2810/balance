@@ -1,4 +1,4 @@
-import {keyToken, keyUser, linkApi, routerLinks} from '@utils';
+import { keyToken, keyUser, linkApi, routerLinks } from '@utils';
 import { AuthService } from '../services/user';
 import { Message } from '@components';
 
@@ -20,7 +20,7 @@ const API = {
     if (headers) {
       config.headers = { ...config.headers, ...headers };
     }
-    const response = await fetch('http://localhost:3000/api' + url, config);
+    const response = await fetch(linkApi + url, config);
     if (response.ok) {
       return response.json();
     }
@@ -85,6 +85,6 @@ const API = {
       },
       headers,
     );
-  }
+  },
 };
 export default API;
