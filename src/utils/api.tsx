@@ -16,39 +16,54 @@ const API = {
       redirect: 'follow',
       referrerPolicy: 'no-referrer',
     } as RequestInit),
-  responsible: async (url: string, config: RequestInit, headers?: RequestInit['headers']) => {
-    if (headers) {
-      config.headers = { ...config.headers, ...headers };
-    }
-    const response = await fetch(linkApi + url, config);
-    if (response.ok) {
-      return response.json();
-    }
+  responsible: async (
+    url: string,
+    params: { [key: string]: string } = {},
+    config: RequestInit,
+    headers: RequestInit['headers'] = {},
+  ) => {
+    config.headers = { ...config.headers, ...headers };
+
+    const linkParam = Object.keys(params)
+      .map(
+        (key) =>
+          key + '=' + encodeURIComponent(typeof params[key] === 'object' ? JSON.stringify(params[key]) : params[key]),
+      )
+      .join('&');
+    const response = await fetch(linkApi + url + (linkParam && '?' + linkParam), config);
     const res = await response.json();
-    if (res.message) {
+    if (response.ok) {
+      return res;
+    } else if (res.message) {
       await Message.error({ text: res.message });
     }
-    if (
+    console.log(url, config, headers, response, res);
+
+    if (url === `${routerLinks(AuthService.nameLink, 'api')}/refresh`) {
+      return false;
+    } else if (
       response.status === 401 &&
       url !== `${routerLinks(AuthService.nameLink, 'api')}/login` &&
       url !== `${routerLinks(AuthService.nameLink, 'api')}/logout`
     ) {
       const accessToken = await AuthService.refresh();
       if (accessToken) {
-        config.headers = { ...config.headers, Authorization: accessToken };
-        const response = await fetch(linkApi + url, config);
+        config.headers = { ...config.headers, authorization: accessToken };
+        const response = await fetch(linkApi + url + (linkParam && '?' + linkParam), config);
         return response.json();
       }
     }
-    localStorage.removeItem(keyUser);
-    if (url !== `${routerLinks(AuthService.nameLink, 'api')}/login`) {
-      window.location.href = routerLinks('Login');
+    if (response.status === 401 && url !== `${routerLinks(AuthService.nameLink, 'api')}/login`) {
+      localStorage.removeItem(keyUser);
+      alert('ddddddddddddddddddddddd');
+      // window.location.href = routerLinks('Login');
     }
     return false;
   },
-  get: async (url: string, headers?: RequestInit['headers']) => {
+  get: async (url: string, params = {}, headers?: RequestInit['headers']) => {
     return API.responsible(
       url,
+      params,
       {
         ...API.init(),
         method: 'GET',
@@ -56,9 +71,10 @@ const API = {
       headers,
     );
   },
-  post: (url: string, data = {}, headers?: RequestInit['headers']) =>
+  post: (url: string, data = {}, params = {}, headers?: RequestInit['headers']) =>
     API.responsible(
       url,
+      params,
       {
         ...API.init(),
         method: 'POST',
@@ -66,9 +82,10 @@ const API = {
       },
       headers,
     ),
-  put: (url: string, data = {}, headers?: RequestInit['headers']) =>
+  put: (url: string, data = {}, params = {}, headers?: RequestInit['headers']) =>
     API.responsible(
       url,
+      params,
       {
         ...API.init(),
         method: 'PUT',
@@ -76,9 +93,10 @@ const API = {
       },
       headers,
     ),
-  delete: async (url: string, headers?: RequestInit['headers']) => {
+  delete: async (url: string, params = {}, headers?: RequestInit['headers']) => {
     return API.responsible(
       url,
+      params,
       {
         ...API.init(),
         method: 'DELETE',

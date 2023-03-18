@@ -44,6 +44,7 @@ const Component = {
         showCancelButton,
         showConfirmButton,
         padding,
+        timer: 6000,
       }),
     ),
   error: ({

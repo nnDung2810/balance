@@ -5,7 +5,6 @@ import { useAuth } from '@globalContext';
 import { DataTable, ModalForm, ModalDrag, Button } from '@components';
 import { ColumnTableUser, ColumnFormUser, ColumnFormUserRole } from '@columns';
 import { UserRoleService } from '@services';
-import { CodeTypeService } from '../../../services/code/type';
 import { UserService } from '../../../services/user';
 
 import { keyRole } from '@utils';
@@ -15,15 +14,12 @@ const Page = () => {
   const { formatDate, user, timeOut } = useAuth();
 
   const [isLoading, setIsLoading] = useState(false);
-  const [listPosition, set_listPosition] = useState([]);
   const [listPermission, set_listPermission] = useState([]);
   const [listRole, set_listRole] = useState([]);
 
   useEffect(() => {
     const init = async () => {
       await dataTableRef?.current?.onChange();
-      const { data } = await CodeTypeService.getById('POS');
-      set_listPosition(data.items);
     };
     if (timeOut.current) {
       clearTimeout(timeOut.current);
@@ -65,7 +61,6 @@ const Page = () => {
         columns={ColumnTableUser({
           t,
           formatDate,
-          listPosition,
           handleEdit: modalFormRef?.current?.handleEdit,
           handleDelete: modalFormRef?.current?.handleDelete,
           permissions: user?.role?.permissions,
@@ -100,7 +95,6 @@ const Page = () => {
         columns={ColumnFormUser({
           t,
           formatDate,
-          listPosition,
           listRole,
         })}
         GetById={user?.role?.permissions?.includes(keyRole.P_USER_DETAIL) && UserService.getById}

@@ -187,18 +187,20 @@ const Hook = forwardRef(
         if (showList && Get) {
           setIsLoading && setIsLoading(true);
           const prop = await Get(param.current, id());
-          if (prop.data.length === 0 && param.current[pageIndex] > 1) {
-            await onChange({
-              ...param.current,
-              page: param.current[pageIndex] - 1,
-            });
-          } else {
-            set_objData(prop);
-            setIsLoading && setIsLoading(false);
+          if (prop) {
+            if (prop.data.length === 0 && param.current[pageIndex] > 1) {
+              await onChange({
+                ...param.current,
+                page: param.current[pageIndex] - 1,
+              });
+            } else {
+              set_objData(prop);
+              setIsLoading && setIsLoading(false);
+            }
+            return true;
           }
-        } else {
-          setIsLoading && setIsLoading(false);
         }
+        setIsLoading && setIsLoading(false);
       },
       [id, showList],
     );

@@ -3,12 +3,9 @@ import { Message } from '@components';
 
 export const UserRoleService = {
   nameLink: 'UserRole',
-  get: () => API.get(routerLinks(UserRoleService.nameLink, 'api')),
-  getById: async (id: string) => API.get(`${routerLinks(UserRoleService.nameLink, 'api')}/${id}`),
-  getPermission: async () => {
-    const data = await API.get(`${routerLinks(UserRoleService.nameLink, 'api')}/permission`);
-    return data;
-  },
+  get: (params: any = {}) => API.get(routerLinks(UserRoleService.nameLink, 'api'), params),
+  getById: (id: string) => API.get(`${routerLinks(UserRoleService.nameLink, 'api')}/${id}`),
+  getPermission: () => API.get(`${routerLinks(UserRoleService.nameLink, 'api')}/permission`),
   post: async (values: any) => {
     const data = await API.post(routerLinks(UserRoleService.nameLink, 'api'), values);
     if (data.message) await Message.success({ text: data.message });

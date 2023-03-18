@@ -6,7 +6,7 @@ import { Avatar, Button } from '@components';
 import { keyRole } from '@utils';
 import { DataTableModel } from '@models';
 
-const Column = ({ t, formatDate, handleEdit, handleDelete, listPosition, permissions }: any) => {
+const Column = ({ t, formatDate, handleEdit, handleDelete, permissions }: any) => {
   const col: DataTableModel[] = [
     {
       title: t('Họ và tên'),
@@ -27,9 +27,9 @@ const Column = ({ t, formatDate, handleEdit, handleDelete, listPosition, permiss
       title: t('Position'),
       name: 'positionCode',
       tableItem: {
-        filter: { type: 'search' },
+        // filter: { type: 'radio', list: listPosition.map((item: any) => ({value: item.code, label: item.name})) },
         sorter: true,
-        render: (text: string) => text && listPosition.filter((item: any) => item.code === text)[0]?.name,
+        render: (item) => item?.name,
       },
     },
     {

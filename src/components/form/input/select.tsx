@@ -24,13 +24,7 @@ const Component = ({
             const params = formItem.api.params
               ? formItem.api.params(form.getFieldValue, fullTextSearch, value)
               : { fullTextSearch };
-            const { data } = await API.get(
-              url +
-                '?' +
-                Object.keys(params)
-                  .map((key) => key + '=' + encodeURIComponent(params[key]))
-                  .join('&'),
-            );
+            const data = await API.get(url, params);
             set_list(data.data.map(formItem.api.format).filter((item: any) => !!item.value));
           }
         }
@@ -50,7 +44,7 @@ const Component = ({
 
   useEffect(() => {
     loadData('');
-  }, [value, formItem]);
+  }, []);
 
   return (
     <Select
@@ -63,7 +57,7 @@ const Component = ({
       filterOption={false}
       showSearch={showSearch}
       allowClear
-      onBlur={() => loadData('')}
+      // onBlur={() => loadData('')}
       onSearch={(value) => loadData(value)}
       value={value}
       maxTagPlaceholder={(array) => '+' + array.length}

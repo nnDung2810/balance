@@ -3,8 +3,8 @@ import { Message } from '@components';
 
 export const CodeTypeService = {
   nameLink: 'CodeType',
-  get: () => API.get(routerLinks(CodeTypeService.nameLink, 'api')),
-  getById: async (id: string) => API.get(`${routerLinks(CodeTypeService.nameLink, 'api')}/${id}`),
+  get: (params: any = {}) => API.get(routerLinks(CodeTypeService.nameLink, 'api'), params),
+  getById: (id: string) => API.get(`${routerLinks(CodeTypeService.nameLink, 'api')}/${id}`),
   post: async (values: any) => {
     const data = await API.post(routerLinks(CodeTypeService.nameLink, 'api'), values);
     if (data.message) await Message.success({ text: data.message });

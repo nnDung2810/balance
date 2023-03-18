@@ -1,6 +1,7 @@
 import { FormModel } from '@models';
+import { routerLinks } from '@utils';
 
-const Column = ({ t, listPosition, listRole }: any) => {
+const Column = ({ t, listRole }: any) => {
   const col: FormModel[] = [
     {
       title: t('Họ và tên'),
@@ -75,10 +76,19 @@ const Column = ({ t, listPosition, listRole }: any) => {
         col: 6,
         type: 'select',
         rules: [{ type: 'required' }],
-        list: listPosition.map((item: any) => ({
-          value: item.code,
-          label: item.name,
-        })),
+        convert: (data: any) =>
+          data?.map ? data.map((_item: any) => (_item?.id !== undefined ? +_item.id : _item)) : data,
+        api: {
+          link: () => routerLinks('Code', 'api') + '/',
+          format: (item: any) => ({
+            label: item.name,
+            value: item.id,
+          }),
+          params: (form: any, fullTextSearch: string) => ({
+            fullTextSearch,
+            filter: { type: 'POS' },
+          }),
+        },
       },
     },
     {

@@ -26,9 +26,13 @@ export const AuthService = {
   },
   logout: () => API.get(`${routerLinks(AuthService.nameLink, 'api')}/logout`),
   refresh: async () => {
-    const data = await API.get(`${routerLinks(AuthService.nameLink, 'api')}/refresh`, {
-      Authorization: 'Bearer ' + localStorage.getItem(keyRefreshToken),
-    });
+    const data = await API.get(
+      `${routerLinks(AuthService.nameLink, 'api')}/refresh`,
+      {},
+      {
+        authorization: 'Bearer ' + localStorage.getItem(keyRefreshToken),
+      },
+    );
     if (data) {
       const { accessToken } = data.data;
       localStorage.setItem(keyToken, accessToken);
@@ -39,15 +43,8 @@ export const AuthService = {
 
 export const UserService = {
   nameLink: 'User',
-  get: (params: any) =>
-    API.get(
-      routerLinks(UserService.nameLink, 'api') +
-        '?' +
-        Object.keys(params)
-          .map((key) => key + '=' + encodeURIComponent(params[key]))
-          .join('&'),
-    ),
-  getById: async (id: string) => API.get(`${routerLinks(UserService.nameLink, 'api')}/${id}`),
+  get: (params: any = {}) => API.get(routerLinks(UserService.nameLink, 'api'), params),
+  getById: (id: string) => API.get(`${routerLinks(UserService.nameLink, 'api')}/${id}`),
   post: async (values: any) => {
     if (values.avatar) {
       values.avatar = values.avatar[0].url;

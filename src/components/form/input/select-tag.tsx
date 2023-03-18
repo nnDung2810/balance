@@ -12,13 +12,7 @@ const Component = ({ tag, onChange, form, value, disabled, maxTagCount, placehol
         const params = tag.params
           ? tag.params(form.getFieldValue, fullTextSearch, value && value.filter((item: any) => !!item))
           : { fullTextSearch };
-        const { data } = await API.get(
-          tag.api +
-            '?' +
-            Object.keys(params)
-              .map((key) => key + '=' + encodeURIComponent(params[key]))
-              .join('&'),
-        );
+        const { data } = await API.get(tag.api, params);
         set_options(
           data?.data?.map((item: any, index: number) => ({
             label: tag.avatar ? (

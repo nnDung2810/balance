@@ -3,15 +3,8 @@ import { API, routerLinks } from '@utils';
 
 export const DataService = {
   nameLink: 'Data',
-  get: (params: any) =>
-    API.get(
-      routerLinks(DataService.nameLink, 'api') +
-        '?' +
-        Object.keys(params)
-          .map((key) => key + '=' + encodeURIComponent(params[key]))
-          .join('&'),
-    ),
-  getById: async (id: string) => API.get(`${routerLinks(DataService.nameLink, 'api')}/${id}`),
+  get: (params: any = {}) => API.get(routerLinks(DataService.nameLink, 'api'), params),
+  getById: (id: string) => API.get(`${routerLinks(DataService.nameLink, 'api')}/${id}`),
   post: async (values: any) => {
     const data = await API.post(routerLinks(DataService.nameLink, 'api'), values);
     if (data.message) await Message.success({ text: data.message });
