@@ -37,7 +37,6 @@ const API = {
     } else if (res.message) {
       await Message.error({ text: res.message });
     }
-    console.log(url, config, headers, response, res);
 
     if (url === `${routerLinks(AuthService.nameLink, 'api')}/refresh`) {
       return false;
@@ -55,8 +54,7 @@ const API = {
     }
     if (response.status === 401 && url !== `${routerLinks(AuthService.nameLink, 'api')}/login`) {
       localStorage.removeItem(keyUser);
-      alert('ddddddddddddddddddddddd');
-      // window.location.href = routerLinks('Login');
+      window.location.href = routerLinks('Login');
     }
     return false;
   },
