@@ -1,5 +1,5 @@
-import {FormModel} from '@models';
-import {routerLinks} from '@utils';
+import { FormModel } from '@models';
+import { routerLinks } from '@utils';
 
 const Column = ({ t, listRole }: any) => {
   const col: FormModel[] = [

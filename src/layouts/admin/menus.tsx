@@ -1,4 +1,4 @@
-import {keyRole} from '@utils';
+import { keyRole } from '@utils';
 
 const Layout = () => [
   {

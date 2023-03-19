@@ -1,13 +1,13 @@
-import React, {Fragment, useEffect, useRef, useState} from 'react';
-import {useTranslation} from 'react-i18next';
+import React, { Fragment, useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
-import {useAuth} from '@globalContext';
-import {Button, DataTable, ModalDrag, ModalForm} from '@components';
-import {ColumnFormUser, ColumnFormUserRole, ColumnTableUser} from '@columns';
-import {UserRoleService} from '@services';
-import {UserService} from '../../../services/user';
+import { useAuth } from '@globalContext';
+import { Button, DataTable, ModalDrag, ModalForm } from '@components';
+import { ColumnFormUser, ColumnFormUserRole, ColumnTableUser } from '@columns';
+import { UserRoleService } from '@services';
+import { UserService } from '../../../services/user';
 
-import {keyRole} from '@utils';
+import { keyRole } from '@utils';
 
 const Page = () => {
   const { t } = useTranslation();

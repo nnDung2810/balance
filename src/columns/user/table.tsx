@@ -1,10 +1,10 @@
-import {Popconfirm, Tooltip} from 'antd';
+import { Popconfirm, Tooltip } from 'antd';
 import React from 'react';
 import dayjs from 'dayjs';
 
-import {Avatar, Button} from '@components';
-import {keyRole, routerLinks} from '@utils';
-import {DataTableModel} from '@models';
+import { Avatar, Button } from '@components';
+import { keyRole, routerLinks } from '@utils';
+import { DataTableModel } from '@models';
 
 const Column = ({ t, formatDate, handleEdit, handleDelete, permissions }: any) => {
   const col: DataTableModel[] = [

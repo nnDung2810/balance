@@ -1,13 +1,13 @@
-import React, {Fragment, useEffect, useRef, useState} from 'react';
-import {Form as FormAnt} from 'antd';
-import {useTranslation} from 'react-i18next';
+import React, { Fragment, useEffect, useRef, useState } from 'react';
+import { Form as FormAnt } from 'antd';
+import { useTranslation } from 'react-i18next';
 
-import {useAuth} from '@globalContext';
-import {Spin} from '@components';
+import { useAuth } from '@globalContext';
+import { Spin } from '@components';
 import Form from '../../../components/form';
-import {AuthService} from '../../../services/user';
-import {CodeTypeService} from '../../../services/code/type';
-import {ColumnProfile} from '@columns';
+import { AuthService } from '../../../services/user';
+import { CodeTypeService } from '../../../services/code/type';
+import { ColumnProfile } from '@columns';
 
 const Page = () => {
   const { t } = useTranslation();

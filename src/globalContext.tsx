@@ -1,12 +1,12 @@
-import React, {PropsWithChildren, useCallback, useContext, useEffect, useRef, useState} from 'react';
-import {useTranslation} from 'react-i18next';
-import {ConfigProvider} from 'antd';
+import React, { PropsWithChildren, useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { ConfigProvider } from 'antd';
 import viVN from 'antd/lib/locale/vi_VN';
 import enUS from 'antd/lib/locale/en_US';
 import dayjs from 'dayjs';
 import 'dayjs/locale/vi';
 
-import {keyRefreshToken, keyToken, keyUser} from '@utils';
+import { keyRefreshToken, keyToken, keyUser } from '@utils';
 // import { AuthService } from './services';
 
 export const AuthContext = React.createContext<any>({

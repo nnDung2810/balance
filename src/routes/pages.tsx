@@ -1,5 +1,5 @@
 import React from 'react';
-import {routerLinks} from '@utils';
+import { routerLinks } from '@utils';
 
 export const pages = [
   {

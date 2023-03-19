@@ -1,13 +1,13 @@
-import React, {lazy, Suspense} from 'react';
+import React, { lazy, Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 import AuthProvider from '@globalContext';
-import {ConfigProvider} from 'antd';
-import {Spin} from './components/spin';
+import { ConfigProvider } from 'antd';
+import { Spin } from './components/spin';
 import Router from '@routes/index';
 import i18n from 'i18next';
 import XHR from 'i18next-xhr-backend';
-import {initReactI18next} from 'react-i18next';
-import {reportWebVitals} from '@utils';
+import { initReactI18next } from 'react-i18next';
+import { reportWebVitals } from '@utils';
 
 const Styling = lazy(() => import('./utils/init/styling'));
 

@@ -9,18 +9,18 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import {v4} from 'uuid';
-import {Checkbox, CheckboxOptionType, DatePicker, Popover, Radio, Table} from 'antd';
-import {useTranslation} from 'react-i18next';
-import {useLocation, useNavigate} from 'react-router';
+import { v4 } from 'uuid';
+import { Checkbox, CheckboxOptionType, DatePicker, Popover, Radio, Table } from 'antd';
+import { useTranslation } from 'react-i18next';
+import { useLocation, useNavigate } from 'react-router';
 import dayjs from 'dayjs';
 import classNames from 'classnames';
 // @ts-ignore
-import {Resizable} from 'react-resizable';
+import { Resizable } from 'react-resizable';
 
-import {Button, Pagination} from '@components';
-import {API} from '@utils';
-import {TableApi} from '@models';
+import { Button, Pagination } from '@components';
+import { API } from '@utils';
+import { TableApi } from '@models';
 
 const RadioGroup = Radio.Group;
 const CheckboxGroup = Checkbox.Group;

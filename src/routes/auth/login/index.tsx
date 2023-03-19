@@ -1,15 +1,15 @@
-import React, {Fragment, useState} from 'react';
-import {useTranslation} from 'react-i18next';
-import {Link} from 'react-router-dom';
-import {Form as FormAnt} from 'antd';
-import {useNavigate} from 'react-router';
+import React, { Fragment, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
+import { Form as FormAnt } from 'antd';
+import { useNavigate } from 'react-router';
 // import { Rocketchat } from '@rocket.chat/sdk';
-import {useAuth} from '@globalContext';
-import {Spin} from '@components';
+import { useAuth } from '@globalContext';
+import { Spin } from '@components';
 import Form from '../../../components/form';
-import {routerLinks} from '@utils';
-import {ColumnLogin} from '@columns';
-import {AuthService} from '../../../services/user';
+import { routerLinks } from '@utils';
+import { ColumnLogin } from '@columns';
+import { AuthService } from '../../../services/user';
 // import { urlChat, passChat } from 'variable';
 
 // const realTimeAPI = new Rocketchat({
