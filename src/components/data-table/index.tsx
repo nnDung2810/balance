@@ -258,7 +258,7 @@ const Hook = forwardRef(
               e.stopPropagation();
             }}
           />
-          {groupButton(confirm, clearFilters, key, selectedKeys, setSelectedKeys)}
+          {groupButton(confirm, clearFilters, key, selectedKeys)}
         </div>
       ),
       filterIcon: (filtered: boolean) => (
@@ -316,7 +316,7 @@ const Hook = forwardRef(
                 onChange={(e) => setSelectedKeys(e.target.value + '')}
               />
             </div>
-            {groupButton(confirm, clearFilters, key, selectedKeys, setSelectedKeys)}
+            {groupButton(confirm, clearFilters, key, selectedKeys)}
           </div>
         );
       },
@@ -355,7 +355,7 @@ const Hook = forwardRef(
               onChange={(e) => setSelectedKeys(e)}
             />
           </div>
-          {groupButton(confirm, clearFilters, key, selectedKeys, setSelectedKeys)}
+          {groupButton(confirm, clearFilters, key, selectedKeys)}
         </div>
       ),
       filterIcon: (filtered: boolean) => (
@@ -379,7 +379,7 @@ const Hook = forwardRef(
             value={!!selectedKeys && selectedKeys.length && [dayjs(selectedKeys[0]), dayjs(selectedKeys[1])]}
             onChange={(e) => setSelectedKeys(e)}
           />
-          {groupButton(confirm, clearFilters, key, selectedKeys, setSelectedKeys)}
+          {groupButton(confirm, clearFilters, key, selectedKeys)}
         </div>
       ),
       filterIcon: (filtered: boolean) => (
