@@ -1,19 +1,20 @@
-import React, { useEffect, Suspense } from 'react';
-import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom';
+import React, {Suspense, useEffect} from 'react';
+import {BrowserRouter, Navigate, Outlet, Route, Routes} from 'react-router-dom';
 
-import { useAuth } from '@globalContext';
-import { Spin } from '../components/spin';
-import { pages } from './pages';
+import {useAuth} from '@globalContext';
+import {Spin} from '../components/spin';
+import {pages} from './pages';
+import {keyUser, routerLinks} from '@utils';
 
 const Layout = ({ layout: Layout, isPublic = false }: any) => {
   const { user } = useAuth();
-  if (isPublic === true || !!user?.email)
+  if (isPublic === true || !!user?.email || !!JSON.parse(localStorage.getItem(keyUser) || '{}')?.email)
     return (
       <Layout>
         <Outlet />
       </Layout>
     );
-  return <Navigate to="/auth/login" />;
+  return <Navigate to={routerLinks('Login')} />;
 };
 
 const Page = ({ title = '', component: Comp, ...props }: any) => {

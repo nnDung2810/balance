@@ -1,9 +1,9 @@
 import React from 'react';
-import { within, userEvent } from '@storybook/testing-library';
+import {userEvent, within} from '@storybook/testing-library';
 // import { expect } from '@storybook/jest';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import {ComponentMeta, ComponentStory} from '@storybook/react';
 
-import { Button } from './';
+import {Button} from './';
 
 export default {
   title: 'Component/Button',

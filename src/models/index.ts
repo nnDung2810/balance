@@ -1,4 +1,4 @@
-import { DataTableModel } from './data-table';
-import { FormModel, FormItem } from './form';
+import {DataTableModel, TableApi} from './data-table';
+import {FormItem, FormModel} from './form';
 
-export { DataTableModel, FormModel, FormItem };
+export { DataTableModel, FormModel, FormItem, TableApi };

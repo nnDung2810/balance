@@ -1,15 +1,14 @@
-import React, { useState, useEffect, PropsWithChildren } from 'react';
-import { Select, Dropdown } from 'antd';
-import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router';
+import React, {PropsWithChildren, useEffect, useState} from 'react';
+import {Dropdown, Select} from 'antd';
+import {useTranslation} from 'react-i18next';
+import {useNavigate} from 'react-router';
 import classNames from 'classnames';
-import { useLocation } from 'react-router-dom';
+import {useLocation} from 'react-router-dom';
 // import { initializeApp } from 'firebase/app';
 // import { getMessaging, isSupported, getToken, onMessage } from 'firebase/messaging';
-
-import { useAuth } from '@globalContext';
-import { routerLinks } from '@utils';
-import { Avatar } from '@components';
+import {useAuth} from '@globalContext';
+import {routerLinks} from '@utils';
+import {Avatar} from '@components';
 import Menu from './menu';
 // import { firebaseConfig } from 'variable';
 import './index.less';

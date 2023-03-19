@@ -1,10 +1,10 @@
-import { Popconfirm, Tooltip } from 'antd';
+import {Popconfirm, Tooltip} from 'antd';
 import React from 'react';
 import dayjs from 'dayjs';
 
-import { Avatar, Button } from '@components';
-import { keyRole } from '@utils';
-import { DataTableModel } from '@models';
+import {Avatar, Button} from '@components';
+import {keyRole, routerLinks} from '@utils';
+import {DataTableModel} from '@models';
 
 const Column = ({ t, formatDate, handleEdit, handleDelete, permissions }: any) => {
   const col: DataTableModel[] = [
@@ -27,7 +27,22 @@ const Column = ({ t, formatDate, handleEdit, handleDelete, permissions }: any) =
       title: t('Position'),
       name: 'positionCode',
       tableItem: {
-        // filter: { type: 'radio', list: listPosition.map((item: any) => ({value: item.code, label: item.name})) },
+        filter: {
+          type: 'radio',
+          name: 'positionCode',
+          api: {
+            link: () => routerLinks('Code', 'api') + '/',
+            format: (item: any) => ({
+              label: item.name,
+              value: item.code,
+            }),
+            params: (fullTextSearch: string, value) => ({
+              fullTextSearch,
+              filter: { type: 'POS' },
+              extend: { code: value },
+            }),
+          },
+        },
         sorter: true,
         render: (item) => item?.name,
       },

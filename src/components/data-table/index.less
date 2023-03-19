@@ -36,8 +36,11 @@
     cursor: col-resize;
   }
   &-filter-dropdown {
+    .ant-checkbox-group {
+      @apply inline-block;
+    }
     .ant-checkbox-group-item, .ant-radio-wrapper {
-      @apply flex;
+      @apply flex ml-1;
     }
     .ant-radio-input {
       @apply ~'mt-1 mr-1';

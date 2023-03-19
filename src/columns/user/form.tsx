@@ -1,5 +1,5 @@
-import { FormModel } from '@models';
-import { routerLinks } from '@utils';
+import {FormModel} from '@models';
+import {routerLinks} from '@utils';
 
 const Column = ({ t, listRole }: any) => {
   const col: FormModel[] = [
@@ -82,7 +82,7 @@ const Column = ({ t, listRole }: any) => {
           link: () => routerLinks('Code', 'api') + '/',
           format: (item: any) => ({
             label: item.name,
-            value: item.id,
+            value: item.code,
           }),
           params: (form: any, fullTextSearch: string) => ({
             fullTextSearch,
