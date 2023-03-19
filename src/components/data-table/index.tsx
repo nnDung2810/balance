@@ -285,9 +285,9 @@ const Hook = forwardRef(
       }
     };
     // noinspection JSUnusedGlobalSymbols
-    const getColumnSearchRadio = (filters: CheckboxOptionType[], key: string, api: TableApi = {}) => ({
+    const getColumnSearchRadio = (filters: CheckboxOptionType[], key: string, api: TableApi = {}, value?: any) => ({
       onFilterDropdownOpenChange: async (visible: boolean) => {
-        if (visible) await apiColumnSearchRadio(key, api);
+        if (visible) await apiColumnSearchRadio(key, api, '', value);
       },
       filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }: any) => {
         return (
@@ -325,9 +325,9 @@ const Hook = forwardRef(
       ),
     });
     // noinspection JSUnusedGlobalSymbols
-    const getColumnSearchCheckbox = (filters: any, key: any, api: TableApi = {}) => ({
+    const getColumnSearchCheckbox = (filters: any, key: any, api: TableApi = {}, value?: any) => ({
       onFilterDropdownOpenChange: async (visible: boolean) => {
-        if (visible) await apiColumnSearchRadio(key, api);
+        if (visible) await apiColumnSearchRadio(key, api, '', value);
       },
       filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }: any) => (
         <div className={'p-1'}>
@@ -400,13 +400,23 @@ const Hook = forwardRef(
             case 'radio':
               item = {
                 ...item,
-                ...getColumnSearchRadio(item.filter.list, item.filter.name || col.name, item.filter.api),
+                ...getColumnSearchRadio(
+                  item.filter.list,
+                  item.filter.name || col.name,
+                  item.filter.api,
+                  item.defaultFilteredValue,
+                ),
               };
               break;
             case 'checkbox':
               item = {
                 ...item,
-                ...getColumnSearchCheckbox(item.filter.list, item.filter.name || col.name, item.filter.api),
+                ...getColumnSearchCheckbox(
+                  item.filter.list,
+                  item.filter.name || col.name,
+                  item.filter.api,
+                  item.defaultFilteredValue,
+                ),
               };
               break;
             case 'date':

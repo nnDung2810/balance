@@ -28,7 +28,7 @@ const Column = ({ t, formatDate, handleEdit, handleDelete, permissions }: any) =
       name: 'positionCode',
       tableItem: {
         filter: {
-          type: 'radio',
+          type: 'checkbox',
           name: 'positionCode',
           api: {
             link: () => routerLinks('Code', 'api') + '/',
