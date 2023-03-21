@@ -163,7 +163,7 @@ const Component = ({
                 : formatDate
             }
             onChange={(date: any) => formItem.onChange && formItem.onChange(date, form, reRender)}
-            disabledDate={(current: any) => (formItem.disabledDate ? formItem.disabledDate(current, form) : true)}
+            disabledDate={(current: any) => (formItem.disabledDate ? formItem.disabledDate(current, form) : false)}
             showTime={!!formItem.showTime}
             picker={formItem.picker || 'date'}
             disabled={!!formItem.disabled && formItem.disabled(values, form)}
@@ -177,7 +177,7 @@ const Component = ({
             onCalendarChange={(date) => formItem.onCalendarChange && formItem.onCalendarChange(date, form, reRender)}
             onChange={(date) => formItem.onChange && formItem.onChange(date, form, reRender)}
             format={formatDate + (formItem.showTime ? ' HH:mm' : '')}
-            disabledDate={(current) => (formItem.disabledDate ? formItem.disabledDate(current, form) : true)}
+            disabledDate={(current) => (formItem.disabledDate ? formItem.disabledDate(current, form) : false)}
             defaultValue={
               formItem.initialValues && [dayjs(formItem.initialValues.start), dayjs(formItem.initialValues.end)]
             }
