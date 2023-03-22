@@ -238,6 +238,11 @@ const Util = (columns: any, values: any, exportData = true) => {
               values[item.name] = [];
             }
             break;
+          case 'select':
+            if (!exportData && item.formItem.mode === 'multiple' && values[item.name]) {
+              values[item.name] = values[item.name].map((item: any) => (item.id ? item.id : item));
+            }
+            break;
           default:
             if (!item?.formItem?.mask && typeof values[item.name] === 'string') {
               values[item.name] = values[item.name].trim();

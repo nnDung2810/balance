@@ -33,7 +33,7 @@ export class FormItem {
   condition?: (value: string, form: FormInstance, index: number, values: any) => boolean;
   list?: CheckboxOptionType[];
   rules?: FormItemRule[];
-  mode?: string;
+  mode?: 'multiple' | 'tags';
   tab?: FormItemTab;
   column?: FormModel[];
   disabled?: (values: any, form?: FormInstance) => boolean;
