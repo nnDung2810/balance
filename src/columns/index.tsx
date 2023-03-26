@@ -1,6 +1,8 @@
 import ColumnLogin from './auth/login';
 import ColumnRegister from './auth/register';
 import ColumnProfile from './auth/profile';
+import ColumnForgottenPassword from './auth/forgotten-password';
+import ColumnResetPassword from './auth/reset-password';
 
 import ColumnCodeTable from './code/table';
 import ColumnCodeForm from './code/form';
@@ -20,6 +22,8 @@ export {
   ColumnLogin,
   ColumnRegister,
   ColumnProfile,
+  ColumnForgottenPassword,
+  ColumnResetPassword,
   ColumnCodeTable,
   ColumnCodeForm,
   ColumnCodeTypeForm,

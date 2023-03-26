@@ -11,6 +11,11 @@ export const pages = [
         component: React.lazy(() => import('./auth/login')),
         title: 'Login',
       },
+      {
+        path: routerLinks('ResetPassword'),
+        component: React.lazy(() => import('./auth/reset-password')),
+        title: 'Reset Password',
+      },
     ],
   },
   {

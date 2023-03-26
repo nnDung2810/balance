@@ -1,14 +1,13 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
 import { Form as FormAnt } from 'antd';
 import { useNavigate } from 'react-router';
 // import { Rocketchat } from '@rocket.chat/sdk';
 import { useAuth } from '@globalContext';
-import { Spin } from '@components';
+import { ModalForm, Spin } from '@components';
 import Form from '../../../components/form';
 import { routerLinks } from '@utils';
-import { ColumnLogin } from '@columns';
+import { ColumnForgottenPassword, ColumnLogin } from '@columns';
 import { AuthService } from '../../../services/user';
 // import { urlChat, passChat } from 'variable';
 
@@ -49,6 +48,7 @@ const Page = () => {
       navigate(routerLinks('Dashboard'), { replace: true });
     }
   };
+  const modalFormRef = useRef<any>();
 
   return (
     <Fragment>
@@ -71,8 +71,23 @@ const Page = () => {
       </Spin>
       <div className="mt-3 intro-x">
         Don&apos;t have an account?
-        <Link to={routerLinks('Login')}>{t('routes.auth.login.Forgot Password')}</Link>
+        <button className={'text-blue-600'} onClick={() => modalFormRef.current.handleEdit()}>
+          {' '}
+          {t('routes.auth.login.Forgot Password')}
+        </button>
       </div>
+      <ModalForm
+        ref={modalFormRef}
+        title={() => 'Quên mật khẩu'}
+        isLoading={isLoading}
+        setIsLoading={setIsLoading}
+        columns={ColumnForgottenPassword({
+          t,
+        })}
+        Post={AuthService.forgottenPassword}
+        widthModal={400}
+        idElement={'user'}
+      />
     </Fragment>
   );
 };

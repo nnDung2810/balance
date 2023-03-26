@@ -39,6 +39,22 @@ export const AuthService = {
       return 'Bearer ' + accessToken;
     }
   },
+  forgottenPassword: async (values: any) => {
+    const data = await API.post(`${routerLinks(AuthService.nameLink, 'api')}/forgotten-password`, values);
+    if (data) {
+      if (data.message) Message.success({ text: data.message });
+      return true;
+    }
+    return false;
+  },
+  resetPassword: async (values: any, token: string) => {
+    const data = await API.post(`${routerLinks(AuthService.nameLink, 'api')}/reset-password`, values, {}, {authorization: 'Bearer ' + token});
+    if (data) {
+      if (data.message) Message.success({ text: data.message });
+      return true;
+    }
+    return false;
+  },
 };
 
 export const UserService = {

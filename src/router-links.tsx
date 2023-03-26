@@ -1,6 +1,7 @@
 const Util = (name: string, type?: string) => {
   const array: any = {
     Login: '/auth/login',
+    ResetPassword: '/auth/reset-password',
     MyProfile: '/my-profile',
     Dashboard: '/',
     User: '/user',
