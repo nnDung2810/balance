@@ -70,6 +70,7 @@ export class FormItem {
   isTable?: boolean;
   showRemove?: any;
   idCheck?: any;
+  tabIndex?: number;
 }
 export class FormItemList {
   label?: string | JSX.Element;

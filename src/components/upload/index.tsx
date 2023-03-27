@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import { v4 } from 'uuid';
 
+// import { useAuth } from '@globalContext';
 import { API, linkApi } from '@utils';
 import { Button, Message, Spin } from '@components';
 
@@ -25,6 +26,7 @@ export const Upload = ({
   children,
 }: Type) => {
   const { t } = useTranslation();
+  // const { formatDate } = useAuth();
   const [isLoading, set_isLoading] = useState(false);
   const ref = useRef<any>();
   const [listFiles, set_listFiles] = useState(
@@ -318,4 +320,5 @@ type Type = PropsWithChildren<{
   accept?: string;
   validation?: (file: any, listFiles: any) => Promise<boolean>;
   viewGrid?: boolean;
+  children?: JSX.Element[] | JSX.Element;
 }>;

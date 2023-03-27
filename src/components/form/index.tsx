@@ -80,7 +80,7 @@ const Component = ({
     handleFilter();
   }, [handleFilter, values]);
 
-  const generateInput = (formItem: FormItem, item: FormModel, values: any, name: string) => {
+  const generateInput = (formItem: FormItem, item: FormModel, values: any, name: string, index: number) => {
     switch (formItem.type) {
       case 'hidden':
         break;
@@ -113,6 +113,7 @@ const Component = ({
       case 'password':
         return (
           <Password
+            tabIndex={formItem.tabIndex || index}
             placeholder={formItem.placeholder || t('components.form.Enter') + ' ' + item.title.toLowerCase()}
             disabled={!!formItem.disabled && formItem.disabled(values, form)}
           />
@@ -120,6 +121,7 @@ const Component = ({
       case 'textarea':
         return (
           <textarea
+            tabIndex={formItem.tabIndex || index}
             disabled={!!formItem.disabled && formItem.disabled(values, form)}
             className={classNames(
               'ant-input px-4 py-2.5 w-full rounded-xl text-gray-600 bg-white border border-solid input-description',
@@ -157,6 +159,7 @@ const Component = ({
       case 'date':
         return (
           <DatePicker
+            tabIndex={formItem.tabIndex || index}
             format={
               !formItem.picker || formItem.picker === 'date'
                 ? formatDate + (formItem.showTime ? ' HH:mm' : '')
@@ -229,6 +232,7 @@ const Component = ({
       case 'select':
         return (
           <Select
+            tabIndex={formItem.tabIndex || index}
             showSearch={formItem.showSearch}
             maxTagCount={formItem.maxTagCount || 'responsive'}
             onChange={(value: any) => formItem.onChange && formItem.onChange(value, form, reRender)}
@@ -259,6 +263,7 @@ const Component = ({
       default:
         return (
           <Mask
+            tabIndex={formItem.tabIndex || index}
             form={form}
             mask={formItem.mask}
             addonBefore={formItem.addonBefore}
@@ -528,9 +533,9 @@ const Component = ({
       }
 
       return item.formItem.type !== 'addable' ? (
-        <Form.Item {...otherProps}>{generateInput(item.formItem, item, values, otherProps.name)}</Form.Item>
+        <Form.Item {...otherProps}>{generateInput(item.formItem, item, values, otherProps.name, index)}</Form.Item>
       ) : (
-        generateInput(item.formItem, item, values, otherProps.name)
+        generateInput(item.formItem, item, values, otherProps.name, index)
       );
     }
     return null;

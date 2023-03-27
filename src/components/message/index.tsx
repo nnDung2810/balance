@@ -44,7 +44,6 @@ const Component = {
         showCancelButton,
         showConfirmButton,
         padding,
-        timer: 6000,
       }),
     ),
   error: ({
@@ -67,6 +66,7 @@ const Component = {
         showConfirmButton,
         padding,
         focusCancel: showCancelButton,
+        timer: 6000,
       }),
     ),
   confirm: ({

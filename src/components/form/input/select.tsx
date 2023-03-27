@@ -11,6 +11,7 @@ const Component = ({
   onChange,
   placeholder,
   disabled,
+  tabIndex,
   ...prop
 }: Type) => {
   const [_list, set_list] = useState(formItem.list ? formItem.list : []);
@@ -48,6 +49,7 @@ const Component = ({
 
   return (
     <Select
+      tabIndex={tabIndex}
       maxTagCount={maxTagCount}
       onChange={onChange}
       placeholder={placeholder}
@@ -83,5 +85,6 @@ type Type = {
   onChange: (e: any) => any;
   placeholder: string;
   disabled: boolean;
+  tabIndex: number;
 };
 export default Component;

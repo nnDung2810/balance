@@ -7,6 +7,7 @@ const Column = ({ t, listRole }: any) => {
       title: t('Họ và tên'),
       name: 'name',
       formItem: {
+        tabIndex: 1,
         col: 6,
         rules: [{ type: 'required' }],
       },
@@ -15,6 +16,7 @@ const Column = ({ t, listRole }: any) => {
       title: t('Mật khẩu'),
       name: 'password',
       formItem: {
+        tabIndex: 2,
         col: 6,
         type: 'password',
         condition: (value: string, form: any, index: number, values: any) => !values?.name,
@@ -25,6 +27,7 @@ const Column = ({ t, listRole }: any) => {
       title: t('Email'),
       name: 'email',
       formItem: {
+        tabIndex: 1,
         col: 6,
         rules: [{ type: 'required' }, { type: 'email' }, { type: 'min', value: 6 }],
       },
@@ -33,6 +36,7 @@ const Column = ({ t, listRole }: any) => {
       title: t('Nhập lại mật khẩu'),
       name: 'retypedPassword',
       formItem: {
+        tabIndex: 2,
         col: 6,
         type: 'password',
         condition: (value: string, form: any, index: number, values: any) => !values?.name,
