@@ -83,9 +83,7 @@ const Component = ({
   const generateInput = (formItem: FormItem, item: FormModel, values: any, name: string, index: number) => {
     switch (formItem.type) {
       case 'hidden':
-        break;
-      // case "media":
-      //   return <Media limit={formItem.limit} />;
+        return <input type={'hidden'} name={item.name} tabIndex={-1} />;
       case 'tab':
         return <Tab name={item.name} generateForm={generateForm} column={formItem.column} list={formItem.list} />;
       case 'addable':
