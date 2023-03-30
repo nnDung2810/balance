@@ -170,6 +170,7 @@ const Component = ({
             disabled={!!formItem.disabled && formItem.disabled(values, form)}
             form={form}
             name={item.name}
+            placeholder={formItem.placeholder || t('components.form.Select Date') || ''}
           />
         );
       case 'date_range':

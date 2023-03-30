@@ -34,7 +34,8 @@
       "modal": {
         "save": "Save",
         "cancel": "Cancel"
-      }
+      },
+      "Select Date": "Select Date"
     },
     "media-management": {
       "filename": "File name",
@@ -60,6 +61,10 @@
       "Fail": "Fail",
       "Close": "Close",
       "Ok": "Ok"
+    },
+    "button": {
+      "New": "New",
+      "Role": "Role"
     }
   },
   "titles": {
@@ -81,17 +86,22 @@
         "password": "Password",
         "remember": "Remember Me",
         "New password": "New password",
-        "Enter new password": "Enter new password"
+        "Enter new password": "Enter new password",
+        "Confirm Password": "Confirm Password"
       },
       "register": {
         "firstName": "First Name",
         "lastName": "Last Name",
         "retypedPassword": "Retype Password"
+      },
+      "reset-password": {
+        "Recovery Email": "Recovery Email",
+        "Enter Recovery Email": "Enter Recovery Email"
       }
     }
   },
   "layout": {
-    "footer": "React Software Ltd. ©{{year}}"
+    "footer": "Ari Technology Company Ltd. ©{{year}}"
   },
   "routes": {
     "auth": {
@@ -101,7 +111,18 @@
         "Log In": "Log In",
         "Forgot Password": "Forgot Password",
         "Confirm Password": "Confirm Password",
-        "Reset password": "Reset Password"
+        "Reset password": "Reset Password",
+        "New password": "New password",
+        "Enter new password": "Enter new password",
+        "Account": "Don't have an account?",
+        "Welcome": "Welcome to Web Member Ari"
+      },
+      "reset-password": {
+        "Recovery Email": "Recovery Email",
+        "Enter Recovery Email": "Enter Recovery Email",
+        "title": "Reset Password",
+        "Submit": "Submit",
+        "Back To Login": "Submit"
       }
     },
     "admin": {
@@ -118,8 +139,39 @@
         "See All": "See All",
         "Add": "Add new",
         "Edit": "Edit",
-        "Delete": "Delete"
+        "Delete": "Delete",
+        "My Profile": "My Profile"
       }
     }
+  },
+  "user": {
+    "Position": "Position",
+    "Team": "Team",
+    "Start Date": "Start Date",
+    "Remaining Leave Day": "Remaining Leave Day",
+    "Date of birth": "Date of birth",
+    "Name": "Name",
+    "Is System Admin": "Is System Admin",
+    "Permissions": "Permissions",
+    "Description": "Description",
+    "Upload avatar": "Upload avatar",
+    "Fullname": "Full Name",
+    "Phone Number": "Phone Number",
+    "Action": "Action"
+  },
+  "Code": {
+    "Type": "Type",
+    "Type Code": "Type Code",
+    "Type Category": "Type Category",
+    "Name": "Name"
+  },
+  "Data": {
+    "Type": "Type",
+    "Type Data": "Type Data",
+    "Name": "Name",
+    "Order": "Order",
+    "Page": "Page",
+    "Image": "Image",
+    "Create At": "Create At"
   }
 }

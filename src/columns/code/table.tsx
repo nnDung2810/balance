@@ -8,7 +8,7 @@ import { DataTableModel } from '@models';
 const Column = ({ t, handleEdit, handleDelete, listType, permissions }: any) => {
   const col: DataTableModel[] = [
     {
-      title: t('Type'),
+      title: t('Code.Type'),
       name: 'type',
       tableItem: {
         filter: {
@@ -21,7 +21,7 @@ const Column = ({ t, handleEdit, handleDelete, listType, permissions }: any) => 
       },
     },
     {
-      title: t('Code'),
+      title: t('titles.Code'),
       name: 'code',
       tableItem: {
         width: 100,
@@ -31,7 +31,7 @@ const Column = ({ t, handleEdit, handleDelete, listType, permissions }: any) => 
       },
     },
     {
-      title: t('Name'),
+      title: t('Code.Name'),
       name: 'name',
       tableItem: {
         filter: { type: 'search' },
@@ -40,7 +40,7 @@ const Column = ({ t, handleEdit, handleDelete, listType, permissions }: any) => 
       },
     },
     {
-      title: t('Description'),
+      title: t('user.Description'),
       name: 'description',
       tableItem: {
         filter: { type: 'search' },
@@ -48,7 +48,7 @@ const Column = ({ t, handleEdit, handleDelete, listType, permissions }: any) => 
       },
     },
     {
-      title: t('Action'),
+      title: t('user.Action'),
       tableItem: {
         width: 100,
         align: 'center',
@@ -72,7 +72,7 @@ const Column = ({ t, handleEdit, handleDelete, listType, permissions }: any) => 
                   okText={t('components.datatable.ok')}
                   cancelText={t('components.datatable.cancel')}
                 >
-                  <Button icon={'las la-trash-alt'} className={'bg-red-500 text-white'} />
+                  <Button icon={'las la-trash-alt'} className={'!bg-red-500 text-white'} />
                 </Popconfirm>
               </Tooltip>
             )}

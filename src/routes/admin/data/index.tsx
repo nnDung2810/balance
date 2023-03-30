@@ -67,17 +67,25 @@ const Page = () => {
         rightHeader={
           <div className={'flex gap-2'}>
             {user?.role?.permissions?.includes(keyRole.P_PAGE_LISTED) && (
-              <Button icon={'las la-pager'} text={t('Page')} onClick={() => modalDragPageRef?.current?.handleShow()} />
+              <Button
+                icon={'las la-pager'}
+                text={t('Data.Page')}
+                onClick={() => modalDragPageRef?.current?.handleShow()}
+              />
             )}
             {user?.role?.permissions?.includes(keyRole.P_DATA_TYPE_LISTED) && (
               <Button
                 icon={'las la-briefcase'}
-                text={t('Type Data')}
+                text={t('Data.Type Data')}
                 onClick={() => modalDragRef?.current?.handleShow()}
               />
             )}
             {user?.role?.permissions?.includes(keyRole.P_DATA_CREATE) && (
-              <Button icon={'las la-plus'} text={t('Tạo mới')} onClick={() => modalFormRef?.current?.handleEdit()} />
+              <Button
+                icon={'las la-plus'}
+                text={t('components.button.New')}
+                onClick={() => modalFormRef?.current?.handleEdit()}
+              />
             )}
           </div>
         }
@@ -122,7 +130,7 @@ const Page = () => {
       />
       <ModalDrag
         ref={modalDragPageRef}
-        title={() => t('Page')}
+        title={() => t('Data.Page')}
         isLoading={isLoading}
         setIsLoading={setIsLoading}
         columns={ColumnPageForm({ t })}

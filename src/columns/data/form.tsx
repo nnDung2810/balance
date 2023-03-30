@@ -4,7 +4,7 @@ import slug from 'slug';
 const Column = ({ t, listType }: any) => {
   const col: FormModel[] = [
     {
-      title: t('Type'),
+      title: t('Data.Type'),
       name: 'type',
       formItem: {
         type: 'select',
@@ -14,7 +14,7 @@ const Column = ({ t, listType }: any) => {
       },
     },
     {
-      title: t('Order'),
+      title: t('Data.Order'),
       name: 'order',
       formItem: {
         col: 4,
@@ -22,7 +22,7 @@ const Column = ({ t, listType }: any) => {
       },
     },
     {
-      title: t('Created At'),
+      title: t('Data.Created At'),
       name: 'createdAt',
       formItem: {
         col: 4,
@@ -30,7 +30,7 @@ const Column = ({ t, listType }: any) => {
       },
     },
     {
-      title: t('Image'),
+      title: t('Data.Image'),
       name: 'image',
       formItem: {
         type: 'upload',

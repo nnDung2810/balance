@@ -4,7 +4,7 @@ import { FormModel } from '@models';
 const Column = ({ t }: any) => {
   const col: FormModel[] = [
     {
-      title: t('Name'),
+      title: t('Code.Name'),
       name: 'name',
       formItem: {
         rules: [{ type: 'required' }],
@@ -16,7 +16,7 @@ const Column = ({ t }: any) => {
       },
     },
     {
-      title: t('Code'),
+      title: t('titles.Code'),
       name: 'code',
       formItem: {
         disabled: (values: any) => !!values?.code,

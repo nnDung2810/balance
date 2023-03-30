@@ -4,7 +4,7 @@ import { routerLinks } from '@utils';
 const Column = ({ t, listRole }: any) => {
   const col: FormModel[] = [
     {
-      title: t('Họ và tên'),
+      title: t('dayoff.Fullname'),
       name: 'name',
       formItem: {
         tabIndex: 1,
@@ -13,7 +13,7 @@ const Column = ({ t, listRole }: any) => {
       },
     },
     {
-      title: t('Mật khẩu'),
+      title: t('columns.auth.login.password'),
       name: 'password',
       formItem: {
         tabIndex: 2,
@@ -33,7 +33,7 @@ const Column = ({ t, listRole }: any) => {
       },
     },
     {
-      title: t('Nhập lại mật khẩu'),
+      title: t('columns.auth.register.retypedPassword'),
       name: 'retypedPassword',
       formItem: {
         tabIndex: 2,
@@ -65,7 +65,7 @@ const Column = ({ t, listRole }: any) => {
       },
     },
     {
-      title: t('Ngày sinh'),
+      title: t('user.Date of birth'),
       name: 'dob',
       formItem: {
         col: 6,
@@ -74,7 +74,7 @@ const Column = ({ t, listRole }: any) => {
       },
     },
     {
-      title: t('Vị trí'),
+      title: t('user.Position'),
       name: 'positionCode',
       formItem: {
         col: 6,
@@ -96,7 +96,7 @@ const Column = ({ t, listRole }: any) => {
       },
     },
     {
-      title: t('Ngày đầu đi làm'),
+      title: t('user.Start Date'),
       name: 'startDate',
       formItem: {
         col: 6,
@@ -105,7 +105,7 @@ const Column = ({ t, listRole }: any) => {
       },
     },
     {
-      title: t('Quyền'),
+      title: t('components.button.Role'),
       name: 'roleId',
       formItem: {
         col: 6,
@@ -118,7 +118,7 @@ const Column = ({ t, listRole }: any) => {
       },
     },
     {
-      title: t('Description'),
+      title: t('user.Description'),
       name: 'description',
       formItem: {
         col: 8,
@@ -127,7 +127,7 @@ const Column = ({ t, listRole }: any) => {
     },
     {
       name: 'avatar',
-      title: 'Upload avatar',
+      title: t('user.Upload avatar'),
       formItem: {
         col: 4,
         type: 'upload',

@@ -2,12 +2,14 @@ import { Collapse, Popover } from 'antd';
 import React, { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
 import { useNavigate, useLocation } from 'react-router';
+import { useTranslation } from 'react-i18next';
 
 import { routerLinks } from '@utils';
 import listMenu from '../menus';
 import './index.less';
 
 const Layout = ({ isCollapsed = false, permission = [] }: any) => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   const refMenu = useRef<any>();
@@ -51,7 +53,7 @@ const Layout = ({ isCollapsed = false, permission = [] }: any) => {
           })}
           onClick={() => navigate(routerLinks(subItem.name))}
         >
-          {subItem.name}
+          {t(`titles.${subItem.name}`)}
         </li>
       ));
 
@@ -87,7 +89,7 @@ const Layout = ({ isCollapsed = false, permission = [] }: any) => {
                       'opacity-0 text-[0] ml-0': isCollapsed,
                     })}
                   >
-                    {item.name}
+                    {t(`titles.${item.name}`)}
                   </span>
                 </li>
               );
@@ -128,7 +130,7 @@ const Layout = ({ isCollapsed = false, permission = [] }: any) => {
                               'opacity-0 text-[0]': isCollapsed,
                             })}
                           >
-                            {item.name}
+                            {t(`titles.${item.name}`)}
                           </span>
                         </div>
                       }

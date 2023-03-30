@@ -110,11 +110,19 @@ const Layout = ({ children }: PropsWithChildren) => {
               items: [
                 {
                   key: '1',
-                  label: <div onClick={() => navigate(routerLinks('MyProfile'), { replace: true })}>My Profile</div>,
+                  label: (
+                    <div onClick={() => navigate(routerLinks('MyProfile'), { replace: true })}>
+                      {t('routes.admin.Layout.My Profile')}
+                    </div>
+                  ),
                 },
                 {
                   key: '2',
-                  label: <div onClick={() => navigate(routerLinks('Login'), { replace: true })}>Sign Out</div>,
+                  label: (
+                    <div onClick={() => navigate(routerLinks('Login'), { replace: true })}>
+                      {t('routes.admin.Layout.Sign out')}
+                    </div>
+                  ),
                 },
               ],
             }}

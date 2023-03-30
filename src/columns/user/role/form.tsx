@@ -3,21 +3,21 @@ import { FormModel } from '@models';
 const Column = ({ t, listPermission }: any) => {
   const col: FormModel[] = [
     {
-      title: t('Name'),
+      title: t('user.Name'),
       name: 'name',
       formItem: {
         rules: [{ type: 'required' }],
       },
     },
     {
-      title: t('Is System Admin'),
+      title: t('user.Is System Admin'),
       name: 'isSystemAdmin',
       formItem: {
         type: 'switch',
       },
     },
     {
-      title: t('Permissions'),
+      title: t('user.Permissions'),
       name: 'permissions',
       formItem: {
         type: 'select',

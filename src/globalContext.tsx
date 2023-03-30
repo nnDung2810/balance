@@ -64,7 +64,7 @@ const GlobalContext = ({ children }: PropsWithChildren) => {
 
   const changeLanguage = useCallback(
     (values: any) => {
-      if (values) {
+      if (!values) {
         values = 'en';
       }
       i18n.changeLanguage(values);

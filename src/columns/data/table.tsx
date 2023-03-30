@@ -8,7 +8,7 @@ import { DataTableModel } from '@models';
 const Column = ({ t, handleEdit, handleDelete, listType, permissions }: any) => {
   const col: DataTableModel[] = [
     {
-      title: t('Type'),
+      title: t('Data.Type'),
       name: 'type',
       tableItem: {
         filter: {
@@ -21,7 +21,7 @@ const Column = ({ t, handleEdit, handleDelete, listType, permissions }: any) => 
       },
     },
     {
-      title: t('Name'),
+      title: t('Data.Name'),
       name: 'translations',
       tableItem: {
         filter: { type: 'search' },
@@ -31,7 +31,7 @@ const Column = ({ t, handleEdit, handleDelete, listType, permissions }: any) => 
       },
     },
     {
-      title: t('Order'),
+      title: t('Data.Order'),
       name: 'order',
       tableItem: {
         filter: { type: 'search' },
@@ -39,7 +39,7 @@ const Column = ({ t, handleEdit, handleDelete, listType, permissions }: any) => 
       },
     },
     {
-      title: t('Action'),
+      title: t('user.Action'),
       tableItem: {
         width: 100,
         align: 'center',
@@ -63,7 +63,7 @@ const Column = ({ t, handleEdit, handleDelete, listType, permissions }: any) => 
                   okText={t('components.datatable.ok')}
                   cancelText={t('components.datatable.cancel')}
                 >
-                  <Button className={'bg-red-500 text-white'} icon={'las la-trash-alt'} />
+                  <Button className={'!bg-red-500 text-white'} icon={'las la-trash-alt'} />
                 </Popconfirm>
               </Tooltip>
             )}

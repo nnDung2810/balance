@@ -65,7 +65,7 @@ const Page = () => {
         rightHeader={
           <div className={'flex gap-2'}>
             {user?.role?.permissions?.includes(keyRole.P_CODE_TYPE_LISTED) && (
-              <Button icon={'las la-plus'} text={t('Type Code')} onClick={() => modalDragRef?.current?.handleShow()} />
+              <Button icon={'las la-plus'} text={t('Code.Type Code')} onClick={() => modalDragRef?.current?.handleShow()} />
             )}
             {user?.role?.permissions?.includes(keyRole.P_CODE_CREATE) && (
               <Button
@@ -97,7 +97,7 @@ const Page = () => {
       />
       <ModalDrag
         ref={modalDragRef}
-        title={() => t('Type Category')}
+        title={() => t('Code.Type Category')}
         isLoading={isLoading}
         setIsLoading={setIsLoading}
         columns={ColumnCodeTypeForm({ t })}

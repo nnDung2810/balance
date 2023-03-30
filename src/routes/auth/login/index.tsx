@@ -70,7 +70,7 @@ const Page = () => {
         />
       </Spin>
       <div className="mt-3 intro-x">
-        Don&apos;t have an account?
+        {t('routes.auth.login.Account')}
         <button className={'text-blue-600'} onClick={() => modalFormRef.current.handleEdit()}>
           {' '}
           {t('routes.auth.login.Forgot Password')}

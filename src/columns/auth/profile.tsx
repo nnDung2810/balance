@@ -1,9 +1,9 @@
 import { FormModel } from '@models';
 
-const Column = ({ t, listPosition, listTeam }: any) => {
+const Column = ({ t, listPosition }: any) => {
   const col: FormModel[] = [
     {
-      title: t('Họ và tên'),
+      title: t('dayoff.Fullname'),
       name: 'name',
       formItem: {
         col: 6,
@@ -11,7 +11,7 @@ const Column = ({ t, listPosition, listTeam }: any) => {
       },
     },
     {
-      title: t('Mật khẩu'),
+      title: t('columns.auth.login.password'),
       name: 'password',
       formItem: {
         col: 6,
@@ -28,7 +28,7 @@ const Column = ({ t, listPosition, listTeam }: any) => {
       },
     },
     {
-      title: t('Nhập lại mật khẩu'),
+      title: t('columns.auth.register.retypedPassword'),
       name: 'retypedPassword',
       formItem: {
         col: 6,
@@ -49,7 +49,7 @@ const Column = ({ t, listPosition, listTeam }: any) => {
       },
     },
     {
-      title: t('Số điện thoại'),
+      title: t('customer.Phone Number'),
       name: 'phoneNumber',
       formItem: {
         col: 6,
@@ -57,7 +57,7 @@ const Column = ({ t, listPosition, listTeam }: any) => {
       },
     },
     {
-      title: t('Ngày sinh'),
+      title: t('user.Date of birth'),
       name: 'dob',
       formItem: {
         col: 6,
@@ -66,7 +66,7 @@ const Column = ({ t, listPosition, listTeam }: any) => {
       },
     },
     {
-      title: t('Vị trí'),
+      title: t('user.Position'),
       name: 'positionCode',
       formItem: {
         col: 6,
@@ -76,19 +76,7 @@ const Column = ({ t, listPosition, listTeam }: any) => {
       },
     },
     {
-      title: t('Nhóm'),
-      name: 'teamId',
-      formItem: {
-        col: 6,
-        type: 'select',
-        list: listTeam.map((item: any) => ({
-          value: item?.id,
-          label: item?.name,
-        })),
-      },
-    },
-    {
-      title: t('Description'),
+      title: t('user.Description'),
       name: 'description',
       formItem: {
         col: 8,
@@ -97,7 +85,7 @@ const Column = ({ t, listPosition, listTeam }: any) => {
     },
     {
       name: 'avatar',
-      title: 'Upload avatar',
+      title: t('user.Upload avatar'),
       formItem: {
         col: 4,
         type: 'upload',

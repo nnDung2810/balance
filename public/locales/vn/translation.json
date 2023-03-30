@@ -34,7 +34,8 @@
       "modal": {
         "save": "Lưu lại",
         "cancel": "Huỷ bỏ"
-      }
+      },
+      "Select Date": "Chọn ngày"
     },
     "media-management": {
       "filename": "Tên tệp",
@@ -60,6 +61,10 @@
       "Fail": "Thất bại",
       "Close": "Đóng",
       "Ok": "Đồng ý"
+    },
+    "button": {
+      "New": "Tạo mới",
+      "Role": "Vai trò"
     }
   },
   "titles": {
@@ -67,7 +72,7 @@
     "Dashboard": "Tra cứu dữ liệu",
     "User": "Quản Lý Người Dùng",
     "MyProfile": "Thông tin của tôi",
-    "Setting": "Tùy chỉnh",
+    "Setting": "Thiết lập",
     "Code": "Mã",
     "Data": "Dữ liệu",
     "Page": "Trang"
@@ -87,7 +92,7 @@
       "register": {
         "firstName": "Tên",
         "lastName": "Họ",
-        "retypedPassword": "Gõ lại mật khẩu"
+        "retypedPassword": "Nhập lại mật khẩu"
       },
       "reset-password": {
         "Recovery Email": "Email khôi phục",
@@ -96,7 +101,7 @@
     }
   },
   "layout": {
-    "footer": "Công ty TNHH phần mềm React. ©{{year}}"
+    "footer": "Công ty cổ phần Cồng nghệ Ari. ©{{year}}"
   },
   "routes": {
     "auth": {
@@ -104,11 +109,13 @@
         "title": "Đăng nhập",
         "subTitle": "Nhập thông tin chi tiết của bạn để đăng nhập vào tài khoản của bạn",
         "Log In": "Đăng nhập",
-        "Forgot Password": "Quên mật khẩu",
+        "Forgot Password": "Quên mật khẩu?",
         "Confirm Password": "Xác nhận mật khẩu",
         "Reset Password": "Xác nhận",
         "New password": "Mật khẩu mới",
-        "Enter new password": "Nhập mật khẩu mới"
+        "Enter new password": "Nhập mật khẩu mới",
+        "Account": "Chưa có tài khoản?",
+        "Welcome": "Chào mừng bạn đến với Web Member Ari"
       },
       "reset-password": {
         "Recovery Email": "Email khôi phục",
@@ -132,8 +139,39 @@
         "See All": "Xem tất cả",
         "Add": "Thêm mới",
         "Edit": "Sửa",
-        "Delete": "Xóa"
+        "Delete": "Xóa",
+        "My Profile": "Thông tin cá nhân"
       }
     }
+  },
+  "user": {
+    "Position": "Vị trí",
+    "Team": "Nhóm",
+    "Start Date": "Ngày đầu đi làm",
+    "Remaining Leave Day": "Ngày phép còn lại",
+    "Date of birth": "Ngày sinh",
+    "Name": "Tên",
+    "Is System Admin": "Là quản trị viên hệ thống",
+    "Permissions": "Cho phép",
+    "Description": "Mô tả",
+    "Upload avatar": "Tải ảnh lên",
+    "Fullname": "Họ và tên",
+    "Phone Number": "Số điện thoại",
+    "Action": "Hoạt động"
+  },
+  "Code": {
+    "Type": "Loại mã",
+    "Type Code": "Thêm loại mã",
+    "Type Category": "Loại",
+    "Name": "Tên mã"
+  },
+  "Data": {
+    "Type": "Loại dữ liệu",
+    "Type Data": "Thêm mới loại",
+    "Name": "Tên dữ liệu",
+    "Order": "Order",
+    "Page": "Trang",
+    "Image": "Ảnh",
+    "Created At": "Ngày tạo"
   }
 }

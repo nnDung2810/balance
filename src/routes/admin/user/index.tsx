@@ -70,13 +70,17 @@ const Page = () => {
             {user?.role?.permissions?.includes(keyRole.P_USER_ROLE_LISTED) && (
               <Button
                 icon={'las la-users-cog'}
-                text={t('Vai trò')}
+                text={t('components.button.Role')}
                 onClick={() => modalDragRoleRef?.current?.handleShow()}
               />
             )}
 
             {user?.role?.permissions?.includes(keyRole.P_USER_CREATE) && (
-              <Button icon={'las la-plus'} text={t('Tạo mới')} onClick={() => modalFormRef?.current?.handleEdit()} />
+              <Button
+                icon={'las la-plus'}
+                text={t('components.button.New')}
+                onClick={() => modalFormRef?.current?.handleEdit()}
+              />
             )}
           </div>
         }
@@ -106,7 +110,7 @@ const Page = () => {
       />
       <ModalDrag
         ref={modalDragRoleRef}
-        title={() => t('Vai trò')}
+        title={() => t('components.button.Role')}
         isLoading={isLoading}
         setIsLoading={setIsLoading}
         columns={ColumnFormUserRole({ t, listPermission })}

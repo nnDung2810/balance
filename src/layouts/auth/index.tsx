@@ -28,12 +28,7 @@ const Layout = ({ children }: PropsWithChildren) => {
             </h2>
           </div>
           <div className="">
-            <h2 className="-intro-x font-bold text-3xl text-white mb-3">Welcome To Admin</h2>
-            <p className="-intro-x text-white mb-4">
-              It is a long established fact that a reader will be distracted by the readable content of a page when
-              looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of
-              letters
-            </p>
+            <h2 className="-intro-x font-bold text-3xl text-white mb-3">{t('routes.auth.login.Welcome')}</h2>
             <div className="-intro-x mb-4">
               <a
                 href="/"
@@ -54,9 +49,7 @@ const Layout = ({ children }: PropsWithChildren) => {
                 <i className="lab la-linkedin-in text-xl" />
               </a>
             </div>
-            <p className="-intro-x text-white">
-              Copyright © Designed &amp; Developed by <a href="https://reactjs.org/">react</a>
-            </p>
+            <p className="-intro-x text-white">{t('layout.footer', { year: new Date().getFullYear() })}</p>
           </div>
         </div>
         <div className="w-full lg:w-2/5 p-10 flex justify-center flex-col">

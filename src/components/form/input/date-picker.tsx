@@ -47,6 +47,7 @@ const Component = ({
 type Type = {
   form: FormInstance;
   name?: string;
+  placeholder?: string;
   id?: string;
   onChange: (selectDate: any, value: any) => void;
   format: string;

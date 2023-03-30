@@ -9,7 +9,7 @@ import { DataTableModel } from '@models';
 const Column = ({ t, formatDate, handleEdit, handleDelete, permissions }: any) => {
   const col: DataTableModel[] = [
     {
-      title: t('Họ và tên'),
+      title: t(`user.Fullname`),
       name: 'name',
       tableItem: {
         filter: { type: 'search' },
@@ -24,7 +24,7 @@ const Column = ({ t, formatDate, handleEdit, handleDelete, permissions }: any) =
       },
     },
     {
-      title: t('Position'),
+      title: t('user.Position'),
       name: 'positionCode',
       tableItem: {
         filter: {
@@ -56,7 +56,7 @@ const Column = ({ t, formatDate, handleEdit, handleDelete, permissions }: any) =
       },
     },
     {
-      title: t('Phone Number'),
+      title: t('user.Phone Number'),
       name: 'phoneNumber',
       tableItem: {
         filter: { type: 'search' },
@@ -64,7 +64,7 @@ const Column = ({ t, formatDate, handleEdit, handleDelete, permissions }: any) =
       },
     },
     {
-      title: t('Ngày sinh'),
+      title: t('user.Date of birth'),
       name: 'dob',
       tableItem: {
         filter: { type: 'date' },
@@ -73,7 +73,7 @@ const Column = ({ t, formatDate, handleEdit, handleDelete, permissions }: any) =
       },
     },
     {
-      title: t('Start Date'),
+      title: t('user.Start Date'),
       name: 'startDate',
       tableItem: {
         filter: { type: 'search' },
@@ -82,7 +82,7 @@ const Column = ({ t, formatDate, handleEdit, handleDelete, permissions }: any) =
       },
     },
     {
-      title: t('Hoạt động'),
+      title: t('user.Action'),
       tableItem: {
         width: 180,
         align: 'center',
@@ -107,7 +107,7 @@ const Column = ({ t, formatDate, handleEdit, handleDelete, permissions }: any) =
                   okText={t('components.datatable.ok')}
                   cancelText={t('components.datatable.cancel')}
                 >
-                  <Button icon={'las la-trash-alt'} className={'bg-red-500 text-white'} />
+                  <Button icon={'las la-trash-alt'} className={'!bg-red-500 text-white'} />
                 </Popconfirm>
               </Tooltip>
             )}
