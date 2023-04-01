@@ -6,7 +6,7 @@ import { Avatar, Button } from '@components';
 import { keyRole, routerLinks } from '@utils';
 import { DataTableModel } from '@models';
 
-const Column = ({ t, formatDate, handleEdit, handleDelete, permissions }: any) => {
+const Column = ({ t, formatDate, modalFormRef, permissions }: any) => {
   const col: DataTableModel[] = [
     {
       title: t(`user.Fullname`),
@@ -93,7 +93,7 @@ const Column = ({ t, formatDate, handleEdit, handleDelete, permissions }: any) =
           <div className={'flex gap-2'}>
             {permissions?.includes(keyRole.P_USER_UPDATE) && (
               <Tooltip title={t('routes.admin.Layout.Edit')}>
-                <Button icon={'las la-edit'} onClick={() => handleEdit(data)} />
+                <Button icon={'las la-edit'} onClick={() => modalFormRef?.current?.handleEdit(data)} />
               </Tooltip>
             )}
 
@@ -103,7 +103,7 @@ const Column = ({ t, formatDate, handleEdit, handleDelete, permissions }: any) =
                   placement="left"
                   title={t('components.datatable.areYouSureWant')}
                   icon={<i className="las la-question-circle text-2xl text-yellow-500 absolute -top-0.5 -left-1" />}
-                  onConfirm={() => handleDelete(data.id)}
+                  onConfirm={() => modalFormRef?.current?.handleDelete(data.id)}
                   okText={t('components.datatable.ok')}
                   cancelText={t('components.datatable.cancel')}
                 >

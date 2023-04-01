@@ -1,14 +1,4 @@
-import React, {
-  Dispatch,
-  forwardRef,
-  Fragment,
-  SetStateAction,
-  useCallback,
-  useEffect,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from 'react';
+import React, { forwardRef, Fragment, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { v4 } from 'uuid';
 import { Checkbox, CheckboxOptionType, DatePicker, Popover, Radio, Table } from 'antd';
 import { useTranslation } from 'react-i18next';
@@ -16,11 +6,12 @@ import { useLocation, useNavigate } from 'react-router';
 import dayjs from 'dayjs';
 import classNames from 'classnames';
 // @ts-ignore
-import { Resizable } from 'react-resizable';
 
 import { Button, Pagination } from '@components';
 import { API } from '@utils';
 import { TableApi } from '@models';
+import { useTypedSelector } from '../../redux/hooks/useTypedSelector';
+import { useAppDispatch } from '../../redux/hooks/useActions';
 
 const RadioGroup = Radio.Group;
 const CheckboxGroup = Checkbox.Group;
@@ -56,51 +47,11 @@ const getQueryStringParams = (query: any) => {
       }, {})
     : {}; // Trim - from end of text
 };
-const ResizableTitle = ({
-  onResize,
-  width,
-  minWidth,
-  ...restProps
-}: {
-  onResize: any;
-  width: number;
-  minWidth: number;
-}) => {
-  if (!width) {
-    return <th {...restProps} />;
-  }
-
-  return (
-    <Resizable
-      minConstraints={[minWidth, 0]}
-      width={width}
-      height={0}
-      handle={
-        <span
-          className="react-resizable-handle"
-          onClick={(e) => {
-            e.stopPropagation();
-          }}
-        />
-      }
-      onResize={onResize}
-      draggableOpts={{
-        enableUserSelectHack: false,
-      }}
-    >
-      <th {...restProps} />
-    </Resizable>
-  );
-};
 
 const Hook = forwardRef(
   (
     {
       columns = [],
-      isLoading,
-      setIsLoading,
-      Get,
-      id = () => true,
       showList = true,
       footer,
       defaultRequest = {},
@@ -126,91 +77,60 @@ const Hook = forwardRef(
       paginationDescription = (from: number, to: number, total: number) => from + '-' + to + ' of ' + total + ' items',
       idElement = 'temp-' + v4(),
       className = 'data-table',
-      data = [],
-      count = 0,
+      action,
       ...prop
     }: Type,
     ref,
   ) => {
     useImperativeHandle(ref, () => ({ onChange, params }));
-
+    const dispatch = useAppDispatch();
     const { t } = useTranslation();
     const location = useLocation();
     const navigate = useNavigate();
 
-    const [idTable] = useState('temp-' + v4());
-    const [objData, set_objData] = useState({ data, count });
-    const idE: any = useRef(idElement);
-    const param = useRef(
-      localStorage.getItem(idTable)
-        ? JSON.parse(localStorage.getItem(idTable) || '{}')
-        : {
-            [pageIndex]: 1,
-            [pageSize]: 10,
-            ...defaultRequest,
-          },
-    );
+    const idTable = useRef(idElement);
+    const param = useRef(defaultRequest);
     const timeoutSearch = useRef<any>();
     const cols = useRef<any>();
-
-    useEffect(() => {
-      return () => {
-        localStorage.removeItem(idTable);
-      };
-    }, [idTable]);
-
+    const { result, isLoading } = useTypedSelector((state: any) => state[action.name]);
+    const params =
+      save && location.search && location.search.indexOf('=') > -1
+        ? { ...param.current, ...getQueryStringParams(location.search) }
+        : param.current;
     useEffect(() => {
       param.current = cleanObjectKeyNull({
         ...params,
         [sort]: JSON.stringify(params[sort]),
         [filter]: JSON.stringify(params[filter]),
       });
-      localStorage.setItem(idTable, JSON.stringify(cleanObjectKeyNull(param.current)));
-    }, []);
+      localStorage.setItem(idTable.current, JSON.stringify(cleanObjectKeyNull(param.current)));
+      onChange(param.current);
+      return () => {
+        localStorage.removeItem(idTable.current);
+      };
+    }, [dispatch]);
 
-    const onChange = useCallback(
-      async (request: any) => {
-        if (request) {
-          localStorage.setItem(idTable, JSON.stringify(request));
-          param.current = { ...request };
-          if (save) {
-            if (request[sort] && typeof request[sort] === 'object') {
-              request[sort] = JSON.stringify(request[sort]);
-            }
-            if (request[filter] && typeof request[filter] === 'object') {
-              request[filter] = JSON.stringify(request[filter]);
-            }
-            navigate(location.pathname + '?' + new URLSearchParams(request).toString());
+    const onChange = (request: any) => {
+      if (request) {
+        localStorage.setItem(idTable.current, JSON.stringify(request));
+        param.current = { ...request };
+        if (save) {
+          if (request[sort] && typeof request[sort] === 'object') {
+            request[sort] = JSON.stringify(request[sort]);
           }
-        } else if (localStorage.getItem(idTable)) {
-          param.current = JSON.parse(localStorage.getItem(idTable) || '{}');
-        }
-
-        if (showList && Get) {
-          setIsLoading && setIsLoading(true);
-          const prop = await Get(param.current, id());
-          if (prop) {
-            if (prop.data.length === 0 && param.current[pageIndex] > 1) {
-              await onChange({
-                ...param.current,
-                page: param.current[pageIndex] - 1,
-              });
-            } else {
-              set_objData(prop);
-              setIsLoading && setIsLoading(false);
-            }
-            return true;
+          if (request[filter] && typeof request[filter] === 'object') {
+            request[filter] = JSON.stringify(request[filter]);
           }
+          navigate(location.pathname + '?' + new URLSearchParams(request).toString());
         }
-        setIsLoading && setIsLoading(false);
-      },
-      [id, showList],
-    );
+      } else if (localStorage.getItem(idTable.current)) {
+        param.current = JSON.parse(localStorage.getItem(idTable.current) || '{}');
+      }
 
-    const params =
-      save && location.search && location.search.indexOf('=') > -1
-        ? { ...param.current, ...getQueryStringParams(location.search) }
-        : param.current;
+      if (showList) {
+        dispatch(action.get(cleanObjectKeyNull({ ...param.current })));
+      }
+    };
 
     if (params[filter] && typeof params[filter] === 'string') {
       params[filter] = JSON.parse(params[filter]);
@@ -245,7 +165,7 @@ const Hook = forwardRef(
       filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }: any) => (
         <div className="p-1">
           <input
-            id={idE.current + '_input_filter_' + key}
+            id={idTable.current + '_input_filter_' + key}
             className="w-full h-10 rounded-xl text-gray-600 bg-white border border-solid border-gray-100 pr-9 pl-4"
             value={selectedKeys}
             type="text"
@@ -267,7 +187,7 @@ const Hook = forwardRef(
       onFilterDropdownOpenChange: (visible: boolean) => {
         if (visible) {
           setTimeout(
-            () => (document.getElementById(idE.current + '_input_filter_' + key) as HTMLInputElement).select(),
+            () => (document.getElementById(idTable.current + '_input_filter_' + key) as HTMLInputElement).select(),
             100,
           );
         }
@@ -439,33 +359,10 @@ const Hook = forwardRef(
         return {
           title: col.title,
           dataIndex: col.name,
-          onHeaderCell: (column: any) => ({
-            minWidth: xScroll && item.width,
-            width: xScroll && column.width,
-            onResize: handleResize(index),
-          }),
           ...item,
         };
       });
 
-    const [_columns, set_columns] = useState(cols.current.map((item: any) => item.width));
-    const xScrollRef = useRef(xScroll);
-    if (_columns.length !== cols.current.length) {
-      set_columns(cols.current.map((item: any) => item.width));
-    }
-
-    const handleResize =
-      (index: number) =>
-      (_: any, { size }: any) => {
-        if (typeof xScroll === 'number') {
-          _columns[index] = size.width;
-          cols.current[index].width = size.width;
-          const sumColumns = columns.reduce((partialSum: number, a: any) => partialSum + (a?.tableItem?.width || 0), 0);
-          const sumCols = cols.current.reduce((partialSum: number, a: any) => partialSum + (a?.width || 0), 0);
-          xScrollRef.current = xScroll + (sumCols - sumColumns);
-          set_columns([..._columns]);
-        }
-      };
     const handleTableChange = (pagination: any, filters = {}, sorts: any, tempFullTextSearch: string) => {
       let tempPageIndex = pagination?.current || params[pageIndex];
       const tempPageSize = pagination?.pageSize || params[pageSize];
@@ -499,7 +396,7 @@ const Hook = forwardRef(
           {showSearch ? (
             <div className="relative">
               <input
-                id={idE.current + '_input_search'}
+                id={idTable.current + '_input_search'}
                 className="w-full sm:w-52 h-10 rounded-xl text-gray-600 bg-white border border-solid border-gray-100 pr-9 pl-4"
                 defaultValue={params[fullTextSearch]}
                 type="text"
@@ -511,7 +408,7 @@ const Hook = forwardRef(
                       null,
                       params[filter],
                       params[sort],
-                      (document.getElementById(idE.current + '_input_search') as HTMLInputElement).value,
+                      (document.getElementById(idTable.current + '_input_search') as HTMLInputElement).value,
                     );
                   }, 500);
                 }}
@@ -521,7 +418,7 @@ const Hook = forwardRef(
                       null,
                       params[filter],
                       params[sort],
-                      (document.getElementById(idE.current + '_input_search') as HTMLInputElement).value,
+                      (document.getElementById(idTable.current + '_input_search') as HTMLInputElement).value,
                     );
                   }
                 }}
@@ -533,7 +430,7 @@ const Hook = forwardRef(
                 })}
                 onClick={() => {
                   if (params[fullTextSearch]) {
-                    (document.getElementById(idE.current + '_input_search') as HTMLInputElement).value = '';
+                    (document.getElementById(idTable.current + '_input_search') as HTMLInputElement).value = '';
                     handleTableChange(null, params[filter], params[sort], '');
                   }
                 }}
@@ -545,40 +442,35 @@ const Hook = forwardRef(
           {!!leftHeader && <div className={'mt-2 sm:mt-0'}>{leftHeader}</div>}
           {!!rightHeader && <div className={'mt-2 sm:mt-0'}>{rightHeader}</div>}
         </div>
-        {subHeader && subHeader(objData?.count)}
+        {subHeader && subHeader(result?.count)}
         {!!showList && (
           <Fragment>
             <Table
-              components={{
-                header: {
-                  cell: ResizableTitle,
-                },
-              }}
               onRow={onRow}
               locale={{
                 emptyText: <div className="bg-gray-100 text-gray-400 py-4">{emptyText}</div>,
               }}
               loading={isLoading}
-              columns={_columns.map((item: any, index: number) => {
+              columns={cols.current.map((item: any, index: number) => {
                 if (item) {
                   cols.current[index].width = item;
                 }
                 return cols.current[index];
               })}
               pagination={false}
-              dataSource={objData?.data.map((item: any) => ({
+              dataSource={result?.data?.map((item: any) => ({
                 ...item,
                 key: item.id || v4(),
               }))}
               onChange={(pagination, filters, sorts) => handleTableChange(null, filters, sorts, params[fullTextSearch])}
               showSorterTooltip={false}
-              scroll={{ x: xScrollRef.current, y: yScroll }}
+              scroll={{ x: xScroll, y: yScroll }}
               size="small"
               {...prop}
             />
             {showPagination && (
               <Pagination
-                total={objData?.count}
+                total={result?.count}
                 pageIndex={+params[pageIndex]}
                 pageSize={+params[pageSize]}
                 pageSizeOptions={pageSizeOptions}
@@ -588,13 +480,13 @@ const Hook = forwardRef(
                   handleTableChange(pagination, params[filter], params[sort], params[fullTextSearch])
                 }
                 paginationDescription={paginationDescription}
-                idElement={idE.current}
+                idElement={idTable.current}
                 {...prop}
               />
             )}
           </Fragment>
         )}
-        {!!footer && <div className="footer">{footer(objData)}</div>}
+        {!!footer && <div className="footer">{footer(result)}</div>}
       </div>
     );
   },
@@ -603,11 +495,8 @@ Hook.displayName = 'HookTable';
 type Type = {
   columns: any[];
   isLoading?: boolean;
-  setIsLoading?: Dispatch<SetStateAction<boolean>>;
-  Get?: (params: any, id: any) => Promise<any>;
-  id?: () => boolean;
   showList?: boolean;
-  footer?: (objData: any) => any;
+  footer?: (result: any) => any;
   defaultRequest?: any;
   pageIndex?: string;
   pageSize?: string;
@@ -631,7 +520,6 @@ type Type = {
   paginationDescription?: (from: number, to: number, total: number) => string;
   idElement?: string;
   className?: string;
-  data?: any[];
-  count?: number;
+  action: any;
 };
 export default Hook;

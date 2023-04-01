@@ -19,7 +19,6 @@ const Component = ({
   handSubmit,
   values = {},
   form,
-  onFirstChange = () => null,
   widthLabel,
   checkHidden = false,
   extendForm,
@@ -274,7 +273,6 @@ const Component = ({
             }
             onChange={(value: any) => formItem.onChange && formItem.onChange(value, form, reRender)}
             disabled={!!formItem.disabled && formItem.disabled(values, form)}
-            onFirstChange={onFirstChange}
           />
         );
     }
@@ -284,7 +282,7 @@ const Component = ({
       return;
     }
     if (item?.formItem?.render) {
-      return item?.formItem?.render(form, values, generateForm, index, reRender, onFirstChange);
+      return item?.formItem?.render(form, values, generateForm, index, reRender);
     }
     if (item.formItem) {
       const rules: any = [];
@@ -556,7 +554,6 @@ const Component = ({
       onFinish={handFinish}
       initialValues={convertFormValue(columns, values, false)}
       onValuesChange={async (objValue) => {
-        onFirstChange();
         if (form && checkHidden) {
           clearTimeout(timeout.current);
           timeout.current = setTimeout(async () => {

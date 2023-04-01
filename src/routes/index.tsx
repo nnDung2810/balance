@@ -5,6 +5,7 @@ import { useAuth } from '@globalContext';
 import { Spin } from '../components/spin';
 import { pages } from './pages';
 import { keyUser, routerLinks } from '@utils';
+import { useTranslation } from 'react-i18next';
 
 const Layout = ({ layout: Layout, isPublic = false }: any) => {
   const { user } = useAuth();
@@ -18,10 +19,10 @@ const Layout = ({ layout: Layout, isPublic = false }: any) => {
 };
 
 const Page = ({ title = '', component: Comp, ...props }: any) => {
-  const auth = useAuth();
+  const { t } = useTranslation();
 
   useEffect(() => {
-    auth.setTitlePage('titles.' + title || '');
+    document.title = t('titles.' + title || '');
   }, [title]);
 
   if (typeof Comp === 'string') {

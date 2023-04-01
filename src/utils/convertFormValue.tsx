@@ -19,7 +19,7 @@ const Util = (columns: any, values: any, exportData = true) => {
               values[item.name[0]] = item.formItem.convert(values[item.name[0]]);
               break;
           }
-        } else {
+        } else if (values[item.name]) {
           values[item.name] = item.formItem.convert(values[item.name]);
         }
       } else {

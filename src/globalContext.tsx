@@ -12,9 +12,7 @@ import { keyRefreshToken, keyToken, keyUser } from '@utils';
 export const AuthContext = React.createContext<any>({
   user: {},
   timeOut: {},
-  title: '',
   formatDate: 'YYYY-MM-DD',
-  setTitlePage: () => null,
   login: () => null,
   logout: () => null,
   changeLanguage: () => null,
@@ -27,7 +25,6 @@ export const useAuth = () => {
 
 const GlobalContext = ({ children }: PropsWithChildren) => {
   const [user, set_User] = useState(JSON.parse(localStorage.getItem(keyUser) || '{}'));
-  const [title, setTitle] = useState('');
   const [locale, set_locale] = useState<any | undefined>();
   const [formatDate, set_formatDate] = useState('YYYY-MM-DD');
   const { t, i18n } = useTranslation();
@@ -54,31 +51,23 @@ const GlobalContext = ({ children }: PropsWithChildren) => {
     set_User(value);
   };
 
-  const setTitlePage = useCallback(
-    (name: string) => {
-      document.title = t(name);
-      setTitle(name);
-    },
-    [t],
-  );
-
   const changeLanguage = useCallback(
     (values: any) => {
-      if (!values) {
-        values = 'en';
-      }
-      i18n.changeLanguage(values);
-      localStorage.setItem('i18nextLng', values);
-      dayjs.locale(values === 'vn' ? 'vi' : values);
-      switch (values) {
-        case 'vn':
-          set_locale(viVN);
-          set_formatDate('DD-MM-YYYY');
-          break;
-        default:
-          set_locale(enUS);
-          set_formatDate('DD-MM-YYYY');
-      }
+      // if (!values) {
+      //   values = 'en';
+      // }
+      // i18n.changeLanguage(values);
+      // localStorage.setItem('i18nextLng', values);
+      // dayjs.locale(values === 'vn' ? 'vi' : values);
+      // switch (values) {
+      //   case 'vn':
+      //     set_locale(viVN);
+      //     set_formatDate('DD-MM-YYYY');
+      //     break;
+      //   default:
+      //     set_locale(enUS);
+      //     set_formatDate('DD-MM-YYYY');
+      // }
     },
     [i18n],
   );
@@ -105,9 +94,7 @@ const GlobalContext = ({ children }: PropsWithChildren) => {
       value={{
         user,
         timeOut,
-        title,
         formatDate,
-        setTitlePage,
         login,
         logout,
         changeLanguage,

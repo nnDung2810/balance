@@ -1,13 +1,14 @@
 import React, { lazy, Suspense } from 'react';
-import ReactDOM from 'react-dom/client';
+import ReactDOM, { createRoot } from 'react-dom/client';
 import AuthProvider from '@globalContext';
-import { ConfigProvider } from 'antd';
 import { Spin } from './components/spin';
 import Router from '@routes/index';
 import i18n from 'i18next';
 import XHR from 'i18next-xhr-backend';
 import { initReactI18next } from 'react-i18next';
 import { reportWebVitals } from '@utils';
+import { setupStore } from './redux/store';
+import { Provider } from 'react-redux';
 
 const Styling = lazy(() => import('./utils/init/styling'));
 
@@ -28,20 +29,29 @@ i18n
       escapeValue: false,
     },
   });
-
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <Suspense
-    fallback={
-      <Spin>
-        <div className="w-screen h-screen" />
-      </Spin>
-    }
-  >
-    <Styling>
-      <AuthProvider>
-        <Router />
-      </AuthProvider>
-    </Styling>
-  </Suspense>,
-);
+const store = setupStore();
+let container: any = null;
+document.addEventListener('DOMContentLoaded', function () {
+  if (!container) {
+    container = document.getElementById('root') as HTMLElement;
+    const root = createRoot(container);
+    root.render(
+      <Suspense
+        fallback={
+          <Spin>
+            <div className="w-screen h-screen" />
+          </Spin>
+        }
+      >
+        <Styling>
+          <AuthProvider>
+            <Provider store={store}>
+              <Router />
+            </Provider>
+          </AuthProvider>
+        </Styling>
+      </Suspense>,
+    );
+  }
+});
 reportWebVitals();

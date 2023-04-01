@@ -1,28 +1,20 @@
-import React, {
-  useState,
-  forwardRef,
-  useImperativeHandle,
-  useRef,
-  Dispatch,
-  SetStateAction,
-  PropsWithChildren,
-} from 'react';
+import React, { forwardRef, useImperativeHandle, PropsWithChildren } from 'react';
 import { Modal } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { v4 } from 'uuid';
 
 import { Button, Spin } from '@components';
+import { useAppDispatch } from '../../redux/hooks/useActions';
+import slice from '../../redux/reducers/users/slice';
+import { useTypedSelector } from '../../redux/hooks/useTypedSelector';
 
 const Hook = forwardRef(
   (
     {
+      action,
       title,
       widthModal = 800,
       onOk,
-      onCancel,
-      GetById,
-      isLoading,
-      setIsLoading,
       firstChange = true,
       textSubmit,
       className = '',
@@ -32,42 +24,20 @@ const Hook = forwardRef(
     }: Type,
     ref: any,
   ) => {
-    useImperativeHandle(ref, () => ({ handleShow, handleCancel, data: data.current, setIsVisible }));
+    useImperativeHandle(ref, () => ({ handleCancel, data }));
+    const dispatch = useAppDispatch();
+    const { data, isLoading, isVisible } = useTypedSelector((state: any) => state[action.name]);
 
     const { t } = useTranslation();
-    const [isVisible, setIsVisible] = useState(false);
-    const isLoadingT = useRef(false);
-    const data = useRef({});
     const handleCancel = () => {
-      setIsVisible(false);
-      isLoadingT.current = false;
-      !!onCancel && onCancel(data.current);
+      dispatch(slice.actions.setIsVisible(false));
     };
     const handleOk = async () => {
-      if (!isLoadingT.current) {
-        isLoadingT.current = true;
-        if (onOk) {
-          setIsLoading && setIsLoading(true);
-          const res = await onOk(data.current);
-          setIsLoading && setIsLoading(false);
-          !!res && handleCancel();
-          isLoadingT.current = false;
-          return res;
-        } else {
-          handleCancel();
-        }
+      if (onOk) {
+        onOk(data);
+      } else {
+        handleCancel();
       }
-    };
-
-    const handleShow = async (item: { id?: string } = {}) => {
-      setIsLoading(true);
-      if (GetById) {
-        const { data } = await GetById(item.id);
-        item = { ...item, ...data };
-      }
-      data.current = item;
-      setIsVisible(true);
-      setTimeout(() => setIsLoading(false), 1);
     };
 
     return (
@@ -76,7 +46,7 @@ const Hook = forwardRef(
         destroyOnClose={true}
         centered={true}
         width={widthModal}
-        title={title && <h3 className="font-bold text-lg">{title(data.current)}</h3>}
+        title={title && <h3 className="font-bold text-lg">{title(data)}</h3>}
         open={isVisible}
         onOk={handleOk}
         onCancel={handleCancel}
@@ -109,13 +79,12 @@ const Hook = forwardRef(
 );
 Hook.displayName = 'HookModal';
 type Type = PropsWithChildren<{
+  action: any;
   title?: (data: any) => string;
   widthModal: number;
-  onOk?: (data: any) => Promise<any>;
+  onOk?: (data: any) => any;
   onCancel?: (data: any) => void;
   GetById?: (id?: string) => any;
-  isLoading: boolean;
-  setIsLoading: Dispatch<SetStateAction<boolean>>;
   firstChange?: boolean;
   textSubmit?: string;
   className?: string;

@@ -9,7 +9,6 @@ const Component = ({
   addonAfter,
   form,
   disabled,
-  onFirstChange,
   maxLength,
   placeholder,
   onBlur,
@@ -29,7 +28,7 @@ const Component = ({
   }, []);
   return (
     <div className={classNames('ant-input flex items-center', { 'border rounded-xl': !!addonBefore || !!addonAfter })}>
-      {!!addonBefore && <div>{addonBefore(form, onFirstChange)}</div>}
+      {!!addonBefore && <div>{addonBefore(form)}</div>}
       <input
         ref={input}
         tabIndex={tabIndex}
@@ -48,7 +47,7 @@ const Component = ({
         onChange={onChange}
         {...prop}
       />
-      {!!addonAfter && <div>{addonAfter(form, onFirstChange)}</div>}
+      {!!addonAfter && <div>{addonAfter(form)}</div>}
     </div>
   );
 };
@@ -56,11 +55,10 @@ type Type = {
   tabIndex?: number;
   mask?: string;
   value?: string;
-  addonBefore?: (form: FormInstance, onFirstChange: () => void) => JSX.Element;
-  addonAfter?: (form: FormInstance, onFirstChange: () => void) => JSX.Element;
+  addonBefore?: (form: FormInstance) => JSX.Element;
+  addonAfter?: (form: FormInstance) => JSX.Element;
   form: FormInstance;
   disabled: boolean;
-  onFirstChange: () => void;
   maxLength?: number;
   placeholder: string;
   onBlur: (e: any) => any;

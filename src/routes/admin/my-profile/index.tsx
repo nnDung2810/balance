@@ -31,12 +31,7 @@ const Page = () => {
       setUser(user);
       setIsLoading(false);
     };
-    if (timeOut.current) {
-      clearTimeout(timeOut.current);
-    }
-    timeOut.current = setTimeout(() => {
-      init().then();
-    }, 100);
+    init().then();
   }, []);
 
   return (
