@@ -114,7 +114,17 @@ const GlobalContext = ({ children }: PropsWithChildren) => {
         setUser,
       }}
     >
-      <ConfigProvider locale={locale}>{children}</ConfigProvider>
+      <ConfigProvider
+        locale={locale}
+        theme={{
+          token: {
+            fontFamily:
+              'Google Sans, -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Noto Sans,Ubuntu,Droid Sans,Helvetica Neue,sans-serif',
+          },
+        }}
+      >
+        {children}
+      </ConfigProvider>
     </AuthContext.Provider>
   );
 };

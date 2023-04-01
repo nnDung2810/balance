@@ -39,16 +39,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   >
     <Styling>
       <AuthProvider>
-        <ConfigProvider
-          theme={{
-            token: {
-              fontFamily:
-                'Google Sans, -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Noto Sans,Ubuntu,Droid Sans,Helvetica Neue,sans-serif',
-            },
-          }}
-        >
-          <Router />
-        </ConfigProvider>
+        <Router />
       </AuthProvider>
     </Styling>
   </Suspense>,
