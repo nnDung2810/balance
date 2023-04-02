@@ -1,16 +1,22 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
-import { userAction, userSlice } from './user';
-import { roleAction, roleSlide } from './user/role';
-import { codeSlide, codeAction } from './code';
-import { codeTypeSlide, codeTypeAction } from './code/type';
+import { userSlice, userAction } from './user';
+import { userRoleSlice, userRoleAction } from './user/role';
+import { codeSlice, codeAction } from './code';
+import { codeTypeSlice, codeTypeAction } from './code/type';
+import { dataSlice, dataAction } from './data';
+import { dataTypeSlice, dataTypeAction } from './data/type';
+import { pageSlice, pageAction } from './page';
 
 const rootReducer = combineReducers({
   [userSlice.name]: userSlice.reducer,
-  [roleSlide.name]: roleSlide.reducer,
-  [codeSlide.name]: codeSlide.reducer,
-  [codeTypeSlide.name]: codeTypeSlide.reducer,
+  [userRoleSlice.name]: userRoleSlice.reducer,
+  [codeSlice.name]: codeSlice.reducer,
+  [codeTypeSlice.name]: codeTypeSlice.reducer,
+  [dataSlice.name]: dataSlice.reducer,
+  [dataTypeSlice.name]: dataTypeSlice.reducer,
+  [pageSlice.name]: pageSlice.reducer,
 });
 
 const setupStore = () => {
@@ -26,12 +32,18 @@ export {
   setupStore,
   useAppDispatch,
   useTypedSelector,
-  userAction,
   userSlice,
-  roleAction,
-  roleSlide,
-  codeSlide,
+  userAction,
+  userRoleSlice,
+  userRoleAction,
+  codeSlice,
   codeAction,
-  codeTypeSlide,
+  codeTypeSlice,
   codeTypeAction,
+  dataSlice,
+  dataAction,
+  dataTypeSlice,
+  dataTypeAction,
+  pageSlice,
+  pageAction,
 };

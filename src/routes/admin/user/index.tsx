@@ -1,17 +1,17 @@
-import React, {Fragment, useRef} from 'react';
+import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useAuth } from '@globalContext';
 import { Button, DataTable, ModalForm } from '@components';
 import { ColumnFormUser, ColumnTableUser } from '@columns';
 import { keyRole } from '@utils';
-import { useAppDispatch, useTypedSelector, userAction, userSlice, roleAction } from '@reducers';
+import { useAppDispatch, useTypedSelector, userAction, userSlice, userRoleAction } from '@reducers';
 
 const Page = () => {
   const { t } = useTranslation();
   const { formatDate, user } = useAuth();
   const dispatch = useAppDispatch();
-  const { result } = useTypedSelector((state: any) => state[roleAction.name]);
+  const { result } = useTypedSelector((state: any) => state[userRoleAction.name]);
 
   const dataTableRef = useRef<any>();
   const modalFormRef = useRef<any>();
@@ -52,7 +52,7 @@ const Page = () => {
         action={userAction}
         firstRun={async () => {
           if (!result.data) {
-            dispatch(roleAction.get({}));
+            dispatch(userRoleAction.get({}));
           }
         }}
         ref={modalFormRef}

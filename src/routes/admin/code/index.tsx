@@ -1,16 +1,15 @@
-import React, { useState, Fragment, useEffect, useRef } from 'react';
+import React, { Fragment, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useAuth } from '@globalContext';
-import { DataTable, ModalForm, ModalDrag, Button } from '@components';
-import { ColumnCodeForm, ColumnCodeTable, ColumnCodeTypeForm } from '@columns';
-import { CodeTypeService } from '../../../services/code/type';
+import { DataTable, ModalForm, Button } from '@components';
+import { ColumnCodeForm, ColumnCodeTable } from '@columns';
 import { keyRole } from '@utils';
-import { useAppDispatch, useTypedSelector, codeSlide, codeAction, codeTypeAction } from '@reducers';
+import { useAppDispatch, useTypedSelector, codeSlice, codeAction, codeTypeAction } from '@reducers';
 
 const Page = () => {
   const { t } = useTranslation();
-  const { formatDate, user, timeOut } = useAuth();
+  const { formatDate, user } = useAuth();
   const dispatch = useAppDispatch();
   const { result } = useTypedSelector((state: any) => state[codeTypeAction.name]);
   const listType = (result.data || []).map((item: any) => ({ value: item.code, label: item.name }));
@@ -27,7 +26,7 @@ const Page = () => {
     <Fragment>
       <DataTable
         action={codeAction}
-        slice={codeSlide}
+        slice={codeSlice}
         ref={dataTableRef}
         onRow={() => ({
           onDoubleClick: () => null,
@@ -65,7 +64,7 @@ const Page = () => {
       />
       <ModalForm
         action={codeAction}
-        slice={codeSlide}
+        slice={codeSlice}
         ref={modalFormRef}
         title={(data: any) => (!data?.id ? t('routes.admin.Layout.Add') : t('routes.admin.Layout.Edit'))}
         handleChange={async () => await dataTableRef?.current?.onChange()}
@@ -77,29 +76,6 @@ const Page = () => {
         widthModal={600}
         idElement={'user'}
       />
-      {/*<ModalDrag*/}
-      {/*  ref={modalDragRef}*/}
-      {/*  title={() => t('Code.Type Category')}*/}
-      {/*  isLoading={isLoading}*/}
-      {/*  setIsLoading={setIsLoading}*/}
-      {/*  columns={ColumnCodeTypeForm({ t })}*/}
-      {/*  Get={getListType}*/}
-      {/*  Put={CodeTypeService.put}*/}
-      {/*  Post={CodeTypeService.post}*/}
-      {/*  Delete={CodeTypeService.delete}*/}
-      {/*  GetById={*/}
-      {/*    user?.role?.permissions?.includes(keyRole.P_CODE_TYPE_DETAIL) &&*/}
-      {/*    ((id: string, parent: any, item: any) => CodeTypeService.getById(item.code))*/}
-      {/*  }*/}
-      {/*  widthForm={600}*/}
-      {/*  isReloadLoadToSave={true}*/}
-      {/*  idElement={'role'}*/}
-      {/*  showAddNew={user?.role?.permissions?.includes(keyRole.P_CODE_TYPE_CREATE)}*/}
-      {/*  conditionEdit={(item: any) => user?.role?.permissions?.includes(keyRole.P_CODE_TYPE_UPDATE) && !item?.isPrimary}*/}
-      {/*  conditionDelete={(item: any) =>*/}
-      {/*    user?.role?.permissions?.includes(keyRole.P_CODE_TYPE_DELETE) && !item?.isPrimary*/}
-      {/*  }*/}
-      {/*/>*/}
     </Fragment>
   );
 };

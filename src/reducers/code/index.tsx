@@ -9,4 +9,4 @@ export const codeAction = {
 };
 
 const slice = new Slice(codeAction);
-export const codeSlide = createSlice({ ...slice });
+export const codeSlice = createSlice({ ...slice });

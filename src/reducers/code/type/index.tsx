@@ -7,4 +7,4 @@ export const codeTypeAction = {
   ...action,
 };
 const slice = new Slice(codeTypeAction, { keepUnusedDataFor: 9999 });
-export const codeTypeSlide = createSlice({ ...slice });
+export const codeTypeSlice = createSlice({ ...slice });
