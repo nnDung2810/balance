@@ -10,9 +10,7 @@ import classNames from 'classnames';
 import { Button, Pagination } from '@components';
 import { API } from '@utils';
 import { TableApi } from '@models';
-import { useTypedSelector } from '../../redux/hooks/useTypedSelector';
-import { useAppDispatch } from '../../redux/hooks/useActions';
-import slice from "../../redux/reducers/users/slice";
+import { useAppDispatch, useTypedSelector } from '@reducers';
 
 const RadioGroup = Radio.Group;
 const CheckboxGroup = Checkbox.Group;
@@ -82,6 +80,7 @@ const Hook = forwardRef(
       idElement = 'temp-' + v4(),
       className = 'data-table',
       action,
+      slice,
       data,
       ...prop
     }: Type,
@@ -103,7 +102,7 @@ const Hook = forwardRef(
         ? { ...param.current, ...getQueryStringParams(location.search) }
         : param.current;
     useEffect(() => {
-      if (action) {
+      if (action && slice) {
         param.current = cleanObjectKeyNull({
           ...params,
           [sort]: JSON.stringify(params[sort]),
@@ -529,6 +528,7 @@ type Type = {
   idElement?: string;
   className?: string;
   action?: any;
+  slice?: any;
   data?: any[];
 };
 export default Hook;

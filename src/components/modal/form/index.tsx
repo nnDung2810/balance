@@ -1,4 +1,4 @@
-import React, { useState, forwardRef, useImperativeHandle, useRef, Dispatch, SetStateAction, useEffect } from 'react';
+import React, { forwardRef, useImperativeHandle, useEffect } from 'react';
 import { Form as FormAnt } from 'antd';
 import { v4 } from 'uuid';
 
@@ -6,9 +6,7 @@ import { Modal } from '@components';
 import Form from '../../form';
 import { convertFormValue } from '@utils';
 import { FormModel } from '@models';
-import { useTypedSelector } from '../../../redux/hooks/useTypedSelector';
-import { useAppDispatch } from '../../../redux/hooks/useActions';
-import slice from '../../../redux/reducers/users/slice';
+import { useAppDispatch, useTypedSelector } from '@reducers';
 
 const Hook = forwardRef(
   (
@@ -23,6 +21,7 @@ const Hook = forwardRef(
       footerCustom,
       idElement = 'modal-form-' + v4(),
       action,
+      slice,
       ...propForm
     }: Type,
     ref: any,
@@ -44,7 +43,7 @@ const Hook = forwardRef(
     }, [status]);
 
     const handleEdit = async (item: { id?: string } = {}) => {
-      !!firstRun && (await firstRun(item));
+      !!firstRun && firstRun(item);
       if (item.id) {
         dispatch(action.getById(item.id));
       } else {
@@ -57,6 +56,7 @@ const Hook = forwardRef(
 
     return (
       <Modal
+        slice={slice}
         action={action}
         idElement={idElement}
         widthModal={widthModal}
@@ -84,6 +84,7 @@ const Hook = forwardRef(
 Hook.displayName = 'HookModalForm';
 type Type = {
   action: any;
+  slice: any;
   title: (data: any) => string;
   handleChange?: (values?: any, data?: any) => Promise<any>;
   firstRun?: (item: any) => void;

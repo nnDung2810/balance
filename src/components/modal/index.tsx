@@ -4,14 +4,13 @@ import { useTranslation } from 'react-i18next';
 import { v4 } from 'uuid';
 
 import { Button, Spin } from '@components';
-import { useAppDispatch } from '../../redux/hooks/useActions';
-import slice from '../../redux/reducers/users/slice';
-import { useTypedSelector } from '../../redux/hooks/useTypedSelector';
+import { useAppDispatch, useTypedSelector } from '@reducers';
 
 const Hook = forwardRef(
   (
     {
       action,
+      slice,
       title,
       widthModal = 800,
       onOk,
@@ -80,6 +79,7 @@ const Hook = forwardRef(
 Hook.displayName = 'HookModal';
 type Type = PropsWithChildren<{
   action: any;
+  slice: any;
   title?: (data: any) => string;
   widthModal: number;
   onOk?: (data: any) => any;

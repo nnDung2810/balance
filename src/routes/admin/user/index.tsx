@@ -1,38 +1,25 @@
-import React, { Fragment, useRef, useState } from 'react';
+import React, {Fragment, useRef} from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useAuth } from '@globalContext';
-import { Button, DataTable, ModalDrag, ModalForm } from '@components';
-import { ColumnFormUser, ColumnFormUserRole, ColumnTableUser } from '@columns';
-import { UserRoleService } from '@services';
-import action from '../../../redux/reducers/users/action';
-
+import { Button, DataTable, ModalForm } from '@components';
+import { ColumnFormUser, ColumnTableUser } from '@columns';
 import { keyRole } from '@utils';
+import { useAppDispatch, useTypedSelector, userAction, userSlice, roleAction } from '@reducers';
 
 const Page = () => {
   const { t } = useTranslation();
   const { formatDate, user } = useAuth();
+  const dispatch = useAppDispatch();
+  const { result } = useTypedSelector((state: any) => state[roleAction.name]);
 
-  const [listPermission, set_listPermission] = useState([]);
-  const [listRole, set_listRole] = useState([]);
-
-  const getListRole = async () => {
-    const { data } = await UserRoleService.get();
-    set_listRole(data);
-    if (!listPermission.length) {
-      const { data: permission } = await UserRoleService.getPermission();
-      set_listPermission(permission);
-    }
-
-    return { data };
-  };
   const dataTableRef = useRef<any>();
   const modalFormRef = useRef<any>();
-  // const modalDragRoleRef = useRef<any>();
   return (
     <Fragment>
       <DataTable
-        action={action}
+        slice={userSlice}
+        action={userAction}
         ref={dataTableRef}
         onRow={() => ({
           onDoubleClick: () => null,
@@ -50,14 +37,6 @@ const Page = () => {
         })}
         rightHeader={
           <div className={'flex gap-2'}>
-            {/*{user?.role?.permissions?.includes(keyRole.P_USER_ROLE_LISTED) && (*/}
-            {/*  <Button*/}
-            {/*    icon={'las la-users-cog'}*/}
-            {/*    text={t('components.button.Role')}*/}
-            {/*    onClick={() => modalDragRoleRef?.current?.handleShow()}*/}
-            {/*  />*/}
-            {/*)}*/}
-
             {user?.role?.permissions?.includes(keyRole.P_USER_CREATE) && (
               <Button
                 icon={'las la-plus'}
@@ -69,10 +48,11 @@ const Page = () => {
         }
       />
       <ModalForm
-        action={action}
+        slice={userSlice}
+        action={userAction}
         firstRun={async () => {
-          if (!listRole.length) {
-            await getListRole();
+          if (!result.data) {
+            dispatch(roleAction.get({}));
           }
         }}
         ref={modalFormRef}
@@ -81,29 +61,11 @@ const Page = () => {
         columns={ColumnFormUser({
           t,
           formatDate,
-          listRole,
+          listRole: result.data || [],
         })}
         widthModal={600}
         idElement={'user'}
       />
-      {/*<ModalDrag*/}
-      {/*  ref={modalDragRoleRef}*/}
-      {/*  title={() => t('components.button.Role')}*/}
-      {/*  isLoading={isLoading}*/}
-      {/*  setIsLoading={setIsLoading}*/}
-      {/*  columns={ColumnFormUserRole({ t, listPermission })}*/}
-      {/*  Get={getListRole}*/}
-      {/*  Put={UserRoleService.put}*/}
-      {/*  Post={UserRoleService.post}*/}
-      {/*  Delete={UserRoleService.delete}*/}
-      {/*  GetById={user?.role?.permissions?.includes(keyRole.P_USER_ROLE_DETAIL) && UserRoleService.getById}*/}
-      {/*  widthForm={600}*/}
-      {/*  isReloadLoadToSave={true}*/}
-      {/*  idElement={'role'}*/}
-      {/*  showAddNew={user?.role?.permissions?.includes(keyRole.P_USER_ROLE_CREATE)}*/}
-      {/*  conditionEdit={() => user?.role?.permissions?.includes(keyRole.P_USER_ROLE_UPDATE)}*/}
-      {/*  conditionDelete={() => user?.role?.permissions?.includes(keyRole.P_USER_ROLE_DELETE)}*/}
-      {/*/>*/}
     </Fragment>
   );
 };

@@ -56,30 +56,3 @@ export const AuthService = {
     return false;
   },
 };
-
-export const UserService = {
-  nameLink: 'User',
-  get: (params: any = {}) => API.get(routerLinks(UserService.nameLink, 'api'), params),
-  getById: (id: string) => API.get(`${routerLinks(UserService.nameLink, 'api')}/${id}`),
-  post: async (values: any) => {
-    if (values.avatar) {
-      values.avatar = values.avatar[0].url;
-    }
-    const data = await API.post(routerLinks(UserService.nameLink, 'api'), values);
-    if (data.message) await Message.success({ text: data.message });
-    return data;
-  },
-  put: async (values: any, id: string) => {
-    if (values.avatar) {
-      values.avatar = values.avatar[0].url;
-    }
-    const data = await API.put(`${routerLinks(UserService.nameLink, 'api')}/${id}`, values);
-    if (data.message) await Message.success({ text: data.message });
-    return data;
-  },
-  delete: async (id: string) => {
-    const data = await API.delete(`${routerLinks(UserService.nameLink, 'api')}/${id}`);
-    if (data.message) await Message.success({ text: data.message });
-    return data;
-  },
-};

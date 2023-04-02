@@ -1,14 +1,15 @@
 import React, { lazy, Suspense } from 'react';
-import ReactDOM, { createRoot } from 'react-dom/client';
-import AuthProvider from '@globalContext';
-import { Spin } from './components/spin';
-import Router from '@routes/index';
+import { createRoot } from 'react-dom/client';
 import i18n from 'i18next';
 import XHR from 'i18next-xhr-backend';
 import { initReactI18next } from 'react-i18next';
-import { reportWebVitals } from '@utils';
-import { setupStore } from './redux/store';
 import { Provider } from 'react-redux';
+
+import AuthProvider from '@globalContext';
+import Router from '@routes/index';
+import { reportWebVitals } from '@utils';
+import { setupStore } from '@reducers';
+import { Spin } from './components/spin';
 
 const Styling = lazy(() => import('./utils/init/styling'));
 
