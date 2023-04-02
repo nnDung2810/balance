@@ -6,7 +6,6 @@ import userSlice from './user/slice';
 import roleAction from './role/action';
 import roleSlide from './role/slice';
 
-
 const rootReducer = combineReducers({
   [userSlice.name]: userSlice.reducer,
   [roleSlide.name]: roleSlide.reducer,
