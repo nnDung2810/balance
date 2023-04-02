@@ -94,75 +94,75 @@ export const DraggableLayout = ({ value, onChange }: { value: any; onChange?: an
           {t('routes.admin.Layout.Add')}
         </div>
       </div>
-      <ModalForm
-        ref={modalFormRef}
-        title={() => (indexEdit.current === -1 ? t('routes.admin.Layout.Add') : t('routes.admin.Layout.Edit'))}
-        isLoading={isLoading}
-        setIsLoading={set_isLoading}
-        columns={[
-          {
-            title: 'Name',
-            name: 'name',
-            formItem: {
-              col: 6,
-              rules: [{ type: 'required' }],
-            },
-          },
-          {
-            title: 'Style',
-            name: 'style',
-            formItem: {
-              col: 6,
-              type: 'select',
-              list: listStyle,
-            },
-          },
-          {
-            name: 'col',
-            title: 'Width',
-            formItem: {
-              type: 'slider',
-              min: 1,
-              max: 4,
-              sliderMarks: {
-                1: '25%',
-                2: '50%',
-                3: '75%',
-                4: '100%',
-              },
-              col: 6,
-              rules: [{ type: 'required' }],
-            },
-          },
-          {
-            title: t('Image'),
-            name: 'image',
-            formItem: {
-              col: 6,
-              type: 'upload',
-              mode: 'multiple',
-            },
-          },
-          {
-            title: 'Content',
-            name: 'content',
-            formItem: {
-              type: 'editor',
-            },
-          },
-        ]}
-        Post={(value: any) => {
-          if (indexEdit.current === -1) {
-            list.push(value);
-          } else {
-            list.splice(indexEdit.current, 1, value);
-            indexEdit.current = -1;
-          }
-          reload();
-        }}
-        widthModal={600}
-        idElement={'user'}
-      />
+      {/*<ModalForm*/}
+      {/*  ref={modalFormRef}*/}
+      {/*  title={() => (indexEdit.current === -1 ? t('routes.admin.Layout.Add') : t('routes.admin.Layout.Edit'))}*/}
+      {/*  isLoading={isLoading}*/}
+      {/*  setIsLoading={set_isLoading}*/}
+      {/*  columns={[*/}
+      {/*    {*/}
+      {/*      title: 'Name',*/}
+      {/*      name: 'name',*/}
+      {/*      formItem: {*/}
+      {/*        col: 6,*/}
+      {/*        rules: [{ type: 'required' }],*/}
+      {/*      },*/}
+      {/*    },*/}
+      {/*    {*/}
+      {/*      title: 'Style',*/}
+      {/*      name: 'style',*/}
+      {/*      formItem: {*/}
+      {/*        col: 6,*/}
+      {/*        type: 'select',*/}
+      {/*        list: listStyle,*/}
+      {/*      },*/}
+      {/*    },*/}
+      {/*    {*/}
+      {/*      name: 'col',*/}
+      {/*      title: 'Width',*/}
+      {/*      formItem: {*/}
+      {/*        type: 'slider',*/}
+      {/*        min: 1,*/}
+      {/*        max: 4,*/}
+      {/*        sliderMarks: {*/}
+      {/*          1: '25%',*/}
+      {/*          2: '50%',*/}
+      {/*          3: '75%',*/}
+      {/*          4: '100%',*/}
+      {/*        },*/}
+      {/*        col: 6,*/}
+      {/*        rules: [{ type: 'required' }],*/}
+      {/*      },*/}
+      {/*    },*/}
+      {/*    {*/}
+      {/*      title: t('Image'),*/}
+      {/*      name: 'image',*/}
+      {/*      formItem: {*/}
+      {/*        col: 6,*/}
+      {/*        type: 'upload',*/}
+      {/*        mode: 'multiple',*/}
+      {/*      },*/}
+      {/*    },*/}
+      {/*    {*/}
+      {/*      title: 'Content',*/}
+      {/*      name: 'content',*/}
+      {/*      formItem: {*/}
+      {/*        type: 'editor',*/}
+      {/*      },*/}
+      {/*    },*/}
+      {/*  ]}*/}
+      {/*  Post={(value: any) => {*/}
+      {/*    if (indexEdit.current === -1) {*/}
+      {/*      list.push(value);*/}
+      {/*    } else {*/}
+      {/*      list.splice(indexEdit.current, 1, value);*/}
+      {/*      indexEdit.current = -1;*/}
+      {/*    }*/}
+      {/*    reload();*/}
+      {/*  }}*/}
+      {/*  widthModal={600}*/}
+      {/*  idElement={'user'}*/}
+      {/*/>*/}
       {!isLoading && (
         <article id={'draggable' + id.current} className="w-full grid gap-2 grid-cols-4 mb-2">
           {list.map((item: any, index: number) => (

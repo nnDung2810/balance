@@ -6,7 +6,7 @@ import { useAuth } from '@globalContext';
 import { Spin } from '@components';
 import Form from '../../../components/form';
 import { AuthService } from '../../../services/user';
-import { CodeTypeService } from '../../../services/code/type';
+// import { CodeTypeService } from '../../../services/code/type';
 import { ColumnProfile } from '@columns';
 
 const Page = () => {
@@ -26,8 +26,8 @@ const Page = () => {
   useEffect(() => {
     const init = async () => {
       const { data: user } = await AuthService.profile();
-      const { data } = await CodeTypeService.getById('POS');
-      listPosition.current = data.items;
+      // const { data } = await CodeTypeService.getById('POS');
+      // listPosition.current = data.items;
       setUser(user);
       setIsLoading(false);
     };

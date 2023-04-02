@@ -76,18 +76,18 @@ const Page = () => {
           {t('routes.auth.login.Forgot Password')}
         </button>
       </div>
-      <ModalForm
-        ref={modalFormRef}
-        title={() => 'Quên mật khẩu'}
-        isLoading={isLoading}
-        setIsLoading={setIsLoading}
-        columns={ColumnForgottenPassword({
-          t,
-        })}
-        Post={AuthService.forgottenPassword}
-        widthModal={400}
-        idElement={'user'}
-      />
+      {/*<ModalForm*/}
+      {/*  ref={modalFormRef}*/}
+      {/*  title={() => 'Quên mật khẩu'}*/}
+      {/*  isLoading={isLoading}*/}
+      {/*  setIsLoading={setIsLoading}*/}
+      {/*  columns={ColumnForgottenPassword({*/}
+      {/*    t,*/}
+      {/*  })}*/}
+      {/*  Post={AuthService.forgottenPassword}*/}
+      {/*  widthModal={400}*/}
+      {/*  idElement={'user'}*/}
+      {/*/>*/}
     </Fragment>
   );
 };
