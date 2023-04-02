@@ -12,6 +12,7 @@ import { API } from '@utils';
 import { TableApi } from '@models';
 import { useTypedSelector } from '../../redux/hooks/useTypedSelector';
 import { useAppDispatch } from '../../redux/hooks/useActions';
+import slice from "../../redux/reducers/users/slice";
 
 const RadioGroup = Radio.Group;
 const CheckboxGroup = Checkbox.Group;
@@ -54,7 +55,10 @@ const Hook = forwardRef(
       columns = [],
       showList = true,
       footer,
-      defaultRequest = {},
+      defaultRequest = {
+        page: 1,
+        perPage: 10,
+      },
       pageIndex = 'page',
       pageSize = 'perPage',
       sort = 'sorts',
@@ -78,6 +82,7 @@ const Hook = forwardRef(
       idElement = 'temp-' + v4(),
       className = 'data-table',
       action,
+      data,
       ...prop
     }: Type,
     ref,
@@ -92,19 +97,21 @@ const Hook = forwardRef(
     const param = useRef(defaultRequest);
     const timeoutSearch = useRef<any>();
     const cols = useRef<any>();
-    const { result, isLoading } = useTypedSelector((state: any) => state[action.name]);
+    const { result, isLoading, queryParams, time } = useTypedSelector((state: any) => state[action?.name || 'User']);
     const params =
       save && location.search && location.search.indexOf('=') > -1
         ? { ...param.current, ...getQueryStringParams(location.search) }
         : param.current;
     useEffect(() => {
-      param.current = cleanObjectKeyNull({
-        ...params,
-        [sort]: JSON.stringify(params[sort]),
-        [filter]: JSON.stringify(params[filter]),
-      });
-      localStorage.setItem(idTable.current, JSON.stringify(cleanObjectKeyNull(param.current)));
-      onChange(param.current);
+      if (action) {
+        param.current = cleanObjectKeyNull({
+          ...params,
+          [sort]: JSON.stringify(params[sort]),
+          [filter]: JSON.stringify(params[filter]),
+        });
+        localStorage.setItem(idTable.current, JSON.stringify(cleanObjectKeyNull(param.current)));
+        if (!result.data || new Date().getTime() > time || JSON.stringify(param.current) != queryParams) onChange(param.current);
+      }
       return () => {
         localStorage.removeItem(idTable.current);
       };
@@ -127,7 +134,8 @@ const Hook = forwardRef(
         param.current = JSON.parse(localStorage.getItem(idTable.current) || '{}');
       }
 
-      if (showList) {
+      if (showList && action) {
+        dispatch(slice.actions.setQueryParams({ queryParams: param.current }));
         dispatch(action.get(cleanObjectKeyNull({ ...param.current })));
       }
     };
@@ -389,7 +397,7 @@ const Hook = forwardRef(
       });
       onChange && onChange(tempParams);
     };
-
+    if (!data) data = result?.data;
     return (
       <div className={classNames(className, 'intro-x')}>
         <div className="sm:flex justify-between mb-2.5">
@@ -458,7 +466,7 @@ const Hook = forwardRef(
                 return cols.current[index];
               })}
               pagination={false}
-              dataSource={result?.data?.map((item: any) => ({
+              dataSource={data?.map((item: any) => ({
                 ...item,
                 key: item.id || v4(),
               }))}
@@ -520,6 +528,7 @@ type Type = {
   paginationDescription?: (from: number, to: number, total: number) => string;
   idElement?: string;
   className?: string;
-  action: any;
+  action?: any;
+  data?: any[];
 };
 export default Hook;

@@ -5,7 +5,6 @@ import { useAuth } from '@globalContext';
 import { Button, DataTable, ModalDrag, ModalForm } from '@components';
 import { ColumnFormUser, ColumnFormUserRole, ColumnTableUser } from '@columns';
 import { UserRoleService } from '@services';
-import { UserService } from '../../../services/user';
 import action from '../../../redux/reducers/users/action';
 
 import { keyRole } from '@utils';

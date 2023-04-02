@@ -7,6 +7,9 @@ const initialState: State = {
   isLoading: false,
   isVisible: false,
   status: 'idle',
+  queryParams: '',
+  keepUnusedDataFor: 60,
+  time: 0,
 };
 
 export const slice = createSlice({
@@ -21,6 +24,10 @@ export const slice = createSlice({
         state.data = action.payload.data;
       }
     },
+    setQueryParams: (state, action: PayloadAction<{ queryParams: object }>) => {
+      state.time = new Date().getTime() + (state.keepUnusedDataFor * 1000);
+      state.queryParams = JSON.stringify(action.payload.queryParams);
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -104,5 +111,8 @@ interface State {
   isLoading: boolean;
   isVisible: boolean;
   status: string;
+  queryParams: string;
+  keepUnusedDataFor: number;
+  time: number;
 }
 export default slice;
