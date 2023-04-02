@@ -3,13 +3,13 @@ import { Form, Checkbox, Radio, Switch, Slider, DatePicker as DateAntDesign, For
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import { DefaultTFuncReturn } from 'i18next';
+import dayjs from 'dayjs';
 
-import { useAuth } from '@globalContext';
 import { Upload, Editor, DraggableLayout, Button } from '@components';
 import { convertFormValue } from '@utils';
 import { FormItem, FormModel } from '@models';
+import { globalAction, useTypedSelector } from '@reducers';
 import { Chips, SelectTag, Select, TreeSelect, TableTransfer, Password, Mask, Addable, DatePicker, Tab } from './input';
-import dayjs from 'dayjs';
 
 const Component = ({
   className,
@@ -29,7 +29,7 @@ const Component = ({
   classGroupButton = 'justify-center items-center',
 }: Type) => {
   const { t } = useTranslation();
-  const { formatDate } = useAuth();
+  const { formatDate } = useTypedSelector((state: any) => state[globalAction.name]);
   const [_columns, set_columns] = useState<FormModel[]>([]);
   const timeout = useRef<any>();
   const refLoad = useRef(true);

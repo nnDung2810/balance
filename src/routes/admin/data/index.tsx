@@ -1,15 +1,14 @@
 import React, { Fragment, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { useAuth } from '@globalContext';
 import { DataTable, ModalForm, Button } from '@components';
-import { ColumnDataForm, ColumnDataTable, ColumnDataTypeForm, ColumnPageForm } from '@columns';
+import { ColumnDataForm, ColumnDataTable } from '@columns';
 import { keyRole } from '@utils';
-import { dataSlice, dataAction, dataTypeAction, useAppDispatch, useTypedSelector } from '@reducers';
+import { dataSlice, dataAction, dataTypeAction, useAppDispatch, useTypedSelector, globalAction } from '@reducers';
 
 const Page = () => {
   const { t } = useTranslation();
-  const { formatDate, user } = useAuth();
+  const { formatDate, user } = useTypedSelector((state: any) => state[globalAction.name]);
   const dispatch = useAppDispatch();
   const { result } = useTypedSelector((state: any) => state[dataTypeAction.name]);
 

@@ -45,11 +45,11 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       >
         <Styling>
-          <AuthProvider>
-            <Provider store={store}>
+          <Provider store={store}>
+            <AuthProvider>
               <Router />
-            </Provider>
-          </AuthProvider>
+            </AuthProvider>
+          </Provider>
         </Styling>
       </Suspense>,
     );

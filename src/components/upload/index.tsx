@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import { v4 } from 'uuid';
 
-// import { useAuth } from '@globalContext';
 import { API, linkApi } from '@utils';
 import { Button, Message, Spin } from '@components';
 

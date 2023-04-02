@@ -316,7 +316,7 @@ const Hook = forwardRef(
     });
     cols.current = columns
       .filter((col: any) => !!col && !!col.tableItem)
-      .map((col: any, index: number) => {
+      .map((col: any) => {
         let item = col.tableItem;
 
         if (item.filter) {

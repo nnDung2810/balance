@@ -1,6 +1,6 @@
 import { FormModel } from '@models';
 
-const Column = ({ t }: any) => {
+const Column = () => {
   const col: FormModel[] = [
     {
       name: 'email',

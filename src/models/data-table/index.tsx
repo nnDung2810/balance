@@ -1,4 +1,4 @@
-import {CheckboxOptionType} from 'antd';
+import { CheckboxOptionType } from 'antd';
 
 export class DataTableModel {
   name?: string;

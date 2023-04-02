@@ -5,8 +5,8 @@ import { Swappable } from '@shopify/draggable';
 import { v4 } from 'uuid';
 import { t } from 'i18next';
 import { Popconfirm, Tooltip } from 'antd';
-import { ModalForm } from '@components';
-import { listStyle } from '@utils';
+// import { ModalForm } from '@components';
+// import { listStyle } from '@utils';
 
 export const DraggableLayout = ({ value, onChange }: { value: any; onChange?: any }) => {
   const id = useRef(v4());

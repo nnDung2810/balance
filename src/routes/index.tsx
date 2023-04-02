@@ -1,14 +1,14 @@
 import React, { Suspense, useEffect } from 'react';
 import { BrowserRouter, Navigate, Outlet, Route, Routes } from 'react-router-dom';
 
-import { useAuth } from '@globalContext';
 import { Spin } from '../components/spin';
 import { pages } from './pages';
 import { keyUser, routerLinks } from '@utils';
 import { useTranslation } from 'react-i18next';
+import { globalAction, useTypedSelector } from '@reducers';
 
 const Layout = ({ layout: Layout, isPublic = false }: any) => {
-  const { user } = useAuth();
+  const { user } = useTypedSelector((state: any) => state[globalAction.name]);
   if (isPublic === true || !!user?.email || !!JSON.parse(localStorage.getItem(keyUser) || '{}')?.email)
     return (
       <Layout>

@@ -1,34 +1,30 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form as FormAnt } from 'antd';
 import { useNavigate, useLocation } from 'react-router';
-import { useAuth } from '@globalContext';
 import { Spin } from '@components';
 import Form from '../../../components/form';
 import { routerLinks } from '@utils';
 import { ColumnResetPassword } from '@columns';
-import { AuthService } from '../../../services/user';
-// import { urlChat, passChat } from 'variable';
+import { globalAction, useAppDispatch, useTypedSelector } from '@reducers';
 
-// const realTimeAPI = new Rocketchat({
-//   protocol: 'ddp',
-//   host: `https://${urlChat}`,
-//   useSsl: true,
-// });
 const Page = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [form] = FormAnt.useForm();
-  const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useAppDispatch();
   const { search } = useLocation();
-  const submit = async (values: any) => {
-    setIsLoading(true);
-    const data = await AuthService.resetPassword(values, new URLSearchParams(search).get("token") || '');
-    setIsLoading(false);
-    if (data) {
-      console.log(data);
+
+  const { isLoading, status } = useTypedSelector((state: any) => state[globalAction.name]);
+
+  useEffect(() => {
+    if (status === 'resetPassword.fulfilled') {
       navigate(routerLinks('Login'), { replace: true });
     }
+  }, [status]);
+  const submit = async (values: any) => {
+    values.token = new URLSearchParams(search).get('token') || '';
+    dispatch(globalAction.resetPassword(values));
   };
   return (
     <Fragment>

@@ -1,39 +1,26 @@
-import React, { Fragment, useEffect, useRef, useState } from 'react';
+import React, { Fragment, useEffect, useRef } from 'react';
 import { Form as FormAnt } from 'antd';
 import { useTranslation } from 'react-i18next';
 
-import { useAuth } from '@globalContext';
 import { Spin } from '@components';
 import Form from '../../../components/form';
-import { AuthService } from '../../../services/user';
-// import { CodeTypeService } from '../../../services/code/type';
 import { ColumnProfile } from '@columns';
+import { globalAction, useAppDispatch, useTypedSelector } from '@reducers';
 
 const Page = () => {
   const { t } = useTranslation();
-  const { user, timeOut, setUser } = useAuth();
+  const { user, isLoading } = useTypedSelector((state: any) => state[globalAction.name]);
   const [form] = FormAnt.useForm();
-  const [isLoading, setIsLoading] = useState(true);
+  const dispatch = useAppDispatch();
   const listPosition = useRef([]);
 
   const submit = async (values: any) => {
-    setIsLoading(true);
-    const { data: user } = await AuthService.putProfile(values);
-    setUser(user);
-    setIsLoading(false);
+    dispatch(globalAction.putProfile(values));
   };
 
   useEffect(() => {
-    const init = async () => {
-      const { data: user } = await AuthService.profile();
-      // const { data } = await CodeTypeService.getById('POS');
-      // listPosition.current = data.items;
-      setUser(user);
-      setIsLoading(false);
-    };
-    init().then();
-  }, []);
-
+    dispatch(globalAction.profile());
+  }, [dispatch]);
   return (
     <Fragment>
       <Spin className="intro-x" spinning={isLoading}>
@@ -45,7 +32,7 @@ const Page = () => {
           isShowCancel={true}
           handSubmit={submit}
           disableSubmit={isLoading}
-          values={user}
+          values={{ ...user }}
         />
       </Spin>
     </Fragment>

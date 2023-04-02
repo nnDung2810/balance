@@ -1,5 +1,4 @@
-import { keyToken, keyUser, linkApi, routerLinks } from '@utils';
-import { AuthService } from '../services/user';
+import { keyRefreshToken, keyToken, keyUser, linkApi, routerLinks } from '@utils';
 import { Message } from '@components';
 
 const API = {
@@ -38,21 +37,21 @@ const API = {
       await Message.error({ text: res.message });
     }
 
-    if (url === `${routerLinks(AuthService.nameLink, 'api')}/refresh`) {
+    if (url === `${routerLinks('Auth', 'api')}/refresh`) {
       return false;
     } else if (
       response.status === 401 &&
-      url !== `${routerLinks(AuthService.nameLink, 'api')}/login` &&
-      url !== `${routerLinks(AuthService.nameLink, 'api')}/logout`
+      url !== `${routerLinks('Auth', 'api')}/login` &&
+      url !== `${routerLinks('Auth', 'api')}/logout`
     ) {
-      const accessToken = await AuthService.refresh();
+      const accessToken = await API.refresh();
       if (accessToken) {
         config.headers = { ...config.headers, authorization: accessToken };
         const response = await fetch(linkApi + url + (linkParam && '?' + linkParam), config);
         return response.json();
       }
     }
-    if (response.status === 401 && url !== `${routerLinks(AuthService.nameLink, 'api')}/login`) {
+    if (response.status === 401 && url !== `${routerLinks('Auth', 'api')}/login`) {
       localStorage.removeItem(keyUser);
       window.location.href = routerLinks('Login');
     }
@@ -101,6 +100,20 @@ const API = {
       },
       headers,
     );
+  },
+  refresh: async () => {
+    const data = await API.get(
+      `${routerLinks('Auth', 'api')}/refresh`,
+      {},
+      {
+        authorization: 'Bearer ' + localStorage.getItem(keyRefreshToken),
+      },
+    );
+    if (data) {
+      const { accessToken } = data.data;
+      localStorage.setItem(keyToken, accessToken);
+      return 'Bearer ' + accessToken;
+    }
   },
 };
 export default API;

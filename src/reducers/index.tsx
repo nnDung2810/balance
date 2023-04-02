@@ -1,6 +1,7 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
+import { globalSlice, globalAction } from './global';
 import { userSlice, userAction } from './user';
 import { userRoleSlice, userRoleAction } from './user/role';
 import { codeSlice, codeAction } from './code';
@@ -10,6 +11,7 @@ import { dataTypeSlice, dataTypeAction } from './data/type';
 import { pageSlice, pageAction } from './page';
 
 const rootReducer = combineReducers({
+  [globalSlice.name]: globalSlice.reducer,
   [userSlice.name]: userSlice.reducer,
   [userRoleSlice.name]: userRoleSlice.reducer,
   [codeSlice.name]: codeSlice.reducer,
@@ -32,6 +34,8 @@ export {
   setupStore,
   useAppDispatch,
   useTypedSelector,
+  globalSlice,
+  globalAction,
   userSlice,
   userAction,
   userRoleSlice,

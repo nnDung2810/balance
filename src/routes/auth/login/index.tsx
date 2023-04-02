@@ -1,14 +1,13 @@
-import React, { Fragment, useRef, useState } from 'react';
+import React, { Fragment, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form as FormAnt } from 'antd';
 import { useNavigate } from 'react-router';
 // import { Rocketchat } from '@rocket.chat/sdk';
-import { useAuth } from '@globalContext';
 import { ModalForm, Spin } from '@components';
 import Form from '../../../components/form';
 import { routerLinks } from '@utils';
 import { ColumnForgottenPassword, ColumnLogin } from '@columns';
-import { AuthService } from '../../../services/user';
+import { globalAction, globalSlice, useAppDispatch, useTypedSelector } from '@reducers';
 // import { urlChat, passChat } from 'variable';
 
 // const realTimeAPI = new Rocketchat({
@@ -18,35 +17,30 @@ import { AuthService } from '../../../services/user';
 // });
 const Page = () => {
   const { t } = useTranslation();
-  const { login } = useAuth();
-  const navigate = useNavigate();
   const [form] = FormAnt.useForm();
-  const [isLoading, setIsLoading] = useState(false);
-  const [values, setValues] = useState({});
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
-  const submit = async (values: any) => {
-    setValues(values);
-    setIsLoading(true);
-    const data = await AuthService.login(values);
-    setIsLoading(false);
-    if (data) {
-      login(data);
-      console.log(data);
-      // await realTimeAPI.connect({
-      //   protocol: 'ddp',
-      //   host: `https://${urlChat}`,
-      //   useSsl: true,
-      // });
-      //
-      // const result = await realTimeAPI.login({ username: data.user.rocketChatUsername, password: values.password });
-      // if (result.type === 'resume') {
-      //   localStorage.setItem(passChat, result?.token);
-      //   document.cookie = 'rc_token=' + result?.token;
-      //   document.cookie = 'rc_uid=' + result?.id;
-      // }
-      // console.log(result);
+  const { isLoading, status } = useTypedSelector((state: any) => state[globalAction.name]);
+  useEffect(() => {
+    if (status === 'login.fulfilled') {
       navigate(routerLinks('Dashboard'), { replace: true });
     }
+  }, [status]);
+  const submit = async (values: any) => {
+    dispatch(globalAction.login(values));
+    // await realTimeAPI.connect({
+    //   protocol: 'ddp',
+    //   host: `https://${urlChat}`,
+    //   useSsl: true,
+    // });
+    //
+    // const result = await realTimeAPI.login({ username: data.user.rocketChatUsername, password: values.password });
+    // if (result.type === 'resume') {
+    //   localStorage.setItem(passChat, result?.token);
+    //   document.cookie = 'rc_token=' + result?.token;
+    //   document.cookie = 'rc_uid=' + result?.id;
+    // }
   };
   const modalFormRef = useRef<any>();
 
@@ -66,7 +60,6 @@ const Page = () => {
           textSubmit={t('routes.auth.login.Log In')}
           handSubmit={submit}
           disableSubmit={isLoading}
-          values={values}
         />
       </Spin>
       <div className="mt-3 intro-x">
@@ -76,18 +69,15 @@ const Page = () => {
           {t('routes.auth.login.Forgot Password')}
         </button>
       </div>
-      {/*<ModalForm*/}
-      {/*  ref={modalFormRef}*/}
-      {/*  title={() => 'Quên mật khẩu'}*/}
-      {/*  isLoading={isLoading}*/}
-      {/*  setIsLoading={setIsLoading}*/}
-      {/*  columns={ColumnForgottenPassword({*/}
-      {/*    t,*/}
-      {/*  })}*/}
-      {/*  Post={AuthService.forgottenPassword}*/}
-      {/*  widthModal={400}*/}
-      {/*  idElement={'user'}*/}
-      {/*/>*/}
+      <ModalForm
+        action={globalAction}
+        slice={globalSlice}
+        ref={modalFormRef}
+        title={() => 'Quên mật khẩu'}
+        columns={ColumnForgottenPassword()}
+        widthModal={400}
+        idElement={'user'}
+      />
     </Fragment>
   );
 };

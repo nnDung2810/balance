@@ -6,16 +6,18 @@ import classNames from 'classnames';
 import { useLocation } from 'react-router-dom';
 // import { initializeApp } from 'firebase/app';
 // import { getMessaging, isSupported, getToken, onMessage } from 'firebase/messaging';
-import { useAuth } from '@globalContext';
 import { routerLinks } from '@utils';
 import { Avatar } from '@components';
+import { globalAction, globalSlice, useAppDispatch, useTypedSelector } from '@reducers';
 import Menu from './menu';
 // import { firebaseConfig } from 'variable';
 import './index.less';
 
 const Layout = ({ children }: PropsWithChildren) => {
   const { t, i18n } = useTranslation();
-  const { user, changeLanguage } = useAuth();
+  const dispatch = useAppDispatch();
+  const { user } = useTypedSelector((state: any) => state[globalAction.name]);
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -81,7 +83,7 @@ const Layout = ({ children }: PropsWithChildren) => {
       )}
     >
       <div className="flex items-center justify-end sm:justify-between px-5 h-20">
-        <Select value={i18n.language} onChange={(value) => changeLanguage(value)}>
+        <Select value={i18n.language} onChange={(value: string) => dispatch(globalSlice.actions.setLanguage(value))}>
           <Select.Option value="en">
             <img src="/assets/svg/us.svg" alt="US" className="mr-1 w-4 inline-block relative -top-0.5" />{' '}
             {t('routes.admin.Layout.English')}
