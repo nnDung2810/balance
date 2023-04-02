@@ -1,7 +1,4 @@
-import {createAsyncThunk, PayloadAction} from '@reduxjs/toolkit';
-import { API, routerLinks } from '@utils';
-import { Message } from '@components';
-import action from "./user/action";
+import { PayloadAction } from '@reduxjs/toolkit';
 
 export default class Slice {
   name: string;
@@ -19,8 +16,8 @@ export default class Slice {
     time: 0,
   };
   constructor(action: any, initialState: object = {}) {
-    this.name = action.name
-    this.initialState = {...this.defaultState, initialState}
+    this.name = action.name;
+    this.initialState = { ...this.defaultState, initialState };
     this.reducers = {
       setIsVisible: (state: State, action: PayloadAction<boolean | { isVisible: boolean; data: object }>) => {
         if (typeof action.payload === 'boolean') {
@@ -31,9 +28,9 @@ export default class Slice {
         }
       },
       setQueryParams: (state: State, action: PayloadAction<{ queryParams: object }>) => {
-        state.time = new Date().getTime() + (state.keepUnusedDataFor * 1000);
+        state.time = new Date().getTime() + state.keepUnusedDataFor * 1000;
         state.queryParams = JSON.stringify(action.payload.queryParams);
-      }
+      },
     };
     this.extraReducers = (builder: any) => {
       builder

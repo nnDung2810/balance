@@ -1,11 +1,11 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { API, routerLinks } from '@utils';
 import { Message } from '@components';
-import Action from "../action";
+import Action from '../action';
+import Slice from '../slice';
 
 const action = new Action('User');
-
-export default {
+export const userAction = {
   ...action,
   post: createAsyncThunk(action.name + '/post', async (values: any) => {
     if (values.avatar) {
@@ -26,3 +26,5 @@ export default {
     return data;
   }),
 };
+const slice = new Slice(userAction);
+export const userSlice = createSlice({ ...slice });

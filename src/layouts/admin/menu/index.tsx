@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { routerLinks } from '@utils';
 import listMenu from '../menus';
 import './index.less';
+import { v4 } from 'uuid';
 
 const Layout = ({ isCollapsed = false, permission = [] }: any) => {
   const { t } = useTranslation();
@@ -42,20 +43,23 @@ const Layout = ({ isCollapsed = false, permission = [] }: any) => {
     }
   }, [isCollapsed]);
 
-  const subMenu = (child: any[]) =>
-    child
-      .filter((subItem: any) => !subItem.permission || permission?.includes(subItem.permission))
-      .map((subItem: any, index: number) => (
-        <li
-          key={index}
-          className={classNames('child-item py-2 cursor-pointer', {
-            'bg-white text-blue-500': location.pathname.indexOf(routerLinks(subItem.name)) > -1,
-          })}
-          onClick={() => navigate(routerLinks(subItem.name))}
-        >
-          {t(`titles.${subItem.name}`)}
-        </li>
-      ));
+  const subMenu = (child: any[]) => (
+    <ul>
+      {child
+        .filter((subItem: any) => !subItem.permission || permission?.includes(subItem.permission))
+        .map((subItem: any, index: number) => (
+          <li
+            key={index + v4()}
+            className={classNames('child-item py-2 cursor-pointer', {
+              'bg-white text-blue-500': location.pathname.indexOf(routerLinks(subItem.name)) > -1,
+            })}
+            onClick={() => navigate(routerLinks(subItem.name))}
+          >
+            {t(`titles.${subItem.name}`)}
+          </li>
+        ))}
+    </ul>
+  );
 
   return (
     <ul className="menu relative h-[calc(100vh-5rem)]" id={'menu-sidebar'} ref={refMenu}>

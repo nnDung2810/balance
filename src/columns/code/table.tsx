@@ -5,8 +5,25 @@ import { Button } from '@components';
 import { keyRole } from '@utils';
 import { DataTableModel } from '@models';
 
-const Column = ({ t, handleEdit, handleDelete, listType, permissions }: any) => {
+const Column = ({ t, modalFormRef, listType, permissions }: any) => {
   const col: DataTableModel[] = [
+    {
+      title: t('titles.Code'),
+      name: 'code',
+      tableItem: {
+        width: 100,
+        filter: { type: 'search' },
+        sorter: true,
+      },
+    },
+    {
+      title: t('Code.Name'),
+      name: 'name',
+      tableItem: {
+        filter: { type: 'search' },
+        sorter: true,
+      },
+    },
     {
       title: t('Code.Type'),
       name: 'type',
@@ -18,25 +35,6 @@ const Column = ({ t, handleEdit, handleDelete, listType, permissions }: any) => 
         width: 110,
         sorter: true,
         render: (text: string) => text && listType.filter((item: any) => item.value === text)[0]?.label,
-      },
-    },
-    {
-      title: t('titles.Code'),
-      name: 'code',
-      tableItem: {
-        width: 100,
-        filter: { type: 'search' },
-        fixed: window.innerWidth > 767,
-        sorter: true,
-      },
-    },
-    {
-      title: t('Code.Name'),
-      name: 'name',
-      tableItem: {
-        filter: { type: 'search' },
-        fixed: window.innerWidth > 767,
-        sorter: true,
       },
     },
     {
@@ -59,7 +57,7 @@ const Column = ({ t, handleEdit, handleDelete, listType, permissions }: any) => 
           <div className={'flex gap-2'}>
             {permissions?.includes(keyRole.P_CODE_UPDATE) && (
               <Tooltip title={t('routes.admin.Layout.Edit')}>
-                <Button icon={'las la-edit'} onClick={() => handleEdit(data)} />
+                <Button icon={'las la-edit'} onClick={() => modalFormRef?.current?.handleEdit(data)} />
               </Tooltip>
             )}
             {permissions?.includes(keyRole.P_CODE_DELETE) && (
@@ -68,7 +66,7 @@ const Column = ({ t, handleEdit, handleDelete, listType, permissions }: any) => 
                   placement="left"
                   title={t('components.datatable.areYouSureWant')}
                   icon={<i className="las la-question-circle text-2xl text-yellow-500 absolute -top-0.5 -left-1" />}
-                  onConfirm={() => handleDelete(data.id)}
+                  onConfirm={() => modalFormRef?.current?.handleDelete(data.id)}
                   okText={t('components.datatable.ok')}
                   cancelText={t('components.datatable.cancel')}
                 >

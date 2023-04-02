@@ -109,7 +109,8 @@ const Hook = forwardRef(
           [filter]: JSON.stringify(params[filter]),
         });
         localStorage.setItem(idTable.current, JSON.stringify(cleanObjectKeyNull(param.current)));
-        if (!result.data || new Date().getTime() > time || JSON.stringify(param.current) != queryParams) onChange(param.current);
+        if (!result.data || new Date().getTime() > time || JSON.stringify(param.current) != queryParams)
+          onChange(param.current);
       }
       return () => {
         localStorage.removeItem(idTable.current);
@@ -501,7 +502,6 @@ const Hook = forwardRef(
 Hook.displayName = 'HookTable';
 type Type = {
   columns: any[];
-  isLoading?: boolean;
   showList?: boolean;
   footer?: (result: any) => any;
   defaultRequest?: any;
