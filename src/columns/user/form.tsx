@@ -88,6 +88,7 @@ const Column = ({ t, listRole }: any) => {
           params: (form: any, fullTextSearch: string) => ({
             fullTextSearch,
             filter: { type: 'POS' },
+            extend: {},
           }),
           format: (item: any) => ({
             label: item.name,

@@ -1,4 +1,5 @@
 import { CheckboxOptionType, FormInstance } from 'antd';
+import { TableGet } from '../data-table';
 
 export class FormModel {
   name?: string;
@@ -51,11 +52,7 @@ export class FormItem {
   picker?: 'time' | 'date' | 'week' | 'month' | 'quarter' | 'year';
   onCalendarChange?: (current: any, form: FormInstance, reRender: any) => void;
   api?: FormApi;
-  get?: {
-    action: any;
-    params?: (getFieldValue: any, fullTextSearch: string, value: any) => any;
-    format?: (item: any) => CheckboxOptionType;
-  };
+  get?: TableGet;
   label?: string;
   maxTagCount?: number;
   tag?: {

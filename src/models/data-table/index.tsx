@@ -20,12 +20,12 @@ export class TableItem {
 export class TableItemFilter {
   type?: 'search' | 'checkbox' | 'radio' | 'date';
   list?: TableItemFilterList[];
-  api?: TableApi;
+  get?: TableGet;
   name?: string;
 }
 
-export class TableApi {
-  link?: () => string;
+export class TableGet {
+  action?: any;
   format?: (item: any) => CheckboxOptionType;
   params?: (fullTextSearch: string, value?: any) => any;
 }

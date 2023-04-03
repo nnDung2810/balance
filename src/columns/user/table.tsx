@@ -5,6 +5,7 @@ import dayjs from 'dayjs';
 import { Avatar, Button } from '@components';
 import { keyRole, routerLinks } from '@utils';
 import { DataTableModel } from '@models';
+import { codeAction } from '@reducers';
 
 const Column = ({ t, formatDate, modalFormRef, permissions }: any) => {
   const col: DataTableModel[] = [
@@ -30,8 +31,8 @@ const Column = ({ t, formatDate, modalFormRef, permissions }: any) => {
         filter: {
           type: 'checkbox',
           name: 'positionCode',
-          api: {
-            link: () => routerLinks('Code', 'api') + '/',
+          get: {
+            action: codeAction,
             format: (item: any) => ({
               label: item.name,
               value: item.code,
