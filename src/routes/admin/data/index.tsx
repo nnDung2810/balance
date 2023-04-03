@@ -26,7 +26,6 @@ const Page = () => {
     <Fragment>
       <DataTable
         action={dataAction}
-        slice={dataSlice}
         showSearch={false}
         ref={dataTableRef}
         onRow={() => ({

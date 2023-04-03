@@ -51,6 +51,11 @@ export class FormItem {
   picker?: 'time' | 'date' | 'week' | 'month' | 'quarter' | 'year';
   onCalendarChange?: (current: any, form: FormInstance, reRender: any) => void;
   api?: FormApi;
+  get?: {
+    action: any;
+    params?: (getFieldValue: any, fullTextSearch: string, value: any) => any;
+    format?: (item: any) => CheckboxOptionType;
+  };
   label?: string;
   maxTagCount?: number;
   tag?: {

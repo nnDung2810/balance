@@ -11,13 +11,11 @@ const Page = () => {
   const { formatDate, user } = useTypedSelector((state: any) => state[globalAction.name]);
   const dispatch = useAppDispatch();
   const { result } = useTypedSelector((state: any) => state[userRoleAction.name]);
-
   const dataTableRef = useRef<any>();
   const modalFormRef = useRef<any>();
   return (
     <Fragment>
       <DataTable
-        slice={userSlice}
         action={userAction}
         ref={dataTableRef}
         onRow={() => ({

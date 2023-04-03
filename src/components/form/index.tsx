@@ -238,6 +238,7 @@ const Component = ({
             formItem={formItem}
             form={form}
             disabled={!!formItem.disabled && formItem.disabled(values, form)}
+            get={formItem.get}
           />
         );
       case 'tree_select':

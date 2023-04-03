@@ -27,14 +27,12 @@ export default class Slice {
           state.data = action.payload.data;
         }
       },
-      setQueryParams: (state: State, action: PayloadAction<{ queryParams: object }>) => {
-        state.time = new Date().getTime() + state.keepUnusedDataFor * 1000;
-        state.queryParams = JSON.stringify(action.payload.queryParams);
-      },
     };
     this.extraReducers = (builder: any) => {
       builder
-        .addCase(action.get.pending, (state: State) => {
+        .addCase(action.get.pending, (state: State, action: any) => {
+          state.time = new Date().getTime() + state.keepUnusedDataFor * 1000;
+          state.queryParams = JSON.stringify(action.meta.arg);
           state.isLoading = true;
           state.status = 'get.pending';
         })

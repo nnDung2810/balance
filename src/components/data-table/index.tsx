@@ -80,7 +80,6 @@ const Hook = forwardRef(
       idElement = 'temp-' + v4(),
       className = 'data-table',
       action,
-      slice,
       data,
       ...prop
     }: Type,
@@ -102,7 +101,7 @@ const Hook = forwardRef(
         ? { ...param.current, ...getQueryStringParams(location.search) }
         : param.current;
     useEffect(() => {
-      if (action && slice) {
+      if (action) {
         param.current = cleanObjectKeyNull({
           ...params,
           [sort]: JSON.stringify(params[sort]),
@@ -135,7 +134,6 @@ const Hook = forwardRef(
       }
 
       if (showList && action) {
-        dispatch(slice.actions.setQueryParams({ queryParams: param.current }));
         dispatch(action.get(cleanObjectKeyNull({ ...param.current })));
       }
     };
@@ -528,7 +526,6 @@ type Type = {
   idElement?: string;
   className?: string;
   action?: any;
-  slice?: any;
   data?: any[];
 };
 export default Hook;

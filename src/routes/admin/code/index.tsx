@@ -25,7 +25,6 @@ const Page = () => {
     <Fragment>
       <DataTable
         action={codeAction}
-        slice={codeSlice}
         ref={dataTableRef}
         onRow={() => ({
           onDoubleClick: () => null,
