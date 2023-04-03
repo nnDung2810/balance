@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { CheckboxOptionType, FormInstance, Select } from 'antd';
+import { FormInstance, Select } from 'antd';
 import { useAppDispatch, useTypedSelector } from '@reducers';
+import { TableGet } from '@models';
 
 const Component = ({
   formItem,
@@ -82,10 +83,6 @@ type Type = {
   placeholder: string;
   disabled: boolean;
   tabIndex: number;
-  get?: {
-    action: any;
-    params?: (getFieldValue: any, fullTextSearch: string, value: any) => any;
-    format?: (item: any) => CheckboxOptionType;
-  };
+  get?: TableGet;
 };
 export default Component;
