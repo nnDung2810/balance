@@ -11,6 +11,7 @@ import routerLinks from '../router-links';
 import { keyRole, keyToken, keyUser, linkApi, keyRefreshToken, listStyle } from './variable';
 
 import convertFormValue from './convertFormValue';
+import cleanObjectKeyNull from './cleanObjectKeyNull';
 import covertChild from './covertChild';
 
 export {
@@ -24,6 +25,7 @@ export {
   keyRefreshToken,
   listStyle,
   convertFormValue,
+  cleanObjectKeyNull,
   covertChild,
   echartBar,
   echartBarStack,

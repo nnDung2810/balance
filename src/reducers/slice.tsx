@@ -18,18 +18,20 @@ export default class Slice {
   constructor(action: any, initialState: object = {}) {
     this.name = action.name;
     this.initialState = { ...this.defaultState, initialState };
-    this.reducers = {
-      setIsVisible: (state: State, action: PayloadAction<boolean | { isVisible: boolean; data: object }>) => {
-        if (typeof action.payload === 'boolean') {
-          state.isVisible = action.payload;
-        } else {
-          state.isVisible = action.payload.isVisible;
-          state.data = action.payload.data;
-        }
-      },
-    };
+    this.reducers = {};
     this.extraReducers = (builder: any) => {
       builder
+        .addCase(
+          action.isVisible.fulfilled,
+          (state: State, action: PayloadAction<boolean | { isVisible: boolean; data: object }>) => {
+            if (typeof action.payload === 'boolean') {
+              state.isVisible = action.payload;
+            } else {
+              if (JSON.stringify(state.data) !== JSON.stringify(action.payload.data)) state.data = action.payload.data;
+              state.isVisible = action.payload.isVisible;
+            }
+          },
+        )
         .addCase(action.get.pending, (state: State, action: any) => {
           state.time = new Date().getTime() + state.keepUnusedDataFor * 1000;
           state.queryParams = JSON.stringify(action.meta.arg);
@@ -51,7 +53,7 @@ export default class Slice {
           state.status = 'getById.pending';
         })
         .addCase(action.getById.fulfilled, (state: State, action: PayloadAction<any>) => {
-          state.data = action.payload.data;
+          if (JSON.stringify(state.data) !== JSON.stringify(action.payload.data)) state.data = action.payload.data;
           state.isLoading = false;
           state.isVisible = true;
           state.status = 'getById.fulfilled';

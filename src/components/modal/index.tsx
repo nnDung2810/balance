@@ -10,7 +10,6 @@ const Hook = forwardRef(
   (
     {
       action,
-      slice,
       title,
       widthModal = 800,
       onOk,
@@ -29,7 +28,7 @@ const Hook = forwardRef(
 
     const { t } = useTranslation();
     const handleCancel = () => {
-      dispatch(slice.actions.setIsVisible(false));
+      dispatch(action.isVisible(false));
     };
     const handleOk = async () => {
       if (onOk) {
@@ -79,7 +78,6 @@ const Hook = forwardRef(
 Hook.displayName = 'HookModal';
 type Type = PropsWithChildren<{
   action: any;
-  slice: any;
   title?: (data: any) => string;
   widthModal: number;
   onOk?: (data: any) => any;

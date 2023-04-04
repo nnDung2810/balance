@@ -62,7 +62,6 @@ const Page = () => {
       />
       <ModalForm
         action={codeAction}
-        slice={codeSlice}
         ref={modalFormRef}
         title={(data: any) => (!data?.id ? t('routes.admin.Layout.Add') : t('routes.admin.Layout.Edit'))}
         handleChange={async () => await dataTableRef?.current?.onChange()}

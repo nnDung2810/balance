@@ -71,7 +71,6 @@ const Page = () => {
       </div>
       <ModalForm
         action={globalAction}
-        slice={globalSlice}
         ref={modalFormRef}
         title={() => 'Quên mật khẩu'}
         columns={ColumnForgottenPassword()}

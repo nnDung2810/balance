@@ -4,6 +4,7 @@ import { Message } from '@components';
 
 export default class Action {
   name: string;
+  isVisible: any;
   get: any;
   getById: any;
   post: any;
@@ -11,6 +12,7 @@ export default class Action {
   delete: any;
   constructor(name: string) {
     this.name = name;
+    this.isVisible = createAsyncThunk(name + '/isVisible', async (values: any) => values);
     this.get = createAsyncThunk(name + '/get', async (params: any = {}) => API.get(routerLinks(name, 'api'), params));
     this.getById = createAsyncThunk(name + '/getById', async (id: string) =>
       API.get(`${routerLinks(name, 'api')}/${id}`),

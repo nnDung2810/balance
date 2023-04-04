@@ -45,7 +45,6 @@ const Page = () => {
         }
       />
       <ModalForm
-        slice={userSlice}
         action={userAction}
         firstRun={async () => {
           if (!result.data) {

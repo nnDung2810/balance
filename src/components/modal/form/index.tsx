@@ -21,7 +21,6 @@ const Hook = forwardRef(
       footerCustom,
       idElement = 'modal-form-' + v4(),
       action,
-      slice,
       ...propForm
     }: Type,
     ref: any,
@@ -29,7 +28,6 @@ const Hook = forwardRef(
     useImperativeHandle(ref, () => ({ handleEdit, handleDelete, form }));
     const dispatch = useAppDispatch();
     const { data, status } = useTypedSelector((state: any) => state[action.name]);
-
     const [form] = FormAnt.useForm();
 
     useEffect(() => {
@@ -47,7 +45,7 @@ const Hook = forwardRef(
       if (item.id) {
         dispatch(action.getById(item.id));
       } else {
-        dispatch(slice.actions.setIsVisible({ isVisible: true, data: {} }));
+        dispatch(action.isVisible({ isVisible: true, data: {} }));
       }
     };
     const handleDelete = async (id: string) => {
@@ -56,7 +54,6 @@ const Hook = forwardRef(
 
     return (
       <Modal
-        slice={slice}
         action={action}
         idElement={idElement}
         widthModal={widthModal}
@@ -84,7 +81,6 @@ const Hook = forwardRef(
 Hook.displayName = 'HookModalForm';
 type Type = {
   action: any;
-  slice: any;
   title: (data: any) => string;
   handleChange?: (values?: any, data?: any) => Promise<any>;
   firstRun?: (item: any) => void;

@@ -10,6 +10,7 @@ import classNames from 'classnames';
 import { Button, Pagination } from '@components';
 import { TableGet } from '@models';
 import { useAppDispatch, useTypedSelector } from '@reducers';
+import { cleanObjectKeyNull } from '@utils';
 
 const RadioGroup = Radio.Group;
 const CheckboxGroup = Checkbox.Group;
@@ -26,16 +27,7 @@ const checkTextToShort = (text: string) => {
     </span>
   );
 };
-const cleanObjectKeyNull = (obj: any) => {
-  for (const propName in obj) {
-    if (Object.prototype.hasOwnProperty.call(obj, propName)) {
-      if (obj[propName] === null || obj[propName] === undefined) {
-        delete obj[propName];
-      }
-    }
-  }
-  return obj;
-};
+
 const getQueryStringParams = (query: any) => {
   return query
     ? (/^[?#]/.test(query) ? query.slice(1) : query).split('&').reduce((params: any, param: any) => {
@@ -166,8 +158,8 @@ const Hook = forwardRef(
     const columnSearch = (get: TableGet, fullTextSearch = '', value?: any, queryParams = '', time = 0) => {
       if (get?.action) {
         const params = get.params ? get.params(fullTextSearch, value) : { fullTextSearch };
-        if (new Date().getTime() > time || JSON.stringify(params) != queryParams) {
-          dispatch(get.action.get(params));
+        if (new Date().getTime() > time || JSON.stringify(cleanObjectKeyNull(params)) != queryParams) {
+          dispatch(get.action.get(cleanObjectKeyNull(params)));
         }
       }
     };

@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { FormInstance, Select } from 'antd';
+
 import { useAppDispatch, useTypedSelector } from '@reducers';
 import { TableGet } from '@models';
+import { cleanObjectKeyNull } from '@utils';
 
 const Component = ({
   formItem,
@@ -18,15 +20,15 @@ const Component = ({
 }: Type) => {
   const [_list, set_list] = useState(formItem.list ? formItem.list : []);
   const dispatch = useAppDispatch();
-  const { result, queryParams, time } = useTypedSelector((state: any) => state[get?.action?.name || 'User']);
+  const { result, queryParams, time, isLoading } = useTypedSelector((state: any) => state[get?.action?.name || 'User']);
   const list = !get ? _list : result.data?.map(formItem.get.format).filter((item: any) => !!item.value);
   const loadData = async (fullTextSearch: string) => {
     if (get) {
       const params = formItem.get.params
         ? formItem.get.params(form.getFieldValue, fullTextSearch, value)
         : { fullTextSearch };
-      if (!result.data || new Date().getTime() > time || JSON.stringify(params) != queryParams) {
-        dispatch(get.action.get(params));
+      if (!result.data || new Date().getTime() > time || JSON.stringify(cleanObjectKeyNull(params)) != queryParams) {
+        dispatch(get.action.get(cleanObjectKeyNull(params)));
       }
     } else if (formItem.renderList) {
       set_list(formItem.renderList(form.getFieldValue, fullTextSearch, formItem.list));
@@ -41,7 +43,9 @@ const Component = ({
   };
 
   useEffect(() => {
-    loadData('');
+    if (!isLoading) {
+      loadData('');
+    }
   }, []);
 
   return (
