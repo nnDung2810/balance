@@ -5,6 +5,8 @@ import dayjs from 'dayjs';
 import { Avatar, Button } from '@components';
 import { keyRole, routerLinks } from '@utils';
 import { DataTableModel } from '@models';
+import edit from '../../assets/svgs/edit.svg';
+import trash from '../../assets/svgs/trash-alt-solid.svg';
 
 const Column = ({ t, formatDate, modalFormRef, permissions }: any) => {
   const col: DataTableModel[] = [
@@ -93,7 +95,9 @@ const Column = ({ t, formatDate, modalFormRef, permissions }: any) => {
           <div className={'flex gap-2'}>
             {permissions?.includes(keyRole.P_USER_UPDATE) && (
               <Tooltip title={t('routes.admin.Layout.Edit')}>
-                <Button icon={'las la-edit'} onClick={() => modalFormRef?.current?.handleEdit(data)} />
+                <img src={edit} className="h-7 w-7 bg-sky-900 !fill-white rounded hover:cursor-pointer"
+                      onClick={() => modalFormRef?.current?.handleEdit(data)}/>
+                {/* <Button icon={'las la-edit'} onClick={() => modalFormRef?.current?.handleEdit(data)} /> */}
               </Tooltip>
             )}
 
@@ -107,7 +111,8 @@ const Column = ({ t, formatDate, modalFormRef, permissions }: any) => {
                   okText={t('components.datatable.ok')}
                   cancelText={t('components.datatable.cancel')}
                 >
-                  <Button icon={'las la-trash-alt'} className={'!bg-red-500 text-white'} />
+                   <img src={trash} className="h-7 w-7 !bg-red-500 !fill-white rounded hover:cursor-pointer"/>
+                  {/* <Button icon={'las la-trash-alt'} className={'!bg-red-500 text-white'} /> */}
                 </Popconfirm>
               </Tooltip>
             )}

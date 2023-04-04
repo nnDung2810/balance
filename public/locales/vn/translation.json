@@ -9,7 +9,8 @@
       "search": "Tìm kiếm",
       "areYouSureWant": "Bạn có chắc muốn xóa ?",
       "cancel": "Huỷ bỏ",
-      "ok": "Đồng ý"
+      "ok": "Đồng ý",
+      "No Data": "Trống"
     },
     "form": {
       "ruleRequired": "Đây là trường bắt buộc!",
@@ -142,6 +143,35 @@
         "Delete": "Xóa",
         "My Profile": "Thông tin cá nhân"
       }
+    }
+  },
+  "dayoff": {
+    "Fullname": "Họ và tên",
+    "Team": "Nhóm",
+    "Manager": "Quản lý",
+    "Type": "Loại phép",
+    "Time": "Thời gian",
+    "Leave Date": "Ngày nghỉ",
+    "Status": "Trạng thái",
+    "Approved Date": "Ngày phê duyệt",
+    "Approved By": "Phê duyệt bởi",
+    "Reason": "Lý do",
+    "Approve": "Duyệt",
+    "Reject": " Từ chối ",
+    "Reason Reject": "Lý do từ chối",
+    "register": {
+      "Leave Type": "Loại phép",
+      "Annual Leave": "Nghỉ phép có lương",
+      "Leave without Pay": "Nghỉ phép không lương",
+      "Remote": "Làm remote",
+      "Time": "Thời gian",
+      "All day": "Cả ngày",
+      "Morning": "Sáng",
+      "Alternoon": "Chiều",
+      "Date": "Ngày",
+      "Start Date": "Ngày bắt đầu",
+      "End Date": "Ngày kết thúc",
+      "Upload screenshot": "Tải ảnh lên"
     }
   },
   "user": {

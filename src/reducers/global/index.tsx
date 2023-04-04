@@ -57,7 +57,7 @@ export const globalAction = {
   }),
 };
 const checkLanguage = (language: string) => {
-  const formatDate = language === 'vn' ? 'DD-MM-YYYY' : 'DD-MM-YYYY';
+  const formatDate = language === 'vn' ? 'DD-MM-YYYY' : 'YYYY-MM-DD';
   const locale = language === 'vn' ? viVN : enUS;
   dayjs.locale(language === 'vn' ? 'vi' : language);
   localStorage.setItem('i18nextLng', language);

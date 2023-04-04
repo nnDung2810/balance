@@ -4,6 +4,8 @@ import React from 'react';
 import { Button } from '@components';
 import { keyRole } from '@utils';
 import { DataTableModel } from '@models';
+import edit from '../../assets/svgs/edit.svg';
+import trash from '../../assets/svgs/trash-alt-solid.svg';
 
 const Column = ({ t, modalFormRef, listType, permissions }: any) => {
   const col: DataTableModel[] = [
@@ -50,7 +52,9 @@ const Column = ({ t, modalFormRef, listType, permissions }: any) => {
           <div className={'flex gap-2'}>
             {permissions?.includes(keyRole.P_CODE_UPDATE) && (
               <Tooltip title={t('routes.admin.Layout.Edit')}>
-                <Button onClick={() => modalFormRef?.current?.handleEdit(data)} icon={'las la-edit'} />
+                 <img src={edit} className="h-7 w-7 bg-sky-900 !fill-white rounded hover:cursor-pointer"
+                      onClick={() => modalFormRef?.current?.handleEdit(data)}/>
+                {/* <Button onClick={() => modalFormRef?.current?.handleEdit(data)} icon={'las la-edit'} /> */}
               </Tooltip>
             )}
             {permissions?.includes(keyRole.P_CODE_DELETE) && (
@@ -63,7 +67,8 @@ const Column = ({ t, modalFormRef, listType, permissions }: any) => {
                   okText={t('components.datatable.ok')}
                   cancelText={t('components.datatable.cancel')}
                 >
-                  <Button className={'!bg-red-500 text-white'} icon={'las la-trash-alt'} />
+                   <img src={trash} className="h-7 w-7 !bg-red-500 !fill-white rounded hover:cursor-pointer"/>
+                  {/* <Button className={'!bg-red-500 text-white'} icon={'las la-trash-alt'} /> */}
                 </Popconfirm>
               </Tooltip>
             )}

@@ -71,7 +71,7 @@ const Hook = forwardRef(
       subHeader,
       xScroll,
       yScroll,
-      emptyText = <div>No Data</div>,
+      emptyText = 'No Data',
       onRow,
       pageSizeOptions = [10, 20, 30, 40],
       pageSizeRender = (sizePage: number) => sizePage + ' / page',
@@ -456,7 +456,7 @@ const Hook = forwardRef(
             <Table
               onRow={onRow}
               locale={{
-                emptyText: <div className="bg-gray-100 text-gray-400 py-4">{emptyText}</div>,
+                emptyText: <div className="bg-gray-100 text-gray-400 py-4">{t(`components.datatable.${emptyText}`)}</div>,
               }}
               loading={isLoading}
               columns={cols.current.map((item: any, index: number) => {
@@ -519,7 +519,7 @@ type Type = {
   subHeader?: (count: number) => any;
   xScroll?: string | number | true;
   yScroll?: string | number;
-  emptyText?: JSX.Element;
+  emptyText?: JSX.Element | string;
   onRow?: (data: any) => { onDoubleClick: () => void };
   pageSizeOptions?: number[];
   pageSizeRender?: (sizePage: number) => number | string;

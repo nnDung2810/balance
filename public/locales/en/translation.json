@@ -9,7 +9,8 @@
       "search": "Search",
       "areYouSureWant": "Are you sure want delete ?",
       "cancel": "Cancel",
-      "ok": "Ok"
+      "ok": "Ok",
+      "No Data": "No Data"
     },
     "form": {
       "ruleRequired": "This is a required field!",
@@ -142,6 +143,35 @@
         "Delete": "Delete",
         "My Profile": "My Profile"
       }
+    }
+  },
+  "dayoff": {
+    "Fullname": "Full Name",
+    "Team": "Team",
+    "Manager": "Manager",
+    "Type": "Type",
+    "Time": "Time",
+    "Leave Date": "Leave Date",
+    "Status": "Status",
+    "Approved Date": "Approvated Date",
+    "Approved By": "Approvated By",
+    "Reason": "Reason",
+    "Approve": "Approve",
+    "Reject": "Reject",
+    "Reason Reject": "Reason Reject",
+    "register": {
+      "Leave Type": "Leave Type",
+      "Annual Typpe": "Annual Typpe",
+      "Leave without Pay": "Leave without Pay",
+      "Remote": "Remote",
+      "Time": "Time",
+      "All day": "All day",
+      "Morning": "Morning",
+      "Alternoon": "Alternoon",
+      "Date": "Date",
+      "Start Date": "Start Date",
+      "End Date": "End Date",
+      "Upload screenshot": "Upload screenshot"
     }
   },
   "user": {

@@ -5,6 +5,7 @@ import { Button, DataTable, ModalForm } from '@components';
 import { ColumnFormUser, ColumnTableUser } from '@columns';
 import { keyRole } from '@utils';
 import { useAppDispatch, useTypedSelector, userAction, userSlice, userRoleAction, globalAction } from '@reducers';
+import New from '../../../assets/svgs/plus-solid.svg'
 
 const Page = () => {
   const { t } = useTranslation();
@@ -37,11 +38,15 @@ const Page = () => {
         rightHeader={
           <div className={'flex gap-2'}>
             {user?.role?.permissions?.includes(keyRole.P_USER_CREATE) && (
-              <Button
-                icon={'las la-plus'}
-                text={t('components.button.New')}
-                onClick={() => modalFormRef?.current?.handleEdit()}
-              />
+              // <Button
+              //   icon={'las la-plus'}
+              //   text={t('components.button.New')}
+              //   onClick={() => modalFormRef?.current?.handleEdit()}
+              // />
+              <button onClick={() => modalFormRef?.current?.handleEdit()} className='flex items-center gap-2 bg-blue-600 p-2 rounded-md'>
+                <img src={New} className="h-5 w-5 !fill-white"/>
+                <span className='text-white'>{t('components.button.New')}</span>
+              </button>
             )}
           </div>
         }

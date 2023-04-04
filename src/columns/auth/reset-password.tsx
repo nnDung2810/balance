@@ -15,6 +15,7 @@ const Column = ({ t }: any) => {
       name: 'retypedPassword',
       title: t('columns.auth.register.retypedPassword'),
       formItem: {
+        placeholder: t('columns.auth.register.retypedPassword'),
         type: 'password',
         rules: [{ type: 'required' }, { type: 'min', value: 6 }],
       },
