@@ -5,6 +5,7 @@ import { Swappable } from '@shopify/draggable';
 import { v4 } from 'uuid';
 import { t } from 'i18next';
 import { Popconfirm, Tooltip } from 'antd';
+import { Arrows, Edit, Plus, Question } from 'src/assets/svgs';
 // import { ModalForm } from '@components';
 // import { listStyle } from '@utils';
 
@@ -84,13 +85,14 @@ export const DraggableLayout = ({ value, onChange }: { value: any; onChange?: an
     <Fragment>
       <div className="justify-end flex mb-2 gap-2">
         <div
-          className="bg-blue-500 text-white px-2 h-7 rounded-md hover:bg-blue-400 inline-flex items-center gap-1"
+          className="bg-blue-500 text-white px-2 h-7 rounded-md hover:bg-blue-400 inline-flex items-center gap-1 hover:opacity-80"
           onClick={() => {
             indexEdit.current = -1;
             modalFormRef.current.handleEdit({ col: 4 });
           }}
         >
-          <i className="las la-plus la-lg"></i>
+          <Plus className='icon-cud'/>
+          {/* <i className="las la-plus la-lg"></i> */}
           {t('routes.admin.Layout.Add')}
         </div>
       </div>
@@ -168,24 +170,30 @@ export const DraggableLayout = ({ value, onChange }: { value: any; onChange?: an
           {list.map((item: any, index: number) => (
             <div className="draggable" id={index.toString()} key={index}>
               <div className="flex items-center gap-2 cursor-move">
-                <i className="las la-arrows-alt la-lg handle" />
+                {/* <i className="las la-arrows-alt la-lg handle" /> */}
+                <Arrows className='w-5 h-5'/>
                 {item.name}
               </div>
               <div>
                 <Tooltip title={t('routes.admin.Layout.Edit')}>
-                  <i
+                  {/* <i
                     className="las la-edit la-lg cursor-pointer"
                     onClick={() => {
                       indexEdit.current = index;
                       modalFormRef.current.handleEdit(item);
                     }}
-                  />
+
+                  /> */}
+                   <Edit className='icon-cud '  onClick={() => {
+                      indexEdit.current = index;
+                      modalFormRef.current.handleEdit(item);
+                    }}/>
                 </Tooltip>
                 <Tooltip title={t('routes.admin.Layout.Delete')}>
                   <Popconfirm
                     placement="left"
                     title={t('components.datatable.areYouSureWant')}
-                    icon={<i className="las la-question-circle text-2xl text-yellow-500 relative -top-1.5 left-1" />}
+                    icon= {<Question className='h-6 w-6 fill-yellow-500 absolute -top-0.5 -left-1'/>}
                     onConfirm={() => {
                       list.splice(index, 1);
                       reload();

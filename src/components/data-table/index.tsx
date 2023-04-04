@@ -11,6 +11,7 @@ import { Button, Pagination } from '@components';
 import { TableGet } from '@models';
 import { useAppDispatch, useTypedSelector } from '@reducers';
 import { cleanObjectKeyNull } from '@utils';
+import { Calendar, CheckSquare, DotCircle, InfoCircle, Search, Times, User } from 'src/assets/svgs';
 
 const RadioGroup = Radio.Group;
 const CheckboxGroup = Checkbox.Group;
@@ -22,7 +23,7 @@ const checkTextToShort = (text: string) => {
     <span>
       {text?.substring(0, 40)}
       <Popover trigger="hover" overlayClassName="table-tooltip" content={text}>
-        <i className="las la-lg la-info-circle link-click" />
+        <InfoCircle className="h-4 w-4 fill-gray-600" />
       </Popover>
     </span>
   );
@@ -62,7 +63,7 @@ const Hook = forwardRef(
       subHeader,
       xScroll,
       yScroll,
-      emptyText = <div>No Data</div>,
+      emptyText = 'No Data',
       onRow,
       pageSizeOptions = [10, 20, 30, 40],
       pageSizeRender = (sizePage: number) => sizePage + ' / page',
@@ -204,7 +205,7 @@ const Hook = forwardRef(
         );
       },
       filterIcon: (filtered: boolean) => (
-        <i className="las la-lg la-dot-circle" style={{ color: filtered ? '#3699FF' : undefined }} />
+        <DotCircle className="h-4 w-4 fill-gray-600"/>
       ),
     });
     // noinspection JSUnusedGlobalSymbols
@@ -248,7 +249,7 @@ const Hook = forwardRef(
         );
       },
       filterIcon: (filtered: boolean) => (
-        <i className="las la-lg la-check-square" style={{ color: filtered ? '#3699FF' : undefined }} />
+        <CheckSquare className={classNames("h-4 w-4" ,{ "fill-[#3699FF]" : filtered, "fill-gray-600": !filtered})}/>
       ),
     });
     // noinspection JSUnusedGlobalSymbols
@@ -273,7 +274,7 @@ const Hook = forwardRef(
         </div>
       ),
       filterIcon: (filtered: boolean) => (
-        <i className="las la-lg la-search" style={{ color: filtered ? '#3699FF' : undefined }} />
+        <Search className={classNames("h-4 w-4" ,{ "fill-[#3699FF]" : filtered, "fill-gray-600": !filtered})} />
       ),
       onFilterDropdownOpenChange: (visible: boolean) => {
         if (visible) {
@@ -305,7 +306,7 @@ const Hook = forwardRef(
         </div>
       ),
       filterIcon: (filtered: boolean) => (
-        <i className="las la-lg la-calendar" style={{ color: filtered ? '#3699FF' : undefined }} />
+        <Calendar className={classNames("h-4 w-4" ,{ "fill-[#3699FF]" : filtered, "fill-gray-600": !filtered})} />
       ),
     });
     cols.current = columns
@@ -415,18 +416,22 @@ const Hook = forwardRef(
                   }
                 }}
               />
-              <i
-                className={classNames('text-lg las absolute top-1.5 right-3 z-10', {
-                  'la-search': !params[fullTextSearch],
-                  'la-times': !!params[fullTextSearch],
-                })}
-                onClick={() => {
-                  if (params[fullTextSearch]) {
-                    (document.getElementById(idTable.current + '_input_search') as HTMLInputElement).value = '';
-                    handleTableChange(null, params[filter], params[sort], '');
-                  }
-                }}
-              />
+              {!params[fullTextSearch]
+                ?
+                  <Search className='w-5 h-5 my-1 fill-gray-500 text-lg las absolute top-1.5 right-3 z-10' onClick={() => {
+                    if (params[fullTextSearch]) {
+                      (document.getElementById(idTable.current + '_input_search') as HTMLInputElement).value = '';
+                      handleTableChange(null, params[filter], params[sort], '');
+                    }
+                  }}/>
+                : !!params[fullTextSearch]
+                  && <Times className='w-5 h-5 my-1 fill-gray-500 text-lg las absolute top-1.5 right-3 z-10' onClick={() => {
+                    if (params[fullTextSearch]) {
+                      (document.getElementById(idTable.current + '_input_search') as HTMLInputElement).value = '';
+                      handleTableChange(null, params[filter], params[sort], '');
+                    }
+                  }}/>
+              }
             </div>
           ) : (
             <div />
@@ -440,7 +445,7 @@ const Hook = forwardRef(
             <Table
               onRow={onRow}
               locale={{
-                emptyText: <div className="bg-gray-100 text-gray-400 py-4">{emptyText}</div>,
+                emptyText: <div className="bg-gray-100 text-gray-400 py-4">{t(`components.datatable.${emptyText}`)}</div>,
               }}
               loading={isLoading}
               columns={cols.current.map((item: any, index: number) => {
@@ -503,7 +508,7 @@ type Type = {
   subHeader?: (count: number) => any;
   xScroll?: string | number | true;
   yScroll?: string | number;
-  emptyText?: JSX.Element;
+  emptyText?: JSX.Element | string;
   onRow?: (data: any) => { onDoubleClick: () => void };
   pageSizeOptions?: number[];
   pageSizeRender?: (sizePage: number) => number | string;

@@ -36,6 +36,7 @@ const Column = ({ t, listRole }: any) => {
       title: t('columns.auth.register.retypedPassword'),
       name: 'retypedPassword',
       formItem: {
+        placeholder: t('columns.auth.register.retypedPassword'),
         tabIndex: 2,
         col: 6,
         type: 'password',

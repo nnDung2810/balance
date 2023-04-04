@@ -1,26 +1,29 @@
 import { keyRole } from '@utils';
+import './index.less';
+import { Chart, Cog, User } from 'src/assets/svgs';
+
 
 const Layout = () => [
   {
-    icon: 'las la-chart-area',
+    icon: <Chart className='icon-menu'/>,
     name: 'Dashboard',
   },
   {
-    icon: 'las la-user-circle',
+    icon: <User  className='icon-menu'/>,
     name: 'User',
     permission: keyRole.P_USER_LISTED,
   },
   {
-    icon: 'las la-cog',
+    icon: <Cog className='icon-menu'/>,
     name: 'Setting',
     child: [
       {
-        icon: 'las la-code-branch',
+        icon: <Chart className='icon-menu'/>,
         name: 'Code',
         permission: keyRole.P_CODE_LISTED,
       },
       {
-        icon: 'las la-server',
+        icon:<Chart className='icon-menu'/>,
         name: 'Data',
         permission: keyRole.P_DATA_LISTED,
       },

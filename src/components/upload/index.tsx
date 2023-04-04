@@ -6,6 +6,7 @@ import { v4 } from 'uuid';
 
 import { API, linkApi } from '@utils';
 import { Button, Message, Spin } from '@components';
+import { Plus, Question } from 'src/assets/svgs';
 
 export const Upload = ({
   value = [],
@@ -218,7 +219,8 @@ export const Upload = ({
                 children
               ) : !listFiles?.length || !listFiles[0][keyImage] ? (
                 <div className="border-dashed border border-gray-300 rounded-2xl w-40 h-40 flex items-center justify-center">
-                  <i className="las la-plus la-3x" />
+                  {/* <i className="las la-plus la-3x" /> */}
+                  <Plus className='w-12 h-12'/>
                 </div>
               ) : (
                 <img alt={'Align'} className={'rounded-2xl w-40 h-40 flex object-cover'} src={listFiles[0][keyImage]} />
@@ -281,7 +283,7 @@ export const Upload = ({
                   <Popconfirm
                     placement="left"
                     title={t('components.datatable.areYouSureWant')}
-                    icon={<i className="las la-question-circle text-2xl text-yellow-500 relative -top-1.5 left-1" />}
+                    icon= {<Question className='h-6 w-6 fill-yellow-500 absolute -top-0.5 -left-1'/>}
                     onConfirm={async () => {
                       if (deleteFile && file?.id) {
                         const data = await deleteFile(file?.id);

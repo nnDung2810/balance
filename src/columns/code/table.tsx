@@ -1,9 +1,10 @@
 import { Popconfirm, Tooltip } from 'antd';
 import React from 'react';
-
 import { Button } from '@components';
 import { keyRole } from '@utils';
 import { DataTableModel } from '@models';
+import { Edit, Question, Trash } from 'src/assets/svgs';
+import '../../assets/styles/index.less'
 
 const Column = ({ t, modalFormRef, listType, permissions }: any) => {
   const col: DataTableModel[] = [
@@ -57,7 +58,10 @@ const Column = ({ t, modalFormRef, listType, permissions }: any) => {
           <div className={'flex gap-2'}>
             {permissions?.includes(keyRole.P_CODE_UPDATE) && (
               <Tooltip title={t('routes.admin.Layout.Edit')}>
-                <Button icon={'las la-edit'} onClick={() => modalFormRef?.current?.handleEdit(data)} />
+                {/* <Button icon={'las la-edit'} onClick={() => modalFormRef?.current?.handleEdit(data)} /> */}
+                <Edit className="icon-cud bg-blue-600 "  onClick={() => modalFormRef?.current?.handleEdit(data)}/>
+                {/* <img src={edit} className="h-7 w-7 bg-sky-900 !fill-white rounded hover:cursor-pointer"
+                      onClick={() => modalFormRef?.current?.handleEdit(data)}/> */}
               </Tooltip>
             )}
             {permissions?.includes(keyRole.P_CODE_DELETE) && (
@@ -65,12 +69,14 @@ const Column = ({ t, modalFormRef, listType, permissions }: any) => {
                 <Popconfirm
                   placement="left"
                   title={t('components.datatable.areYouSureWant')}
-                  icon={<i className="las la-question-circle text-2xl text-yellow-500 absolute -top-0.5 -left-1" />}
+                  icon= {<Question className='h-6 w-6 fill-yellow-500 absolute -top-0.5 -left-1'/>}
                   onConfirm={() => modalFormRef?.current?.handleDelete(data.id)}
                   okText={t('components.datatable.ok')}
                   cancelText={t('components.datatable.cancel')}
                 >
-                  <Button icon={'las la-trash-alt'} className={'!bg-red-500 text-white'} />
+                   <Trash className="icon-cud bg-red-500 " />
+                  {/* <img src={trash} className="h-7 w-7 !bg-red-500 !fill-white rounded hover:cursor-pointer"/> */}
+                  {/* <Button icon={'las la-trash-alt'} className={'!bg-red-500 text-white'} /> */}
                 </Popconfirm>
               </Tooltip>
             )}

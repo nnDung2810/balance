@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom';
 
 import { echartBar, echartLine, echartPie, echartBarStack, linearGradient } from '@utils';
 import { DataTable, Spin } from '@components';
+import { Briefcase, CheckCircle, User, UserSolid, UserTie } from 'src/assets/svgs';
 
 const Page = () => {
   const { t } = useTranslation();
@@ -30,7 +31,7 @@ const Page = () => {
       },
       series: [
         {
-          name: 'Total Profile',
+          name: t('dashboard.Total Profile'),
           type: 'bar',
           barWidth: '8px',
           itemStyle: {
@@ -40,7 +41,7 @@ const Page = () => {
           data: [164, 285, 115, 281, 295, 124, 125, 262, 177, 160, 267, 253],
         },
         {
-          name: 'Activated Profile',
+          name: t('dashboard.Activated Profile'),
           type: 'bar',
           barWidth: '8px',
           itemStyle: {
@@ -102,7 +103,7 @@ const Page = () => {
       },
       series: [
         {
-          name: 'Free',
+          name: t('dashboard.Free'),
           type: 'line',
           smooth: true,
           showSymbol: false,
@@ -117,7 +118,7 @@ const Page = () => {
           data: [150, 190, 228, 274, 212, 249, 278, 104, 219, 257, 115, 127],
         },
         {
-          name: 'Silver',
+          name: t('dashboard.Silver'),
           type: 'line',
           smooth: true,
           showSymbol: false,
@@ -132,7 +133,7 @@ const Page = () => {
           data: [164, 285, 115, 281, 295, 124, 125, 262, 177, 160, 267, 253],
         },
         {
-          name: 'Gold',
+          name: t('dashboard.Gold'),
           type: 'line',
           smooth: true,
           showSymbol: false,
@@ -147,7 +148,7 @@ const Page = () => {
           data: [184, 281, 114, 190, 199, 101, 239, 216, 231, 132, 102, 244, 257],
         },
         {
-          name: 'Platinum',
+          name: t('dashboard.Platinum'),
           type: 'line',
           smooth: true,
           showSymbol: false,
@@ -168,7 +169,7 @@ const Page = () => {
       label: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dev'],
       series: [
         {
-          name: 'Total Payment',
+          name: t('dashboard.Total Payment'),
           type: 'bar',
           barWidth: '8px',
           itemStyle: {
@@ -178,7 +179,7 @@ const Page = () => {
           data: [150, 190, 228, 274, 212, 249, 278, 104, 219, 257, 115, 127],
         },
         {
-          name: 'Partner Refund',
+          name: t('dashboard.Partner Refund'),
           type: 'bar',
           barWidth: '8px',
           itemStyle: {
@@ -188,7 +189,7 @@ const Page = () => {
           data: [164, 285, 115, 281, 295, 124, 125, 262, 177, 160, 267, 253],
         },
         {
-          name: 'Reference User',
+          name: t('dashboard.Reference User'),
           type: 'bar',
           barWidth: '8px',
           itemStyle: {
@@ -198,7 +199,7 @@ const Page = () => {
           data: [184, 281, 114, 190, 199, 101, 239, 216, 231, 132, 102, 244, 257],
         },
         {
-          name: 'Activated Profile',
+          name: t('dashboard.Activated Profile'),
           type: 'bar',
           barWidth: '8px',
           itemStyle: {
@@ -241,7 +242,7 @@ const Page = () => {
         <div className="rounded-xl shadow bg-gray-50 col-span-2 row-span-2 grid">
           <div className="bg-red-400 rounded-xl">
             <div className="p-5 flex justify-between items-center">
-              <h2 className="text-lg text-white font-bold">Active Profile Report</h2>
+              <h2 className="text-lg text-white font-bold">{t('dashboard.Active Profile Report')}</h2>
             </div>
             <div className="h-56 relative -bottom-1" id="chart-profile" />
           </div>
@@ -249,37 +250,41 @@ const Page = () => {
             <div className="p-5 grid grid-cols-2 gap-5 w-full">
               <div className="rounded-xl p-5 bg-white flex items-center">
                 <div className="px-2 py-1 rounded-md bg-indigo-50">
-                  <i className="las la-user-tie text-2xl text-indigo-500" />
+                  {/* <i className="las la-user-tie text-2xl text-indigo-500" /> */}
+                  <UserTie className='icon-dashboard fill-indigo-500'/>
                 </div>
                 <div className="ml-3">
-                  <p className="font-bold text-black ">Seller Profiles</p>
+                  <p className="font-bold text-black ">{t('dashboard.Seller Profiles')}</p>
                   <p>3212</p>
                 </div>
               </div>
               <div className="rounded-xl p-5 bg-white flex items-center">
                 <div className="px-2 py-1 rounded-md bg-red-50">
-                  <i className="las la-users text-2xl text-red-500" />
+                  {/* <i className="las la-users text-2xl text-red-500" /> */}
+                  <UserSolid className='icon-dashboard fill-red-500'/>
                 </div>
                 <div className="ml-3">
-                  <p className="font-bold text-black ">Buyer Profiles</p>
+                  <p className="font-bold text-black ">{t('dashboard.Buyer Profiles')}</p>
                   <p>244</p>
                 </div>
               </div>
               <div className="rounded-xl p-5 bg-white flex items-center">
                 <div className="px-2 py-1 rounded-md bg-purple-50">
-                  <i className="las la-briefcase text-2xl text-purple-500" />
+                  {/* <i className="las la-briefcase text-2xl text-purple-500" /> */}
+                  <Briefcase className='icon-dashboard fill-purple-500'/>
                 </div>
                 <div className="ml-3">
-                  <p className="font-bold text-black ">Introductions</p>
+                  <p className="font-bold text-black ">{t('dashboard.Introductions')}</p>
                   <p>20</p>
                 </div>
               </div>
               <div className="rounded-xl p-5 bg-white flex items-center">
                 <div className="px-2 py-1 rounded-md bg-green-50">
-                  <i className="las la-check-circle text-2xl text-green-500" />
+                  {/* <i className="las la-check-circle text-2xl text-green-500" /> */}
+                  <CheckCircle className='icon-dashboard fill-green-500'/>
                 </div>
                 <div className="ml-3">
-                  <p className="font-bold text-black ">Success Deal</p>
+                  <p className="font-bold text-black ">{t('dashboard.Success Deal')}</p>
                   <p>12</p>
                 </div>
               </div>
@@ -292,43 +297,43 @@ const Page = () => {
               <i className="las la-user-tie text-2xl text-blue-500" />
             </div>
             <h2 className="px-5 pt-1 text-2xl font-bold">875</h2>
-            <p className="px-5 pb-3">New Custommers</p>
+            <p className="px-5 pb-3">{t('dashboard.New Custommers')}</p>
           </div>
           <div className="h-36" id="chart-line1" />
         </div>
         <div className="rounded-xl shadow bg-blue-400 col-span-2 2xl:col-span-3">
           <div className="p-5 flex justify-between items-center">
-            <h2 className="text-lg text-white font-bold">User Purchasing Report</h2>
+            <h2 className="text-lg text-white font-bold">{t('dashboard.User Purchasing Report')}</h2>
           </div>
           <div className="h-48" id="chart-purchasing" />
         </div>
 
         <div className="rounded-xl shadow bg-green-400 col-span-2 2xl:col-span-3">
           <div className="px-5 py-3 flex justify-between items-center">
-            <h2 className="text-lg font-bold">User Purchasing Report</h2>
+            <h2 className="text-lg font-bold">{t('dashboard.User Purchasing Report')}</h2>
           </div>
           <div className="h-48" id="chart-user" />
         </div>
         <div className="rounded-xl shadow bg-gray-50 hidden 2xl:flex flex-col justify-between">
           <div>
-            <h2 className="px-5 pt-3 text-2xl font-bold">Sales Stats</h2>
+            <h2 className="px-5 pt-3 text-2xl font-bold">{t('dashboard.Sales Stats')}</h2>
             <p className="px-5 pb-3">890,344 Sales</p>
           </div>
           <div className="h-36" id="chart-line2" />
         </div>
 
         <div className="rounded-xl shadow col-span-2 2xl:col-span-3 bg-blue-500">
-          <h2 className="p-5 py-4 text-lg font-bold text-white">Share of total 3454 active profiles</h2>
+          <h2 className="p-5 py-4 text-lg font-bold text-white">{t('dashboard.Share of total')} 3454 {t('dashboard.active profiles')}</h2>
           <div className="h-80" id="total-active-profile" />
         </div>
         <div className="rounded-xl shadow bg-gray-50 col-span-2 2xl:col-span-3">
-          <h2 className="px-5 py-3 text-lg font-bold">Total 6892 active profile in 2021</h2>
+          <h2 className="px-5 py-3 text-lg font-bold">{t('dashboard.Share of total')} 6892 {t('dashboard.active profiles')}</h2>
           <div className="h-80" id="total-active-profile-year" />
         </div>
 
         <div className="rounded-xl shadow bg-gray-50 col-span-2 2xl:col-span-3">
           <div className="p-5 flex justify-between items-center">
-            <h2 className="text-lg font-bold">Business Profiles Activity</h2>
+            <h2 className="text-lg font-bold">{t('dashboard.Business Profiles Activity')}</h2>
           </div>
           <DataTable
             save={false}
@@ -372,16 +377,16 @@ const Page = () => {
               },
             ]}
             columns={[
-              { title: t('Profile'), name: 'name', tableItem: {} },
-              { title: t('Package'), name: 'package', tableItem: {} },
-              { title: t('Start Date'), name: 'date', tableItem: {} },
-              { title: t('Status'), name: 'status', tableItem: {} },
+              { title: t('dashboard.Profile'), name: 'name', tableItem: {} },
+              { title: t('dashboard.Package'), name: 'package', tableItem: {} },
+              { title: t('dashboard.Start Date'), name: 'date', tableItem: {} },
+              { title: t('dashboard.Status'), name: 'status', tableItem: {} },
             ]}
           />
         </div>
         <div className="rounded-xl shadow bg-gray-50 col-span-2 2xl:col-span-3">
           <div className="p-5 flex justify-between items-center">
-            <h2 className="text-lg font-bold">Franchise Profiles Activity</h2>
+            <h2 className="text-lg font-bold">{t('dashboard.Franchise Profiles Activity')}</h2>
           </div>
           <DataTable
             save={false}
@@ -425,16 +430,16 @@ const Page = () => {
               },
             ]}
             columns={[
-              { title: t('Profile'), name: 'name', tableItem: {} },
-              { title: t('Package'), name: 'package', tableItem: {} },
-              { title: t('Start Date'), name: 'date', tableItem: {} },
-              { title: t('Status'), name: 'status', tableItem: {} },
+              { title: t('dashboard.Profile'), name: 'name', tableItem: {} },
+              { title: t('dashboard.Package'), name: 'package', tableItem: {} },
+              { title: t('dashboard.Start Date'), name: 'date', tableItem: {} },
+              { title: t('dashboard.Status'), name: 'status', tableItem: {} },
             ]}
           />
         </div>
         <div className="rounded-xl shadow bg-gray-50 col-span-2 2xl:col-span-3">
           <div className="p-5 flex justify-between items-center">
-            <h2 className="text-lg font-bold">Investor Profiles Activity</h2>
+            <h2 className="text-lg font-bold">{t('dashboard.Investor Profiles Activity')}</h2>
           </div>
           <DataTable
             save={false}
@@ -478,16 +483,16 @@ const Page = () => {
               },
             ]}
             columns={[
-              { title: t('Profile'), name: 'name', tableItem: {} },
-              { title: t('Package'), name: 'package', tableItem: {} },
-              { title: t('Start Date'), name: 'date', tableItem: {} },
-              { title: t('Status'), name: 'status', tableItem: {} },
+              { title: t('dashboard.Profile'), name: 'name', tableItem: {} },
+              { title: t('dashboard.Package'), name: 'package', tableItem: {} },
+              { title: t('dashboard.Start Date'), name: 'date', tableItem: {} },
+              { title: t('dashboard.Status'), name: 'status', tableItem: {} },
             ]}
           />
         </div>
         <div className="rounded-xl shadow bg-gray-50 col-span-2 2xl:col-span-3">
           <div className="p-5 flex justify-between items-center">
-            <h2 className="text-lg font-bold">Monthly Profiles Activity</h2>
+            <h2 className="text-lg font-bold">{t('dashboard.Monthly Profiles Activity')}</h2>
           </div>
           <DataTable
             save={false}
@@ -531,10 +536,10 @@ const Page = () => {
               },
             ]}
             columns={[
-              { title: t('Profile'), name: 'name', tableItem: {} },
-              { title: t('Package'), name: 'package', tableItem: {} },
-              { title: t('Start Date'), name: 'date', tableItem: {} },
-              { title: t('Status'), name: 'status', tableItem: {} },
+              { title: t('dashboard.Profile'), name: 'name', tableItem: {} },
+              { title: t('dashboard.Package'), name: 'package', tableItem: {} },
+              { title: t('dashboard.Start Date'), name: 'date', tableItem: {} },
+              { title: t('dashboard.Status'), name: 'status', tableItem: {} },
             ]}
           />
         </div>

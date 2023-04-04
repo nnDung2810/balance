@@ -4,6 +4,9 @@ import React from 'react';
 import { Button } from '@components';
 import { keyRole } from '@utils';
 import { DataTableModel } from '@models';
+import edit from '../../assets/svgs/edit.svg';
+import trash from '../../assets/svgs/trash-alt-solid.svg';
+import { Edit, Question, Trash } from 'src/assets/svgs';
 
 const Column = ({ t, modalFormRef, listType, permissions }: any) => {
   const col: DataTableModel[] = [
@@ -50,7 +53,9 @@ const Column = ({ t, modalFormRef, listType, permissions }: any) => {
           <div className={'flex gap-2'}>
             {permissions?.includes(keyRole.P_CODE_UPDATE) && (
               <Tooltip title={t('routes.admin.Layout.Edit')}>
-                <Button onClick={() => modalFormRef?.current?.handleEdit(data)} icon={'las la-edit'} />
+                <Edit className="icon-cud bg-blue-600"  onClick={() => modalFormRef?.current?.handleEdit(data)}/>
+
+                {/* <Button onClick={() => modalFormRef?.current?.handleEdit(data)} icon={'las la-edit'} /> */}
               </Tooltip>
             )}
             {permissions?.includes(keyRole.P_CODE_DELETE) && (
@@ -58,12 +63,13 @@ const Column = ({ t, modalFormRef, listType, permissions }: any) => {
                 <Popconfirm
                   placement="left"
                   title={t('components.datatable.areYouSureWant')}
-                  icon={<i className="las la-question-circle text-2xl text-yellow-500 absolute -top-0.5 -left-1" />}
+                  icon= {<Question className='h-6 w-6 fill-yellow-500 absolute -top-0.5 -left-1'/>}
                   onConfirm={() => modalFormRef?.current?.handleDelete(data.id)}
                   okText={t('components.datatable.ok')}
                   cancelText={t('components.datatable.cancel')}
                 >
-                  <Button className={'!bg-red-500 text-white'} icon={'las la-trash-alt'} />
+                   <Trash className="icon-cud bg-red-500 " />
+                  {/* <Button className={'!bg-red-500 text-white'} icon={'las la-trash-alt'} /> */}
                 </Popconfirm>
               </Tooltip>
             )}
