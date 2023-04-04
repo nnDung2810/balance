@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 
 import { echartBar, echartLine, echartPie, echartBarStack, linearGradient } from '@utils';
 import { DataTable, Spin } from '@components';
-import { Briefcase, CheckCircle, User, UserSolid, UserTie } from 'src/assets/svgs';
+import { Briefcase, CheckCircle, UserSolid, UserTie } from 'src/assets/svgs';
 
 const Page = () => {
   const { t } = useTranslation();
@@ -251,7 +251,7 @@ const Page = () => {
               <div className="rounded-xl p-5 bg-white flex items-center">
                 <div className="px-2 py-1 rounded-md bg-indigo-50">
                   {/* <i className="las la-user-tie text-2xl text-indigo-500" /> */}
-                  <UserTie className='icon-dashboard fill-indigo-500'/>
+                  <UserTie className="icon-dashboard fill-indigo-500" />
                 </div>
                 <div className="ml-3">
                   <p className="font-bold text-black ">{t('dashboard.Seller Profiles')}</p>
@@ -261,7 +261,7 @@ const Page = () => {
               <div className="rounded-xl p-5 bg-white flex items-center">
                 <div className="px-2 py-1 rounded-md bg-red-50">
                   {/* <i className="las la-users text-2xl text-red-500" /> */}
-                  <UserSolid className='icon-dashboard fill-red-500'/>
+                  <UserSolid className="icon-dashboard fill-red-500" />
                 </div>
                 <div className="ml-3">
                   <p className="font-bold text-black ">{t('dashboard.Buyer Profiles')}</p>
@@ -271,7 +271,7 @@ const Page = () => {
               <div className="rounded-xl p-5 bg-white flex items-center">
                 <div className="px-2 py-1 rounded-md bg-purple-50">
                   {/* <i className="las la-briefcase text-2xl text-purple-500" /> */}
-                  <Briefcase className='icon-dashboard fill-purple-500'/>
+                  <Briefcase className="icon-dashboard fill-purple-500" />
                 </div>
                 <div className="ml-3">
                   <p className="font-bold text-black ">{t('dashboard.Introductions')}</p>
@@ -281,7 +281,7 @@ const Page = () => {
               <div className="rounded-xl p-5 bg-white flex items-center">
                 <div className="px-2 py-1 rounded-md bg-green-50">
                   {/* <i className="las la-check-circle text-2xl text-green-500" /> */}
-                  <CheckCircle className='icon-dashboard fill-green-500'/>
+                  <CheckCircle className="icon-dashboard fill-green-500" />
                 </div>
                 <div className="ml-3">
                   <p className="font-bold text-black ">{t('dashboard.Success Deal')}</p>
@@ -323,11 +323,15 @@ const Page = () => {
         </div>
 
         <div className="rounded-xl shadow col-span-2 2xl:col-span-3 bg-blue-500">
-          <h2 className="p-5 py-4 text-lg font-bold text-white">{t('dashboard.Share of total')} 3454 {t('dashboard.active profiles')}</h2>
+          <h2 className="p-5 py-4 text-lg font-bold text-white">
+            {t('dashboard.Share of total')} 3454 {t('dashboard.active profiles')}
+          </h2>
           <div className="h-80" id="total-active-profile" />
         </div>
         <div className="rounded-xl shadow bg-gray-50 col-span-2 2xl:col-span-3">
-          <h2 className="px-5 py-3 text-lg font-bold">{t('dashboard.Share of total')} 6892 {t('dashboard.active profiles')}</h2>
+          <h2 className="px-5 py-3 text-lg font-bold">
+            {t('dashboard.Share of total')} 6892 {t('dashboard.active profiles')}
+          </h2>
           <div className="h-80" id="total-active-profile-year" />
         </div>
 

@@ -11,7 +11,7 @@ import { Button, Pagination } from '@components';
 import { TableGet } from '@models';
 import { useAppDispatch, useTypedSelector } from '@reducers';
 import { cleanObjectKeyNull } from '@utils';
-import { Calendar, CheckSquare, DotCircle, InfoCircle, Search, Times, User } from 'src/assets/svgs';
+import { Calendar, CheckSquare, DotCircle, InfoCircle, Search, Times } from 'src/assets/svgs';
 
 const RadioGroup = Radio.Group;
 const CheckboxGroup = Checkbox.Group;
@@ -204,9 +204,7 @@ const Hook = forwardRef(
           </div>
         );
       },
-      filterIcon: (filtered: boolean) => (
-        <DotCircle className="h-4 w-4 fill-gray-600"/>
-      ),
+      filterIcon: () => <DotCircle className="h-4 w-4 fill-gray-600" />,
     });
     // noinspection JSUnusedGlobalSymbols
     const getColumnSearchCheckbox = (filters: any, key: any, get: TableGet = {}) => ({
@@ -249,7 +247,7 @@ const Hook = forwardRef(
         );
       },
       filterIcon: (filtered: boolean) => (
-        <CheckSquare className={classNames("h-4 w-4" ,{ "fill-[#3699FF]" : filtered, "fill-gray-600": !filtered})}/>
+        <CheckSquare className={classNames('h-4 w-4', { 'fill-[#3699FF]': filtered, 'fill-gray-600': !filtered })} />
       ),
     });
     // noinspection JSUnusedGlobalSymbols
@@ -274,7 +272,7 @@ const Hook = forwardRef(
         </div>
       ),
       filterIcon: (filtered: boolean) => (
-        <Search className={classNames("h-4 w-4" ,{ "fill-[#3699FF]" : filtered, "fill-gray-600": !filtered})} />
+        <Search className={classNames('h-4 w-4', { 'fill-[#3699FF]': filtered, 'fill-gray-600': !filtered })} />
       ),
       onFilterDropdownOpenChange: (visible: boolean) => {
         if (visible) {
@@ -306,7 +304,7 @@ const Hook = forwardRef(
         </div>
       ),
       filterIcon: (filtered: boolean) => (
-        <Calendar className={classNames("h-4 w-4" ,{ "fill-[#3699FF]" : filtered, "fill-gray-600": !filtered})} />
+        <Calendar className={classNames('h-4 w-4', { 'fill-[#3699FF]': filtered, 'fill-gray-600': !filtered })} />
       ),
     });
     cols.current = columns
@@ -416,22 +414,29 @@ const Hook = forwardRef(
                   }
                 }}
               />
-              {!params[fullTextSearch]
-                ?
-                  <Search className='w-5 h-5 my-1 fill-gray-500 text-lg las absolute top-1.5 right-3 z-10' onClick={() => {
+              {!params[fullTextSearch] ? (
+                <Search
+                  className="w-5 h-5 my-1 fill-gray-500 text-lg las absolute top-1.5 right-3 z-10"
+                  onClick={() => {
                     if (params[fullTextSearch]) {
                       (document.getElementById(idTable.current + '_input_search') as HTMLInputElement).value = '';
                       handleTableChange(null, params[filter], params[sort], '');
                     }
-                  }}/>
-                : !!params[fullTextSearch]
-                  && <Times className='w-5 h-5 my-1 fill-gray-500 text-lg las absolute top-1.5 right-3 z-10' onClick={() => {
-                    if (params[fullTextSearch]) {
-                      (document.getElementById(idTable.current + '_input_search') as HTMLInputElement).value = '';
-                      handleTableChange(null, params[filter], params[sort], '');
-                    }
-                  }}/>
-              }
+                  }}
+                />
+              ) : (
+                !!params[fullTextSearch] && (
+                  <Times
+                    className="w-5 h-5 my-1 fill-gray-500 text-lg las absolute top-1.5 right-3 z-10"
+                    onClick={() => {
+                      if (params[fullTextSearch]) {
+                        (document.getElementById(idTable.current + '_input_search') as HTMLInputElement).value = '';
+                        handleTableChange(null, params[filter], params[sort], '');
+                      }
+                    }}
+                  />
+                )
+              )}
             </div>
           ) : (
             <div />
@@ -445,7 +450,9 @@ const Hook = forwardRef(
             <Table
               onRow={onRow}
               locale={{
-                emptyText: <div className="bg-gray-100 text-gray-400 py-4">{t(`components.datatable.${emptyText}`)}</div>,
+                emptyText: (
+                  <div className="bg-gray-100 text-gray-400 py-4">{t(`components.datatable.${emptyText}`)}</div>
+                ),
               }}
               loading={isLoading}
               columns={cols.current.map((item: any, index: number) => {

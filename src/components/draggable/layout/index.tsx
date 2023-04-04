@@ -91,7 +91,7 @@ export const DraggableLayout = ({ value, onChange }: { value: any; onChange?: an
             modalFormRef.current.handleEdit({ col: 4 });
           }}
         >
-          <Plus className='icon-cud'/>
+          <Plus className="icon-cud" />
           {/* <i className="las la-plus la-lg"></i> */}
           {t('routes.admin.Layout.Add')}
         </div>
@@ -171,7 +171,7 @@ export const DraggableLayout = ({ value, onChange }: { value: any; onChange?: an
             <div className="draggable" id={index.toString()} key={index}>
               <div className="flex items-center gap-2 cursor-move">
                 {/* <i className="las la-arrows-alt la-lg handle" /> */}
-                <Arrows className='w-5 h-5'/>
+                <Arrows className="w-5 h-5" />
                 {item.name}
               </div>
               <div>
@@ -184,16 +184,19 @@ export const DraggableLayout = ({ value, onChange }: { value: any; onChange?: an
                     }}
 
                   /> */}
-                   <Edit className='icon-cud '  onClick={() => {
+                  <Edit
+                    className="icon-cud "
+                    onClick={() => {
                       indexEdit.current = index;
                       modalFormRef.current.handleEdit(item);
-                    }}/>
+                    }}
+                  />
                 </Tooltip>
                 <Tooltip title={t('routes.admin.Layout.Delete')}>
                   <Popconfirm
                     placement="left"
                     title={t('components.datatable.areYouSureWant')}
-                    icon= {<Question className='h-6 w-6 fill-yellow-500 absolute -top-0.5 -left-1'/>}
+                    icon={<Question className="h-6 w-6 fill-yellow-500 absolute -top-0.5 -left-1" />}
                     onConfirm={() => {
                       list.splice(index, 1);
                       reload();

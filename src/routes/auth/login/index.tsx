@@ -7,7 +7,7 @@ import { ModalForm, Spin } from '@components';
 import Form from '../../../components/form';
 import { routerLinks } from '@utils';
 import { ColumnForgottenPassword, ColumnLogin } from '@columns';
-import { globalAction, globalSlice, useAppDispatch, useTypedSelector } from '@reducers';
+import { globalAction, useAppDispatch, useTypedSelector } from '@reducers';
 // import { urlChat, passChat } from 'variable';
 
 // const realTimeAPI = new Rocketchat({

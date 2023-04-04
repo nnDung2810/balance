@@ -4,8 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Button, DataTable, ModalForm } from '@components';
 import { ColumnFormUser, ColumnTableUser } from '@columns';
 import { keyRole } from '@utils';
-import { useAppDispatch, useTypedSelector, userAction, userSlice, userRoleAction, globalAction } from '@reducers';
-import New from '../../../assets/svgs/plus-solid.svg'
+import { useAppDispatch, useTypedSelector, userAction, userRoleAction, globalAction } from '@reducers';
 import { Plus } from 'src/assets/svgs';
 
 const Page = () => {
@@ -26,7 +25,17 @@ const Page = () => {
         pageSizeRender={(sizePage: number) => sizePage}
         pageSizeWidth={'50px'}
         paginationDescription={(from: number, to: number, total: number) =>
-          t('routes.admin.Layout.Show')+ ' ' + from + '-' + to + ' / ' + t('routes.admin.Layout.Total')+ ' ' + total + ' '+ t('routes.admin.Layout.categories')
+          t('routes.admin.Layout.Show') +
+          ' ' +
+          from +
+          '-' +
+          to +
+          ' / ' +
+          t('routes.admin.Layout.Total') +
+          ' ' +
+          total +
+          ' ' +
+          t('routes.admin.Layout.categories')
         }
         columns={ColumnTableUser({
           t,
@@ -38,7 +47,7 @@ const Page = () => {
           <div className={'flex gap-2'}>
             {user?.role?.permissions?.includes(keyRole.P_USER_CREATE) && (
               <Button
-                icon={<Plus className='icon-cud !h-5 !w-5'/>}
+                icon={<Plus className="icon-cud !h-5 !w-5" />}
                 text={t('components.button.New')}
                 onClick={() => modalFormRef?.current?.handleEdit()}
               />

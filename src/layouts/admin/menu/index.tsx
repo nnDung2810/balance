@@ -81,7 +81,7 @@ const Layout = ({ isCollapsed = false, permission = [] }: any) => {
                 <li
                   className={classNames('flex items-center h-11 m-3 px-2', {
                     'bg-white text-blue-500 !fill-blue-500 rounded-2xl': location.pathname === routerLinks(item.name),
-                    'fill-gray-500' : location.pathname !== routerLinks(item.name),
+                    'fill-gray-500': location.pathname !== routerLinks(item.name),
                     'justify-center': isCollapsed,
                   })}
                   onClick={() => navigate(routerLinks(item.name))}
@@ -104,7 +104,7 @@ const Layout = ({ isCollapsed = false, permission = [] }: any) => {
                 <Popover key={index} placement="rightTop" trigger={'hover'} content={subMenu(item.child)}>
                   <li className="flex items-center justify-center h-11 m-3 px-2 fill-gray-500 ">
                     {/* <img src={item.icon} className={classNames('h-8  w-8 block !fill-red-700', { 'ml-1': !isCollapsed})}/> */}
-                    <div className={classNames({ 'ml-1': !isCollapsed})}>{item.icon}</div>
+                    <div className={classNames({ 'ml-1': !isCollapsed })}>{item.icon}</div>
                   </li>
                 </Popover>
               ) : (
@@ -127,7 +127,7 @@ const Layout = ({ isCollapsed = false, permission = [] }: any) => {
                           })}
                         >
                           {/* <img src={item.icon} className={classNames('h-8 w-8 block !fill-red-700', { 'ml-1': !isCollapsed})}/> */}
-                          <div className={classNames({ 'ml-1': !isCollapsed})}>{item.icon}</div>
+                          <div className={classNames({ 'ml-1': !isCollapsed })}>{item.icon}</div>
                           <span
                             className={classNames('pl-2.5 transition-all duration-300 ease-in-out font-bold', {
                               'opacity-100': !isCollapsed,
