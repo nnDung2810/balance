@@ -6,6 +6,7 @@ import { ColumnDataForm, ColumnDataTable } from '@columns';
 import { keyRole } from '@utils';
 import { dataSlice, dataAction, dataTypeAction, useAppDispatch, useTypedSelector, globalAction } from '@reducers';
 import New from '../../../assets/svgs/plus-solid.svg'
+import { Plus } from 'src/assets/svgs';
 
 const Page = () => {
   const { t } = useTranslation();
@@ -27,7 +28,6 @@ const Page = () => {
     <Fragment>
       <DataTable
         action={dataAction}
-        slice={dataSlice}
         showSearch={false}
         ref={dataTableRef}
         onRow={() => ({
@@ -36,7 +36,7 @@ const Page = () => {
         pageSizeRender={(sizePage: number) => sizePage}
         pageSizeWidth={'50px'}
         paginationDescription={(from: number, to: number, total: number) =>
-          'Hiển thị ' + from + '-' + to + ' / Tổng số ' + total + ' danh mục'
+          t('routes.admin.Layout.Show')+ ' ' + from + '-' + to + ' / ' + t('routes.admin.Layout.Total')+ ' ' + total + ' '+ t('routes.admin.Layout.categories')
         }
         columns={ColumnDataTable({
           t,
@@ -48,10 +48,15 @@ const Page = () => {
         rightHeader={
           <div className={'flex gap-2'}>
             {user?.role?.permissions?.includes(keyRole.P_DATA_CREATE) && (
-              <button onClick={() => modalFormRef?.current?.handleEdit()} className='flex items-center gap-2 bg-blue-600 p-2 rounded-md'>
-              <img src={New} className="h-5 w-5 !fill-white"/>
-              <span className='text-white'>{t('components.button.New')}</span>
-            </button>
+            //   <button onClick={() => modalFormRef?.current?.handleEdit()} className='flex items-center gap-2 bg-blue-600 p-2 rounded-md hover:opacity-80'>
+            //   <Plus className='icon-cud !h-5 !w-5'/>
+            //   <span className='text-white'>{t('components.button.New')}</span>
+            // </button>
+              <Button
+              icon={<Plus className='icon-cud !h-5 !w-5'/>}
+              text={t('components.button.New')}
+              onClick={() => modalFormRef?.current?.handleEdit()}
+            />
             )}
           </div>
         }

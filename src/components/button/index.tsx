@@ -16,14 +16,15 @@ export const Button = ({ text, icon, className, disabled, ...props }: Type) => {
       )}
       {...props}
     >
-      {icon && <i className={icon} />}
+      {/* {icon && <i className={icon} />} */}
+      {icon}
       {text}
     </button>
   );
 };
 
 type Type = {
-  icon?: string;
+  icon?: string | React.ReactNode;
   text?: string | DefaultTFuncReturn;
   className?: string;
   disabled?: boolean;

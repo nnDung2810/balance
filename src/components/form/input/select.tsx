@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FormInstance, Select } from 'antd';
-import { API } from '@utils';
+import { useAppDispatch, useTypedSelector } from '@reducers';
+import { TableGet } from '@models';
 
 const Component = ({
   formItem,
@@ -12,36 +13,32 @@ const Component = ({
   placeholder,
   disabled,
   tabIndex,
+  get,
   ...prop
 }: Type) => {
   const [_list, set_list] = useState(formItem.list ? formItem.list : []);
-
-  const loadData = useCallback(
-    async (fullTextSearch: string) => {
-      if (formItem.api) {
-        if (!formItem.api.condition || formItem.api.condition(form.getFieldValue)) {
-          const url = formItem.api.link(form.getFieldValue);
-          if (url) {
-            const params = formItem.api.params
-              ? formItem.api.params(form.getFieldValue, fullTextSearch, value)
-              : { fullTextSearch };
-            const data = await API.get(url, params);
-            set_list(data.data.map(formItem.api.format).filter((item: any) => !!item.value));
-          }
-        }
-      } else if (formItem.renderList) {
-        set_list(formItem.renderList(form.getFieldValue, fullTextSearch, formItem.list));
-      } else if (formItem.list) {
-        set_list(
-          formItem.list.filter(
-            (item: any) =>
-              !item?.label?.toUpperCase || item?.label?.toUpperCase().indexOf(fullTextSearch.toUpperCase()) > -1,
-          ),
-        );
+  const dispatch = useAppDispatch();
+  const { result, queryParams, time } = useTypedSelector((state: any) => state[get?.action?.name || 'User']);
+  const list = !get ? _list : result.data?.map(formItem.get.format).filter((item: any) => !!item.value);
+  const loadData = async (fullTextSearch: string) => {
+    if (get) {
+      const params = formItem.get.params
+        ? formItem.get.params(form.getFieldValue, fullTextSearch, value)
+        : { fullTextSearch };
+      if (!result.data || new Date().getTime() > time || JSON.stringify(params) != queryParams) {
+        dispatch(get.action.get(params));
       }
-    },
-    [form, formItem, value],
-  );
+    } else if (formItem.renderList) {
+      set_list(formItem.renderList(form.getFieldValue, fullTextSearch, formItem.list));
+    } else if (formItem.list) {
+      set_list(
+        formItem.list.filter(
+          (item: any) =>
+            !item?.label?.toUpperCase || item?.label?.toUpperCase().indexOf(fullTextSearch.toUpperCase()) > -1,
+        ),
+      );
+    }
+  };
 
   useEffect(() => {
     loadData('');
@@ -68,7 +65,7 @@ const Component = ({
       onSelect={(value) => formItem?.onSelect && formItem?.onSelect(value, form)}
     >
       {formItem &&
-        _list.map((item: any, index: number) => (
+        list?.map((item: any, index: number) => (
           <Select.Option key={`${item.value}${index}`} value={item.value} disabled={item.disabled}>
             {item.label}
           </Select.Option>
@@ -86,5 +83,6 @@ type Type = {
   placeholder: string;
   disabled: boolean;
   tabIndex: number;
+  get?: TableGet;
 };
 export default Component;

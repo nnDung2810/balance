@@ -1,4 +1,4 @@
-import React, { forwardRef, Fragment, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import React, { forwardRef, Fragment, useEffect, useImperativeHandle, useRef } from 'react';
 import { v4 } from 'uuid';
 import { Checkbox, CheckboxOptionType, DatePicker, Popover, Radio, Table } from 'antd';
 import { useTranslation } from 'react-i18next';
@@ -8,9 +8,9 @@ import classNames from 'classnames';
 // @ts-ignore
 
 import { Button, Pagination } from '@components';
-import { API } from '@utils';
-import { TableApi } from '@models';
+import { TableGet } from '@models';
 import { useAppDispatch, useTypedSelector } from '@reducers';
+import { Calendar, CheckSquare, DotCircle, InfoCircle, Search, Times, User } from 'src/assets/svgs';
 
 const RadioGroup = Radio.Group;
 const CheckboxGroup = Checkbox.Group;
@@ -22,7 +22,8 @@ const checkTextToShort = (text: string) => {
     <span>
       {text?.substring(0, 40)}
       <Popover trigger="hover" overlayClassName="table-tooltip" content={text}>
-        <i className="las la-lg la-info-circle link-click" />
+        {/* <i className="las la-lg la-info-circle link-click" /> */}
+        <InfoCircle className="h-4 w-4 fill-gray-600" />
       </Popover>
     </span>
   );
@@ -80,7 +81,6 @@ const Hook = forwardRef(
       idElement = 'temp-' + v4(),
       className = 'data-table',
       action,
-      slice,
       data,
       ...prop
     }: Type,
@@ -102,7 +102,7 @@ const Hook = forwardRef(
         ? { ...param.current, ...getQueryStringParams(location.search) }
         : param.current;
     useEffect(() => {
-      if (action && slice) {
+      if (action) {
         param.current = cleanObjectKeyNull({
           ...params,
           [sort]: JSON.stringify(params[sort]),
@@ -135,7 +135,6 @@ const Hook = forwardRef(
       }
 
       if (showList && action) {
-        dispatch(slice.actions.setQueryParams({ queryParams: param.current }));
         dispatch(action.get(cleanObjectKeyNull({ ...param.current })));
       }
     };
@@ -157,17 +156,120 @@ const Hook = forwardRef(
           }}
           className={'justify-center'}
         />
+        {/* <button className='flex text-white fill-white rounded-md gap-1 justify-center items-center bg-blue-600 '
+                type="button"
+                onClick={() => confirm(value)}
+          >
+          <Search className='h-4 w-4'/>
+          {t('components.datatable.search')}
+        </button> */}
         <Button
-          icon={'las la-search'}
+          icon={<Search className='fill-white h-4 w-4'/>}
           text={t('components.datatable.search')}
           onClick={() => confirm(value)}
           className={'justify-center'}
         />
       </div>
     );
-    const [rerender, set_rerender] = useState(false);
     const valueFilter = useRef<any>({});
-
+    const columnSearch = (get: TableGet, fullTextSearch = '', value?: any, queryParams = '', time = 0) => {
+      if (get?.action) {
+        const params = get.params ? get.params(fullTextSearch, value) : { fullTextSearch };
+        if (new Date().getTime() > time || JSON.stringify(params) != queryParams) {
+          dispatch(get.action.get(params));
+        }
+      }
+    };
+    // noinspection JSUnusedGlobalSymbols
+    const getColumnSearchRadio = (filters: CheckboxOptionType[], key: string, get: TableGet = {}) => ({
+      onFilterDropdownOpenChange: async (visible: boolean) => {
+        valueFilter.current[key] = visible;
+      },
+      filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }: any) => {
+        const { result, queryParams, time } = useTypedSelector((state: any) => state[get?.action?.name || 'User']);
+        if (get && !result.data && valueFilter.current[key]) {
+          columnSearch(get, '', undefined, queryParams, time);
+        }
+        return (
+          <div className={'p-1'}>
+            <input
+              className="w-full sm:w-52 h-10 rounded-xl text-gray-600 bg-white border border-solid border-gray-100 pr-9 pl-4 mb-1"
+              type="text"
+              placeholder={t('components.datatable.pleaseEnterValueToSearch') || ''}
+              onChange={(e) => {
+                clearTimeout(timeoutSearch.current);
+                timeoutSearch.current = setTimeout(
+                  () => columnSearch(get, e.target.value, selectedKeys, queryParams, time),
+                  500,
+                );
+              }}
+              onKeyUp={async (e) => {
+                if (e.key === 'Enter') {
+                  await columnSearch(get, e.currentTarget.value, undefined, queryParams, time);
+                }
+              }}
+            />
+            <div>
+              <RadioGroup
+                options={filters || result?.data?.map(get.format).filter((item: any) => !!item.value) || []}
+                value={selectedKeys}
+                onChange={(e) => setSelectedKeys(e.target.value + '')}
+              />
+            </div>
+            {groupButton(confirm, clearFilters, key, selectedKeys)}
+          </div>
+        );
+      },
+      filterIcon: (filtered: boolean) => (
+        // <i className="las la-lg la-dot-circle" style={{ color: filtered ? '#3699FF' : undefined }} />
+        <DotCircle className="h-4 w-4 fill-gray-600"/>
+      ),
+    });
+    // noinspection JSUnusedGlobalSymbols
+    const getColumnSearchCheckbox = (filters: any, key: any, get: TableGet = {}) => ({
+      onFilterDropdownOpenChange: async (visible: boolean) => {
+        valueFilter.current[key] = visible;
+      },
+      filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }: any) => {
+        const { result, queryParams, time } = useTypedSelector((state: any) => state[get?.action?.name || 'User']);
+        if (get && !result.data && valueFilter.current[key]) {
+          columnSearch(get, '', undefined, queryParams, time);
+        }
+        return (
+          <div className={'p-1'}>
+            <input
+              className="w-full sm:w-52 h-10 rounded-xl text-gray-600 bg-white border border-solid border-gray-100 pr-9 pl-4 mb-1"
+              type="text"
+              placeholder={t('components.datatable.pleaseEnterValueToSearch') || ''}
+              onChange={(e) => {
+                clearTimeout(timeoutSearch.current);
+                timeoutSearch.current = setTimeout(
+                  () => columnSearch(get, e.target.value, selectedKeys, queryParams, time),
+                  500,
+                );
+              }}
+              onKeyUp={async (e) => {
+                if (e.key === 'Enter') {
+                  await columnSearch(get, e.currentTarget.value, undefined, queryParams, time);
+                }
+              }}
+            />
+            <div>
+              <CheckboxGroup
+                options={filters || result?.data?.map(get.format).filter((item: any) => !!item.value) || []}
+                defaultValue={selectedKeys}
+                onChange={(e) => setSelectedKeys(e)}
+              />
+            </div>
+            {groupButton(confirm, clearFilters, key, selectedKeys)}
+          </div>
+        );
+      },
+      filterIcon: (filtered: boolean) => (
+        // <i className="las la-lg la-check-square" style={{ color: filtered ? '#3699FF' : undefined }} />
+        <CheckSquare className={classNames("h-4 w-4" ,{ "fill-[#3699FF]" : filtered, "fill-gray-600": !filtered})}/>
+      ),
+    });
     // noinspection JSUnusedGlobalSymbols
     const getColumnSearchInput = (key: any) => ({
       filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }: any) => (
@@ -190,7 +292,8 @@ const Hook = forwardRef(
         </div>
       ),
       filterIcon: (filtered: boolean) => (
-        <i className="las la-lg la-search" style={{ color: filtered ? '#3699FF' : undefined }} />
+        // <i className="las la-lg la-search" style={{ color: filtered ? '#3699FF' : undefined }} />
+        <Search className={classNames("h-4 w-4" ,{ "fill-[#3699FF]" : filtered, "fill-gray-600": !filtered})} />
       ),
       onFilterDropdownOpenChange: (visible: boolean) => {
         if (visible) {
@@ -200,95 +303,6 @@ const Hook = forwardRef(
           );
         }
       },
-    });
-    const apiColumnSearchRadio = async (key: string, api: TableApi = {}, fullTextSearch = '', value?: any) => {
-      if (api.link) {
-        const url = api.link();
-        if (url) {
-          const params = api.params ? api.params(fullTextSearch, value) : { fullTextSearch };
-          const data = await API.get(url, params);
-          valueFilter.current[key] = data.data.map(api.format).filter((item: any) => !!item.value);
-          set_rerender(!rerender);
-        }
-      }
-    };
-    // noinspection JSUnusedGlobalSymbols
-    const getColumnSearchRadio = (filters: CheckboxOptionType[], key: string, api: TableApi = {}, value?: any) => ({
-      onFilterDropdownOpenChange: async (visible: boolean) => {
-        if (visible) await apiColumnSearchRadio(key, api, '', value);
-      },
-      filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }: any) => {
-        return (
-          <div className={'p-1'}>
-            <input
-              className="w-full sm:w-52 h-10 rounded-xl text-gray-600 bg-white border border-solid border-gray-100 pr-9 pl-4 mb-1"
-              type="text"
-              placeholder={t('components.datatable.pleaseEnterValueToSearch') || ''}
-              onChange={(e) => {
-                clearTimeout(timeoutSearch.current);
-                timeoutSearch.current = setTimeout(
-                  async () => await apiColumnSearchRadio(key, api, e.target.value),
-                  500,
-                );
-              }}
-              onKeyUp={async (e) => {
-                if (e.key === 'Enter') {
-                  await apiColumnSearchRadio(key, api, e.currentTarget.value);
-                }
-              }}
-            />
-            <div>
-              <RadioGroup
-                options={filters || valueFilter.current[key]}
-                value={selectedKeys}
-                onChange={(e) => setSelectedKeys(e.target.value + '')}
-              />
-            </div>
-            {groupButton(confirm, clearFilters, key, selectedKeys)}
-          </div>
-        );
-      },
-      filterIcon: (filtered: boolean) => (
-        <i className="las la-lg la-dot-circle" style={{ color: filtered ? '#3699FF' : undefined }} />
-      ),
-    });
-    // noinspection JSUnusedGlobalSymbols
-    const getColumnSearchCheckbox = (filters: any, key: any, api: TableApi = {}, value?: any) => ({
-      onFilterDropdownOpenChange: async (visible: boolean) => {
-        if (visible) await apiColumnSearchRadio(key, api, '', value);
-      },
-      filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }: any) => (
-        <div className={'p-1'}>
-          <input
-            className="w-full sm:w-52 h-10 rounded-xl text-gray-600 bg-white border border-solid border-gray-100 pr-9 pl-4 mb-1"
-            type="text"
-            placeholder={t('components.datatable.pleaseEnterValueToSearch') || ''}
-            onChange={(e) => {
-              clearTimeout(timeoutSearch.current);
-              timeoutSearch.current = setTimeout(
-                async () => await apiColumnSearchRadio(key, api, e.target.value, selectedKeys),
-                500,
-              );
-            }}
-            onKeyUp={async (e) => {
-              if (e.key === 'Enter') {
-                await apiColumnSearchRadio(key, api, e.currentTarget.value);
-              }
-            }}
-          />
-          <div>
-            <CheckboxGroup
-              options={filters || valueFilter.current[key]}
-              defaultValue={selectedKeys}
-              onChange={(e) => setSelectedKeys(e)}
-            />
-          </div>
-          {groupButton(confirm, clearFilters, key, selectedKeys)}
-        </div>
-      ),
-      filterIcon: (filtered: boolean) => (
-        <i className="las la-lg la-check-square" style={{ color: filtered ? '#3699FF' : undefined }} />
-      ),
     });
     // noinspection JSUnusedGlobalSymbols
     const getColumnSearchDate = (key: any) => ({
@@ -311,7 +325,8 @@ const Hook = forwardRef(
         </div>
       ),
       filterIcon: (filtered: boolean) => (
-        <i className="las la-lg la-calendar" style={{ color: filtered ? '#3699FF' : undefined }} />
+        // <i className="las la-lg la-calendar" style={{ color: filtered ? '#3699FF' : undefined }} />
+        <Calendar className={classNames("h-4 w-4" ,{ "fill-[#3699FF]" : filtered, "fill-gray-600": !filtered})} />
       ),
     });
     cols.current = columns
@@ -328,23 +343,13 @@ const Hook = forwardRef(
             case 'radio':
               item = {
                 ...item,
-                ...getColumnSearchRadio(
-                  item.filter.list,
-                  item.filter.name || col.name,
-                  item.filter.api,
-                  item.defaultFilteredValue,
-                ),
+                ...getColumnSearchRadio(item.filter.list, item.filter.name || col.name, item.filter.get),
               };
               break;
             case 'checkbox':
               item = {
                 ...item,
-                ...getColumnSearchCheckbox(
-                  item.filter.list,
-                  item.filter.name || col.name,
-                  item.filter.api,
-                  item.defaultFilteredValue,
-                ),
+                ...getColumnSearchCheckbox(item.filter.list, item.filter.name || col.name, item.filter.get),
               };
               break;
             case 'date':
@@ -431,7 +436,25 @@ const Hook = forwardRef(
                   }
                 }}
               />
-              <i
+              {!params[fullTextSearch]
+                ?
+                  <Search className='w-5 h-5 my-1 fill-gray-500 text-lg las absolute top-1.5 right-3 z-10' onClick={() => {
+                    if (params[fullTextSearch]) {
+                      (document.getElementById(idTable.current + '_input_search') as HTMLInputElement).value = '';
+                      handleTableChange(null, params[filter], params[sort], '');
+                    }
+                  }}/>
+                : !!params[fullTextSearch]
+                  && <Times className='w-5 h-5 my-1 fill-gray-500 text-lg las absolute top-1.5 right-3 z-10' onClick={() => {
+                    if (params[fullTextSearch]) {
+                      (document.getElementById(idTable.current + '_input_search') as HTMLInputElement).value = '';
+                      handleTableChange(null, params[filter], params[sort], '');
+                    }
+                  }}/>
+
+              }
+
+              {/* <i
                 className={classNames('text-lg las absolute top-1.5 right-3 z-10', {
                   'la-search': !params[fullTextSearch],
                   'la-times': !!params[fullTextSearch],
@@ -442,7 +465,7 @@ const Hook = forwardRef(
                     handleTableChange(null, params[filter], params[sort], '');
                   }
                 }}
-              />
+              /> */}
             </div>
           ) : (
             <div />
@@ -528,7 +551,6 @@ type Type = {
   idElement?: string;
   className?: string;
   action?: any;
-  slice?: any;
   data?: any[];
 };
 export default Hook;

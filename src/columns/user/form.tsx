@@ -1,5 +1,5 @@
 import { FormModel } from '@models';
-import { routerLinks } from '@utils';
+import { codeAction } from '@reducers';
 
 const Column = ({ t, listRole }: any) => {
   const col: FormModel[] = [
@@ -83,15 +83,16 @@ const Column = ({ t, listRole }: any) => {
         rules: [{ type: 'required' }],
         convert: (data: any) =>
           data?.map ? data.map((_item: any) => (_item?.id !== undefined ? +_item.id : _item)) : data,
-        api: {
-          link: () => routerLinks('Code', 'api') + '/',
-          format: (item: any) => ({
-            label: item.name,
-            value: item.code,
-          }),
+        get: {
+          action: codeAction,
           params: (form: any, fullTextSearch: string) => ({
             fullTextSearch,
             filter: { type: 'POS' },
+            extend: {},
+          }),
+          format: (item: any) => ({
+            label: item.name,
+            value: item.code,
           }),
         },
       },

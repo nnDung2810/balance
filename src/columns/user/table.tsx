@@ -3,10 +3,10 @@ import React from 'react';
 import dayjs from 'dayjs';
 
 import { Avatar, Button } from '@components';
-import { keyRole, routerLinks } from '@utils';
+import { keyRole } from '@utils';
 import { DataTableModel } from '@models';
-import edit from '../../assets/svgs/edit.svg';
-import trash from '../../assets/svgs/trash-alt-solid.svg';
+import { codeAction } from '@reducers';
+import { Edit, Question, Trash } from 'src/assets/svgs';
 
 const Column = ({ t, formatDate, modalFormRef, permissions }: any) => {
   const col: DataTableModel[] = [
@@ -32,8 +32,8 @@ const Column = ({ t, formatDate, modalFormRef, permissions }: any) => {
         filter: {
           type: 'checkbox',
           name: 'positionCode',
-          api: {
-            link: () => routerLinks('Code', 'api') + '/',
+          get: {
+            action: codeAction,
             format: (item: any) => ({
               label: item.name,
               value: item.code,
@@ -95,8 +95,8 @@ const Column = ({ t, formatDate, modalFormRef, permissions }: any) => {
           <div className={'flex gap-2'}>
             {permissions?.includes(keyRole.P_USER_UPDATE) && (
               <Tooltip title={t('routes.admin.Layout.Edit')}>
-                <img src={edit} className="h-7 w-7 bg-sky-900 !fill-white rounded hover:cursor-pointer"
-                      onClick={() => modalFormRef?.current?.handleEdit(data)}/>
+                <Edit className="icon-cud bg-blue-600"  onClick={() => modalFormRef?.current?.handleEdit(data)}/>
+
                 {/* <Button icon={'las la-edit'} onClick={() => modalFormRef?.current?.handleEdit(data)} /> */}
               </Tooltip>
             )}
@@ -106,12 +106,12 @@ const Column = ({ t, formatDate, modalFormRef, permissions }: any) => {
                 <Popconfirm
                   placement="left"
                   title={t('components.datatable.areYouSureWant')}
-                  icon={<i className="las la-question-circle text-2xl text-yellow-500 absolute -top-0.5 -left-1" />}
+                  icon= {<Question className='h-6 w-6 fill-yellow-500 absolute -top-0.5 -left-1'/>}
                   onConfirm={() => modalFormRef?.current?.handleDelete(data.id)}
                   okText={t('components.datatable.ok')}
                   cancelText={t('components.datatable.cancel')}
                 >
-                   <img src={trash} className="h-7 w-7 !bg-red-500 !fill-white rounded hover:cursor-pointer"/>
+                   <Trash className="icon-cud bg-red-500 " />
                   {/* <Button icon={'las la-trash-alt'} className={'!bg-red-500 text-white'} /> */}
                 </Popconfirm>
               </Tooltip>

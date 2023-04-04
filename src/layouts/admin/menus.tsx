@@ -1,32 +1,29 @@
 import { keyRole } from '@utils';
-import SVGChart from "../../assets/svgs/chart-area-solid.svg"
-import SVGUserCircle from "../../assets/svgs/user-circle.svg"
-import SVGCog from"../../assets/svgs/cog-solid.svg"
-import SVGCode from "../../assets/svgs/code-branch-solid.svg"
-import SVGServer from "../../assets/svgs/server-solid.svg"
+import './index.less';
+import { Chart, Cog, User } from 'src/assets/svgs';
 
 
 const Layout = () => [
   {
-    icon: SVGChart,
+    icon: <Chart className='icon-menu'/>,
     name: 'Dashboard',
   },
   {
-    icon: SVGUserCircle,
+    icon: <User  className='icon-menu'/>,
     name: 'User',
     permission: keyRole.P_USER_LISTED,
   },
   {
-    icon: SVGCog,
+    icon: <Cog className='icon-menu'/>,
     name: 'Setting',
     child: [
       {
-        icon: SVGCode,
+        icon: <Chart className='icon-menu'/>,
         name: 'Code',
         permission: keyRole.P_CODE_LISTED,
       },
       {
-        icon: SVGServer,
+        icon:<Chart className='icon-menu'/>,
         name: 'Data',
         permission: keyRole.P_DATA_LISTED,
       },
