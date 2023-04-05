@@ -16,7 +16,6 @@ export const Button = ({ text, icon, className, disabled, ...props }: Type) => {
       )}
       {...props}
     >
-      {/* {icon && <i className={icon} />} */}
       {icon}
       {text}
     </button>
@@ -24,7 +23,7 @@ export const Button = ({ text, icon, className, disabled, ...props }: Type) => {
 };
 
 type Type = {
-  icon?: string | React.ReactNode;
+  icon?: React.ReactNode;
   text?: string | DefaultTFuncReturn;
   className?: string;
   disabled?: boolean;

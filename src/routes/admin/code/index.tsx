@@ -54,10 +54,7 @@ const Page = () => {
         rightHeader={
           <div className={'flex gap-2'}>
             {user?.role?.permissions?.includes(keyRole.P_CODE_TYPE_LISTED) && (
-              //    <button onClick={() => modalDragRef?.current?.handleShow()} className='flex items-center gap-2 bg-blue-600 p-2 rounded-md hover:opacity-80'>
-              //    <Plus className='icon-cud !h-5 !w-5'/>
-              //    <span className='text-white'>{t('Code.Type Code')}</span>
-              //  </button>
+
               <Button
                 icon={<Plus className="icon-cud !h-5 !w-5" />}
                 text={t('Code.Type Code')}
@@ -65,10 +62,6 @@ const Page = () => {
               />
             )}
             {user?.role?.permissions?.includes(keyRole.P_CODE_CREATE) && (
-              //    <button onClick={() => modalFormRef?.current?.handleEdit()} className='flex items-center gap-2 bg-blue-600 p-2 rounded-md hover:opacity-80'>
-              //    <Plus className='icon-cud !h-5 !w-5'/>
-              //    <span className='text-white'>{t('routes.admin.Layout.Add')}</span>
-              //  </button>
               <Button
                 icon={<Plus className="icon-cud !h-5 !w-5" />}
                 text={t('routes.admin.Layout.Add')}

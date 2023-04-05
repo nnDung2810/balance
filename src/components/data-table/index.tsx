@@ -148,7 +148,7 @@ const Hook = forwardRef(
           className={'justify-center'}
         />
         <Button
-          icon={'las la-search'}
+          icon={<Search className='fill-white h-4 w-4'/>}
           text={t('components.datatable.search')}
           onClick={() => confirm(value)}
           className={'justify-center'}

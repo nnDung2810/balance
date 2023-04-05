@@ -294,7 +294,7 @@ const Page = () => {
         <div className="rounded-xl shadow bg-gray-50 flex-col justify-between hidden 2xl:flex">
           <div>
             <div className="ml-5 mt-5 px-2 py-1 rounded-md bg-blue-50 inline-block">
-              <i className="las la-user-tie text-2xl text-blue-500" />
+              <UserTie className="icon-dashboard fill-blue-500" />
             </div>
             <h2 className="px-5 pt-1 text-2xl font-bold">875</h2>
             <p className="px-5 pb-3">{t('dashboard.New Custommers')}</p>
