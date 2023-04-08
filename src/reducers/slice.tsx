@@ -1,6 +1,4 @@
 import { PayloadAction } from '@reduxjs/toolkit';
-import {object} from "prop-types";
-
 export default class Slice {
   name: string;
   initialState: any;
@@ -24,15 +22,12 @@ export default class Slice {
     this.reducers = {};
     this.extraReducers = (builder: any) => {
       builder
-        .addCase(
-          action.set.fulfilled,
-          (state: State, action: PayloadAction<object>) => {
-            Object.keys(action.payload).forEach((key) => {
-              // @ts-ignore
-              state[key] = action.payload[key];
-            })
-          },
-        )
+        .addCase(action.set.fulfilled, (state: State, action: PayloadAction<object>) => {
+          Object.keys(action.payload).forEach((key) => {
+            // @ts-ignore
+            state[key] = action.payload[key];
+          });
+        })
         .addCase(action.get.pending, (state: State, action: any) => {
           if (action.meta.arg.keyList) {
             state.keyList = action.meta.arg.keyList;

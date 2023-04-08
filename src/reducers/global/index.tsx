@@ -89,15 +89,12 @@ export const globalSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(
-        globalAction.set.fulfilled,
-        (state: State, action: PayloadAction<object>) => {
-          Object.keys(action.payload).forEach((key) => {
-            // @ts-ignore
-            state[key] = action.payload[key];
-          })
-        },
-      )
+      .addCase(globalAction.set.fulfilled, (state: State, action: PayloadAction<object>) => {
+        Object.keys(action.payload).forEach((key) => {
+          // @ts-ignore
+          state[key] = action.payload[key];
+        });
+      })
       // .addCase(globalAction.logout.pending, (state: State) => {
       //   state.isLoading = true;
       //   state.status = 'logout.pending';
