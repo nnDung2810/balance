@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useCallback, useState } from 'react';
 import { Select } from 'antd';
 import classNames from 'classnames';
-import {Arrow, DoubleArrow, } from 'src/assets/svgs';
+import { Arrow, DoubleArrow } from 'src/assets/svgs';
 
 export const Pagination: any = ({
   total = 4,

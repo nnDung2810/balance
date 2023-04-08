@@ -52,8 +52,8 @@ export default class Slice {
           state.isLoading = true;
           state.status = 'getById.pending';
         })
-        .addCase(action.getById.fulfilled, (state: State, action: PayloadAction<{data: any, keyState: string}>) => {
-          const {data, keyState} = action.payload;
+        .addCase(action.getById.fulfilled, (state: State, action: PayloadAction<{ data: any; keyState: string }>) => {
+          const { data, keyState } = action.payload;
           if (JSON.stringify(state.data) !== JSON.stringify(data)) state.data = data;
           state.isLoading = false;
           // @ts-ignore

@@ -36,7 +36,6 @@ const Hook = forwardRef(
         onOk(data);
       } else {
         handleCancel();
-
       }
     };
 

@@ -158,7 +158,7 @@ export const globalSlice = createSlice({
           state.data = {};
         }
         state.isLoading = false;
-        state.status = 'login.fulfilled'
+        state.status = 'login.fulfilled';
       })
       .addCase(globalAction.login.rejected, (state: State) => {
         state.isLoading = false;

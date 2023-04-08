@@ -3,7 +3,7 @@ import React from 'react';
 
 import { keyRole } from '@utils';
 import { DataTableModel } from '@models';
-import { Edit, Question, Trash } from 'src/assets/svgs';
+import { Edit, Trash } from 'src/assets/svgs';
 
 const Column = ({ t, modalFormRef, listType, permissions }: any) => {
   const col: DataTableModel[] = [
@@ -61,7 +61,6 @@ const Column = ({ t, modalFormRef, listType, permissions }: any) => {
                 <Popconfirm
                   placement="left"
                   title={t('components.datatable.areYouSureWant')}
-                  icon={<Question className="h-6 w-6 fill-yellow-500 absolute -top-0.5 -left-1" />}
                   onConfirm={() => modalFormRef?.current?.handleDelete(data.id)}
                   okText={t('components.datatable.ok')}
                   cancelText={t('components.datatable.cancel')}

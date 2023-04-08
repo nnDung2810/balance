@@ -1,4 +1,4 @@
-import React, { forwardRef, useImperativeHandle, useEffect } from 'react';
+import React, { forwardRef, useImperativeHandle } from 'react';
 import { Form as FormAnt } from 'antd';
 import { v4 } from 'uuid';
 
@@ -35,7 +35,7 @@ const Hook = forwardRef(
     const handleEdit = async (item: { id?: string } = {}, isGet = true) => {
       !!firstRun && firstRun(item);
       if (item.id && isGet) {
-        dispatch(action.getById({id: item.id, keyState}));
+        dispatch(action.getById({ id: item.id, keyState }));
       } else {
         dispatch(action[keyState]({ isVisible: true, data: item }));
       }

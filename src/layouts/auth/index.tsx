@@ -3,7 +3,7 @@ import { Select } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 import { globalAction, globalSlice, useAppDispatch } from '@reducers';
-import {Facebook, Twitter, Linkedin, Logo} from 'src/assets/svgs';
+import { Facebook, Twitter, Linkedin, Logo } from 'src/assets/svgs';
 
 import './index.less';
 
@@ -22,7 +22,7 @@ const Layout = ({ children }: PropsWithChildren) => {
           <div className="mb-5">
             <h2 className="font-bold text-3xl -intro-x">
               <a href="/" className="flex items-center text-white hover:text-yellow-500">
-                <Logo className={'w-14 h-14 mr-3 brightness-0 invert'}/>
+                <Logo className={'w-14 h-14 mr-3 brightness-0 invert'} />
               </a>
             </h2>
           </div>

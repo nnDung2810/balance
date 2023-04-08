@@ -43,7 +43,6 @@ const Page = () => {
     // }
   };
   const modalFormRef = useRef<any>();
-  console.log(data);
   return (
     <Fragment>
       <div className="mb-8">
@@ -54,7 +53,7 @@ const Page = () => {
       </div>
       <Spin spinning={isLoading}>
         <Form
-          values={{...data}}
+          values={{ ...data }}
           form={form}
           className="intro-x"
           columns={ColumnLogin({ t })}

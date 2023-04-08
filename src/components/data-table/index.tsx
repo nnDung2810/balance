@@ -22,7 +22,9 @@ const checkTextToShort = (text: string) => {
   ) : (
     <span>
       {text?.substring(0, 40)}
-      <Popover trigger="hover" overlayClassName="table-tooltip" content={text}>...</Popover>
+      <Popover trigger="hover" overlayClassName="table-tooltip" content={text}>
+        ...
+      </Popover>
     </span>
   );
 };

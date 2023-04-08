@@ -12,7 +12,7 @@ import { globalAction, globalSlice, useAppDispatch, useTypedSelector } from '@re
 import Menu from './menu';
 // import { firebaseConfig } from 'variable';
 import './index.less';
-import {Bell, Comment, Logo} from 'src/assets/svgs';
+import { Bell, Comment, Logo } from 'src/assets/svgs';
 
 const Layout = ({ children }: PropsWithChildren) => {
   const { t, i18n } = useTranslation();
@@ -160,7 +160,7 @@ const Layout = ({ children }: PropsWithChildren) => {
       >
         <div>
           <a href="/" className="flex items-center">
-            <Logo className={'w-10 h-10 mr-3'}/>
+            <Logo className={'w-10 h-10 mr-3'} />
             <div
               id={'name-application'}
               className={classNames(

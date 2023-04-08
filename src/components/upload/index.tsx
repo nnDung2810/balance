@@ -6,7 +6,7 @@ import { v4 } from 'uuid';
 
 import { API, linkApi } from '@utils';
 import { Button, Message, Spin } from '@components';
-import { Plus, Question, Copy, Paste, Times } from 'src/assets/svgs';
+import { Plus, Copy, Paste, Times } from 'src/assets/svgs';
 
 export const Upload = ({
   value = [],
@@ -282,7 +282,6 @@ export const Upload = ({
                   <Popconfirm
                     placement="left"
                     title={t('components.datatable.areYouSureWant')}
-                    icon={<Question className="h-6 w-6 fill-yellow-500 absolute -top-0.5 -left-1" />}
                     onConfirm={async () => {
                       if (deleteFile && file?.id) {
                         const data = await deleteFile(file?.id);

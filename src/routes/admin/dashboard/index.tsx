@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 
 import { echartBar, echartLine, echartPie, echartBarStack, linearGradient } from '@utils';
 import { DataTable, Spin } from '@components';
-import {Briefcase, CheckCircle, User, UserSolid} from 'src/assets/svgs';
+import { Briefcase, CheckCircle, User, UserSolid } from 'src/assets/svgs';
 
 const Page = () => {
   const { t } = useTranslation();

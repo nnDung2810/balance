@@ -14,13 +14,11 @@ export default class Action {
     this.name = name;
     this.isVisible = createAsyncThunk(name + '/isVisible', async (values: any) => values);
     this.get = createAsyncThunk(name + '/get', async (params: any = {}) => API.get(routerLinks(name, 'api'), params));
-    this.getById = createAsyncThunk(name + '/getById', async (value: {id: string, keyState?: string}) =>
-      {
-        const {data} = await API.get(`${routerLinks(name, 'api')}/${value.id}`);
-        const keyState = value.keyState || 'isVisible';
-        return {data, keyState}
-      },
-    );
+    this.getById = createAsyncThunk(name + '/getById', async (value: { id: string; keyState?: string }) => {
+      const { data } = await API.get(`${routerLinks(name, 'api')}/${value.id}`);
+      const keyState = value.keyState || 'isVisible';
+      return { data, keyState };
+    });
     this.post = createAsyncThunk(name + '/post', async (values: any) => {
       const data = await API.post(routerLinks(name, 'api'), values);
       if (data.message) await Message.success({ text: data.message });
