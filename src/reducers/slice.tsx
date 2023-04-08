@@ -11,13 +11,15 @@ export default class Slice {
     isLoading: false,
     isVisible: false,
     status: 'idle',
+    keyList: 'result',
+    keyIsLoading: 'isLoading',
     queryParams: '',
     keepUnusedDataFor: 60,
     time: 0,
   };
   constructor(action: any, initialState: object = {}, extraReducers = (builder: any) => builder) {
     this.name = action.name;
-    this.initialState = { ...this.defaultState, initialState };
+    this.initialState = { ...this.defaultState, ...initialState };
     this.reducers = {};
     this.extraReducers = (builder: any) => {
       builder
@@ -33,18 +35,34 @@ export default class Slice {
           },
         )
         .addCase(action.get.pending, (state: State, action: any) => {
+          if (action.meta.arg.keyList) {
+            state.keyList = action.meta.arg.keyList;
+            delete action.meta.arg.keyList;
+          }
+          if (action.meta.arg.keyIsLoading) {
+            state.keyIsLoading = action.meta.arg.keyIsLoading;
+            delete action.meta.arg.keyIsLoading;
+          }
           state.time = new Date().getTime() + state.keepUnusedDataFor * 1000;
           state.queryParams = JSON.stringify(action.meta.arg);
-          state.isLoading = true;
+          // @ts-ignore
+          state[state.keyIsLoading] = true;
           state.status = 'get.pending';
         })
         .addCase(action.get.fulfilled, (state: State, action: PayloadAction<any[]>) => {
-          state.result = action.payload;
-          state.isLoading = false;
+          // @ts-ignore
+          state[state.keyList] = action.payload;
+          // @ts-ignore
+          state[state.keyIsLoading] = false;
+          state.keyList = 'result';
+          state.keyIsLoading = 'isLoading';
           state.status = 'get.fulfilled';
         })
         .addCase(action.get.rejected, (state: State) => {
-          state.isLoading = false;
+          // @ts-ignore
+          state[state.keyIsLoading] = false;
+          state.keyList = 'result';
+          state.keyIsLoading = 'isLoading';
           state.status = 'get.rejected';
         })
 
@@ -118,6 +136,8 @@ export interface State {
   isLoading: boolean;
   isVisible: boolean;
   status: string;
+  keyList: string;
+  keyIsLoading: string;
   queryParams: string;
   keepUnusedDataFor: number;
   time: number;

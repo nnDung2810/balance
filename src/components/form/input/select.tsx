@@ -20,15 +20,27 @@ const Component = ({
 }: Type) => {
   const [_list, set_list] = useState(formItem.list ? formItem.list : []);
   const dispatch = useAppDispatch();
-  const { result, queryParams, time, isLoading } = useTypedSelector((state: any) => state[get?.action?.name || 'User']);
-  const list = !get ? _list : result.data?.map(formItem.get.format).filter((item: any) => !!item.value);
+  const { queryParams, time, ...state } = useTypedSelector((state: any) => state[get?.action?.name || 'User']);
+  const list = !get
+    ? _list
+    : state[get?.keyList || 'result'].data?.map(formItem.get.format).filter((item: any) => !!item.value);
   const loadData = async (fullTextSearch: string) => {
     if (get) {
-      const params = formItem.get.params
-        ? formItem.get.params(form.getFieldValue, fullTextSearch, value)
-        : { fullTextSearch };
-      if (!result.data || new Date().getTime() > time || JSON.stringify(cleanObjectKeyNull(params)) != queryParams) {
-        dispatch(get.action.get(cleanObjectKeyNull(params)));
+      const params = cleanObjectKeyNull(
+        formItem.get.params ? formItem.get.params(form.getFieldValue, fullTextSearch, value) : { fullTextSearch },
+      );
+      if (
+        !state[get?.keyList || 'result'].data ||
+        new Date().getTime() > time ||
+        JSON.stringify(params) != queryParams
+      ) {
+        dispatch(
+          get.action.get({
+            ...params,
+            keyList: get?.keyList || 'result',
+            keyIsLoading: get?.keyIsLoading || 'isLoading',
+          }),
+        );
       }
     } else if (formItem.renderList) {
       set_list(formItem.renderList(form.getFieldValue, fullTextSearch, formItem.list));
@@ -43,7 +55,7 @@ const Component = ({
   };
 
   useEffect(() => {
-    if (!isLoading) {
+    if (!state[get?.keyIsLoading || 'isLoading'] && !state[get?.keyList || 'result'].data) {
       loadData('');
     }
   }, []);
@@ -88,5 +100,6 @@ type Type = {
   disabled: boolean;
   tabIndex: number;
   get?: TableGet;
+  keyList?: string;
 };
 export default Component;
