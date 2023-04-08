@@ -1,10 +1,10 @@
-import React, {Fragment, useEffect, useRef} from 'react';
+import React, { Fragment, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { Button, DataTable, ModalForm } from '@components';
 import { ColumnFormUser, ColumnTableUser } from '@columns';
 import { keyRole } from '@utils';
-import {useAppDispatch, useTypedSelector, userAction, userRoleAction, globalAction, dataAction} from '@reducers';
+import { useAppDispatch, useTypedSelector, userAction, userRoleAction, globalAction } from '@reducers';
 import { Plus } from 'src/assets/svgs';
 
 const Page = () => {

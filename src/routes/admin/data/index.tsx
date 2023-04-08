@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { DataTable, ModalForm, Button } from '@components';
 import { ColumnDataForm, ColumnDataTable } from '@columns';
 import { keyRole } from '@utils';
-import {dataAction, dataTypeAction, useAppDispatch, useTypedSelector, globalAction, codeAction} from '@reducers';
+import { dataAction, dataTypeAction, useAppDispatch, useTypedSelector, globalAction } from '@reducers';
 import { Plus } from 'src/assets/svgs';
 
 const Page = () => {
