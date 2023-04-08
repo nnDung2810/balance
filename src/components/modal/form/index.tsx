@@ -12,7 +12,6 @@ const Hook = forwardRef(
   (
     {
       title,
-      firstRun,
       widthModal = 1200,
       columns,
       textSubmit,
@@ -33,11 +32,10 @@ const Hook = forwardRef(
     const [form] = FormAnt.useForm();
 
     const handleEdit = async (item: { id?: string } = {}, isGet = true) => {
-      !!firstRun && firstRun(item);
       if (item.id && isGet) {
         dispatch(action.getById({ id: item.id, keyState }));
       } else {
-        dispatch(action[keyState]({ isVisible: true, data: item }));
+        dispatch(action.set({ [keyState]: true, data: item }));
       }
     };
     const handleDelete = async (id: string) => {
@@ -78,7 +76,6 @@ type Type = {
   keyPost?: string;
   keyPut?: string;
   title: (data: any) => string;
-  firstRun?: (item: any) => void;
   widthModal?: number;
   columns: FormModel[];
   textSubmit?: string;

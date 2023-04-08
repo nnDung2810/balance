@@ -10,7 +10,7 @@ import { Message } from '@components';
 const name = 'Auth';
 export const globalAction = {
   name,
-  isVisible: createAsyncThunk(name + '/isVisible', async (values: any) => values),
+  set: createAsyncThunk(name + '/set', async (values: any) => values),
   logout: createAsyncThunk(name + '/logout', async () => {
     // if (localStorage.getItem(keyRefreshToken)) {
     //   return await API.get(`${routerLinks(name, 'api')}/logout`);
@@ -90,13 +90,12 @@ export const globalSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(
-        globalAction.isVisible.fulfilled,
-        (state: State, action: PayloadAction<boolean | { isVisible: boolean; data: object }>) => {
-          if (typeof action.payload === 'boolean') {
-            state.isVisible = action.payload;
-          } else {
-            state.isVisible = action.payload.isVisible;
-          }
+        globalAction.set.fulfilled,
+        (state: State, action: PayloadAction<object>) => {
+          Object.keys(action.payload).forEach((key) => {
+            // @ts-ignore
+            state[key] = action.payload[key];
+          })
         },
       )
       // .addCase(globalAction.logout.pending, (state: State) => {

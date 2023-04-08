@@ -1,4 +1,5 @@
 import { PayloadAction } from '@reduxjs/toolkit';
+import {object} from "prop-types";
 
 export default class Slice {
   name: string;
@@ -24,14 +25,12 @@ export default class Slice {
     this.extraReducers = (builder: any) => {
       builder
         .addCase(
-          action.isVisible.fulfilled,
-          (state: State, action: PayloadAction<boolean | { isVisible: boolean; data: object }>) => {
-            if (typeof action.payload === 'boolean') {
-              state.isVisible = action.payload;
-            } else {
-              if (JSON.stringify(state.data) !== JSON.stringify(action.payload.data)) state.data = action.payload.data;
-              state.isVisible = action.payload.isVisible;
-            }
+          action.set.fulfilled,
+          (state: State, action: PayloadAction<object>) => {
+            Object.keys(action.payload).forEach((key) => {
+              // @ts-ignore
+              state[key] = action.payload[key];
+            })
           },
         )
         .addCase(action.get.pending, (state: State, action: any) => {
@@ -75,7 +74,7 @@ export default class Slice {
           if (JSON.stringify(state.data) !== JSON.stringify(data)) state.data = data;
           state.isLoading = false;
           // @ts-ignore
-          state[keyState as keyof State] = true;
+          state[keyState] = true;
           state.status = 'getById.fulfilled';
         })
         .addCase(action.getById.rejected, (state: State) => {

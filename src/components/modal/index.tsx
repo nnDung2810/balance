@@ -29,7 +29,7 @@ const Hook = forwardRef(
     const { data, isLoading, ...state } = useTypedSelector((state: any) => state[action.name]);
     const { t } = useTranslation();
     const handleCancel = () => {
-      dispatch(action[keyState](false));
+      dispatch(action.set({[keyState]: false}));
     };
     const handleOk = async () => {
       if (onOk) {
