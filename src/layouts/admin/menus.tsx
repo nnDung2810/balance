@@ -2,7 +2,7 @@ import React from 'react';
 
 import { keyRole } from '@utils';
 import './index.less';
-import { Chart, Cog, User } from 'src/assets/svgs';
+import { Chart, Cog, User } from '@svgs';
 
 const Layout = () => [
   {

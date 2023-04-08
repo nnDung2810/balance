@@ -5,7 +5,7 @@ import { Button, DataTable, ModalForm } from '@components';
 import { ColumnFormUser, ColumnTableUser } from '@columns';
 import { keyRole } from '@utils';
 import { useAppDispatch, useTypedSelector, userAction, userRoleAction, globalAction } from '@reducers';
-import { Plus } from 'src/assets/svgs';
+import { Plus } from '@svgs';
 
 const Page = () => {
   const { t } = useTranslation();

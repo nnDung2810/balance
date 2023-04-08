@@ -6,7 +6,7 @@ import { v4 } from 'uuid';
 
 import { API, linkApi } from '@utils';
 import { Button, Message, Spin } from '@components';
-import { Plus, Copy, Paste, Times } from 'src/assets/svgs';
+import { Plus, Copy, Paste, Times } from '@svgs';
 
 export const Upload = ({
   value = [],

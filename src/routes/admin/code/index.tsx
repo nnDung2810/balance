@@ -5,7 +5,7 @@ import { DataTable, ModalForm, Button } from '@components';
 import { ColumnCodeForm, ColumnCodeTable } from '@columns';
 import { keyRole } from '@utils';
 import { useAppDispatch, useTypedSelector, codeAction, codeTypeAction, globalAction } from '@reducers';
-import { Plus } from 'src/assets/svgs';
+import { Plus } from '@svgs';
 const Page = () => {
   const { t } = useTranslation();
   const { formatDate, user } = useTypedSelector((state: any) => state[globalAction.name]);

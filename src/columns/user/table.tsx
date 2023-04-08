@@ -6,7 +6,7 @@ import { Avatar } from '@components';
 import { keyRole } from '@utils';
 import { DataTableModel } from '@models';
 import { codeAction } from '@reducers';
-import { Edit, Trash } from 'src/assets/svgs';
+import { Edit, Trash } from '@svgs';
 
 const Column = ({ t, formatDate, modalFormRef, permissions }: any) => {
   const col: DataTableModel[] = [

@@ -3,7 +3,7 @@ import { FormInstance, Select } from 'antd';
 
 import { Avatar, Button } from '@components';
 import { API } from '@utils';
-import { Times } from 'src/assets/svgs';
+import { Times } from '@svgs';
 
 const Component = ({ tag, onChange, form, value, disabled, maxTagCount, placeholder, ...prop }: Type) => {
   const [_options, set_options] = useState([]);

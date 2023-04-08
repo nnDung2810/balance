@@ -2,7 +2,7 @@ import React, { useState, useEffect, Fragment, useCallback, useRef } from 'react
 import { TreeSelect, Checkbox, FormInstance } from 'antd';
 import { Button } from '@components';
 import { API } from '@utils';
-import { Times } from 'src/assets/svgs';
+import { Times } from '@svgs';
 
 const Component = ({ formItem, placeholder, onChange, value, form, disabled, showSearch = true }: Type) => {
   const [_list, set_list] = useState(formItem.list || []);

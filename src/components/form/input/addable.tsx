@@ -5,7 +5,7 @@ import classNames from 'classnames';
 
 import { FormModel } from '@models';
 import { Button } from '@components';
-import { Trash, Plus } from 'src/assets/svgs';
+import { Trash, Plus } from '@svgs';
 
 const Component = ({
   name,

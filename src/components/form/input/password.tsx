@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Eye, EyeSlash } from 'src/assets/svgs';
+import { Eye, EyeSlash } from '@svgs';
 
 const Component = ({
   value = '',

@@ -3,7 +3,7 @@ import React from 'react';
 
 import { keyRole } from '@utils';
 import { DataTableModel } from '@models';
-import { Edit, Trash } from 'src/assets/svgs';
+import { Edit, Trash } from '@svgs';
 
 const Column = ({ t, modalFormRef, listType, permissions }: any) => {
   const col: DataTableModel[] = [

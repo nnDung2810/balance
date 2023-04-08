@@ -12,7 +12,7 @@ import { globalAction, globalSlice, useAppDispatch, useTypedSelector } from '@re
 import Menu from './menu';
 // import { firebaseConfig } from 'variable';
 import './index.less';
-import { Bell, Comment, Logo } from 'src/assets/svgs';
+import { Bell, Comment, Logo } from '@svgs';
 
 const Layout = ({ children }: PropsWithChildren) => {
   const { t, i18n } = useTranslation();

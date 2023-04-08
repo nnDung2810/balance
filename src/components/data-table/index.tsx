@@ -11,7 +11,7 @@ import { Button, Pagination } from '@components';
 import { TableGet } from '@models';
 import { useAppDispatch, useTypedSelector } from '@reducers';
 import { cleanObjectKeyNull } from '@utils';
-import { Calendar, CheckCircle, CheckSquare, Search, Times } from 'src/assets/svgs';
+import { Calendar, CheckCircle, CheckSquare, Search, Times } from '@svgs';
 
 const RadioGroup = Radio.Group;
 const CheckboxGroup = Checkbox.Group;

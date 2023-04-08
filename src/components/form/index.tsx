@@ -9,8 +9,8 @@ import { Upload, Editor, DraggableLayout, Button } from '@components';
 import { convertFormValue } from '@utils';
 import { FormItem, FormModel } from '@models';
 import { globalAction, useTypedSelector } from '@reducers';
+import { Check, Times } from '@svgs';
 import { Chips, SelectTag, Select, TreeSelect, TableTransfer, Password, Mask, Addable, DatePicker, Tab } from './input';
-import { Check, Times } from 'src/assets/svgs';
 
 const Component = ({
   className,

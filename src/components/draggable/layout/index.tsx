@@ -5,7 +5,7 @@ import { Swappable } from '@shopify/draggable';
 import { v4 } from 'uuid';
 import { t } from 'i18next';
 import { Popconfirm, Tooltip } from 'antd';
-import { Arrows, Edit, Plus, Trash } from 'src/assets/svgs';
+import { Arrows, Edit, Plus, Trash } from '@svgs';
 // import { ModalForm } from '@components';
 // import { listStyle } from '@utils';
 

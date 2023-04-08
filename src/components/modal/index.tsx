@@ -5,7 +5,7 @@ import { v4 } from 'uuid';
 
 import { Button, Spin } from '@components';
 import { useAppDispatch, useTypedSelector } from '@reducers';
-import { Spinner } from 'src/assets/svgs';
+import { Spinner } from '@svgs';
 
 const Hook = forwardRef(
   (

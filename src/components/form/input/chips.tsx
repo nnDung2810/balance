@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import { Button } from '@components';
-import { Times } from 'src/assets/svgs';
+import { Times } from '@svgs';
 
 const Component = ({
   onChange,

@@ -3,7 +3,7 @@ import { Select } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 import { globalAction, globalSlice, useAppDispatch } from '@reducers';
-import { Facebook, Twitter, Linkedin, Logo } from 'src/assets/svgs';
+import { Facebook, Twitter, Linkedin, Logo } from '@svgs';
 
 import './index.less';
 
