@@ -11,7 +11,7 @@ import { Button, Pagination } from '@components';
 import { TableGet } from '@models';
 import { useAppDispatch, useTypedSelector } from '@reducers';
 import { cleanObjectKeyNull } from '@utils';
-import { Calendar, CheckCircle, CheckSquare, InfoCircle, Search, Times } from 'src/assets/svgs';
+import { Calendar, CheckCircle, CheckSquare, Search, Times } from 'src/assets/svgs';
 
 const RadioGroup = Radio.Group;
 const CheckboxGroup = Checkbox.Group;
@@ -22,9 +22,7 @@ const checkTextToShort = (text: string) => {
   ) : (
     <span>
       {text?.substring(0, 40)}
-      <Popover trigger="hover" overlayClassName="table-tooltip" content={text}>
-        <InfoCircle className="h-4 w-4 fill-gray-600" />
-      </Popover>
+      <Popover trigger="hover" overlayClassName="table-tooltip" content={text}>...</Popover>
     </span>
   );
 };
@@ -204,7 +202,7 @@ const Hook = forwardRef(
           </div>
         );
       },
-      filterIcon: () => <InfoCircle className="h-4 w-4 fill-gray-600" />,
+      filterIcon: () => <CheckCircle className="h-4 w-4 fill-gray-600" />,
     });
     // noinspection JSUnusedGlobalSymbols
     const getColumnSearchCheckbox = (filters: any, key: any, get: TableGet = {}) => ({

@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 
 import { echartBar, echartLine, echartPie, echartBarStack, linearGradient } from '@utils';
 import { DataTable, Spin } from '@components';
-import { Briefcase, CheckCircle, UserSolid, UserTie } from 'src/assets/svgs';
+import {Briefcase, CheckCircle, User, UserSolid} from 'src/assets/svgs';
 
 const Page = () => {
   const { t } = useTranslation();
@@ -250,7 +250,7 @@ const Page = () => {
             <div className="p-5 grid grid-cols-2 gap-5 w-full">
               <div className="rounded-xl p-5 bg-white flex items-center">
                 <div className="px-2 py-1 rounded-md bg-indigo-50">
-                  <UserTie className="icon-dashboard fill-indigo-500" />
+                  <User className="icon-dashboard fill-indigo-500" />
                 </div>
                 <div className="ml-3">
                   <p className="font-bold text-black ">{t('dashboard.Seller Profiles')}</p>
@@ -290,7 +290,7 @@ const Page = () => {
         <div className="rounded-xl shadow bg-gray-50 flex-col justify-between hidden 2xl:flex">
           <div>
             <div className="ml-5 mt-5 px-2 py-1 rounded-md bg-blue-50 inline-block">
-              <UserTie className="icon-dashboard fill-blue-500" />
+              <User className="icon-dashboard fill-blue-500" />
             </div>
             <h2 className="px-5 pt-1 text-2xl font-bold">875</h2>
             <p className="px-5 pb-3">{t('dashboard.New Custommers')}</p>

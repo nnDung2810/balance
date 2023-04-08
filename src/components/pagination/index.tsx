@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useCallback, useState } from 'react';
 import { Select } from 'antd';
 import classNames from 'classnames';
-import { AngleDoubleLeft, AngleDoubleRight, AngleLeft, AngleRight } from 'src/assets/svgs';
+import {Arrow, DoubleArrow, } from 'src/assets/svgs';
 
 export const Pagination: any = ({
   total = 4,
@@ -165,10 +165,10 @@ export const Pagination: any = ({
                 onClick={() => onPageIndexChange(page)}
                 aria-label={page.type}
               >
-                {page.type === 'prev' && <AngleLeft className={'w-4 h-4'} />}
-                {page.type === 'next' && <AngleRight className={'w-4 h-4'} />}
-                {page.type === 'prev_10' && <AngleDoubleLeft className={'w-4 h-4'} />}
-                {page.type === 'next_10' && <AngleDoubleRight className={'w-4 h-4'} />}
+                {page.type === 'prev' && <Arrow className={'w-4 h-4 rotate-180'} />}
+                {page.type === 'next' && <Arrow className={'w-4 h-4'} />}
+                {page.type === 'prev_10' && <DoubleArrow className={'w-4 h-4 rotate-180'} />}
+                {page.type === 'next_10' && <DoubleArrow className={'w-4 h-4'} />}
                 {page.type.indexOf('page') === 0 && page.index}
                 {(page.type === 'prev_5' || page.type === 'next_5') && '...'}
               </button>
