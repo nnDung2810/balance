@@ -1,10 +1,10 @@
-import React, { Fragment, useRef } from 'react';
+import React, {Fragment, useEffect, useRef} from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { Button, DataTable, ModalForm } from '@components';
 import { ColumnFormUser, ColumnTableUser } from '@columns';
 import { keyRole } from '@utils';
-import { useAppDispatch, useTypedSelector, userAction, userRoleAction, globalAction } from '@reducers';
+import {useAppDispatch, useTypedSelector, userAction, userRoleAction, globalAction, dataAction} from '@reducers';
 import { Plus } from 'src/assets/svgs';
 
 const Page = () => {
@@ -12,6 +12,18 @@ const Page = () => {
   const { formatDate, user } = useTypedSelector((state: any) => state[globalAction.name]);
   const dispatch = useAppDispatch();
   const { result } = useTypedSelector((state: any) => state[userRoleAction.name]);
+
+  const { status } = useTypedSelector((state: any) => state[userAction.name]);
+  useEffect(() => {
+    switch (status) {
+      case 'put.fulfilled':
+      case 'post.fulfilled':
+      case 'delete.fulfilled':
+        dataTableRef.current.onChange();
+        break;
+    }
+  }, [status]);
+
   const dataTableRef = useRef<any>();
   const modalFormRef = useRef<any>();
   return (
@@ -64,7 +76,6 @@ const Page = () => {
         }}
         ref={modalFormRef}
         title={(data: any) => (!data?.id ? t('routes.admin.Layout.Add') : t('routes.admin.Layout.Edit'))}
-        handleChange={async () => await dataTableRef?.current?.onChange()}
         columns={ColumnFormUser({
           t,
           formatDate,

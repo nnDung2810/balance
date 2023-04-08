@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { DataTable, ModalForm, Button } from '@components';
 import { ColumnDataForm, ColumnDataTable } from '@columns';
 import { keyRole } from '@utils';
-import { dataAction, dataTypeAction, useAppDispatch, useTypedSelector, globalAction } from '@reducers';
+import {dataAction, dataTypeAction, useAppDispatch, useTypedSelector, globalAction, codeAction} from '@reducers';
 import { Plus } from 'src/assets/svgs';
 
 const Page = () => {
@@ -12,6 +12,17 @@ const Page = () => {
   const { formatDate, user } = useTypedSelector((state: any) => state[globalAction.name]);
   const dispatch = useAppDispatch();
   const { result } = useTypedSelector((state: any) => state[dataTypeAction.name]);
+
+  const { status } = useTypedSelector((state: any) => state[dataAction.name]);
+  useEffect(() => {
+    switch (status) {
+      case 'put.fulfilled':
+      case 'post.fulfilled':
+      case 'delete.fulfilled':
+        dataTableRef.current.onChange();
+        break;
+    }
+  }, [status]);
 
   useEffect(() => {
     if (!result.data) {
@@ -70,7 +81,6 @@ const Page = () => {
         action={dataAction}
         ref={modalFormRef}
         title={(data: any) => (!data?.id ? t('routes.admin.Layout.Add') : t('routes.admin.Layout.Edit'))}
-        handleChange={async () => await dataTableRef?.current?.onChange()}
         columns={ColumnDataForm({
           t,
           formatDate,

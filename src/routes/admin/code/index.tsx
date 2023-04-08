@@ -18,6 +18,17 @@ const Page = () => {
     }
   }, [dispatch]);
 
+  const { status } = useTypedSelector((state: any) => state[codeAction.name]);
+  useEffect(() => {
+    switch (status) {
+      case 'put.fulfilled':
+      case 'post.fulfilled':
+      case 'delete.fulfilled':
+        dataTableRef.current.onChange();
+        break;
+    }
+  }, [status]);
+
   const dataTableRef = useRef<any>();
   const modalFormRef = useRef<any>();
   const modalDragRef = useRef<any>();
@@ -74,7 +85,6 @@ const Page = () => {
         action={codeAction}
         ref={modalFormRef}
         title={(data: any) => (!data?.id ? t('routes.admin.Layout.Add') : t('routes.admin.Layout.Edit'))}
-        handleChange={async () => await dataTableRef?.current?.onChange()}
         columns={ColumnCodeForm({
           t,
           formatDate,
