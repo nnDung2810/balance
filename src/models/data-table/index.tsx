@@ -25,8 +25,6 @@ export class TableItemFilter {
 }
 
 export class TableGet {
-  keyList?: string;
-  keyIsLoading?: string;
   action?: any;
   format?: (item: any) => CheckboxOptionType;
   params?: (fullTextSearch: string, value?: any) => any;

@@ -6,41 +6,29 @@ import { TableGet } from '@models';
 import { cleanObjectKeyNull } from '@utils';
 
 const Component = ({
-  formItem,
-  form,
-  value,
-  showSearch = true,
-  maxTagCount,
-  onChange,
-  placeholder,
-  disabled,
-  tabIndex,
-  get,
-  ...prop
-}: Type) => {
+   formItem,
+   form,
+   value,
+   showSearch = true,
+   maxTagCount,
+   onChange,
+   placeholder,
+   disabled,
+   tabIndex,
+   get,
+   ...prop
+ }: Type) => {
   const [_list, set_list] = useState(formItem.list ? formItem.list : []);
   const dispatch = useAppDispatch();
-  const { queryParams, time, ...state } = useTypedSelector((state: any) => state[get?.action?.name || 'User']);
-  const list = !get
-    ? _list
-    : state[get?.keyList || 'result'].data?.map(formItem.get.format).filter((item: any) => !!item.value);
+  const { result, queryParams, time, isLoading } = useTypedSelector((state: any) => state[get?.action?.name || 'User']);
+  const list = !get ? _list : result.data?.map(formItem.get.format).filter((item: any) => !!item.value);
   const loadData = async (fullTextSearch: string) => {
     if (get) {
-      const params = cleanObjectKeyNull(
-        formItem.get.params ? formItem.get.params(form.getFieldValue, fullTextSearch, value) : { fullTextSearch },
-      );
-      if (
-        !state[get?.keyList || 'result'].data ||
-        new Date().getTime() > time ||
-        JSON.stringify(params) != queryParams
-      ) {
-        dispatch(
-          get.action.get({
-            ...params,
-            keyList: get?.keyList || 'result',
-            keyIsLoading: get?.keyIsLoading || 'isLoading',
-          }),
-        );
+      const params = cleanObjectKeyNull(formItem.get.params
+        ? formItem.get.params(form.getFieldValue, fullTextSearch, value)
+        : { fullTextSearch });
+      if (!result.data || new Date().getTime() > time || JSON.stringify(params) != queryParams) {
+        dispatch(get.action.get(params));
       }
     } else if (formItem.renderList) {
       set_list(formItem.renderList(form.getFieldValue, fullTextSearch, formItem.list));
@@ -55,7 +43,7 @@ const Component = ({
   };
 
   useEffect(() => {
-    if (!state[get?.keyIsLoading || 'isLoading'] && !state[get?.keyList || 'result'].data) {
+    if (!isLoading && !result.data) {
       loadData('');
     }
   }, []);
@@ -100,6 +88,5 @@ type Type = {
   disabled: boolean;
   tabIndex: number;
   get?: TableGet;
-  keyList?: string;
 };
 export default Component;
