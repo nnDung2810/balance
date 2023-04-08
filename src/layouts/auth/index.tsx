@@ -3,6 +3,8 @@ import { Select } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 import { globalAction, globalSlice, useAppDispatch } from '@reducers';
+import { Facebook, Twitter, Linkedin } from 'src/assets/svgs';
+
 import './index.less';
 
 const Layout = ({ children }: PropsWithChildren) => {
@@ -31,19 +33,19 @@ const Layout = ({ children }: PropsWithChildren) => {
                 href="/"
                 className="bg-blue-300 bg-opacity-50 text-white rounded-md py-2 px-3 inline-block leading-none mr-2"
               >
-                <i className="lab la-facebook-f text-xl" />
+                <Facebook className={'w-6 h-6'} />
               </a>
               <a
                 href="/"
                 className="bg-blue-300 bg-opacity-50 text-white rounded-md py-2 px-3 inline-block leading-none mr-2"
               >
-                <i className="lab la-twitter text-xl" />
+                <Twitter className={'w-6 h-6'} />
               </a>
               <a
                 href="/"
                 className="bg-blue-300 bg-opacity-50 text-white rounded-md py-2 px-3 inline-block leading-none"
               >
-                <i className="lab la-linkedin-in text-xl" />
+                <Linkedin className={'w-6 h-6'} />
               </a>
             </div>
             <p className="-intro-x text-white">{t('layout.footer', { year: new Date().getFullYear() })}</p>

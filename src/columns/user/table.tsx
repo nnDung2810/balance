@@ -2,7 +2,7 @@ import { Popconfirm, Tooltip } from 'antd';
 import React from 'react';
 import dayjs from 'dayjs';
 
-import { Avatar, Button } from '@components';
+import { Avatar } from '@components';
 import { keyRole } from '@utils';
 import { DataTableModel } from '@models';
 import { codeAction } from '@reducers';
@@ -86,7 +86,7 @@ const Column = ({ t, formatDate, modalFormRef, permissions }: any) => {
     {
       title: t('user.Action'),
       tableItem: {
-        width: 180,
+        width: 100,
         align: 'center',
         onCell: () => ({
           style: { paddingTop: '0.25rem', paddingBottom: '0.25rem' },
@@ -95,7 +95,10 @@ const Column = ({ t, formatDate, modalFormRef, permissions }: any) => {
           <div className={'flex gap-2'}>
             {permissions?.includes(keyRole.P_USER_UPDATE) && (
               <Tooltip title={t('routes.admin.Layout.Edit')}>
-                <Button icon={<Edit className="icon-cud bg-blue-600 w-9 h-7"/>} onClick={() => modalFormRef?.current?.handleEdit(data)} />
+                <Edit
+                  className="icon-cud bg-blue-600 hover:bg-blue-400"
+                  onClick={() => modalFormRef?.current?.handleEdit(data)}
+                />
               </Tooltip>
             )}
 
@@ -109,7 +112,7 @@ const Column = ({ t, formatDate, modalFormRef, permissions }: any) => {
                   okText={t('components.datatable.ok')}
                   cancelText={t('components.datatable.cancel')}
                 >
-                  <Button icon={ <Trash className="icon-cud bg-red-500 w-9 h-7" />} className={'!bg-red-500 text-white'} />
+                  <Trash className="icon-cud bg-red-600 hover:bg-red-400" />
                 </Popconfirm>
               </Tooltip>
             )}

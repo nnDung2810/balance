@@ -5,7 +5,7 @@ import { Swappable } from '@shopify/draggable';
 import { v4 } from 'uuid';
 import { t } from 'i18next';
 import { Popconfirm, Tooltip } from 'antd';
-import { Arrows, Edit, Plus, Question } from 'src/assets/svgs';
+import { Arrows, Edit, Plus, Question, Trash } from 'src/assets/svgs';
 // import { ModalForm } from '@components';
 // import { listStyle } from '@utils';
 
@@ -92,7 +92,6 @@ export const DraggableLayout = ({ value, onChange }: { value: any; onChange?: an
           }}
         >
           <Plus className="icon-cud" />
-          {/* <i className="las la-plus la-lg"></i> */}
           {t('routes.admin.Layout.Add')}
         </div>
       </div>
@@ -170,20 +169,11 @@ export const DraggableLayout = ({ value, onChange }: { value: any; onChange?: an
           {list.map((item: any, index: number) => (
             <div className="draggable" id={index.toString()} key={index}>
               <div className="flex items-center gap-2 cursor-move">
-                {/* <i className="las la-arrows-alt la-lg handle" /> */}
                 <Arrows className="w-5 h-5" />
                 {item.name}
               </div>
               <div>
                 <Tooltip title={t('routes.admin.Layout.Edit')}>
-                  {/* <i
-                    className="las la-edit la-lg cursor-pointer"
-                    onClick={() => {
-                      indexEdit.current = index;
-                      modalFormRef.current.handleEdit(item);
-                    }}
-
-                  /> */}
                   <Edit
                     className="icon-cud "
                     onClick={() => {
@@ -204,7 +194,7 @@ export const DraggableLayout = ({ value, onChange }: { value: any; onChange?: an
                     okText={t('components.datatable.ok')}
                     cancelText={t('components.datatable.cancel')}
                   >
-                    <i className="las la-trash la-lg cursor-pointer" />
+                    <Trash className="icon-cud bg-red-600 hover:bg-red-400 " />
                   </Popconfirm>
                 </Tooltip>
               </div>

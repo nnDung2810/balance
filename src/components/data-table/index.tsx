@@ -11,7 +11,7 @@ import { Button, Pagination } from '@components';
 import { TableGet } from '@models';
 import { useAppDispatch, useTypedSelector } from '@reducers';
 import { cleanObjectKeyNull } from '@utils';
-import { Calendar, CheckSquare, DotCircle, InfoCircle, Search, Times } from 'src/assets/svgs';
+import { Calendar, CheckCircle, CheckSquare, InfoCircle, Search, Times } from 'src/assets/svgs';
 
 const RadioGroup = Radio.Group;
 const CheckboxGroup = Checkbox.Group;
@@ -148,7 +148,7 @@ const Hook = forwardRef(
           className={'justify-center'}
         />
         <Button
-          icon={<Search className='fill-white h-4 w-4'/>}
+          icon={<Search className="fill-white h-4 w-4" />}
           text={t('components.datatable.search')}
           onClick={() => confirm(value)}
           className={'justify-center'}
@@ -204,7 +204,7 @@ const Hook = forwardRef(
           </div>
         );
       },
-      filterIcon: () => <DotCircle className="h-4 w-4 fill-gray-600" />,
+      filterIcon: () => <InfoCircle className="h-4 w-4 fill-gray-600" />,
     });
     // noinspection JSUnusedGlobalSymbols
     const getColumnSearchCheckbox = (filters: any, key: any, get: TableGet = {}) => ({
@@ -290,7 +290,7 @@ const Hook = forwardRef(
           <RangePicker
             renderExtraFooter={() => (
               <Button
-                icon={'las la-check-circle'}
+                icon={<CheckCircle className="h-5 w-5 fill-white" />}
                 text={t('components.datatable.ok')}
                 onClick={() => (document.activeElement as HTMLElement).blur()}
                 className={'w-full justify-center !py-0'}
@@ -455,12 +455,7 @@ const Hook = forwardRef(
                 ),
               }}
               loading={isLoading}
-              columns={cols.current.map((item: any, index: number) => {
-                if (item) {
-                  cols.current[index].width = item;
-                }
-                return cols.current[index];
-              })}
+              columns={cols.current}
               pagination={false}
               dataSource={data?.map((item: any) => ({
                 ...item,

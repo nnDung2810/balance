@@ -10,6 +10,7 @@ import { convertFormValue } from '@utils';
 import { FormItem, FormModel } from '@models';
 import { globalAction, useTypedSelector } from '@reducers';
 import { Chips, SelectTag, Select, TreeSelect, TableTransfer, Password, Mask, Addable, DatePicker, Tab } from './input';
+import { Check, Times } from 'src/assets/svgs';
 
 const Component = ({
   className,
@@ -254,8 +255,8 @@ const Component = ({
       case 'switch':
         return (
           <Switch
-            checkedChildren={<i className="las la-lg la-check" />}
-            unCheckedChildren={<i className="las la-lg la-times" />}
+            checkedChildren={<Check className="h-5 w-5 fill-white" />}
+            unCheckedChildren={<Times className="h-5 w-5 fill-white" />}
             defaultChecked={!!values && values[item.name || ''] === 1}
           />
         );

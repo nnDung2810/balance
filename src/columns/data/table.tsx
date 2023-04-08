@@ -4,7 +4,6 @@ import React from 'react';
 import { keyRole } from '@utils';
 import { DataTableModel } from '@models';
 import { Edit, Question, Trash } from 'src/assets/svgs';
-import { Button } from '@components';
 
 const Column = ({ t, modalFormRef, listType, permissions }: any) => {
   const col: DataTableModel[] = [
@@ -51,7 +50,10 @@ const Column = ({ t, modalFormRef, listType, permissions }: any) => {
           <div className={'flex gap-2'}>
             {permissions?.includes(keyRole.P_CODE_UPDATE) && (
               <Tooltip title={t('routes.admin.Layout.Edit')}>
-                <Button onClick={() => modalFormRef?.current?.handleEdit(data)} icon={<Edit className="icon-cud bg-blue-600"/> } />
+                <Edit
+                  className="icon-cud bg-blue-600 hover:bg-blue-400"
+                  onClick={() => modalFormRef?.current?.handleEdit(data)}
+                />
               </Tooltip>
             )}
             {permissions?.includes(keyRole.P_CODE_DELETE) && (
@@ -64,7 +66,7 @@ const Column = ({ t, modalFormRef, listType, permissions }: any) => {
                   okText={t('components.datatable.ok')}
                   cancelText={t('components.datatable.cancel')}
                 >
-                  <Button className={'!bg-red-500 text-white'} icon={<Trash className="icon-cud bg-red-500 " />} />
+                  <Trash className="icon-cud bg-red-600 hover:bg-red-400 " />
                 </Popconfirm>
               </Tooltip>
             )}

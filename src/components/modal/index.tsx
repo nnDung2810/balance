@@ -5,6 +5,7 @@ import { v4 } from 'uuid';
 
 import { Button, Spin } from '@components';
 import { useAppDispatch, useTypedSelector } from '@reducers';
+import { Spinner } from 'src/assets/svgs';
 
 const Hook = forwardRef(
   (
@@ -59,7 +60,7 @@ const Hook = forwardRef(
                 onClick={handleCancel}
               />
               <Button
-                icon={isLoading ? 'las la-spinner animate-spin' : ''}
+                icon={isLoading ? <Spinner className={'animate-spin h-5 w-5'} /> : ''}
                 text={textSubmit || t('components.form.modal.save')}
                 disabled={!firstChange}
                 onClick={handleOk}

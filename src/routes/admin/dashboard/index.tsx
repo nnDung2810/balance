@@ -250,7 +250,6 @@ const Page = () => {
             <div className="p-5 grid grid-cols-2 gap-5 w-full">
               <div className="rounded-xl p-5 bg-white flex items-center">
                 <div className="px-2 py-1 rounded-md bg-indigo-50">
-                  {/* <i className="las la-user-tie text-2xl text-indigo-500" /> */}
                   <UserTie className="icon-dashboard fill-indigo-500" />
                 </div>
                 <div className="ml-3">
@@ -260,7 +259,6 @@ const Page = () => {
               </div>
               <div className="rounded-xl p-5 bg-white flex items-center">
                 <div className="px-2 py-1 rounded-md bg-red-50">
-                  {/* <i className="las la-users text-2xl text-red-500" /> */}
                   <UserSolid className="icon-dashboard fill-red-500" />
                 </div>
                 <div className="ml-3">
@@ -270,7 +268,6 @@ const Page = () => {
               </div>
               <div className="rounded-xl p-5 bg-white flex items-center">
                 <div className="px-2 py-1 rounded-md bg-purple-50">
-                  {/* <i className="las la-briefcase text-2xl text-purple-500" /> */}
                   <Briefcase className="icon-dashboard fill-purple-500" />
                 </div>
                 <div className="ml-3">
@@ -280,7 +277,6 @@ const Page = () => {
               </div>
               <div className="rounded-xl p-5 bg-white flex items-center">
                 <div className="px-2 py-1 rounded-md bg-green-50">
-                  {/* <i className="las la-check-circle text-2xl text-green-500" /> */}
                   <CheckCircle className="icon-dashboard fill-green-500" />
                 </div>
                 <div className="ml-3">

@@ -5,6 +5,7 @@ import classNames from 'classnames';
 
 import { FormModel } from '@models';
 import { Button } from '@components';
+import { Trash, Plus } from 'src/assets/svgs';
 
 const Component = ({
   name,
@@ -94,10 +95,10 @@ const Component = ({
                       {generateForm(col, index + '_' + i, false, [n, col.name])}
                     </div>
                   ))}
-                  <div className={'table-cell align-middle w-12 sm:w-8'}>
+                  <div className={'table-cell align-middle w-8 sm:w-8'}>
                     {showRemove(form.getFieldValue([[name], n]), n) && (
-                      <i
-                        className="las la-trash-alt text-red-500 hover:text-red-400 cursor-pointer text-3xl w-12 sm:w-8 text-center"
+                      <Trash
+                        className="fill-red-600 hover:fill-red-400 cursor-pointer h-8 w-8"
                         onClick={() => {
                           remove(n);
                           onAdd(form.getFieldValue(name), form);
@@ -115,7 +116,7 @@ const Component = ({
                   add();
                   onAdd(form.getFieldValue(name), form);
                 }}
-                icon={'las la-plus'}
+                icon={<Plus className="icon-cud !h-5 !w-5" />}
                 text={textAdd}
               />
             </div>
@@ -144,8 +145,8 @@ const Component = ({
                 ))}
                 <div className={'table-cell align-middle w-8'}>
                   {showRemove(form.getFieldValue([[name], n]), n) && (
-                    <i
-                      className="las la-trash-alt text-red-500 hover:text-red-400 cursor-pointer text-3xl"
+                    <Trash
+                      className="fill-red-600 hover:fill-red-400 cursor-pointer h-8 w-8"
                       onClick={() => {
                         remove(n);
                         onAdd(form.getFieldValue(name), form);
@@ -157,7 +158,7 @@ const Component = ({
             ))}
             <div className={'flex justify-end'}>
               <Button
-                icon={'las la-plus'}
+                icon={<Plus className="icon-cud !h-5 !w-5" />}
                 text={textAdd}
                 className="addable-add"
                 onClick={() => {

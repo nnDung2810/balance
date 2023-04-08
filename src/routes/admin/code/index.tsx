@@ -54,7 +54,6 @@ const Page = () => {
         rightHeader={
           <div className={'flex gap-2'}>
             {user?.role?.permissions?.includes(keyRole.P_CODE_TYPE_LISTED) && (
-
               <Button
                 icon={<Plus className="icon-cud !h-5 !w-5" />}
                 text={t('Code.Type Code')}

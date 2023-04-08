@@ -6,7 +6,7 @@ import { v4 } from 'uuid';
 
 import { API, linkApi } from '@utils';
 import { Button, Message, Spin } from '@components';
-import { Plus, Question } from 'src/assets/svgs';
+import { Plus, Question, Copy, Paste, Times } from 'src/assets/svgs';
 
 export const Upload = ({
   value = [],
@@ -219,7 +219,6 @@ export const Upload = ({
                 children
               ) : !listFiles?.length || !listFiles[0][keyImage] ? (
                 <div className="border-dashed border border-gray-300 rounded-2xl w-40 h-40 flex items-center justify-center">
-                  {/* <i className="las la-plus la-3x" /> */}
                   <Plus className="w-12 h-12" />
                 </div>
               ) : (
@@ -256,13 +255,13 @@ export const Upload = ({
                 </a>
                 <div className={'flex gap-5 absolute bottom-0 justify-center w-full'}>
                   {listFiles?.length > 0 && (
-                    <i
-                      className={'las la-copy la-2x cursor-pointer'}
+                    <Copy
+                      className={'h-5 w-5 cursor-pointer'}
                       onClick={() => copy(file[keyImage] ? file[keyImage] : file)}
                     />
                   )}
-                  <i
-                    className={'las la-paste la-2x cursor-wait'}
+                  <Paste
+                    className={'h-5 w-5 cursor-wait'}
                     onPaste={async (event) => {
                       const text = event.clipboardData.getData('text/plain');
                       if (text.indexOf('http') === 0) {
@@ -296,7 +295,10 @@ export const Upload = ({
                     okText={t('components.datatable.ok')}
                     cancelText={t('components.datatable.cancel')}
                   >
-                    <Button icon={'las la-times'} className={'!bg-gray-400 !rounded-full absolute top-0 right-0'} />
+                    <Button
+                      icon={<Times className={'h-4 w-4'} />}
+                      className={'!bg-gray-400 !rounded-full absolute top-0 right-0'}
+                    />
                   </Popconfirm>
                 )}
               </div>

@@ -100,14 +100,12 @@ const Layout = ({ children }: PropsWithChildren) => {
               4
             </div>
             <Bell className="icon-header" />
-
           </div>
           <div className="mr-5 relative flex group">
             <div className="rounded-full text-white w-5 h-5 bg-yellow-500 absolute -right-1.5 -top-1.5 leading-none text-center pt-1 text-xs group-hover:animate-bounce">
               76
             </div>
             <Comment className="icon-header" />
-
           </div>
           <Dropdown
             trigger={['hover', 'click']}

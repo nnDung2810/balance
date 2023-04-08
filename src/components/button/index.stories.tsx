@@ -88,20 +88,3 @@ Disabled.args = {
   text: 'Disabled',
   disabled: true,
 };
-
-export const Icon: ComponentStory<typeof Button> = Template.bind({});
-Icon.args = {
-  icon: 'las la-edit',
-};
-
-export const IconSpin: ComponentStory<typeof Button> = Template.bind({});
-IconSpin.args = {
-  icon: 'las la-spinner animate-spin',
-  text: 'Icon Spin',
-};
-
-export const IconText: ComponentStory<typeof Button> = Template.bind({});
-IconText.args = {
-  text: 'Icon Text',
-  icon: 'las la-plus',
-};
