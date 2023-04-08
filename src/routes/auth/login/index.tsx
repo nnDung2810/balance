@@ -21,9 +21,9 @@ const Page = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const { isLoading, status } = useTypedSelector((state: any) => state[globalAction.name]);
+  const { isLoading, status, user, data } = useTypedSelector((state: any) => state[globalAction.name]);
   useEffect(() => {
-    if (status === 'login.fulfilled') {
+    if (status === 'login.fulfilled' && Object.keys(user).length > 0) {
       navigate(routerLinks('Dashboard'), { replace: true });
     }
   }, [status]);
@@ -43,7 +43,7 @@ const Page = () => {
     // }
   };
   const modalFormRef = useRef<any>();
-
+  console.log(data);
   return (
     <Fragment>
       <div className="mb-8">
@@ -54,6 +54,7 @@ const Page = () => {
       </div>
       <Spin spinning={isLoading}>
         <Form
+          values={{...data}}
           form={form}
           className="intro-x"
           columns={ColumnLogin({ t })}

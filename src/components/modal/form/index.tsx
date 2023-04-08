@@ -12,7 +12,6 @@ const Hook = forwardRef(
   (
     {
       title,
-      handleChange,
       firstRun,
       widthModal = 1200,
       columns,
@@ -21,31 +20,24 @@ const Hook = forwardRef(
       footerCustom,
       idElement = 'modal-form-' + v4(),
       action,
+      keyState = 'isVisible',
+      keyPost = 'post',
+      keyPut = 'put',
       ...propForm
     }: Type,
     ref: any,
   ) => {
     useImperativeHandle(ref, () => ({ handleEdit, handleDelete, form }));
     const dispatch = useAppDispatch();
-    const { data, status } = useTypedSelector((state: any) => state[action.name]);
+    const { data } = useTypedSelector((state: any) => state[action.name]);
     const [form] = FormAnt.useForm();
 
-    useEffect(() => {
-      switch (status) {
-        case 'put.fulfilled':
-        case 'post.fulfilled':
-        case 'delete.fulfilled':
-          handleChange && handleChange();
-          break;
-      }
-    }, [status]);
-
-    const handleEdit = async (item: { id?: string } = {}) => {
+    const handleEdit = async (item: { id?: string } = {}, isGet = true) => {
       !!firstRun && firstRun(item);
-      if (item.id) {
-        dispatch(action.getById(item.id));
+      if (item.id && isGet) {
+        dispatch(action.getById({id: item.id, keyState}));
       } else {
-        dispatch(action.isVisible({ isVisible: true, data: {} }));
+        dispatch(action[keyState]({ isVisible: true, data: item }));
       }
     };
     const handleDelete = async (id: string) => {
@@ -55,6 +47,7 @@ const Hook = forwardRef(
     return (
       <Modal
         action={action}
+        keyState={keyState}
         idElement={idElement}
         widthModal={widthModal}
         textSubmit={textSubmit}
@@ -66,8 +59,8 @@ const Hook = forwardRef(
             .validateFields()
             .then(async (values) => {
               values = convertFormValue(columns, values);
-              if (data.id) dispatch(action.put({ ...values, id: data.id }));
-              else dispatch(action.post({ ...values }));
+              if (data.id) dispatch(action[keyPut]({ ...values, id: data.id }));
+              else dispatch(action[keyPost]({ ...values }));
               return true;
             })
             .catch(() => false);
@@ -81,8 +74,10 @@ const Hook = forwardRef(
 Hook.displayName = 'HookModalForm';
 type Type = {
   action: any;
+  keyState?: string;
+  keyPost?: string;
+  keyPut?: string;
   title: (data: any) => string;
-  handleChange?: (values?: any, data?: any) => Promise<any>;
   firstRun?: (item: any) => void;
   widthModal?: number;
   columns: FormModel[];

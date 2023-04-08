@@ -15,7 +15,7 @@ export default class Slice {
     keepUnusedDataFor: 60,
     time: 0,
   };
-  constructor(action: any, initialState: object = {}) {
+  constructor(action: any, initialState: object = {}, extraReducers = (builder: any) => builder) {
     this.name = action.name;
     this.initialState = { ...this.defaultState, initialState };
     this.reducers = {};
@@ -52,10 +52,12 @@ export default class Slice {
           state.isLoading = true;
           state.status = 'getById.pending';
         })
-        .addCase(action.getById.fulfilled, (state: State, action: PayloadAction<any>) => {
-          if (JSON.stringify(state.data) !== JSON.stringify(action.payload.data)) state.data = action.payload.data;
+        .addCase(action.getById.fulfilled, (state: State, action: PayloadAction<{data: any, keyState: string}>) => {
+          const {data, keyState} = action.payload;
+          if (JSON.stringify(state.data) !== JSON.stringify(data)) state.data = data;
           state.isLoading = false;
-          state.isVisible = true;
+          // @ts-ignore
+          state[keyState as keyof State] = true;
           state.status = 'getById.fulfilled';
         })
         .addCase(action.getById.rejected, (state: State) => {
@@ -67,8 +69,8 @@ export default class Slice {
           state.isLoading = true;
           state.status = 'post.pending';
         })
-        .addCase(action.post.fulfilled, (state: State, action: PayloadAction<any[]>) => {
-          state.data = action.payload;
+        .addCase(action.post.fulfilled, (state: State, action: PayloadAction<any>) => {
+          state.data = action.payload.data;
           state.isLoading = false;
           state.isVisible = false;
           state.status = 'post.fulfilled';
@@ -82,8 +84,8 @@ export default class Slice {
           state.isLoading = true;
           state.status = 'put.pending';
         })
-        .addCase(action.put.fulfilled, (state: State, action: PayloadAction<any[]>) => {
-          state.data = action.payload;
+        .addCase(action.put.fulfilled, (state: State, action: PayloadAction<any>) => {
+          state.data = action.payload.data;
           state.isLoading = false;
           state.isVisible = false;
           state.status = 'put.fulfilled';
@@ -97,7 +99,7 @@ export default class Slice {
           state.isLoading = true;
           state.status = 'delete.pending';
         })
-        .addCase(action.delete.fulfilled, (state: State, action: PayloadAction<any[]>) => {
+        .addCase(action.delete.fulfilled, (state: State, action: PayloadAction<any>) => {
           state.data = action.payload;
           state.isLoading = false;
           state.status = 'delete.fulfilled';
@@ -106,10 +108,11 @@ export default class Slice {
           state.isLoading = false;
           state.status = 'delete.rejected';
         });
+      extraReducers(builder);
     };
   }
 }
-interface State {
+export interface State {
   result: any;
   data: any;
   isLoading: boolean;

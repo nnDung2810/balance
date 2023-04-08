@@ -12,10 +12,10 @@ export const globalAction = {
   name,
   isVisible: createAsyncThunk(name + '/isVisible', async (values: any) => values),
   logout: createAsyncThunk(name + '/logout', async () => {
-    if (localStorage.getItem(keyRefreshToken)) {
-      return await API.get(`${routerLinks(name, 'api')}/logout`);
-    }
-    return false;
+    // if (localStorage.getItem(keyRefreshToken)) {
+    //   return await API.get(`${routerLinks(name, 'api')}/logout`);
+    // }
+    return true;
   }),
   profile: createAsyncThunk(name + '/profile', async () => API.get(`${routerLinks(name, 'api')}/profile`)),
   putProfile: createAsyncThunk(name + '/putProfile', async (values: any) => {
@@ -34,6 +34,7 @@ export const globalAction = {
       localStorage.setItem(keyRefreshToken, refreshToken);
       return user;
     }
+    return data;
   }),
   forgottenPassword: createAsyncThunk(name + '/forgotten-password', async (values: any) => {
     const data = await API.post(`${routerLinks(name, 'api')}/forgotten-password`, values);
@@ -65,6 +66,7 @@ const checkLanguage = (language: string) => {
   return { language, formatDate, locale };
 };
 const initialState: State = {
+  data: {},
   user: JSON.parse(localStorage.getItem(keyUser) || '{}'),
   isLoading: false,
   isVisible: false,
@@ -97,10 +99,10 @@ export const globalSlice = createSlice({
           }
         },
       )
-      .addCase(globalAction.logout.pending, (state: State) => {
-        state.isLoading = true;
-        state.status = 'logout.pending';
-      })
+      // .addCase(globalAction.logout.pending, (state: State) => {
+      //   state.isLoading = true;
+      //   state.status = 'logout.pending';
+      // })
       .addCase(globalAction.logout.fulfilled, (state) => {
         state.user = {};
         localStorage.removeItem(keyUser);
@@ -143,16 +145,20 @@ export const globalSlice = createSlice({
         state.status = 'putProfile.rejected';
       })
 
-      .addCase(globalAction.login.pending, (state: State) => {
+      .addCase(globalAction.login.pending, (state: State, action: any) => {
+        state.data = action.meta.arg;
         state.isLoading = true;
         state.status = 'login.pending';
       })
       .addCase(globalAction.login.fulfilled, (state: State, action: PayloadAction<any>) => {
-        localStorage.setItem(keyUser, JSON.stringify(action.payload));
-        clearTempLocalStorage();
-        state.user = action.payload;
+        if (action.payload) {
+          localStorage.setItem(keyUser, JSON.stringify(action.payload));
+          clearTempLocalStorage();
+          state.user = action.payload;
+          state.data = {};
+        }
         state.isLoading = false;
-        state.status = 'login.fulfilled';
+        state.status = 'login.fulfilled'
       })
       .addCase(globalAction.login.rejected, (state: State) => {
         state.isLoading = false;
@@ -188,6 +194,7 @@ export const globalSlice = createSlice({
 });
 interface State {
   user: any;
+  data: any;
   isLoading: boolean;
   isVisible: boolean;
   status: string;

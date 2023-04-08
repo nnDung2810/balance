@@ -11,6 +11,7 @@ const Hook = forwardRef(
   (
     {
       action,
+      keyState = 'isVisible',
       title,
       widthModal = 800,
       onOk,
@@ -25,17 +26,17 @@ const Hook = forwardRef(
   ) => {
     useImperativeHandle(ref, () => ({ handleCancel, data }));
     const dispatch = useAppDispatch();
-    const { data, isLoading, isVisible } = useTypedSelector((state: any) => state[action.name]);
-
+    const { data, isLoading, ...state } = useTypedSelector((state: any) => state[action.name]);
     const { t } = useTranslation();
     const handleCancel = () => {
-      dispatch(action.isVisible(false));
+      dispatch(action[keyState](false));
     };
     const handleOk = async () => {
       if (onOk) {
         onOk(data);
       } else {
         handleCancel();
+
       }
     };
 
@@ -46,7 +47,7 @@ const Hook = forwardRef(
         centered={true}
         width={widthModal}
         title={title && <h3 className="font-bold text-lg">{title(data)}</h3>}
-        open={isVisible}
+        open={state[keyState]}
         onOk={handleOk}
         onCancel={handleCancel}
         wrapClassName={className}
@@ -79,11 +80,11 @@ const Hook = forwardRef(
 Hook.displayName = 'HookModal';
 type Type = PropsWithChildren<{
   action: any;
+  keyState?: string;
   title?: (data: any) => string;
   widthModal: number;
   onOk?: (data: any) => any;
   onCancel?: (data: any) => void;
-  GetById?: (id?: string) => any;
   firstChange?: boolean;
   textSubmit?: string;
   className?: string;
