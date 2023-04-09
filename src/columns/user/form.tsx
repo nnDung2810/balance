@@ -19,7 +19,7 @@ const Column = ({ t, listRole }: any) => {
         tabIndex: 2,
         col: 6,
         type: 'password',
-        condition: (value: string, form: any, index: number, values: any) => !values?.name,
+        condition: (value: string, form: any, index: number, values: any) => !values?.id,
         rules: [{ type: 'required' }, { type: 'min', value: 6 }],
       },
     },
@@ -40,7 +40,7 @@ const Column = ({ t, listRole }: any) => {
         tabIndex: 2,
         col: 6,
         type: 'password',
-        condition: (value: string, form: any, index: number, values: any) => !values?.name,
+        condition: (value: string, form: any, index: number, values: any) => !values?.id,
         rules: [
           { type: 'required' },
           {

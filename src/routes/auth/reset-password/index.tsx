@@ -1,6 +1,5 @@
 import React, { Fragment, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Form as FormAnt } from 'antd';
 import { useNavigate, useLocation } from 'react-router';
 import { Spin } from '@components';
 import Form from '../../../components/form';
@@ -11,7 +10,6 @@ import { globalAction, useAppDispatch, useTypedSelector } from '@reducers';
 const Page = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [form] = FormAnt.useForm();
   const dispatch = useAppDispatch();
   const { search } = useLocation();
 
@@ -36,10 +34,9 @@ const Page = () => {
       </div>
       <Spin spinning={isLoading}>
         <Form
-          form={form}
           className="intro-x"
           columns={ColumnResetPassword({ t })}
-          textSubmit={t('routes.auth.login.Reset password')}
+          textSubmit={'routes.auth.login.Reset password'}
           handSubmit={submit}
           disableSubmit={isLoading}
         />

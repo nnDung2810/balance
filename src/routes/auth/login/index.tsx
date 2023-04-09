@@ -1,23 +1,14 @@
 import React, { Fragment, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Form as FormAnt } from 'antd';
 import { useNavigate } from 'react-router';
-// import { Rocketchat } from '@rocket.chat/sdk';
 import { ModalForm, Spin } from '@components';
 import Form from '../../../components/form';
 import { routerLinks } from '@utils';
 import { ColumnForgottenPassword, ColumnLogin } from '@columns';
 import { globalAction, useAppDispatch, useTypedSelector } from '@reducers';
-// import { urlChat, passChat } from 'variable';
 
-// const realTimeAPI = new Rocketchat({
-//   protocol: 'ddp',
-//   host: `https://${urlChat}`,
-//   useSsl: true,
-// });
 const Page = () => {
   const { t } = useTranslation();
-  const [form] = FormAnt.useForm();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -29,18 +20,6 @@ const Page = () => {
   }, [status]);
   const submit = async (values: any) => {
     dispatch(globalAction.login(values));
-    // await realTimeAPI.connect({
-    //   protocol: 'ddp',
-    //   host: `https://${urlChat}`,
-    //   useSsl: true,
-    // });
-    //
-    // const result = await realTimeAPI.login({ username: data.user.rocketChatUsername, password: values.password });
-    // if (result.type === 'resume') {
-    //   localStorage.setItem(passChat, result?.token);
-    //   document.cookie = 'rc_token=' + result?.token;
-    //   document.cookie = 'rc_uid=' + result?.id;
-    // }
   };
   const modalFormRef = useRef<any>();
   return (
@@ -54,10 +33,9 @@ const Page = () => {
       <Spin spinning={isLoading}>
         <Form
           values={{ ...data }}
-          form={form}
           className="intro-x"
           columns={ColumnLogin({ t })}
-          textSubmit={t('routes.auth.login.Log In')}
+          textSubmit={'routes.auth.login.Log In'}
           handSubmit={submit}
           disableSubmit={isLoading}
         />

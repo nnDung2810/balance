@@ -32,15 +32,10 @@ const Hook = forwardRef(
     const [form] = FormAnt.useForm();
 
     const handleEdit = async (item: { id?: string } = {}, isGet = true) => {
-      if (item.id && isGet) {
-        dispatch(action.getById({ id: item.id, keyState }));
-      } else {
-        dispatch(action.set({ [keyState]: true, data: item }));
-      }
+      if (item.id && isGet) dispatch(action.getById({ id: item.id, keyState }));
+      else dispatch(action.set({ [keyState]: true, data: item }));
     };
-    const handleDelete = async (id: string) => {
-      dispatch(action.delete(id));
-    };
+    const handleDelete = async (id: string) => dispatch(action.delete(id));
 
     return (
       <Modal
@@ -64,7 +59,7 @@ const Hook = forwardRef(
             .catch(() => false);
         }}
       >
-        <Form {...propForm} values={{ ...data }} form={form} columns={columns} />
+        <Form {...propForm} values={{ ...data }} formAnt={form} columns={columns} />
       </Modal>
     );
   },

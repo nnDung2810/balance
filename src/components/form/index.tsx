@@ -15,19 +15,18 @@ import { Chips, SelectTag, Select, TreeSelect, TableTransfer, Password, Mask, Ad
 const Component = ({
   className,
   columns,
-  textSubmit,
+  textSubmit = 'components.form.modal.save',
   textCancel = 'components.form.modal.cancel',
   handSubmit,
+  handCancel,
   values = {},
-  form,
   widthLabel,
   checkHidden = false,
   extendForm,
-  isShowCancel = false,
   extendButton,
   idSubmit = 'idSubmit',
   disableSubmit = false,
-  classGroupButton = 'justify-center items-center',
+  formAnt,
 }: Type) => {
   const { t } = useTranslation();
   const { formatDate } = useTypedSelector((state: any) => state[globalAction.name]);
@@ -35,6 +34,8 @@ const Component = ({
   const timeout = useRef<any>();
   const refLoad = useRef(true);
   const [_render, set_render] = useState(false);
+  const [forms] = Form.useForm();
+  const form = formAnt || forms;
 
   const reRender = () => {
     set_render(!_render);
@@ -606,18 +607,27 @@ const Component = ({
         {extendForm && extendForm(values)}
       </div>
 
-      <div className={classNames('flex gap-2', classGroupButton)}>
-        {extendButton && extendButton(values)}
-        {isShowCancel && (
-          <Button text={t(textCancel)} className={'w-full justify-center !bg-red-600 hover:!bg-red-400'} type="reset" />
-        )}
-        {textSubmit && (
+      <div
+        className={classNames('gap-2 flex mt-5', {
+          'justify-center': !extendButton && !handCancel,
+          'md:inline-flex md:float-right': extendButton || handCancel,
+        })}
+      >
+        {handCancel && (
           <Button
-            text={textSubmit}
+            text={t(textCancel)}
+            className={'md:min-w-[12rem] w-full justify-center out-line'}
+            onClick={handCancel}
+          />
+        )}
+        {extendButton && extendButton(form)}
+        {handSubmit && (
+          <Button
+            text={t(textSubmit)}
             id={idSubmit}
             onClick={() => form && form.submit()}
             disabled={disableSubmit}
-            className={'w-full justify-center'}
+            className={'md:min-w-[12rem] w-full justify-center'}
             type={'submit'}
           />
         )}
@@ -628,19 +638,18 @@ const Component = ({
 type Type = {
   className?: string;
   columns: FormModel[];
-  textSubmit?: DefaultTFuncReturn;
+  textSubmit?: string;
   textCancel?: string;
-  handSubmit?: (values: any) => Promise<void>;
+  handSubmit?: (values: any) => void;
+  handCancel?: () => void;
   values?: any;
-  form: FormInstance;
+  formAnt?: FormInstance;
   onFirstChange?: () => void;
   widthLabel?: string;
   checkHidden?: boolean;
   extendForm?: (values: any) => JSX.Element;
-  isShowCancel?: boolean;
   extendButton?: (values: any) => JSX.Element;
   idSubmit?: string;
   disableSubmit?: boolean;
-  classGroupButton?: string;
 };
 export default Component;

@@ -17,7 +17,10 @@ export const globalAction = {
     // }
     return true;
   }),
-  profile: createAsyncThunk(name + '/profile', async () => API.get(`${routerLinks(name, 'api')}/profile`)),
+  profile: createAsyncThunk(name + '/profile', async () => {
+    const { data } = await API.get(`${routerLinks(name, 'api')}/profile`);
+    return data;
+  }),
   putProfile: createAsyncThunk(name + '/putProfile', async (values: any) => {
     if (values.avatar && typeof values.avatar === 'object') {
       values.avatar = values.avatar[0].url;
@@ -41,7 +44,7 @@ export const globalAction = {
     if (data) {
       if (data.message) await Message.success({ text: data.message });
     }
-    return !!data;
+    return !!data.data;
   }),
   resetPassword: createAsyncThunk(name + '/reset-password', async (values: any) => {
     const token = values.token;
@@ -71,6 +74,7 @@ const initialState: State = {
   isLoading: false,
   isVisible: false,
   status: 'idle',
+  title: '',
   ...checkLanguage(localStorage.getItem('i18nextLng') || 'en'),
 };
 export const globalSlice = createSlice({
@@ -108,37 +112,30 @@ export const globalSlice = createSlice({
         state.isLoading = false;
         state.status = 'logout.fulfilled';
       })
-      .addCase(globalAction.logout.rejected, (state: State) => {
-        state.isLoading = false;
-        state.status = 'logout.rejected';
-      })
 
       .addCase(globalAction.profile.pending, (state: State) => {
         state.isLoading = true;
         state.status = 'profile.pending';
       })
-      .addCase(globalAction.profile.fulfilled, (state: State, action: PayloadAction<any>) => {
-        state.user = action.payload.data;
+      .addCase(globalAction.profile.fulfilled, (state: State, action: PayloadAction<object>) => {
+        if (action.payload) {
+          state.user = action.payload;
+          state.status = 'profile.fulfilled';
+        } else state.status = 'idle';
         state.isLoading = false;
-        state.status = 'profile.fulfilled';
-      })
-      .addCase(globalAction.profile.rejected, (state: State) => {
-        state.isLoading = false;
-        state.status = 'profile.rejected';
       })
 
-      .addCase(globalAction.putProfile.pending, (state: State) => {
+      .addCase(globalAction.putProfile.pending, (state: State, action: any) => {
+        state.data = action.meta.arg;
         state.isLoading = true;
         state.status = 'putProfile.pending';
       })
-      .addCase(globalAction.putProfile.fulfilled, (state: State, action: PayloadAction<any>) => {
-        state.user = action.payload;
+      .addCase(globalAction.putProfile.fulfilled, (state: State, action: PayloadAction<object>) => {
+        if (action.payload) {
+          state.user = action.payload;
+          state.status = 'putProfile.fulfilled';
+        } else state.status = 'idle';
         state.isLoading = false;
-        state.status = 'putProfile.fulfilled';
-      })
-      .addCase(globalAction.putProfile.rejected, (state: State) => {
-        state.isLoading = false;
-        state.status = 'putProfile.rejected';
       })
 
       .addCase(globalAction.login.pending, (state: State, action: any) => {
@@ -146,45 +143,41 @@ export const globalSlice = createSlice({
         state.isLoading = true;
         state.status = 'login.pending';
       })
-      .addCase(globalAction.login.fulfilled, (state: State, action: PayloadAction<any>) => {
+      .addCase(globalAction.login.fulfilled, (state: State, action: PayloadAction<object>) => {
         if (action.payload) {
           localStorage.setItem(keyUser, JSON.stringify(action.payload));
           clearTempLocalStorage();
           state.user = action.payload;
           state.data = {};
-        }
+          state.status = 'login.fulfilled';
+        } else state.status = 'idle';
         state.isLoading = false;
-        state.status = 'login.fulfilled';
-      })
-      .addCase(globalAction.login.rejected, (state: State) => {
-        state.isLoading = false;
-        state.status = 'login.rejected';
       })
 
-      .addCase(globalAction.forgottenPassword.pending, (state: State) => {
+      .addCase(globalAction.forgottenPassword.pending, (state: State, action: any) => {
+        state.data = action.meta.arg;
         state.isLoading = true;
         state.status = 'forgottenPassword.pending';
       })
-      .addCase(globalAction.forgottenPassword.fulfilled, (state: State) => {
+      .addCase(globalAction.forgottenPassword.fulfilled, (state: State, action: PayloadAction<any>) => {
+        if (action.payload) {
+          state.data = {};
+          state.status = 'forgottenPassword.fulfilled';
+        } else state.status = 'idle';
         state.isLoading = false;
-        state.status = 'forgottenPassword.fulfilled';
-      })
-      .addCase(globalAction.forgottenPassword.rejected, (state: State) => {
-        state.isLoading = false;
-        state.status = 'forgottenPassword.rejected';
       })
 
-      .addCase(globalAction.resetPassword.pending, (state: State) => {
+      .addCase(globalAction.resetPassword.pending, (state: State, action: any) => {
+        state.data = action.meta.arg;
         state.isLoading = true;
         state.status = 'resetPassword.pending';
       })
-      .addCase(globalAction.resetPassword.fulfilled, (state: State) => {
+      .addCase(globalAction.resetPassword.fulfilled, (state: State, action: PayloadAction<any>) => {
+        if (action.payload) {
+          state.data = {};
+          state.status = 'resetPassword.fulfilled';
+        } else state.status = 'idle';
         state.isLoading = false;
-        state.status = 'resetPassword.fulfilled';
-      })
-      .addCase(globalAction.resetPassword.rejected, (state: State) => {
-        state.isLoading = false;
-        state.status = 'resetPassword.rejected';
       });
   },
 });
@@ -194,6 +187,7 @@ interface State {
   isLoading: boolean;
   isVisible: boolean;
   status: string;
+  title: string;
   formatDate: string;
   language: string;
   locale: any;

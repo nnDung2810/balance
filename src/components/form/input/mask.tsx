@@ -27,12 +27,13 @@ const Component = ({
     });
   }, []);
   return (
-    <div className={classNames('ant-input flex items-center', { 'border rounded-xl': !!addonBefore || !!addonAfter })}>
+    <div className={classNames('flex items-center', { 'ant-input border rounded-xl': !!addonBefore || !!addonAfter })}>
       {!!addonBefore && <div>{addonBefore(form)}</div>}
       <input
         ref={input}
         tabIndex={tabIndex}
-        className={classNames('w-full h-10 text-gray-600 bg-white px-4 ant-input', {
+        className={classNames('w-full h-10 text-gray-600 bg-white px-4', {
+          'ant-input': !addonBefore && !addonAfter,
           'border rounded-xl': !addonBefore && !addonAfter,
           'rounded-l-xl border-r': !addonBefore && !!addonAfter,
           'rounded-r-xl border-l': !!addonBefore && !addonAfter,

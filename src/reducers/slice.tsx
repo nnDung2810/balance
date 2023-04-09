@@ -10,6 +10,7 @@ export default class Slice {
     isLoading: false,
     isVisible: false,
     status: 'idle',
+    keyList: 'result',
     queryParams: '',
     keepUnusedDataFor: 60,
     time: 0,
@@ -27,19 +28,22 @@ export default class Slice {
           });
         })
         .addCase(action.get.pending, (state: State, action: any) => {
+          if (action.meta.arg.keyList) {
+            state.keyList = action.meta.arg.keyList;
+            delete action.meta.arg.keyList;
+          }
           state.time = new Date().getTime() + state.keepUnusedDataFor * 1000;
           state.queryParams = JSON.stringify(action.meta.arg);
           state.isLoading = true;
           state.status = 'get.pending';
         })
-        .addCase(action.get.fulfilled, (state: State, action: PayloadAction<any[]>) => {
-          state.result = action.payload;
+        .addCase(action.get.fulfilled, (state: State, action: PayloadAction<object>) => {
+          if (action.payload) {
+            // @ts-ignore
+            state[state.keyList] = action.payload;
+            state.status = 'get.fulfilled';
+          } else state.status = 'idle';
           state.isLoading = false;
-          state.status = 'get.fulfilled';
-        })
-        .addCase(action.get.rejected, (state: State) => {
-          state.isLoading = false;
-          state.status = 'get.rejected';
         })
 
         .addCase(action.getById.pending, (state: State) => {
@@ -47,60 +51,52 @@ export default class Slice {
           state.status = 'getById.pending';
         })
         .addCase(action.getById.fulfilled, (state: State, action: PayloadAction<{ data: any; keyState: string }>) => {
-          const { data, keyState } = action.payload;
-          if (JSON.stringify(state.data) !== JSON.stringify(data)) state.data = data;
+          if (action.payload) {
+            const { data, keyState } = action.payload;
+            if (JSON.stringify(state.data) !== JSON.stringify(data)) state.data = data;
+            // @ts-ignore
+            state[keyState] = true;
+            state.status = 'getById.fulfilled';
+          } else state.status = 'idle';
           state.isLoading = false;
-          // @ts-ignore
-          state[keyState] = true;
-          state.status = 'getById.fulfilled';
-        })
-        .addCase(action.getById.rejected, (state: State) => {
-          state.isLoading = false;
-          state.status = 'getById.rejected';
         })
 
-        .addCase(action.post.pending, (state: State) => {
+        .addCase(action.post.pending, (state: State, action: any) => {
+          state.data = action.meta.arg;
           state.isLoading = true;
           state.status = 'post.pending';
         })
-        .addCase(action.post.fulfilled, (state: State, action: PayloadAction<any>) => {
-          state.data = action.payload.data;
+        .addCase(action.post.fulfilled, (state: State, action: PayloadAction<object>) => {
+          if (action.payload) {
+            state.data = {};
+            state.isVisible = false;
+            state.status = 'post.fulfilled';
+          } else state.status = 'idle';
           state.isLoading = false;
-          state.isVisible = false;
-          state.status = 'post.fulfilled';
-        })
-        .addCase(action.post.rejected, (state: State) => {
-          state.isLoading = false;
-          state.status = 'post.rejected';
         })
 
-        .addCase(action.put.pending, (state: State) => {
+        .addCase(action.put.pending, (state: State, action: any) => {
+          state.data = action.meta.arg;
           state.isLoading = true;
           state.status = 'put.pending';
         })
-        .addCase(action.put.fulfilled, (state: State, action: PayloadAction<any>) => {
-          state.data = action.payload.data;
+        .addCase(action.put.fulfilled, (state: State, action: PayloadAction<object>) => {
+          if (action.payload) {
+            state.data = {};
+            state.isVisible = false;
+            state.status = 'put.fulfilled';
+          } else state.status = 'idle';
           state.isLoading = false;
-          state.isVisible = false;
-          state.status = 'put.fulfilled';
-        })
-        .addCase(action.put.rejected, (state: State) => {
-          state.isLoading = false;
-          state.status = 'put.rejected';
         })
 
         .addCase(action.delete.pending, (state: State) => {
           state.isLoading = true;
           state.status = 'delete.pending';
         })
-        .addCase(action.delete.fulfilled, (state: State, action: PayloadAction<any>) => {
-          state.data = action.payload;
+        .addCase(action.delete.fulfilled, (state: State, action: PayloadAction<object>) => {
+          if (action.payload) state.status = 'delete.fulfilled';
+          else state.status = 'idle';
           state.isLoading = false;
-          state.status = 'delete.fulfilled';
-        })
-        .addCase(action.delete.rejected, (state: State) => {
-          state.isLoading = false;
-          state.status = 'delete.rejected';
         });
       extraReducers(builder);
     };
@@ -112,6 +108,7 @@ export interface State {
   isLoading: boolean;
   isVisible: boolean;
   status: string;
+  keyList: string;
   queryParams: string;
   keepUnusedDataFor: number;
   time: number;

@@ -77,12 +77,15 @@ const Hook = forwardRef(
     }: Type,
     ref,
   ) => {
-    useImperativeHandle(ref, () => ({ onChange, params }));
+    useImperativeHandle(ref, () => ({
+      onChange,
+      params,
+      handleDelete: async (id: string) => dispatch(action.delete(id)),
+    }));
     const dispatch = useAppDispatch();
     const { t } = useTranslation();
     const location = useLocation();
     const navigate = useNavigate();
-
     const idTable = useRef(idElement);
     const param = useRef(defaultRequest);
     const timeoutSearch = useRef<any>();

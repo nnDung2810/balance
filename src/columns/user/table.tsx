@@ -3,12 +3,12 @@ import React from 'react';
 import dayjs from 'dayjs';
 
 import { Avatar } from '@components';
-import { keyRole } from '@utils';
+import { keyRole, routerLinks } from '@utils';
 import { DataTableModel } from '@models';
 import { codeAction } from '@reducers';
 import { Edit, Trash } from '@svgs';
 
-const Column = ({ t, formatDate, modalFormRef, permissions }: any) => {
+const Column = ({ t, formatDate, permissions, navigate, dataTableRef }: any) => {
   const col: DataTableModel[] = [
     {
       title: t(`user.Fullname`),
@@ -86,7 +86,7 @@ const Column = ({ t, formatDate, modalFormRef, permissions }: any) => {
     {
       title: t('user.Action'),
       tableItem: {
-        width: 100,
+        width: 80,
         align: 'center',
         onCell: () => ({
           style: { paddingTop: '0.25rem', paddingBottom: '0.25rem' },
@@ -97,7 +97,7 @@ const Column = ({ t, formatDate, modalFormRef, permissions }: any) => {
               <Tooltip title={t('routes.admin.Layout.Edit')}>
                 <Edit
                   className="icon-cud bg-blue-600 hover:bg-blue-400"
-                  onClick={() => modalFormRef?.current?.handleEdit(data)}
+                  onClick={() => navigate(routerLinks('User') + '/' + data.id)}
                 />
               </Tooltip>
             )}
@@ -107,7 +107,7 @@ const Column = ({ t, formatDate, modalFormRef, permissions }: any) => {
                 <Popconfirm
                   placement="left"
                   title={t('components.datatable.areYouSureWant')}
-                  onConfirm={() => modalFormRef?.current?.handleDelete(data.id)}
+                  onConfirm={() => dataTableRef?.current?.handleDelete(data.id)}
                   okText={t('components.datatable.ok')}
                   cancelText={t('components.datatable.cancel')}
                 >

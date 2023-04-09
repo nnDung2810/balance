@@ -38,14 +38,24 @@ export const pages = [
         title: 'Code',
       },
       {
-        path: routerLinks('User'),
-        component: React.lazy(() => import('./admin/user')),
-        title: 'User',
-      },
-      {
         path: routerLinks('Data'),
         component: React.lazy(() => import('./admin/data')),
         title: 'Data',
+      },
+      {
+        path: routerLinks('User/List'),
+        component: React.lazy(() => import('./admin/user')),
+        title: 'User/List',
+      },
+      {
+        path: routerLinks('User/Add'),
+        component: React.lazy(() => import('./admin/user/add')),
+        title: 'User/Add',
+      },
+      {
+        path: routerLinks('User') + '/:id',
+        component: React.lazy(() => import('./admin/user/add')),
+        title: 'User/Edit',
       },
     ], // 💬 generate link to here
   },

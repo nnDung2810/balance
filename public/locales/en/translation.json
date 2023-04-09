@@ -72,11 +72,18 @@
     "Login": "Login",
     "Dashboard": "Dashboard",
     "User": "User",
+    "User/List": "List",
+    "User/Add": "Add",
     "MyProfile": "My Profile",
     "Setting": "Setting",
     "Code": "Code",
     "Data": "Data",
     "Page": "Page"
+  },
+  "pages": {
+    "User/List": "List User",
+    "User/Add": "Add new User",
+    "User/Edit": "Edit User"
   },
   "columns": {
     "auth": {

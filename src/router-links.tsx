@@ -5,6 +5,8 @@ const Util = (name: string, type?: string) => {
     MyProfile: '/my-profile',
     Dashboard: '/',
     User: '/user',
+    'User/List': '/user/list',
+    'User/Add': '/user/add',
     Page: '/page',
     Setting: '/setting',
     Data: '/setting/data',

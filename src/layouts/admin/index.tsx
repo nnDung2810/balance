@@ -12,12 +12,12 @@ import { globalAction, globalSlice, useAppDispatch, useTypedSelector } from '@re
 import Menu from './menu';
 // import { firebaseConfig } from 'variable';
 import './index.less';
-import { Bell, Comment, Logo } from '@svgs';
+import { Logo } from '@svgs';
 
 const Layout = ({ children }: PropsWithChildren) => {
   const { t, i18n } = useTranslation();
   const dispatch = useAppDispatch();
-  const { user } = useTypedSelector((state: any) => state[globalAction.name]);
+  const { user, title } = useTypedSelector((state: any) => state[globalAction.name]);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -84,29 +84,19 @@ const Layout = ({ children }: PropsWithChildren) => {
       )}
     >
       <div className="flex items-center justify-end sm:justify-between px-5 h-20">
-        <Select value={i18n.language} onChange={(value: string) => dispatch(globalSlice.actions.setLanguage(value))}>
-          <Select.Option value="en">
-            <img src="/assets/svg/us.svg" alt="US" className="mr-1 w-4 inline-block relative -top-0.5" />{' '}
-            {t('routes.admin.Layout.English')}
-          </Select.Option>
-          <Select.Option value="vn">
-            <img src="/assets/svg/vn.svg" alt="VN" className="mr-1 w-4 inline-block relative -top-0.5" />{' '}
-            {t('routes.admin.Layout.Vietnam')}
-          </Select.Option>
-        </Select>
-        <div className="flex items-center">
-          <div className="mr-5 relative flex group">
-            <div className="rounded-full text-white w-5 h-5 bg-blue-400 absolute -right-1.5 -top-1.5 leading-none text-center pt-1 text-xs group-hover:animate-bounce">
-              4
-            </div>
-            <Bell className="icon-header" />
-          </div>
-          <div className="mr-5 relative flex group">
-            <div className="rounded-full text-white w-5 h-5 bg-yellow-500 absolute -right-1.5 -top-1.5 leading-none text-center pt-1 text-xs group-hover:animate-bounce">
-              76
-            </div>
-            <Comment className="icon-header" />
-          </div>
+        <h1 className={'text-xl font-bold hidden sm:block'}>{t('pages.' + title)}</h1>
+
+        <div className="flex items-center gap-5">
+          <Select value={i18n.language} onChange={(value: string) => dispatch(globalSlice.actions.setLanguage(value))}>
+            <Select.Option value="en">
+              <img src="/assets/svg/us.svg" alt="US" className="mr-1 w-4 inline-block relative -top-0.5" />{' '}
+              {t('routes.admin.Layout.English')}
+            </Select.Option>
+            <Select.Option value="vn">
+              <img src="/assets/svg/vn.svg" alt="VN" className="mr-1 w-4 inline-block relative -top-0.5" />{' '}
+              {t('routes.admin.Layout.Vietnam')}
+            </Select.Option>
+          </Select>
           <Dropdown
             trigger={['hover', 'click']}
             menu={{
@@ -136,7 +126,7 @@ const Layout = ({ children }: PropsWithChildren) => {
                 <div className="font-bold text-black text-lg leading-snug mb-0.5">{user?.name}</div>
                 <div className="text-gray-500">{user?.email}</div>
               </div>
-              <Avatar src="assets/images/avatar.jpeg" size={10} />
+              <Avatar src="/assets/images/avatar.jpeg" size={10} />
             </section>
           </Dropdown>
         </div>
@@ -164,7 +154,7 @@ const Layout = ({ children }: PropsWithChildren) => {
             <div
               id={'name-application'}
               className={classNames(
-                'transition-all duration-300 ease-in-out absolute left-16 w-48 overflow-ellipsis overflow-hidden ml-2',
+                'transition-all duration-300 ease-in-out absolute left-16 overflow-ellipsis overflow-hidden ml-2',
                 {
                   'opacity-100 text-lg': !isCollapsed && isDesktop,
                   'opacity-0 text-[0px] invisible': isCollapsed || !isDesktop,
@@ -200,7 +190,7 @@ const Layout = ({ children }: PropsWithChildren) => {
         className={classNames('fixed z-20 top-20 left-0 h-screen bg-blue-100 transition-all duration-300 ease-in-out', {
           'w-52': !isCollapsed,
           'w-20': isCollapsed,
-          '-left-20': isCollapsed && !isDesktop,
+          '!-left-20': isCollapsed && !isDesktop,
         })}
       >
         <Menu isCollapsed={isCollapsed} permission={user?.role?.permissions} />
@@ -215,8 +205,12 @@ const Layout = ({ children }: PropsWithChildren) => {
           'ml-20': isCollapsed && isDesktop,
         })}
       >
-        {children}
-        <footer className="text-center bg-blue-50 mt-10 -mx-5">
+        <div className={'h-[calc(100vh-9rem)]'}>
+          <h1 className={'text-xl font-bold block sm:hidden pb-5'}>{t('pages.' + title)}</h1>
+          {children}
+        </div>
+
+        <footer className="text-center bg-blue-50 pt-5 w-full">
           {t('layout.footer', { year: new Date().getFullYear() })}
         </footer>
       </section>

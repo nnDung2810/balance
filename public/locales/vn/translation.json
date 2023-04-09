@@ -71,12 +71,19 @@
   "titles": {
     "Login": "Đăng nhập",
     "Dashboard": "Tra cứu dữ liệu",
-    "User": "Quản Lý Người Dùng",
+    "User": "Người Dùng",
+    "User/List": "Danh sách",
+    "User/Add": "Tạo mới",
     "MyProfile": "Thông tin của tôi",
     "Setting": "Thiết lập",
     "Code": "Mã",
     "Data": "Dữ liệu",
     "Page": "Trang"
+  },
+  "pages": {
+    "User/List": "Danh sách Người dùng",
+    "User/Add": "Tạo mới người dùng",
+    "User/Edit": "Chỉnh sửa người dùng"
   },
   "columns": {
     "auth": {

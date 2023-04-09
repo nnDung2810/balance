@@ -5,7 +5,7 @@ import { Spin } from '../components/spin';
 import { pages } from './pages';
 import { keyUser, routerLinks } from '@utils';
 import { useTranslation } from 'react-i18next';
-import { globalAction, useTypedSelector } from '@reducers';
+import {globalAction, useAppDispatch, useTypedSelector} from '@reducers';
 
 const Layout = ({ layout: Layout, isPublic = false }: any) => {
   const { user } = useTypedSelector((state: any) => state[globalAction.name]);
@@ -20,9 +20,11 @@ const Layout = ({ layout: Layout, isPublic = false }: any) => {
 
 const Page = ({ title = '', component: Comp, ...props }: any) => {
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    document.title = t('titles.' + title || '');
+    document.title = t('pages.' + title || '');
+    dispatch(globalAction.set({title}));
   }, [title]);
 
   if (typeof Comp === 'string') {
@@ -47,7 +49,7 @@ const Pages = () => (
                     </Spin>
                   }
                 >
-                  <Page title={title} component={component} />
+                  <Page title={title} component={component} path={path} />
                 </Suspense>
               }
             />
