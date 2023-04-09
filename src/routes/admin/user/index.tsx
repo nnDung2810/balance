@@ -24,46 +24,44 @@ const Page = () => {
 
   const dataTableRef = useRef<any>();
   return (
-    <div>
-      <DataTable
-        action={userAction}
-        ref={dataTableRef}
-        onRow={() => ({ onDoubleClick: () => null })}
-        pageSizeRender={(sizePage: number) => sizePage}
-        pageSizeWidth={'50px'}
-        paginationDescription={(from: number, to: number, total: number) =>
-          t('routes.admin.Layout.Show') +
-          ' ' +
-          from +
-          '-' +
-          to +
-          ' / ' +
-          t('routes.admin.Layout.Total') +
-          ' ' +
-          total +
-          ' ' +
-          t('routes.admin.Layout.categories')
-        }
-        columns={ColumnTableUser({
-          t,
-          formatDate,
-          permissions: user?.role?.permissions,
-          navigate,
-          dataTableRef,
-        })}
-        rightHeader={
-          <div className={'flex gap-2'}>
-            {user?.role?.permissions?.includes(keyRole.P_USER_CREATE) && (
-              <Button
-                icon={<Plus className="icon-cud !h-5 !w-5" />}
-                text={t('components.button.New')}
-                onClick={() => navigate(routerLinks('User/Add'))}
-              />
-            )}
-          </div>
-        }
-      />
-    </div>
+    <DataTable
+      action={userAction}
+      ref={dataTableRef}
+      onRow={() => ({ onDoubleClick: () => null })}
+      pageSizeRender={(sizePage: number) => sizePage}
+      pageSizeWidth={'50px'}
+      paginationDescription={(from: number, to: number, total: number) =>
+        t('routes.admin.Layout.Show') +
+        ' ' +
+        from +
+        '-' +
+        to +
+        ' / ' +
+        t('routes.admin.Layout.Total') +
+        ' ' +
+        total +
+        ' ' +
+        t('routes.admin.Layout.categories')
+      }
+      columns={ColumnTableUser({
+        t,
+        formatDate,
+        permissions: user?.role?.permissions,
+        navigate,
+        dataTableRef,
+      })}
+      rightHeader={
+        <div className={'flex gap-2'}>
+          {user?.role?.permissions?.includes(keyRole.P_USER_CREATE) && (
+            <Button
+              icon={<Plus className="icon-cud !h-5 !w-5" />}
+              text={t('components.button.New')}
+              onClick={() => navigate(routerLinks('User/Add'))}
+            />
+          )}
+        </div>
+      }
+    />
   );
 };
 export default Page;

@@ -21,7 +21,7 @@ const Layout = () => [
         name: 'User/Add',
         permission: keyRole.P_DATA_LISTED,
       },
-    ]
+    ],
   },
   {
     icon: <Cog className="icon-menu" />,

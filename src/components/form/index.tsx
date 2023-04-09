@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Form, Checkbox, Radio, Switch, Slider, DatePicker as DateAntDesign, FormInstance } from 'antd';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
-import { DefaultTFuncReturn } from 'i18next';
 import dayjs from 'dayjs';
 
 import { Upload, Editor, DraggableLayout, Button } from '@components';

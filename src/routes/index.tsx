@@ -5,7 +5,7 @@ import { Spin } from '../components/spin';
 import { pages } from './pages';
 import { keyUser, routerLinks } from '@utils';
 import { useTranslation } from 'react-i18next';
-import {globalAction, useAppDispatch, useTypedSelector} from '@reducers';
+import { globalAction, useAppDispatch, useTypedSelector } from '@reducers';
 
 const Layout = ({ layout: Layout, isPublic = false }: any) => {
   const { user } = useTypedSelector((state: any) => state[globalAction.name]);
@@ -24,7 +24,7 @@ const Page = ({ title = '', component: Comp, ...props }: any) => {
 
   useEffect(() => {
     document.title = t('pages.' + title || '');
-    dispatch(globalAction.set({title}));
+    dispatch(globalAction.set({ title }));
   }, [title]);
 
   if (typeof Comp === 'string') {
