@@ -1,10 +1,9 @@
 import React, { Fragment, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Spin } from '@components';
-import Form from '../../../components/form';
-import { ColumnProfile } from './column';
+import { Spin, Form } from '@components';
 import { globalAction, useAppDispatch, useTypedSelector } from '@reducers';
+import { ColumnProfile } from './column';
 
 const Page = () => {
   const { t } = useTranslation();
