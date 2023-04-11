@@ -2,10 +2,10 @@ import React, { Fragment, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { DataTable, ModalForm, Button } from '@components';
-import { ColumnCodeForm, ColumnCodeTable } from '@columns';
 import { keyRole } from '@utils';
 import { useAppDispatch, useTypedSelector, codeAction, codeTypeAction, globalAction } from '@reducers';
 import { Plus } from '@svgs';
+import { ColumnCodeForm, ColumnCodeTable } from './column';
 const Page = () => {
   const { t } = useTranslation();
   const { formatDate, user } = useTypedSelector((state: any) => state[globalAction.name]);

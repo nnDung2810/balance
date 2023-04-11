@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { DataTable, ModalForm, Button } from '@components';
-import { ColumnDataForm, ColumnDataTable } from '@columns';
+import { ColumnDataForm, ColumnDataTable } from './column';
 import { keyRole } from '@utils';
 import { dataAction, dataTypeAction, useAppDispatch, useTypedSelector, globalAction } from '@reducers';
 import { Plus } from '@svgs';

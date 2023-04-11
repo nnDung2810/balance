@@ -3,6 +3,7 @@ import { Button } from './button';
 import DataTable from './data-table';
 import { Pagination } from './pagination';
 import Editor from './editor';
+import Form from './form';
 import Modal from './modal';
 import ModalForm from './modal/form';
 import { DraggableLayout } from './draggable/layout';
@@ -16,6 +17,7 @@ export {
   Button,
   DataTable,
   Editor,
+  Form,
   Modal,
   ModalForm,
   DraggableLayout,

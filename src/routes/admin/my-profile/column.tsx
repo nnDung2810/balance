@@ -1,13 +1,11 @@
 import { FormModel } from '@models';
-import { codeAction } from '@reducers';
 
-const Column = ({ t, listRole }: any) => {
+export const ColumnProfile = ({ t, listPosition }: any) => {
   const col: FormModel[] = [
     {
       title: t('dayoff.Fullname'),
       name: 'name',
       formItem: {
-        tabIndex: 1,
         col: 6,
         rules: [{ type: 'required' }],
       },
@@ -16,18 +14,15 @@ const Column = ({ t, listRole }: any) => {
       title: t('columns.auth.login.password'),
       name: 'password',
       formItem: {
-        tabIndex: 2,
         col: 6,
         type: 'password',
-        condition: (value: string, form: any, index: number, values: any) => !values?.id,
-        rules: [{ type: 'required' }, { type: 'min', value: 6 }],
+        rules: [{ type: 'min', value: 6 }],
       },
     },
     {
       title: t('Email'),
       name: 'email',
       formItem: {
-        tabIndex: 1,
         col: 6,
         rules: [{ type: 'required' }, { type: 'email' }, { type: 'min', value: 6 }],
       },
@@ -37,12 +32,9 @@ const Column = ({ t, listRole }: any) => {
       name: 'retypedPassword',
       formItem: {
         placeholder: t('columns.auth.register.retypedPassword'),
-        tabIndex: 2,
         col: 6,
         type: 'password',
-        condition: (value: string, form: any, index: number, values: any) => !values?.id,
         rules: [
-          { type: 'required' },
           {
             type: 'custom',
             validator: ({ getFieldValue }: any) => ({
@@ -58,7 +50,7 @@ const Column = ({ t, listRole }: any) => {
       },
     },
     {
-      title: t('Số điện thoại'),
+      title: t('customer.Phone Number'),
       name: 'phoneNumber',
       formItem: {
         col: 6,
@@ -81,42 +73,7 @@ const Column = ({ t, listRole }: any) => {
         col: 6,
         type: 'select',
         rules: [{ type: 'required' }],
-        convert: (data: any) =>
-          data?.map ? data.map((_item: any) => (_item?.id !== undefined ? +_item.id : _item)) : data,
-        get: {
-          action: codeAction,
-          params: (form: any, fullTextSearch: string) => ({
-            fullTextSearch,
-            filter: { type: 'POS' },
-            extend: {},
-          }),
-          format: (item: any) => ({
-            label: item.name,
-            value: item.code,
-          }),
-        },
-      },
-    },
-    {
-      title: t('user.Start Date'),
-      name: 'startDate',
-      formItem: {
-        col: 6,
-        type: 'date',
-        rules: [{ type: 'required' }],
-      },
-    },
-    {
-      title: t('components.button.Role'),
-      name: 'roleId',
-      formItem: {
-        col: 6,
-        type: 'select',
-        rules: [{ type: 'required' }],
-        list: listRole.map((item: any) => ({
-          value: item?.id,
-          label: item?.name,
-        })),
+        list: listPosition.map((item: any) => ({ value: item.code, label: item.name })),
       },
     },
     {
@@ -139,4 +96,3 @@ const Column = ({ t, listRole }: any) => {
   ];
   return col;
 };
-export default Column;

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { Spin } from '@components';
 import Form from '../../../components/form';
-import { ColumnProfile } from '@columns';
+import { ColumnProfile } from './column';
 import { globalAction, useAppDispatch, useTypedSelector } from '@reducers';
 
 const Page = () => {

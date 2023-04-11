@@ -1,11 +1,10 @@
 import React, { Fragment, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useLocation } from 'react-router';
-import { Spin } from '@components';
-import Form from '../../../components/form';
+import { Spin, Form } from '@components';
 import { routerLinks } from '@utils';
-import { ColumnResetPassword } from '@columns';
 import { globalAction, useAppDispatch, useTypedSelector } from '@reducers';
+import { ColumnResetPassword } from './column';
 
 const Page = () => {
   const { t } = useTranslation();

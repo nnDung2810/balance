@@ -1,12 +1,12 @@
 import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router';
 
 import { Button, DataTable } from '@components';
-import { ColumnTableUser } from '@columns';
 import { keyRole, routerLinks } from '@utils';
 import { useTypedSelector, userAction, globalAction } from '@reducers';
 import { Plus } from '@svgs';
-import { useNavigate } from 'react-router';
+import { ColumnTableUser } from './column';
 
 const Page = () => {
   const { t } = useTranslation();

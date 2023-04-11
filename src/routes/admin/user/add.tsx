@@ -1,12 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-
-import { ColumnFormUser } from '@columns';
-import { useTypedSelector, userAction, userRoleAction, useAppDispatch } from '@reducers';
-import Form from '../../../components/form';
 import { useNavigate, useParams } from 'react-router';
+
+import { useTypedSelector, userAction, userRoleAction, useAppDispatch } from '@reducers';
 import { routerLinks } from '@utils';
-import { Button } from '@components';
+import { Button, Form } from '@components';
+import { ColumnFormUser } from './column';
 
 const Page = () => {
   const { t } = useTranslation();

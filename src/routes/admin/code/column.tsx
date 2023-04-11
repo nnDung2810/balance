@@ -1,14 +1,31 @@
 import { Popconfirm, Tooltip } from 'antd';
 import React from 'react';
-
 import { keyRole } from '@utils';
-import { DataTableModel } from '@models';
+import { DataTableModel, FormModel } from '@models';
 import { Edit, Trash } from '@svgs';
+import slug from 'slug';
 
-const Column = ({ t, modalFormRef, listType, permissions }: any) => {
+export const ColumnCodeTable = ({ t, modalFormRef, listType, permissions }: any) => {
   const col: DataTableModel[] = [
     {
-      title: t('Data.Type'),
+      title: t('titles.Code'),
+      name: 'code',
+      tableItem: {
+        width: 100,
+        filter: { type: 'search' },
+        sorter: true,
+      },
+    },
+    {
+      title: t('Code.Name'),
+      name: 'name',
+      tableItem: {
+        filter: { type: 'search' },
+        sorter: true,
+      },
+    },
+    {
+      title: t('Code.Type'),
       name: 'type',
       tableItem: {
         filter: {
@@ -21,18 +38,8 @@ const Column = ({ t, modalFormRef, listType, permissions }: any) => {
       },
     },
     {
-      title: t('Data.Name'),
-      name: 'translations',
-      tableItem: {
-        filter: { type: 'search' },
-        sorter: true,
-        render: (text: any[]) =>
-          text?.filter((item: any) => item?.language === localStorage.getItem('i18nextLng'))[0].name || '',
-      },
-    },
-    {
-      title: t('Data.Order'),
-      name: 'order',
+      title: t('user.Description'),
+      name: 'description',
       tableItem: {
         filter: { type: 'search' },
         sorter: true,
@@ -65,7 +72,7 @@ const Column = ({ t, modalFormRef, listType, permissions }: any) => {
                   okText={t('components.datatable.ok')}
                   cancelText={t('components.datatable.cancel')}
                 >
-                  <Trash className="icon-cud bg-red-600 hover:bg-red-400 " />
+                  <Trash className="icon-cud bg-red-600 hover:bg-red-400" />
                 </Popconfirm>
               </Tooltip>
             )}
@@ -76,4 +83,47 @@ const Column = ({ t, modalFormRef, listType, permissions }: any) => {
   ];
   return col;
 };
-export default Column;
+
+export const ColumnCodeForm = ({ t, listType }: any) => {
+  const col: FormModel[] = [
+    {
+      title: t('Code.Name'),
+      name: 'name',
+      formItem: {
+        col: 4,
+        rules: [{ type: 'required' }],
+        onBlur: (e, form) => {
+          if (e.target.value && !form.getFieldValue('code')) {
+            form.setFieldValue('code', slug(e.target.value).toUpperCase());
+          }
+        },
+      },
+    },
+    {
+      title: t('Code.Type'),
+      name: 'type',
+      formItem: {
+        type: 'select',
+        col: 4,
+        rules: [{ type: 'required' }],
+        list: listType || [],
+      },
+    },
+    {
+      title: t('titles.Code'),
+      name: 'code',
+      formItem: {
+        col: 4,
+        rules: [{ type: 'required' }],
+      },
+    },
+    {
+      title: t('user.Description'),
+      name: 'description',
+      formItem: {
+        type: 'textarea',
+      },
+    },
+  ];
+  return col;
+};

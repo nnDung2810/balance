@@ -1,28 +1,7 @@
 import { FormModel } from '@models';
 
-const Column = ({ t }: any) => {
+export const ColumnResetPassword = ({ t }: any) => {
   const col: FormModel[] = [
-    {
-      name: 'firstName',
-      title: t('columns.auth.register.firstName'),
-      formItem: {
-        rules: [{ type: 'required' }],
-      },
-    },
-    {
-      name: 'lastName',
-      title: t('columns.auth.register.lastName'),
-      formItem: {
-        rules: [{ type: 'required' }],
-      },
-    },
-    {
-      name: 'email',
-      title: t('columns.auth.login.Username'),
-      formItem: {
-        rules: [{ type: 'required' }, { type: 'email' }, { type: 'min', value: 6 }],
-      },
-    },
     {
       name: 'password',
       title: t('columns.auth.login.password'),
@@ -44,4 +23,3 @@ const Column = ({ t }: any) => {
   ];
   return col;
 };
-export default Column;
