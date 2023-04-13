@@ -9,7 +9,7 @@ import { Message } from '@components';
 import { useAppDispatch, useTypedSelector } from '@reducers';
 
 const name = 'Auth';
-const globalAction = {
+const action = {
   name,
   set: createAsyncThunk(name + '/set', async (values: any) => values),
   logout: createAsyncThunk(name + '/logout', async () => {
@@ -79,7 +79,7 @@ const initialState: State = {
   ...checkLanguage(localStorage.getItem('i18nextLng') || 'en'),
 };
 export const globalSlice = createSlice({
-  name: globalAction.name,
+  name: action.name,
   initialState,
   reducers: {
     setLanguage: (state: State, action: PayloadAction<string>) => {
@@ -94,17 +94,17 @@ export const globalSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(globalAction.set.fulfilled, (state: State, action: PayloadAction<object>) => {
+      .addCase(action.set.fulfilled, (state: State, action: PayloadAction<object>) => {
         Object.keys(action.payload).forEach((key) => {
           // @ts-ignore
           state[key] = action.payload[key];
         });
       })
-      // .addCase(globalAction.logout.pending, (state: State) => {
+      // .addCase(action.logout.pending, (state: State) => {
       //   state.isLoading = true;
       //   state.status = 'logout.pending';
       // })
-      .addCase(globalAction.logout.fulfilled, (state) => {
+      .addCase(action.logout.fulfilled, (state) => {
         state.user = {};
         localStorage.removeItem(keyUser);
         localStorage.removeItem(keyToken);
@@ -114,11 +114,11 @@ export const globalSlice = createSlice({
         state.status = 'logout.fulfilled';
       })
 
-      .addCase(globalAction.profile.pending, (state: State) => {
+      .addCase(action.profile.pending, (state: State) => {
         state.isLoading = true;
         state.status = 'profile.pending';
       })
-      .addCase(globalAction.profile.fulfilled, (state: State, action: PayloadAction<object>) => {
+      .addCase(action.profile.fulfilled, (state: State, action: PayloadAction<object>) => {
         if (action.payload) {
           state.user = action.payload;
           state.status = 'profile.fulfilled';
@@ -126,12 +126,12 @@ export const globalSlice = createSlice({
         state.isLoading = false;
       })
 
-      .addCase(globalAction.putProfile.pending, (state: State, action: any) => {
+      .addCase(action.putProfile.pending, (state: State, action: any) => {
         state.data = action.meta.arg;
         state.isLoading = true;
         state.status = 'putProfile.pending';
       })
-      .addCase(globalAction.putProfile.fulfilled, (state: State, action: PayloadAction<object>) => {
+      .addCase(action.putProfile.fulfilled, (state: State, action: PayloadAction<object>) => {
         if (action.payload) {
           state.user = action.payload;
           state.status = 'putProfile.fulfilled';
@@ -139,12 +139,12 @@ export const globalSlice = createSlice({
         state.isLoading = false;
       })
 
-      .addCase(globalAction.login.pending, (state: State, action: any) => {
+      .addCase(action.login.pending, (state: State, action: any) => {
         state.data = action.meta.arg;
         state.isLoading = true;
         state.status = 'login.pending';
       })
-      .addCase(globalAction.login.fulfilled, (state: State, action: PayloadAction<object>) => {
+      .addCase(action.login.fulfilled, (state: State, action: PayloadAction<object>) => {
         if (action.payload) {
           localStorage.setItem(keyUser, JSON.stringify(action.payload));
           clearTempLocalStorage();
@@ -155,12 +155,12 @@ export const globalSlice = createSlice({
         state.isLoading = false;
       })
 
-      .addCase(globalAction.forgottenPassword.pending, (state: State, action: any) => {
+      .addCase(action.forgottenPassword.pending, (state: State, action: any) => {
         state.data = action.meta.arg;
         state.isLoading = true;
         state.status = 'forgottenPassword.pending';
       })
-      .addCase(globalAction.forgottenPassword.fulfilled, (state: State, action: PayloadAction<any>) => {
+      .addCase(action.forgottenPassword.fulfilled, (state: State, action: PayloadAction<any>) => {
         if (action.payload) {
           state.data = {};
           state.status = 'forgottenPassword.fulfilled';
@@ -168,12 +168,12 @@ export const globalSlice = createSlice({
         state.isLoading = false;
       })
 
-      .addCase(globalAction.resetPassword.pending, (state: State, action: any) => {
+      .addCase(action.resetPassword.pending, (state: State, action: any) => {
         state.data = action.meta.arg;
         state.isLoading = true;
         state.status = 'resetPassword.pending';
       })
-      .addCase(globalAction.resetPassword.fulfilled, (state: State, action: PayloadAction<any>) => {
+      .addCase(action.resetPassword.fulfilled, (state: State, action: PayloadAction<any>) => {
         if (action.payload) {
           state.data = {};
           state.status = 'resetPassword.fulfilled';
@@ -208,14 +208,14 @@ const clearTempLocalStorage = () => {
 export const GlobalFacade = () => {
   const dispatch = useAppDispatch();
   return {
-    ...useTypedSelector((state: any) => state[globalAction.name]),
-    set: (values: any) => dispatch(globalAction.set(values)),
-    logout: () => dispatch(globalAction.logout()),
-    profile: () => dispatch(globalAction.profile()),
-    putProfile: (values: any) => dispatch(globalAction.putProfile(values)),
-    login: (values: any) => dispatch(globalAction.login(values)),
-    forgottenPassword: (values: any) => dispatch(globalAction.forgottenPassword(values)),
-    resetPassword: (values: any) => dispatch(globalAction.resetPassword(values)),
+    ...useTypedSelector((state: any) => state[action.name]),
+    set: (values: any) => dispatch(action.set(values)),
+    logout: () => dispatch(action.logout()),
+    profile: () => dispatch(action.profile()),
+    putProfile: (values: any) => dispatch(action.putProfile(values)),
+    login: (values: any) => dispatch(action.login(values)),
+    forgottenPassword: (values: any) => dispatch(action.forgottenPassword(values)),
+    resetPassword: (values: any) => dispatch(action.resetPassword(values)),
     setLanguage: (value: string) => dispatch(globalSlice.actions.setLanguage(value)),
   };
 };

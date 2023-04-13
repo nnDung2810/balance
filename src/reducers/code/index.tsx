@@ -4,7 +4,8 @@ import Action from '../action';
 import Slice from '../slice';
 import { useAppDispatch, useTypedSelector } from '@reducers';
 
-const action = new Action('Code');
+const name = 'Code';
+const action = new Action(name);
 export const codeSlice = createSlice(new Slice(action));
 export const CodeFacade = () => {
   const dispatch = useAppDispatch();

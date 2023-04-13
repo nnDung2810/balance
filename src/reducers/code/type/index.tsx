@@ -3,7 +3,8 @@ import Action from '../../action';
 import Slice from '../../slice';
 import { useAppDispatch, useTypedSelector } from '@reducers';
 
-const action = new Action('CodeType');
+const name = 'CodeType';
+const action = new Action(name);
 export const codeTypeSlice = createSlice(new Slice(action, { keepUnusedDataFor: 9999 }));
 export const CodeTypeFacade = () => {
   const dispatch = useAppDispatch();
