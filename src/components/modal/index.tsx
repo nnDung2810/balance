@@ -4,13 +4,12 @@ import { useTranslation } from 'react-i18next';
 import { v4 } from 'uuid';
 
 import { Button, Spin } from '@components';
-import { useAppDispatch, useTypedSelector } from '@reducers';
 import { Spinner } from '@svgs';
 
 const Hook = forwardRef(
   (
     {
-      action,
+      facade,
       keyState = 'isVisible',
       title,
       widthModal = 800,
@@ -25,18 +24,12 @@ const Hook = forwardRef(
     ref: any,
   ) => {
     useImperativeHandle(ref, () => ({ handleCancel, data }));
-    const dispatch = useAppDispatch();
-    const { data, isLoading, ...state } = useTypedSelector((state: any) => state[action.name]);
+    const { data, isLoading, ...state } = facade;
     const { t } = useTranslation();
-    const handleCancel = () => {
-      dispatch(action.set({ [keyState]: false }));
-    };
+    const handleCancel = () => facade.set({ [keyState]: false });
     const handleOk = async () => {
-      if (onOk) {
-        onOk(data);
-      } else {
-        handleCancel();
-      }
+      if (onOk) onOk(data);
+      else handleCancel();
     };
 
     return (
@@ -78,7 +71,7 @@ const Hook = forwardRef(
 );
 Hook.displayName = 'HookModal';
 type Type = PropsWithChildren<{
-  action: any;
+  facade: any;
   keyState?: string;
   title?: (data: any) => string;
   widthModal: number;

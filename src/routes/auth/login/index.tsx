@@ -3,23 +3,20 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 import { ModalForm, Spin, Form } from '@components';
 import { routerLinks } from '@utils';
-import { globalAction, useAppDispatch, useTypedSelector } from '@reducers';
+import { GlobalFacade } from '@reducers';
 import { ColumnForgottenPassword, ColumnLogin } from './column';
 
 const Page = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-
-  const { isLoading, status, user, data } = useTypedSelector((state: any) => state[globalAction.name]);
+  const globalFacade = GlobalFacade();
+  const { isLoading, status, user, data, login } = globalFacade;
   useEffect(() => {
     if (status === 'login.fulfilled' && Object.keys(user).length > 0) {
       navigate(routerLinks('Dashboard'), { replace: true });
     }
   }, [status]);
-  const submit = async (values: any) => {
-    dispatch(globalAction.login(values));
-  };
+  const submit = async (values: any) => login(values);
   const modalFormRef = useRef<any>();
   return (
     <Fragment>
@@ -47,7 +44,7 @@ const Page = () => {
         </button>
       </div>
       <ModalForm
-        action={globalAction}
+        facade={globalFacade}
         ref={modalFormRef}
         title={() => 'Quên mật khẩu'}
         columns={ColumnForgottenPassword()}

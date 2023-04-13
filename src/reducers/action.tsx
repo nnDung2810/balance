@@ -13,7 +13,10 @@ export default class Action {
   constructor(name: string) {
     this.name = name;
     this.set = createAsyncThunk(name + '/set', async (values: any) => values);
-    this.get = createAsyncThunk(name + '/get', async (params: any = {}) => API.get(routerLinks(name, 'api'), params));
+    this.get = createAsyncThunk(
+      name + '/get',
+      async (params: any = {}) => await API.get(routerLinks(name, 'api'), params),
+    );
     this.getById = createAsyncThunk(name + '/getById', async (value: { id: string; keyState?: string }) => {
       const { data } = await API.get(`${routerLinks(name, 'api')}/${value.id}`);
       const keyState = value.keyState || 'isVisible';
@@ -24,9 +27,7 @@ export default class Action {
       if (data.message) await Message.success({ text: data.message });
       return data;
     });
-    this.put = createAsyncThunk(name + '/put', async (values: any) => {
-      const id = values.id;
-      delete values.id;
+    this.put = createAsyncThunk(name + '/put', async ({ id, ...values }: any) => {
       const data = await API.put(`${routerLinks(name, 'api')}/${id}`, values);
       if (data.message) await Message.success({ text: data.message });
       return data;

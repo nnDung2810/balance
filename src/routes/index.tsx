@@ -5,10 +5,10 @@ import { Spin } from '@components';
 import { pages } from './pages';
 import { keyUser, routerLinks } from '@utils';
 import { useTranslation } from 'react-i18next';
-import { globalAction, useAppDispatch, useTypedSelector } from '@reducers';
+import { GlobalFacade } from '@reducers';
 
 const Layout = ({ layout: Layout, isPublic = false }: any) => {
-  const { user } = useTypedSelector((state: any) => state[globalAction.name]);
+  const { user } = GlobalFacade();
   if (isPublic === true || !!user?.email || !!JSON.parse(localStorage.getItem(keyUser) || '{}')?.email)
     return (
       <Layout>
@@ -20,11 +20,11 @@ const Layout = ({ layout: Layout, isPublic = false }: any) => {
 
 const Page = ({ title = '', component: Comp, ...props }: any) => {
   const { t } = useTranslation();
-  const dispatch = useAppDispatch();
+  const globalFacade = GlobalFacade();
 
   useEffect(() => {
     document.title = t('pages.' + title || '');
-    dispatch(globalAction.set({ title }));
+    globalFacade.set({ title });
   }, [title]);
 
   if (typeof Comp === 'string') {

@@ -4,16 +4,21 @@ import { useTranslation } from 'react-i18next';
 import { DataTable, ModalForm, Button } from '@components';
 import { ColumnDataForm, ColumnDataTable } from './column';
 import { keyRole } from '@utils';
-import { dataAction, dataTypeAction, useAppDispatch, useTypedSelector, globalAction } from '@reducers';
+import { GlobalFacade, DataTypeFacade, DataFacade } from '@reducers';
 import { Plus } from '@svgs';
 
 const Page = () => {
   const { t } = useTranslation();
-  const { formatDate, user } = useTypedSelector((state: any) => state[globalAction.name]);
-  const dispatch = useAppDispatch();
-  const { result } = useTypedSelector((state: any) => state[dataTypeAction.name]);
+  const { formatDate, user } = GlobalFacade();
 
-  const { status } = useTypedSelector((state: any) => state[dataAction.name]);
+  const { result, get } = DataTypeFacade();
+  useEffect(() => {
+    if (!result.data) get({});
+  }, []);
+  const listType = (result.data || []).map((item: any) => ({ value: item.code, label: item.name }));
+
+  const dataFacade = DataFacade();
+  const { status } = dataFacade;
   useEffect(() => {
     switch (status) {
       case 'put.fulfilled':
@@ -24,20 +29,13 @@ const Page = () => {
     }
   }, [status]);
 
-  useEffect(() => {
-    if (!result.data) {
-      dispatch(dataTypeAction.get({}));
-    }
-  }, [dispatch]);
-  const listType = (result.data || []).map((item: any) => ({ value: item.code, label: item.name }));
-
   const dataTableRef = useRef<any>();
   const modalFormRef = useRef<any>();
 
   return (
     <Fragment>
       <DataTable
-        action={dataAction}
+        facade={dataFacade}
         showSearch={false}
         ref={dataTableRef}
         onRow={() => ({
@@ -78,7 +76,7 @@ const Page = () => {
         }
       />
       <ModalForm
-        action={dataAction}
+        facade={dataFacade}
         ref={modalFormRef}
         title={(data: any) => (!data?.id ? t('routes.admin.Layout.Add') : t('routes.admin.Layout.Edit'))}
         columns={ColumnDataForm({

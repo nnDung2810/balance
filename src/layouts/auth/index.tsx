@@ -2,18 +2,18 @@ import React, { PropsWithChildren, useEffect } from 'react';
 import { Select } from 'antd';
 import { useTranslation } from 'react-i18next';
 
-import { globalAction, globalSlice, useAppDispatch } from '@reducers';
+import { GlobalFacade } from '@reducers';
 import { Facebook, Twitter, Linkedin, Logo } from '@svgs';
 
 import './index.less';
 
 const Layout = ({ children }: PropsWithChildren) => {
   const { t, i18n } = useTranslation();
-  const dispatch = useAppDispatch();
+  const globalFacade = GlobalFacade();
 
   useEffect(() => {
-    dispatch(globalAction.logout());
-  }, [dispatch]);
+    globalFacade.logout();
+  }, []);
 
   return (
     <div className="layout-auth bg-cover bg-center p-20 relative z-10">
@@ -54,10 +54,7 @@ const Layout = ({ children }: PropsWithChildren) => {
         <div className="w-full lg:w-2/5 p-10 flex justify-center flex-col">
           {children}
           <div className="intro-x text-center mt-5">
-            <Select
-              value={i18n.language}
-              onChange={(value: string) => dispatch(globalSlice.actions.setLanguage(value))}
-            >
+            <Select value={i18n.language} onChange={globalFacade.setLanguage}>
               <Select.Option value="en">
                 <img src="/assets/svg/us.svg" alt="US" className="mr-1 w-4 inline-block relative -top-0.5" />{' '}
                 {t('routes.admin.Layout.English')}

@@ -3,22 +3,20 @@ import { useTranslation } from 'react-i18next';
 
 import { DataTable, ModalForm, Button } from '@components';
 import { keyRole } from '@utils';
-import { useAppDispatch, useTypedSelector, codeAction, codeTypeAction, globalAction } from '@reducers';
+import { GlobalFacade, CodeFacade, CodeTypeFacade } from '@reducers';
 import { Plus } from '@svgs';
 import { ColumnCodeForm, ColumnCodeTable } from './column';
 const Page = () => {
   const { t } = useTranslation();
-  const { formatDate, user } = useTypedSelector((state: any) => state[globalAction.name]);
-  const dispatch = useAppDispatch();
-  const { result } = useTypedSelector((state: any) => state[codeTypeAction.name]);
+  const { formatDate, user } = GlobalFacade();
+  const { result, get } = CodeTypeFacade();
   const listType = (result.data || []).map((item: any) => ({ value: item.code, label: item.name }));
   useEffect(() => {
-    if (!result.data) {
-      dispatch(codeTypeAction.get({}));
-    }
-  }, [dispatch]);
+    if (!result.data) get({});
+  }, []);
 
-  const { status } = useTypedSelector((state: any) => state[codeAction.name]);
+  const codeFacade = CodeFacade();
+  const { status } = codeFacade;
   useEffect(() => {
     switch (status) {
       case 'put.fulfilled':
@@ -31,11 +29,10 @@ const Page = () => {
 
   const dataTableRef = useRef<any>();
   const modalFormRef = useRef<any>();
-  const modalDragRef = useRef<any>();
   return (
     <Fragment>
       <DataTable
-        action={codeAction}
+        facade={codeFacade}
         ref={dataTableRef}
         onRow={() => ({
           onDoubleClick: () => null,
@@ -64,13 +61,6 @@ const Page = () => {
         })}
         rightHeader={
           <div className={'flex gap-2'}>
-            {user?.role?.permissions?.includes(keyRole.P_CODE_TYPE_LISTED) && (
-              <Button
-                icon={<Plus className="icon-cud !h-5 !w-5" />}
-                text={t('Code.Type Code')}
-                onClick={() => modalDragRef?.current?.handleShow()}
-              />
-            )}
             {user?.role?.permissions?.includes(keyRole.P_CODE_CREATE) && (
               <Button
                 icon={<Plus className="icon-cud !h-5 !w-5" />}
@@ -82,7 +72,7 @@ const Page = () => {
         }
       />
       <ModalForm
-        action={codeAction}
+        facade={codeFacade}
         ref={modalFormRef}
         title={(data: any) => (!data?.id ? t('routes.admin.Layout.Add') : t('routes.admin.Layout.Edit'))}
         columns={ColumnCodeForm({

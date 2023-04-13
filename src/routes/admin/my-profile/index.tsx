@@ -2,22 +2,15 @@ import React, { Fragment, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { Spin, Form } from '@components';
-import { globalAction, useAppDispatch, useTypedSelector } from '@reducers';
+import { GlobalFacade } from '@reducers';
 import { ColumnProfile } from './column';
 
 const Page = () => {
   const { t } = useTranslation();
-  const { user, isLoading } = useTypedSelector((state: any) => state[globalAction.name]);
-  const dispatch = useAppDispatch();
+  const { user, isLoading, putProfile, profile } = GlobalFacade();
   const listPosition = useRef([]);
-
-  const submit = async (values: any) => {
-    dispatch(globalAction.putProfile(values));
-  };
-
-  useEffect(() => {
-    dispatch(globalAction.profile());
-  }, [dispatch]);
+  const submit = async (values: any) => putProfile(values);
+  useEffect(() => profile(), []);
   return (
     <Fragment>
       <Spin className="intro-x" spinning={isLoading}>

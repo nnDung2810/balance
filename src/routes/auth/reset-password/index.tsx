@@ -3,16 +3,15 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate, useLocation } from 'react-router';
 import { Spin, Form } from '@components';
 import { routerLinks } from '@utils';
-import { globalAction, useAppDispatch, useTypedSelector } from '@reducers';
+import { GlobalFacade } from '@reducers';
 import { ColumnResetPassword } from './column';
 
 const Page = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
   const { search } = useLocation();
 
-  const { isLoading, status } = useTypedSelector((state: any) => state[globalAction.name]);
+  const { isLoading, status, resetPassword } = GlobalFacade();
 
   useEffect(() => {
     if (status === 'resetPassword.fulfilled') {
@@ -21,7 +20,7 @@ const Page = () => {
   }, [status]);
   const submit = async (values: any) => {
     values.token = new URLSearchParams(search).get('token') || '';
-    dispatch(globalAction.resetPassword(values));
+    resetPassword(values);
   };
   return (
     <Fragment>

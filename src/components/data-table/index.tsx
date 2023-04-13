@@ -9,7 +9,6 @@ import classNames from 'classnames';
 
 import { Button, Pagination } from '@components';
 import { TableGet } from '@models';
-import { useAppDispatch, useTypedSelector } from '@reducers';
 import { cleanObjectKeyNull } from '@utils';
 import { Calendar, CheckCircle, CheckSquare, Search, Times } from '@svgs';
 
@@ -71,7 +70,7 @@ const Hook = forwardRef(
       paginationDescription = (from: number, to: number, total: number) => from + '-' + to + ' of ' + total + ' items',
       idElement = 'temp-' + v4(),
       className = 'data-table',
-      action,
+      facade,
       data,
       ...prop
     }: Type,
@@ -80,9 +79,8 @@ const Hook = forwardRef(
     useImperativeHandle(ref, () => ({
       onChange,
       params,
-      handleDelete: async (id: string) => dispatch(action.delete(id)),
+      handleDelete: async (id: string) => facade.delete(id),
     }));
-    const dispatch = useAppDispatch();
     const { t } = useTranslation();
     const location = useLocation();
     const navigate = useNavigate();
@@ -90,13 +88,13 @@ const Hook = forwardRef(
     const param = useRef(defaultRequest);
     const timeoutSearch = useRef<any>();
     const cols = useRef<any>();
-    const { result, isLoading, queryParams, time } = useTypedSelector((state: any) => state[action?.name || 'User']);
+    const { result, isLoading, queryParams, time } = facade;
     const params =
       save && location.search && location.search.indexOf('=') > -1
         ? { ...param.current, ...getQueryStringParams(location.search) }
         : param.current;
     useEffect(() => {
-      if (action) {
+      if (facade) {
         param.current = cleanObjectKeyNull({
           ...params,
           [sort]: JSON.stringify(params[sort]),
@@ -109,7 +107,7 @@ const Hook = forwardRef(
       return () => {
         localStorage.removeItem(idTable.current);
       };
-    }, [dispatch]);
+    }, []);
 
     const onChange = (request: any) => {
       if (request) {
@@ -128,8 +126,8 @@ const Hook = forwardRef(
         param.current = JSON.parse(localStorage.getItem(idTable.current) || '{}');
       }
 
-      if (showList && action) {
-        dispatch(action.get(cleanObjectKeyNull({ ...param.current })));
+      if (showList && facade) {
+        facade.get(cleanObjectKeyNull({ ...param.current }));
       }
     };
 
@@ -159,24 +157,24 @@ const Hook = forwardRef(
       </div>
     );
     const valueFilter = useRef<any>({});
-    const columnSearch = (get: TableGet, fullTextSearch = '', value?: any, queryParams = '', time = 0) => {
-      if (get?.action) {
+    const columnSearch = (get: TableGet, fullTextSearch = '', value?: any, facade: any = {}) => {
+      if (get?.facade) {
         const params = get.params ? get.params(fullTextSearch, value) : { fullTextSearch };
-        if (new Date().getTime() > time || JSON.stringify(cleanObjectKeyNull(params)) != queryParams) {
-          dispatch(get.action.get(cleanObjectKeyNull(params)));
+        if (new Date().getTime() > facade.time || JSON.stringify(cleanObjectKeyNull(params)) != facade.queryParams) {
+          facade.get(cleanObjectKeyNull(params));
         }
       }
     };
     // noinspection JSUnusedGlobalSymbols
     const getColumnSearchRadio = (filters: CheckboxOptionType[], key: string, get: TableGet = {}) => ({
-      onFilterDropdownOpenChange: async (visible: boolean) => {
-        valueFilter.current[key] = visible;
-      },
+      onFilterDropdownOpenChange: async (visible: boolean) => (valueFilter.current[key] = visible),
       filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }: any) => {
-        const { result, queryParams, time } = useTypedSelector((state: any) => state[get?.action?.name || 'User']);
-        if (get && !result.data && valueFilter.current[key]) {
-          columnSearch(get, '', undefined, queryParams, time);
-        }
+        const facade = get.facade() || {};
+        useEffect(() => {
+          if (get && !facade?.result.data && valueFilter.current[key]) {
+            columnSearch(get, '', undefined, facade);
+          }
+        }, [valueFilter.current[key]]);
         return (
           <div className={'p-1'}>
             <input
@@ -185,20 +183,19 @@ const Hook = forwardRef(
               placeholder={t('components.datatable.pleaseEnterValueToSearch') || ''}
               onChange={(e) => {
                 clearTimeout(timeoutSearch.current);
-                timeoutSearch.current = setTimeout(
-                  () => columnSearch(get, e.target.value, selectedKeys, queryParams, time),
-                  500,
-                );
+                timeoutSearch.current = setTimeout(() => columnSearch(get, e.target.value, selectedKeys), 500);
               }}
               onKeyUp={async (e) => {
                 if (e.key === 'Enter') {
-                  await columnSearch(get, e.currentTarget.value, undefined, queryParams, time);
+                  await columnSearch(get, e.currentTarget.value, undefined, facade);
                 }
               }}
             />
             <div>
               <RadioGroup
-                options={filters || result?.data?.map(get.format).filter((item: any) => !!item.value) || []}
+                options={
+                  filters || get?.facade?.result?.data?.map(get.format).filter((item: any) => !!item.value) || []
+                }
                 value={selectedKeys}
                 onChange={(e) => setSelectedKeys(e.target.value + '')}
               />
@@ -211,14 +208,14 @@ const Hook = forwardRef(
     });
     // noinspection JSUnusedGlobalSymbols
     const getColumnSearchCheckbox = (filters: any, key: any, get: TableGet = {}) => ({
-      onFilterDropdownOpenChange: async (visible: boolean) => {
-        valueFilter.current[key] = visible;
-      },
+      onFilterDropdownOpenChange: async (visible: boolean) => (valueFilter.current[key] = visible),
       filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }: any) => {
-        const { result, queryParams, time } = useTypedSelector((state: any) => state[get?.action?.name || 'User']);
-        if (get && !result.data && valueFilter.current[key]) {
-          columnSearch(get, '', undefined, queryParams, time);
-        }
+        const facade = get.facade() || {};
+        useEffect(() => {
+          if (get && !facade?.result.data && valueFilter.current[key]) {
+            columnSearch(get, '', undefined, facade);
+          }
+        }, [valueFilter.current[key]]);
         return (
           <div className={'p-1'}>
             <input
@@ -227,20 +224,17 @@ const Hook = forwardRef(
               placeholder={t('components.datatable.pleaseEnterValueToSearch') || ''}
               onChange={(e) => {
                 clearTimeout(timeoutSearch.current);
-                timeoutSearch.current = setTimeout(
-                  () => columnSearch(get, e.target.value, selectedKeys, queryParams, time),
-                  500,
-                );
+                timeoutSearch.current = setTimeout(() => columnSearch(get, e.target.value, selectedKeys, facade), 500);
               }}
               onKeyUp={async (e) => {
                 if (e.key === 'Enter') {
-                  await columnSearch(get, e.currentTarget.value, undefined, queryParams, time);
+                  await columnSearch(get, e.currentTarget.value, undefined, facade);
                 }
               }}
             />
             <div>
               <CheckboxGroup
-                options={filters || result?.data?.map(get.format).filter((item: any) => !!item.value) || []}
+                options={filters || facade?.result?.data?.map(get.format).filter((item: any) => !!item.value) || []}
                 defaultValue={selectedKeys}
                 onChange={(e) => setSelectedKeys(e)}
               />
@@ -521,7 +515,7 @@ type Type = {
   paginationDescription?: (from: number, to: number, total: number) => string;
   idElement?: string;
   className?: string;
-  action?: any;
+  facade?: any;
   data?: any[];
 };
 export default Hook;

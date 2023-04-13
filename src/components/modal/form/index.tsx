@@ -2,11 +2,9 @@ import React, { forwardRef, useImperativeHandle } from 'react';
 import { Form as FormAnt } from 'antd';
 import { v4 } from 'uuid';
 
-import { Modal } from '@components';
-import Form from '../../form';
+import { Modal, Form } from '@components';
 import { convertFormValue } from '@utils';
 import { FormModel } from '@models';
-import { useAppDispatch, useTypedSelector } from '@reducers';
 
 const Hook = forwardRef(
   (
@@ -18,7 +16,7 @@ const Hook = forwardRef(
       className = '',
       footerCustom,
       idElement = 'modal-form-' + v4(),
-      action,
+      facade,
       keyState = 'isVisible',
       keyPost = 'post',
       keyPut = 'put',
@@ -27,19 +25,18 @@ const Hook = forwardRef(
     ref: any,
   ) => {
     useImperativeHandle(ref, () => ({ handleEdit, handleDelete, form }));
-    const dispatch = useAppDispatch();
-    const { data } = useTypedSelector((state: any) => state[action.name]);
+    const { data } = facade;
     const [form] = FormAnt.useForm();
 
     const handleEdit = async (item: { id?: string } = {}, isGet = true) => {
-      if (item.id && isGet) dispatch(action.getById({ id: item.id, keyState }));
-      else dispatch(action.set({ [keyState]: true, data: item }));
+      if (item.id && isGet) facade.getById({ id: item.id, keyState });
+      else facade.set({ [keyState]: true, data: item });
     };
-    const handleDelete = async (id: string) => dispatch(action.delete(id));
+    const handleDelete = async (id: string) => facade.delete(id);
 
     return (
       <Modal
-        action={action}
+        facade={facade}
         keyState={keyState}
         idElement={idElement}
         widthModal={widthModal}
@@ -52,8 +49,8 @@ const Hook = forwardRef(
             .validateFields()
             .then(async (values) => {
               values = convertFormValue(columns, values);
-              if (data.id) dispatch(action[keyPut]({ ...values, id: data.id }));
-              else dispatch(action[keyPost]({ ...values }));
+              if (data.id) facade[keyPut]({ ...values, id: data.id });
+              else facade[keyPost]({ ...values });
               return true;
             })
             .catch(() => false);
@@ -66,7 +63,7 @@ const Hook = forwardRef(
 );
 Hook.displayName = 'HookModalForm';
 type Type = {
-  action: any;
+  facade?: any;
   keyState?: string;
   keyPost?: string;
   keyPut?: string;

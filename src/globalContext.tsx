@@ -3,10 +3,10 @@ import { ConfigProvider } from 'antd';
 
 import 'dayjs/locale/vi';
 import 'dayjs/locale/en';
-import { globalAction, useTypedSelector } from '@reducers';
+import { GlobalFacade } from '@reducers';
 
 const GlobalContext = ({ children }: PropsWithChildren) => {
-  const { locale } = useTypedSelector((state: any) => state[globalAction.name]);
+  const { locale } = GlobalFacade();
 
   return (
     <ConfigProvider

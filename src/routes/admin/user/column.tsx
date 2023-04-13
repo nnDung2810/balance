@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 import { Avatar } from '@components';
 import { keyRole, routerLinks } from '@utils';
 import { DataTableModel, FormModel } from '@models';
-import { codeAction } from '@reducers';
+import { CodeFacade } from '@reducers';
 import { Edit, Trash } from '@svgs';
 
 export const ColumnTableUser = ({ t, formatDate, permissions, navigate, dataTableRef }: any) => {
@@ -33,7 +33,7 @@ export const ColumnTableUser = ({ t, formatDate, permissions, navigate, dataTabl
           type: 'checkbox',
           name: 'positionCode',
           get: {
-            action: codeAction,
+            facade: CodeFacade,
             format: (item: any) => ({
               label: item.name,
               value: item.code,
@@ -205,8 +205,8 @@ export const ColumnFormUser = ({ t, listRole }: any) => {
         convert: (data: any) =>
           data?.map ? data.map((_item: any) => (_item?.id !== undefined ? +_item.id : _item)) : data,
         get: {
-          action: codeAction,
-          params: (form: any, fullTextSearch: string) => ({
+          facade: CodeFacade,
+          params: (fullTextSearch: string) => ({
             fullTextSearch,
             filter: { type: 'POS' },
             extend: {},

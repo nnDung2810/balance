@@ -7,7 +7,7 @@ import dayjs from 'dayjs';
 import { Upload, Editor, DraggableLayout, Button } from '@components';
 import { convertFormValue } from '@utils';
 import { FormItem, FormModel } from '@models';
-import { globalAction, useTypedSelector } from '@reducers';
+import { GlobalFacade } from '@reducers';
 import { Check, Times } from '@svgs';
 import { Chips, SelectTag, Select, TreeSelect, TableTransfer, Password, Mask, Addable, DatePicker, Tab } from './input';
 
@@ -28,7 +28,7 @@ const Component = ({
   formAnt,
 }: Type) => {
   const { t } = useTranslation();
-  const { formatDate } = useTypedSelector((state: any) => state[globalAction.name]);
+  const { formatDate } = GlobalFacade();
   const [_columns, set_columns] = useState<FormModel[]>([]);
   const timeout = useRef<any>();
   const refLoad = useRef(true);

@@ -2,16 +2,16 @@ import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router';
 
-import { useTypedSelector, userAction, userRoleAction, useAppDispatch } from '@reducers';
+import { UserRoleFacade, UserFacade } from '@reducers';
 import { routerLinks } from '@utils';
 import { Button, Form } from '@components';
 import { ColumnFormUser } from './column';
 
 const Page = () => {
   const { t } = useTranslation();
-  const { result } = useTypedSelector((state: any) => state[userRoleAction.name]);
-  const { data, isLoading, queryParams, status } = useTypedSelector((state: any) => state[userAction.name]);
-  const dispatch = useAppDispatch();
+  const { result, get } = UserRoleFacade();
+  const userFacade = UserFacade();
+  const { data, isLoading, queryParams, status } = userFacade;
   const navigate = useNavigate();
   const isBack = useRef(true);
   const isReload = useRef(false);
@@ -19,12 +19,12 @@ const Page = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    if (!result.data) dispatch(userRoleAction.get({}));
+    if (!result.data) get({});
 
-    if (id) dispatch(userAction.getById({ id }));
-    else dispatch(userAction.set({ data: {} }));
+    if (id) userFacade.getById({ id });
+    else userFacade.set({ data: {} });
 
-    return () => isReload.current && dispatch(userAction.get(param));
+    return () => isReload.current && userFacade.get(param);
   }, [id]);
 
   useEffect(() => {
@@ -44,8 +44,8 @@ const Page = () => {
 
   const handleBack = () => navigate(routerLinks('User/List') + '?' + new URLSearchParams(param).toString());
   const handleSubmit = (values: any) => {
-    if (id) dispatch(userAction.put({ ...values, id }));
-    else dispatch(userAction.post(values));
+    if (id) userFacade.put({ ...values, id });
+    else userFacade.post(values);
   };
 
   return (

@@ -4,28 +4,28 @@ import { useNavigate } from 'react-router';
 
 import { Button, DataTable } from '@components';
 import { keyRole, routerLinks } from '@utils';
-import { useTypedSelector, userAction, globalAction } from '@reducers';
+import { UserFacade, GlobalFacade } from '@reducers';
 import { Plus } from '@svgs';
 import { ColumnTableUser } from './column';
 
 const Page = () => {
   const { t } = useTranslation();
-  const { formatDate, user } = useTypedSelector((state: any) => state[globalAction.name]);
+  const { formatDate, user } = GlobalFacade();
   const navigate = useNavigate();
 
-  const { status } = useTypedSelector((state: any) => state[userAction.name]);
+  const userFacade = UserFacade();
   useEffect(() => {
-    switch (status) {
+    switch (userFacade.status) {
       case 'delete.fulfilled':
         dataTableRef.current.onChange();
         break;
     }
-  }, [status]);
+  }, [userFacade.status]);
 
   const dataTableRef = useRef<any>();
   return (
     <DataTable
-      action={userAction}
+      facade={userFacade}
       ref={dataTableRef}
       onRow={() => ({ onDoubleClick: () => null })}
       pageSizeRender={(sizePage: number) => sizePage}

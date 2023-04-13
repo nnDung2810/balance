@@ -25,7 +25,7 @@ export class TableItemFilter {
 }
 
 export class TableGet {
-  action?: any;
+  facade?: any;
   format?: (item: any) => CheckboxOptionType;
   params?: (fullTextSearch: string, value?: any) => any;
 }

@@ -6,9 +6,10 @@ import i18n from 'i18next';
 
 import { API, keyRefreshToken, keyToken, keyUser, routerLinks } from '@utils';
 import { Message } from '@components';
+import { useAppDispatch, useTypedSelector } from '@reducers';
 
 const name = 'Auth';
-export const globalAction = {
+const globalAction = {
   name,
   set: createAsyncThunk(name + '/set', async (values: any) => values),
   logout: createAsyncThunk(name + '/logout', async () => {
@@ -203,4 +204,18 @@ const clearTempLocalStorage = () => {
   for (let i = 0; i < arr.length; i++) {
     localStorage.removeItem(arr[i] || '');
   }
+};
+export const GlobalFacade = () => {
+  const dispatch = useAppDispatch();
+  return {
+    ...useTypedSelector((state: any) => state[globalAction.name]),
+    set: (values: any) => dispatch(globalAction.set(values)),
+    logout: () => dispatch(globalAction.logout()),
+    profile: () => dispatch(globalAction.profile()),
+    putProfile: (values: any) => dispatch(globalAction.putProfile(values)),
+    login: (values: any) => dispatch(globalAction.login(values)),
+    forgottenPassword: (values: any) => dispatch(globalAction.forgottenPassword(values)),
+    resetPassword: (values: any) => dispatch(globalAction.resetPassword(values)),
+    setLanguage: (value: string) => dispatch(globalSlice.actions.setLanguage(value)),
+  };
 };
