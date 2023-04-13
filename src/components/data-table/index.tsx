@@ -169,9 +169,9 @@ const Hook = forwardRef(
     const getColumnSearchRadio = (filters: CheckboxOptionType[], key: string, get: TableGet = {}) => ({
       onFilterDropdownOpenChange: async (visible: boolean) => (valueFilter.current[key] = visible),
       filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }: any) => {
-        const facade = get.facade() || {};
+        const facade = get?.facade ? get?.facade() : {};
         useEffect(() => {
-          if (get && !facade?.result.data && valueFilter.current[key]) {
+          if (get && !facade?.result?.data && valueFilter.current[key]) {
             columnSearch(get, '', undefined, facade);
           }
         }, [valueFilter.current[key]]);
@@ -210,9 +210,9 @@ const Hook = forwardRef(
     const getColumnSearchCheckbox = (filters: any, key: any, get: TableGet = {}) => ({
       onFilterDropdownOpenChange: async (visible: boolean) => (valueFilter.current[key] = visible),
       filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }: any) => {
-        const facade = get.facade() || {};
+        const facade = get?.facade ? get?.facade() : {};
         useEffect(() => {
-          if (get && !facade?.result.data && valueFilter.current[key]) {
+          if (get && !facade?.result?.data && valueFilter.current[key]) {
             columnSearch(get, '', undefined, facade);
           }
         }, [valueFilter.current[key]]);
