@@ -70,7 +70,7 @@ const Hook = forwardRef(
       paginationDescription = (from: number, to: number, total: number) => from + '-' + to + ' of ' + total + ' items',
       idElement = 'temp-' + v4(),
       className = 'data-table',
-      facade,
+      facade = {},
       data,
       ...prop
     }: Type,
@@ -101,7 +101,7 @@ const Hook = forwardRef(
           [filter]: JSON.stringify(params[filter]),
         });
         localStorage.setItem(idTable.current, JSON.stringify(cleanObjectKeyNull(param.current)));
-        if (!result.data || new Date().getTime() > time || JSON.stringify(param.current) != queryParams)
+        if (!result?.data || new Date().getTime() > time || JSON.stringify(param.current) != queryParams)
           onChange(param.current);
       }
       return () => {
@@ -126,8 +126,8 @@ const Hook = forwardRef(
         param.current = JSON.parse(localStorage.getItem(idTable.current) || '{}');
       }
 
-      if (showList && facade) {
-        facade.get(cleanObjectKeyNull({ ...param.current }));
+      if (showList && facade?.get) {
+        facade?.get(cleanObjectKeyNull({ ...param.current }));
       }
     };
 
