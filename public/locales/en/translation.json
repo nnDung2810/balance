@@ -150,41 +150,9 @@
         "Delete": "Delete",
         "My Profile": "My Profile",
         "No Data": "No Data",
-        "Show": "Show",
-        "Total": "Total",
-        "categories": "categories",
-        "Apply for leave": "Apply for leave: ",
+        "Pagination": "Show {{from}} - {{to}} /Total {{total}} categories",
         "Day": "day"
       }
-    }
-  },
-  "dayoff": {
-    "Fullname": "Full Name",
-    "Team": "Team",
-    "Manager": "Manager",
-    "Type": "Type",
-    "Time": "Time",
-    "Leave Date": "Leave Date",
-    "Status": "Status",
-    "Approved Date": "Approvated Date",
-    "Approved By": "Approvated By",
-    "Reason": "Reason",
-    "Approve": "Approve",
-    "Reject": "Reject",
-    "Reason Reject": "Reason Reject",
-    "register": {
-      "Leave Type": "Leave Type",
-      "Annual Typpe": "Annual Typpe",
-      "Leave without Pay": "Leave without Pay",
-      "Remote": "Remote",
-      "Time": "Time",
-      "All day": "All day",
-      "Morning": "Morning",
-      "Alternoon": "Alternoon",
-      "Date": "Date",
-      "Start Date": "Start Date",
-      "End Date": "End Date",
-      "Upload screenshot": "Upload screenshot"
     }
   },
   "user": {

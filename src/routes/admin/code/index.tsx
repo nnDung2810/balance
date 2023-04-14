@@ -40,17 +40,7 @@ const Page = () => {
         pageSizeRender={(sizePage: number) => sizePage}
         pageSizeWidth={'50px'}
         paginationDescription={(from: number, to: number, total: number) =>
-          t('routes.admin.Layout.Show') +
-          ' ' +
-          from +
-          '-' +
-          to +
-          ' / ' +
-          t('routes.admin.Layout.Total') +
-          ' ' +
-          total +
-          ' ' +
-          t('routes.admin.Layout.categories')
+          t('routes.admin.Layout.Pagination', { from, to, total })
         }
         columns={ColumnCodeTable({
           t,

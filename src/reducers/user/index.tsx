@@ -12,13 +12,13 @@ export const action = {
     if (values.avatar) values.avatar = values.avatar[0].url;
     const data = await API.post(routerLinks(name, 'api'), values);
     if (data.message) await Message.success({ text: data.message });
-    return data.data;
+    return data;
   }),
   put: createAsyncThunk(name + '/put', async ({ id, ...values }: any) => {
     if (values.avatar) values.avatar = values.avatar[0].url;
     const data = await API.put(`${routerLinks(name, 'api')}/${id}`, values);
     if (data.message) await Message.success({ text: data.message });
-    return data.data;
+    return data;
   }),
 };
 export const userSlice = createSlice(new Slice(action));

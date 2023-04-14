@@ -150,41 +150,9 @@
         "Delete": "Xóa",
         "My Profile": "Thông tin cá nhân",
         "No Data": "Trống",
-        "Show": "Hiển thị",
-        "Total": "Tổng số ",
-        "categories": "danh mục",
-        "Apply for leave": "Đăng ký nghỉ phép: ",
+        "Pagination": "Hiển thị {{from}} - {{to}} /Tổng số {{total}} danh mục",
         "Day": "Ngày phép"
       }
-    }
-  },
-  "dayoff": {
-    "Fullname": "Họ và tên",
-    "Team": "Nhóm",
-    "Manager": "Quản lý",
-    "Type": "Loại phép",
-    "Time": "Thời gian",
-    "Leave Date": "Ngày nghỉ",
-    "Status": "Trạng thái",
-    "Approved Date": "Ngày phê duyệt",
-    "Approved By": "Phê duyệt bởi",
-    "Reason": "Lý do",
-    "Approve": "Duyệt",
-    "Reject": " Từ chối ",
-    "Reason Reject": "Lý do từ chối",
-    "register": {
-      "Leave Type": "Loại phép",
-      "Annual Leave": "Nghỉ phép có lương",
-      "Leave without Pay": "Nghỉ phép không lương",
-      "Remote": "Làm remote",
-      "Time": "Thời gian",
-      "All day": "Cả ngày",
-      "Morning": "Sáng",
-      "Alternoon": "Chiều",
-      "Date": "Ngày",
-      "Start Date": "Ngày bắt đầu",
-      "End Date": "Ngày kết thúc",
-      "Upload screenshot": "Tải ảnh lên"
     }
   },
   "user": {
