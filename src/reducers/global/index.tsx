@@ -63,7 +63,7 @@ const action = {
   }),
 };
 const checkLanguage = (language: string) => {
-  const formatDate = language === 'vn' ? 'DD-MM-YYYY' : 'YYYY-MM-DD';
+  const formatDate = language === 'vn' ? 'DD-MM-YYYY' : 'DD-MM-YYYY';
   const locale = language === 'vn' ? viVN : enUS;
   dayjs.locale(language === 'vn' ? 'vi' : language);
   localStorage.setItem('i18nextLng', language);
@@ -121,6 +121,7 @@ export const globalSlice = createSlice({
       .addCase(action.profile.fulfilled, (state: State, action: PayloadAction<object>) => {
         if (action.payload) {
           state.user = action.payload;
+          localStorage.setItem(keyUser, JSON.stringify(action.payload));
           state.status = 'profile.fulfilled';
         } else state.status = 'idle';
         state.isLoading = false;

@@ -23,6 +23,7 @@ export default class Slice {
       builder
         .addCase(action.set.fulfilled, (state: State, action: PayloadAction<object>) => {
           Object.keys(action.payload).forEach((key) => {
+            state.status = 'idle';
             // @ts-ignore
             state[key] = action.payload[key];
           });
