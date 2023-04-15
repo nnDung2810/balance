@@ -8,7 +8,7 @@ import { Facebook, Twitter, Linkedin, Logo } from '@svgs';
 import './index.less';
 
 const Layout = ({ children }: PropsWithChildren) => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const globalFacade = GlobalFacade();
 
   useEffect(() => {
@@ -54,7 +54,7 @@ const Layout = ({ children }: PropsWithChildren) => {
         <div className="w-full lg:w-2/5 p-10 flex justify-center flex-col">
           {children}
           <div className="intro-x text-center mt-5">
-            <Select value={i18n.language} onChange={globalFacade.setLanguage}>
+            <Select value={globalFacade.language} onChange={(e: 'vn' | 'en') => globalFacade.setLanguage(e)}>
               <Select.Option value="en">
                 <img src="/assets/svg/us.svg" alt="US" className="mr-1 w-4 inline-block relative -top-0.5" />{' '}
                 {t('routes.admin.Layout.English')}

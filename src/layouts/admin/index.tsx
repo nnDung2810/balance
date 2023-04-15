@@ -15,7 +15,7 @@ import './index.less';
 import { Logo } from '@svgs';
 
 const Layout = ({ children }: PropsWithChildren) => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const globalFacade = GlobalFacade();
   const { user, title } = globalFacade;
 
@@ -87,7 +87,7 @@ const Layout = ({ children }: PropsWithChildren) => {
         <h1 className={'text-xl font-bold hidden sm:block'}>{t('pages.' + title)}</h1>
 
         <div className="flex items-center gap-5">
-          <Select value={i18n.language} onChange={globalFacade.setLanguage}>
+          <Select value={globalFacade.language} onChange={(e: 'vn' | 'en') => globalFacade.setLanguage(e)}>
             <Select.Option value="en">
               <img src="/assets/svg/us.svg" alt="US" className="mr-1 w-4 inline-block relative -top-0.5" />{' '}
               {t('routes.admin.Layout.English')}

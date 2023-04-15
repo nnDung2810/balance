@@ -1,15 +1,15 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import { AsyncThunk, createAsyncThunk } from '@reduxjs/toolkit';
 import { API, routerLinks } from '@utils';
 import { Message } from '@components';
 
 export default class Action {
   name: string;
-  set: any;
-  get: any;
-  getById: any;
-  post: any;
-  put: any;
-  delete: any;
+  set: AsyncThunk<string, object, object>;
+  get: AsyncThunk<string, object, object>;
+  getById: AsyncThunk<any, any, object>;
+  post: AsyncThunk<string, object, object>;
+  put: AsyncThunk<string, object, object>;
+  delete: AsyncThunk<string, string, object>;
   constructor(name: string) {
     this.name = name;
     this.set = createAsyncThunk(name + '/set', async (values: any) => values);
@@ -17,11 +17,13 @@ export default class Action {
       name + '/get',
       async (params: any = {}) => await API.get(routerLinks(name, 'api'), params),
     );
-    this.getById = createAsyncThunk(name + '/getById', async (value: { id: string; keyState?: string }) => {
-      const { data } = await API.get(`${routerLinks(name, 'api')}/${value.id}`);
-      const keyState = value.keyState || 'isVisible';
-      return { data, keyState };
-    });
+    this.getById = createAsyncThunk(
+      name + '/getById',
+      async ({ id, keyState = 'isVisible' }: { id: string; keyState?: string }) => {
+        const { data } = await API.get(`${routerLinks(name, 'api')}/${id}`);
+        return { data, keyState };
+      },
+    );
     this.post = createAsyncThunk(name + '/post', async (values: any) => {
       const data = await API.post(routerLinks(name, 'api'), values);
       if (data.message) await Message.success({ text: data.message });

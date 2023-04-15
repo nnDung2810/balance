@@ -9,7 +9,7 @@ export const codeTypeSlice = createSlice(new Slice(action, { keepUnusedDataFor: 
 export const CodeTypeFacade = () => {
   const dispatch = useAppDispatch();
   return {
-    ...useTypedSelector((state: any) => state[action.name]),
+    ...useTypedSelector((state) => state[action.name]),
     set: (values: any) => dispatch(action.set(values)),
     get: (params = {}) => dispatch(action.get(params)),
     getById: (value: { id: string; keyState?: string }) => dispatch(action.getById(value)),

@@ -18,10 +18,7 @@ const Page = () => {
       navigate(routerLinks('Login'), { replace: true });
     }
   }, [status]);
-  const submit = async (values: any) => {
-    values.token = new URLSearchParams(search).get('token') || '';
-    resetPassword(values);
-  };
+
   return (
     <Fragment>
       <div className="mb-8">
@@ -35,7 +32,7 @@ const Page = () => {
           className="intro-x"
           columns={ColumnResetPassword({ t })}
           textSubmit={'routes.auth.login.Reset password'}
-          handSubmit={submit}
+          handSubmit={(values) => resetPassword({ ...values, token: new URLSearchParams(search).get('token') || '' })}
           disableSubmit={isLoading}
         />
       </Spin>
