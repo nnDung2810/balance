@@ -1,21 +1,33 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import Action from '../action';
-import Slice from '../slice';
+import Slice, { State } from '../slice';
 import { useAppDispatch, useTypedSelector } from '@reducers';
+import { CommonEntity, PaginationQuery } from '@models';
+import { CodeType } from './type';
+import { User } from '../global';
 
 const name = 'Code';
-const action = new Action(name);
-export const codeSlice = createSlice(new Slice(action));
+const action = new Action<Code>(name);
+export const codeSlice = createSlice(new Slice<Code>(action));
 export const CodeFacade = () => {
   const dispatch = useAppDispatch();
   return {
-    ...useTypedSelector((state) => state[action.name]),
-    set: (values: any) => dispatch(action.set(values)),
-    get: (params = {}) => dispatch(action.get(params)),
-    getById: (value: { id: string; keyState?: string }) => dispatch(action.getById(value)),
-    post: (values: any) => dispatch(action.post(values)),
-    put: (values: any) => dispatch(action.put(values)),
+    ...useTypedSelector((state) => state[action.name] as State<Code>),
+    set: (values: State<Code>) => dispatch(action.set(values)),
+    get: (params: PaginationQuery<Code>) => dispatch(action.get(params)),
+    getById: ({ id, keyState = 'isVisible' }: { id: string; keyState: keyof State<Code> }) =>
+      dispatch(action.getById({ id, keyState })),
+    post: (values: Code) => dispatch(action.post(values)),
+    put: (values: Code) => dispatch(action.put(values)),
     delete: (id: string) => dispatch(action.delete(id)),
   };
 };
+export class Code extends CommonEntity {
+  code?: string;
+  type?: string;
+  name?: string;
+  description?: string;
+  item?: CodeType;
+  users?: User[];
+}

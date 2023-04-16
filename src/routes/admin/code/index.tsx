@@ -6,13 +6,14 @@ import { keyRole } from '@utils';
 import { GlobalFacade, CodeFacade, CodeTypeFacade } from '@reducers';
 import { Plus } from '@svgs';
 import { ColumnCodeForm, ColumnCodeTable } from './column';
+import { FormModalRefObject, TableRefObject } from '@models';
 const Page = () => {
   const { t } = useTranslation();
   const { formatDate, user } = GlobalFacade();
   const { result, get } = CodeTypeFacade();
-  const listType = (result.data || []).map((item: any) => ({ value: item.code, label: item.name }));
+  const listType = (result?.data || []).map((item: any) => ({ value: item.code, label: item.name }));
   useEffect(() => {
-    if (!result.data) get({});
+    if (!result?.data) get({});
   }, []);
 
   const codeFacade = CodeFacade();
@@ -22,13 +23,13 @@ const Page = () => {
       case 'put.fulfilled':
       case 'post.fulfilled':
       case 'delete.fulfilled':
-        dataTableRef.current.onChange();
+        dataTableRef?.current?.onChange!();
         break;
     }
   }, [status]);
 
-  const dataTableRef = useRef<any>();
-  const modalFormRef = useRef<any>();
+  const dataTableRef = useRef<TableRefObject>(null);
+  const modalFormRef = useRef<FormModalRefObject>(null);
   return (
     <Fragment>
       <DataTable
@@ -55,7 +56,7 @@ const Page = () => {
               <Button
                 icon={<Plus className="icon-cud !h-5 !w-5" />}
                 text={t('routes.admin.Layout.Add')}
-                onClick={() => modalFormRef?.current?.handleEdit()}
+                onClick={() => modalFormRef?.current?.handleEdit!()}
               />
             )}
           </div>
@@ -64,7 +65,7 @@ const Page = () => {
       <ModalForm
         facade={codeFacade}
         ref={modalFormRef}
-        title={(data: any) => (!data?.id ? t('routes.admin.Layout.Add') : t('routes.admin.Layout.Edit'))}
+        title={() => (!codeFacade.data?.id ? t('routes.admin.Layout.Add') : t('routes.admin.Layout.Edit'))}
         columns={ColumnCodeForm({
           t,
           formatDate,

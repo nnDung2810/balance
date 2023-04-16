@@ -7,6 +7,8 @@ import i18n from 'i18next';
 import { API, keyRefreshToken, keyToken, keyUser, routerLinks } from '@utils';
 import { Message } from '@components';
 import { useAppDispatch, useTypedSelector } from '@reducers';
+import { CommonEntity } from '@models';
+import { UserRole } from '../user/role';
 
 const name = 'Auth';
 const action = {
@@ -19,42 +21,41 @@ const action = {
     return true;
   }),
   profile: createAsyncThunk(name + '/profile', async () => {
-    const { data } = await API.get(`${routerLinks(name, 'api')}/profile`);
-    return data;
+    const { data } = await API.get<User>(`${routerLinks(name, 'api')}/profile`);
+    return data || {};
   }),
-  putProfile: createAsyncThunk(name + '/putProfile', async (values: user) => {
+  putProfile: createAsyncThunk(name + '/putProfile', async (values: User) => {
     // if (values.avatar && typeof values.avatar === 'object') {
     //   values.avatar = values.avatar[0].url;
     // }
-    const { data } = await API.put(`${routerLinks(name, 'api')}/profile`, values);
-    return data;
+    const { data } = await API.put<User>(`${routerLinks(name, 'api')}/profile`, values);
+    return data || {};
   }),
-  login: createAsyncThunk(name + '/post', async (values: { password: string; email: string }) => {
-    const data = await API.post(`${routerLinks(name, 'api')}/login`, values);
+  login: createAsyncThunk(name + '/login', async (values: { password: string; email: string }) => {
+    const { data, message } = await API.post<{ user: User; accessToken: string; refreshToken: string }>(
+      `${routerLinks(name, 'api')}/login`,
+      values,
+    );
     if (data) {
-      if (data.message) await Message.success({ text: data.message });
-      const { user, accessToken, refreshToken } = data.data;
-      localStorage.setItem(keyToken, accessToken);
-      localStorage.setItem(keyRefreshToken, refreshToken);
-      return user;
+      if (message) await Message.success({ text: message });
+      localStorage.setItem(keyToken, data?.accessToken);
+      localStorage.setItem(keyRefreshToken, data?.refreshToken);
     }
-    return data;
+    return data!.user;
   }),
   forgottenPassword: createAsyncThunk(name + '/forgotten-password', async (values: { email: string }) => {
-    const data = await API.post(`${routerLinks(name, 'api')}/forgotten-password`, values);
-    if (data) {
-      if (data.message) await Message.success({ text: data.message });
-    }
-    return !!data.data;
+    const { data, message } = await API.post(`${routerLinks(name, 'api')}/forgotten-password`, values);
+    if (message) await Message.success({ text: message });
+    return !!data;
   }),
   resetPassword: createAsyncThunk(name + '/reset-password', async ({ token, ...values }: resetPassword) => {
-    const data = await API.post(
+    const { data, message } = await API.post(
       `${routerLinks(name, 'api')}/reset-password`,
       values,
       {},
       { authorization: 'Bearer ' + token },
     );
-    if (data?.message) await Message.success({ text: data.message });
+    if (message) await Message.success({ text: message });
     return !!data;
   }),
 };
@@ -63,7 +64,7 @@ interface resetPassword {
   retypedPassword: string;
   token: string;
 }
-interface user {
+export class User extends CommonEntity {
   name?: string;
   avatar?: string;
   password?: string;
@@ -73,6 +74,7 @@ interface user {
   description?: string;
   positionCode?: string;
   retypedPassword?: string;
+  role?: UserRole;
 }
 const checkLanguage = (language: 'vn' | 'en') => {
   const formatDate = language === 'vn' ? 'DD-MM-YYYY' : 'DD-MM-YYYY';
@@ -110,7 +112,6 @@ export const globalSlice = createSlice({
       .addCase(action.set.fulfilled, (state, action: PayloadAction<State>) => {
         let key: keyof State;
         for (key in action.payload) {
-          // @ts-ignore
           state[key] = action.payload[key];
         }
       })
@@ -132,7 +133,7 @@ export const globalSlice = createSlice({
         state.isLoading = true;
         state.status = 'profile.pending';
       })
-      .addCase(action.profile.fulfilled, (state: State, action: PayloadAction<user>) => {
+      .addCase(action.profile.fulfilled, (state: State, action: PayloadAction<User>) => {
         if (action.payload) {
           state.user = action.payload;
           localStorage.setItem(keyUser, JSON.stringify(action.payload));
@@ -141,12 +142,12 @@ export const globalSlice = createSlice({
         state.isLoading = false;
       })
 
-      .addCase(action.putProfile.pending, (state: State, action: any) => {
+      .addCase(action.putProfile.pending, (state: State, action) => {
         state.data = action.meta.arg;
         state.isLoading = true;
         state.status = 'putProfile.pending';
       })
-      .addCase(action.putProfile.fulfilled, (state: State, action: PayloadAction<user>) => {
+      .addCase(action.putProfile.fulfilled, (state: State, action: PayloadAction<User>) => {
         if (action.payload) {
           state.user = action.payload;
           state.status = 'putProfile.fulfilled';
@@ -154,12 +155,22 @@ export const globalSlice = createSlice({
         state.isLoading = false;
       })
 
-      .addCase(action.login.pending, (state: State, action: any) => {
-        state.data = action.meta.arg;
-        state.isLoading = true;
-        state.status = 'login.pending';
-      })
-      .addCase(action.login.fulfilled, (state: State, action: PayloadAction<user>) => {
+      .addCase(
+        action.login.pending,
+        (
+          state: State,
+          action: PayloadAction<
+            undefined,
+            string,
+            { arg: { password?: string; email?: string }; requestId: string; requestStatus: 'pending' }
+          >,
+        ) => {
+          state.data = action.meta.arg;
+          state.isLoading = true;
+          state.status = 'login.pending';
+        },
+      )
+      .addCase(action.login.fulfilled, (state: State, action: PayloadAction<User>) => {
         if (action.payload) {
           localStorage.setItem(keyUser, JSON.stringify(action.payload));
           clearTempLocalStorage();
@@ -170,11 +181,21 @@ export const globalSlice = createSlice({
         state.isLoading = false;
       })
 
-      .addCase(action.forgottenPassword.pending, (state: State, action: any) => {
-        state.data = action.meta.arg;
-        state.isLoading = true;
-        state.status = 'forgottenPassword.pending';
-      })
+      .addCase(
+        action.forgottenPassword.pending,
+        (
+          state: State,
+          action: PayloadAction<
+            undefined,
+            string,
+            { arg: { email?: string }; requestId: string; requestStatus: 'pending' }
+          >,
+        ) => {
+          state.data = action.meta.arg;
+          state.isLoading = true;
+          state.status = 'forgottenPassword.pending';
+        },
+      )
       .addCase(action.forgottenPassword.fulfilled, (state: State, action: PayloadAction<boolean>) => {
         if (action.payload) {
           state.data = {};
@@ -183,11 +204,17 @@ export const globalSlice = createSlice({
         state.isLoading = false;
       })
 
-      .addCase(action.resetPassword.pending, (state: State, action: any) => {
-        state.data = action.meta.arg;
-        state.isLoading = true;
-        state.status = 'resetPassword.pending';
-      })
+      .addCase(
+        action.resetPassword.pending,
+        (
+          state: State,
+          action: PayloadAction<undefined, string, { arg: resetPassword; requestId: string; requestStatus: 'pending' }>,
+        ) => {
+          state.data = action.meta.arg;
+          state.isLoading = true;
+          state.status = 'resetPassword.pending';
+        },
+      )
       .addCase(action.resetPassword.fulfilled, (state: State, action: PayloadAction<boolean>) => {
         if (action.payload) {
           state.data = {};
@@ -198,15 +225,16 @@ export const globalSlice = createSlice({
   },
 });
 interface State {
-  user: user;
-  data: resetPassword | { email?: string } | { password?: string; email?: string };
-  isLoading: boolean;
-  isVisible: boolean;
-  status: string;
-  title: string;
-  formatDate: string;
-  language: string;
-  locale: typeof viVN | typeof enUS;
+  [selector: string]: any;
+  user?: User;
+  data?: resetPassword | { email?: string } | { password?: string; email?: string };
+  isLoading?: boolean;
+  isVisible?: boolean;
+  status?: string;
+  title?: string;
+  formatDate?: string;
+  language?: 'vn' | 'en' | null;
+  locale?: typeof viVN | typeof enUS;
 }
 
 const clearTempLocalStorage = () => {
@@ -223,11 +251,11 @@ const clearTempLocalStorage = () => {
 export const GlobalFacade = () => {
   const dispatch = useAppDispatch();
   return {
-    ...useTypedSelector((state) => state[action.name]),
+    ...(useTypedSelector((state) => state[action.name]) as State),
     set: (values: State) => dispatch(action.set(values)),
     logout: () => dispatch(action.logout()),
     profile: () => dispatch(action.profile()),
-    putProfile: (values: user) => dispatch(action.putProfile(values)),
+    putProfile: (values: User) => dispatch(action.putProfile(values)),
     login: (values: { password: string; email: string }) => dispatch(action.login(values)),
     forgottenPassword: (values: { email: string }) => dispatch(action.forgottenPassword(values)),
     resetPassword: (values: resetPassword) => dispatch(action.resetPassword(values)),

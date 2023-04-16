@@ -99,3 +99,9 @@ export class FormApi {
   format?: (item: any) => CheckboxOptionType;
   params?: (form: FormInstance, fullTextSearch: string) => any;
 }
+
+export class FormModalRefObject {
+  handleEdit?: (item?: { id?: string }, isGet?: boolean) => Promise<void>;
+  handleDelete?: (id: string) => Promise<any>;
+  form?: FormInstance<any>;
+}

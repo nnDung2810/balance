@@ -7,6 +7,7 @@ import { keyRole, routerLinks } from '@utils';
 import { UserFacade, GlobalFacade } from '@reducers';
 import { Plus } from '@svgs';
 import { ColumnTableUser } from './column';
+import { TableRefObject } from '@models';
 
 const Page = () => {
   const { t } = useTranslation();
@@ -17,12 +18,12 @@ const Page = () => {
   useEffect(() => {
     switch (userFacade.status) {
       case 'delete.fulfilled':
-        dataTableRef.current.onChange();
+        dataTableRef?.current?.onChange!();
         break;
     }
   }, [userFacade.status]);
 
-  const dataTableRef = useRef<any>();
+  const dataTableRef = useRef<TableRefObject>(null);
   return (
     <DataTable
       facade={userFacade}

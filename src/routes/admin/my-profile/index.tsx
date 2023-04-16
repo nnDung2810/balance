@@ -9,7 +9,7 @@ const Page = () => {
   const { t } = useTranslation();
   const { user, isLoading, putProfile, profile } = GlobalFacade();
   const listPosition = useRef([]);
-  const submit = async (values: any) => putProfile(values);
+  // @ts-ignore
   useEffect(() => profile(), []);
   return (
     <Fragment>
@@ -17,7 +17,7 @@ const Page = () => {
         <Form
           className="intro-x w-[550px] mx-auto"
           columns={ColumnProfile({ t, listPosition: listPosition.current })}
-          handSubmit={submit}
+          handSubmit={putProfile}
           disableSubmit={isLoading}
           values={{ ...user }}
         />

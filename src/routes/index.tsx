@@ -18,7 +18,7 @@ const Layout = ({ layout: Layout, isPublic = false }: any) => {
   return <Navigate to={routerLinks('Login')} />;
 };
 
-const Page = ({ title = '', component: Comp, ...props }: any) => {
+const Page = ({ title = '', component: Comp, ...props }: { title: string; component: any }) => {
   const { t } = useTranslation();
   const globalFacade = GlobalFacade();
 
@@ -49,7 +49,7 @@ const Pages = () => (
                     </Spin>
                   }
                 >
-                  <Page title={title} component={component} path={path} />
+                  <Page title={title} component={component} />
                 </Suspense>
               }
             />

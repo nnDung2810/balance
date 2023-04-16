@@ -1,21 +1,41 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import Action from '../action';
-import Slice from '../slice';
+import Slice, { State } from '../slice';
 import { useAppDispatch, useTypedSelector } from '@reducers';
+import { CommonEntity, PaginationQuery } from '@models';
+import { DataType } from './type';
 
 const name = 'Data';
-const action = new Action(name);
-export const dataSlice = createSlice(new Slice(action));
+const action = new Action<Data>(name);
+export const dataSlice = createSlice(new Slice<Data>(action));
 export const DataFacade = () => {
   const dispatch = useAppDispatch();
   return {
-    ...useTypedSelector((state) => state[action.name]),
-    set: (values: any) => dispatch(action.set(values)),
-    get: (params = {}) => dispatch(action.get(params)),
-    getById: (value: { id: string; keyState?: string }) => dispatch(action.getById(value)),
-    post: (values: any) => dispatch(action.post(values)),
-    put: (values: any) => dispatch(action.put(values)),
+    ...useTypedSelector((state) => state[action.name] as State<Data>),
+    set: (values: State<Data>) => dispatch(action.set(values)),
+    get: (params: PaginationQuery<Data>) => dispatch(action.get(params)),
+    getById: ({ id, keyState = 'isVisible' }: { id: string; keyState: keyof State<Data> }) =>
+      dispatch(action.getById({ id, keyState })),
+    post: (values: Data) => dispatch(action.post(values)),
+    put: (values: Data) => dispatch(action.put(values)),
     delete: (id: string) => dispatch(action.delete(id)),
   };
 };
+export class Data extends CommonEntity {
+  type?: string;
+  image?: string;
+  order?: number;
+  item?: DataType;
+  translations?: {
+    language: string;
+    name: string;
+    description?: string;
+    slug: string;
+    seoTitle: string;
+    seoDescription: string;
+    content?: Record<string, object>;
+    dataId?: string;
+    data?: Data;
+  }[];
+}

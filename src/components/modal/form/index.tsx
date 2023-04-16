@@ -1,10 +1,10 @@
-import React, { forwardRef, useImperativeHandle } from 'react';
+import React, { forwardRef, Ref, useImperativeHandle } from 'react';
 import { Form as FormAnt } from 'antd';
 import { v4 } from 'uuid';
 
 import { Modal, Form } from '@components';
 import { convertFormValue } from '@utils';
-import { FormModel } from '@models';
+import { FormModel, FormModalRefObject } from '@models';
 
 const Hook = forwardRef(
   (
@@ -22,7 +22,7 @@ const Hook = forwardRef(
       keyPut = 'put',
       ...propForm
     }: Type,
-    ref: any,
+    ref: Ref<FormModalRefObject>,
   ) => {
     useImperativeHandle(ref, () => ({ handleEdit, handleDelete, form }));
     const { data } = facade;

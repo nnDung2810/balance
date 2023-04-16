@@ -53,7 +53,7 @@ export const ColumnDataTable = ({ t, modalFormRef, listType, permissions }: any)
               <Tooltip title={t('routes.admin.Layout.Edit')}>
                 <Edit
                   className="icon-cud bg-blue-600 hover:bg-blue-400"
-                  onClick={() => modalFormRef?.current?.handleEdit(data)}
+                  onClick={() => modalFormRef?.current?.handleEdit!(data)}
                 />
               </Tooltip>
             )}
@@ -62,7 +62,7 @@ export const ColumnDataTable = ({ t, modalFormRef, listType, permissions }: any)
                 <Popconfirm
                   placement="left"
                   title={t('components.datatable.areYouSureWant')}
-                  onConfirm={() => modalFormRef?.current?.handleDelete(data.id)}
+                  onConfirm={() => modalFormRef?.current?.handleDelete!(data.id)}
                   okText={t('components.datatable.ok')}
                   cancelText={t('components.datatable.cancel')}
                 >

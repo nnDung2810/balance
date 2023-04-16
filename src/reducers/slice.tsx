@@ -1,100 +1,120 @@
-import { PayloadAction } from '@reduxjs/toolkit';
-export default class Slice {
+import { ActionReducerMapBuilder, PayloadAction } from '@reduxjs/toolkit';
+import { CommonEntity, Responses } from '@models';
+import Action from './action';
+export default class Slice<T extends CommonEntity> {
   name: string;
-  initialState: any;
+  initialState: State<T>;
   reducers: any;
-  extraReducers: any;
-  defaultState: State = {
+  extraReducers: (builder: ActionReducerMapBuilder<State<T>>) => void;
+  defaultState: State<T> = {
     result: {},
-    data: {},
+    data: undefined,
     isLoading: false,
     isVisible: false,
     status: 'idle',
-    keyList: 'result',
     queryParams: '',
     keepUnusedDataFor: 60,
     time: 0,
   };
-  constructor(action: any, initialState: object = {}, extraReducers = (builder: any) => builder) {
+  constructor(
+    action: Action<T>,
+    initialState: object = {},
+    extraReducers = (builder: ActionReducerMapBuilder<State<T>>) => builder,
+  ) {
     this.name = action.name;
     this.initialState = { ...this.defaultState, ...initialState };
     this.reducers = {};
     this.extraReducers = (builder: any) => {
       builder
-        .addCase(action.set.fulfilled, (state: State, action: PayloadAction<object>) => {
+        .addCase(action.set.fulfilled, (state: State<T>, action: PayloadAction<State<T>>) => {
           Object.keys(action.payload).forEach((key) => {
-            state.status = 'idle';
-            // @ts-ignore
-            state[key] = action.payload[key];
+            state[key] = action.payload[key as keyof State<T>];
           });
+          state.status = 'idle';
         })
-        .addCase(action.get.pending, (state: State, action: any) => {
-          if (action.meta.arg.keyList) {
-            state.keyList = action.meta.arg.keyList;
-            delete action.meta.arg.keyList;
-          }
-          state.time = new Date().getTime() + state.keepUnusedDataFor * 1000;
-          state.queryParams = JSON.stringify(action.meta.arg);
-          state.isLoading = true;
-          state.status = 'get.pending';
-        })
-        .addCase(action.get.fulfilled, (state: State, action: PayloadAction<object>) => {
-          if (action.payload) {
-            // @ts-ignore
-            state[state.keyList] = action.payload;
+        .addCase(
+          action.get.pending,
+          (
+            state: State<T>,
+            action: PayloadAction<undefined, string, { arg: T; requestId: string; requestStatus: 'pending' }>,
+          ) => {
+            state.time = new Date().getTime() + (state.keepUnusedDataFor || 60) * 1000;
+            state.queryParams = JSON.stringify(action.meta.arg);
+            state.isLoading = true;
+            state.status = 'get.pending';
+          },
+        )
+        .addCase(action.get.fulfilled, (state: State<T>, action: PayloadAction<Responses<T[]>>) => {
+          if (action.payload.data) {
+            state.result = action.payload;
             state.status = 'get.fulfilled';
           } else state.status = 'idle';
           state.isLoading = false;
         })
 
-        .addCase(action.getById.pending, (state: State) => {
+        .addCase(action.getById.pending, (state: State<T>) => {
           state.isLoading = true;
           state.status = 'getById.pending';
         })
-        .addCase(action.getById.fulfilled, (state: State, action: PayloadAction<{ data: any; keyState: string }>) => {
-          if (action.payload) {
-            const { data, keyState } = action.payload;
-            if (JSON.stringify(state.data) !== JSON.stringify(data)) state.data = data;
-            // @ts-ignore
-            state[keyState] = true;
-            state.status = 'getById.fulfilled';
-          } else state.status = 'idle';
-          state.isLoading = false;
-        })
+        .addCase(
+          action.getById.fulfilled,
+          (state: State<T>, action: PayloadAction<{ data: T; keyState: keyof State<T> }>) => {
+            if (action.payload) {
+              const { data, keyState } = action.payload;
+              if (JSON.stringify(state.data) !== JSON.stringify(data)) state.data = data;
+              // @ts-ignore
+              state[keyState] = true;
+              state.status = 'getById.fulfilled';
+            } else state.status = 'idle';
+            state.isLoading = false;
+          },
+        )
 
-        .addCase(action.post.pending, (state: State, action: any) => {
-          state.data = action.meta.arg;
-          state.isLoading = true;
-          state.status = 'post.pending';
-        })
-        .addCase(action.post.fulfilled, (state: State, action: PayloadAction<object>) => {
+        .addCase(
+          action.post.pending,
+          (
+            state: State<T>,
+            action: PayloadAction<undefined, string, { arg: T; requestId: string; requestStatus: 'pending' }>,
+          ) => {
+            state.data = action.meta.arg;
+            state.isLoading = true;
+            state.status = 'post.pending';
+          },
+        )
+        .addCase(action.post.fulfilled, (state: State<T>, action: PayloadAction<T>) => {
           if (action.payload) {
-            state.data = {};
+            if (JSON.stringify(state.data) !== JSON.stringify(action.payload)) state.data = action.payload;
             state.isVisible = false;
             state.status = 'post.fulfilled';
           } else state.status = 'idle';
           state.isLoading = false;
         })
 
-        .addCase(action.put.pending, (state: State, action: any) => {
-          state.data = action.meta.arg;
-          state.isLoading = true;
-          state.status = 'put.pending';
-        })
-        .addCase(action.put.fulfilled, (state: State, action: PayloadAction<object>) => {
+        .addCase(
+          action.put.pending,
+          (
+            state: State<T>,
+            action: PayloadAction<undefined, string, { arg: T; requestId: string; requestStatus: 'pending' }>,
+          ) => {
+            state.data = action.meta.arg;
+            state.isLoading = true;
+            state.status = 'put.pending';
+          },
+        )
+        .addCase(action.put.fulfilled, (state: State<T>, action: PayloadAction<T>) => {
           if (action.payload) {
-            state.data = {};
+            if (JSON.stringify(state.data) !== JSON.stringify(action.payload)) state.data = action.payload;
             state.isVisible = false;
             state.status = 'put.fulfilled';
           } else state.status = 'idle';
           state.isLoading = false;
         })
 
-        .addCase(action.delete.pending, (state: State) => {
+        .addCase(action.delete.pending, (state: State<T>) => {
           state.isLoading = true;
           state.status = 'delete.pending';
         })
-        .addCase(action.delete.fulfilled, (state: State, action: PayloadAction<object>) => {
+        .addCase(action.delete.fulfilled, (state: State<T>, action: PayloadAction<T>) => {
           if (action.payload) state.status = 'delete.fulfilled';
           else state.status = 'idle';
           state.isLoading = false;
@@ -103,14 +123,14 @@ export default class Slice {
     };
   }
 }
-export interface State {
-  result: any;
-  data: any;
-  isLoading: boolean;
-  isVisible: boolean;
-  status: string;
-  keyList: string;
-  queryParams: string;
-  keepUnusedDataFor: number;
-  time: number;
+export interface State<T = object> {
+  [selector: string]: any;
+  result?: Responses<T[]>;
+  data?: T;
+  isLoading?: boolean;
+  isVisible?: boolean;
+  status?: string;
+  queryParams?: string;
+  keepUnusedDataFor?: number;
+  time?: number;
 }

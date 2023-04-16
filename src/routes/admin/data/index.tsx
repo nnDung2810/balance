@@ -6,6 +6,7 @@ import { ColumnDataForm, ColumnDataTable } from './column';
 import { keyRole } from '@utils';
 import { GlobalFacade, DataTypeFacade, DataFacade } from '@reducers';
 import { Plus } from '@svgs';
+import { FormModalRefObject, TableRefObject } from '@models';
 
 const Page = () => {
   const { t } = useTranslation();
@@ -13,9 +14,9 @@ const Page = () => {
 
   const { result, get } = DataTypeFacade();
   useEffect(() => {
-    if (!result.data) get({});
+    if (!result?.data) get({});
   }, []);
-  const listType = (result.data || []).map((item: any) => ({ value: item.code, label: item.name }));
+  const listType = (result?.data || []).map((item: any) => ({ value: item.code, label: item.name }));
 
   const dataFacade = DataFacade();
   const { status } = dataFacade;
@@ -24,13 +25,13 @@ const Page = () => {
       case 'put.fulfilled':
       case 'post.fulfilled':
       case 'delete.fulfilled':
-        dataTableRef.current.onChange();
+        dataTableRef?.current?.onChange!();
         break;
     }
   }, [status]);
 
-  const dataTableRef = useRef<any>();
-  const modalFormRef = useRef<any>();
+  const dataTableRef = useRef<TableRefObject>(null);
+  const modalFormRef = useRef<FormModalRefObject>(null);
 
   return (
     <Fragment>
@@ -59,7 +60,7 @@ const Page = () => {
               <Button
                 icon={<Plus className="icon-cud !h-5 !w-5" />}
                 text={t('components.button.New')}
-                onClick={() => modalFormRef?.current?.handleEdit()}
+                onClick={() => modalFormRef?.current?.handleEdit!()}
               />
             )}
           </div>
@@ -68,7 +69,7 @@ const Page = () => {
       <ModalForm
         facade={dataFacade}
         ref={modalFormRef}
-        title={(data: any) => (!data?.id ? t('routes.admin.Layout.Add') : t('routes.admin.Layout.Edit'))}
+        title={() => (!dataFacade.data?.id ? t('routes.admin.Layout.Add') : t('routes.admin.Layout.Edit'))}
         columns={ColumnDataForm({
           t,
           formatDate,

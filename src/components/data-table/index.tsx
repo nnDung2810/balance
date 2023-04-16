@@ -1,4 +1,4 @@
-import React, { forwardRef, Fragment, useEffect, useImperativeHandle, useRef } from 'react';
+import React, { forwardRef, Fragment, Ref, useEffect, useImperativeHandle, useRef } from 'react';
 import { v4 } from 'uuid';
 import { Checkbox, CheckboxOptionType, DatePicker, Popover, Radio, Table } from 'antd';
 import { useTranslation } from 'react-i18next';
@@ -8,7 +8,7 @@ import classNames from 'classnames';
 // @ts-ignore
 
 import { Button, Pagination } from '@components';
-import { TableGet } from '@models';
+import { TableGet, TableRefObject } from '@models';
 import { cleanObjectKeyNull } from '@utils';
 import { Calendar, CheckCircle, CheckSquare, Search, Times } from '@svgs';
 
@@ -74,11 +74,10 @@ const Hook = forwardRef(
       data,
       ...prop
     }: Type,
-    ref,
+    ref: Ref<TableRefObject>,
   ) => {
     useImperativeHandle(ref, () => ({
       onChange,
-      params,
       handleDelete: async (id: string) => facade.delete(id),
     }));
     const { t } = useTranslation();
@@ -109,7 +108,7 @@ const Hook = forwardRef(
       };
     }, []);
 
-    const onChange = (request: any) => {
+    const onChange = (request?: any) => {
       if (request) {
         localStorage.setItem(idTable.current, JSON.stringify(request));
         param.current = { ...request };

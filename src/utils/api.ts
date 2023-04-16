@@ -1,5 +1,6 @@
 import { keyRefreshToken, keyToken, keyUser, linkApi, routerLinks } from '@utils';
 import { Message } from '@components';
+import { Responses } from '@models';
 
 const API = {
   init: () =>
@@ -15,7 +16,7 @@ const API = {
       redirect: 'follow',
       referrerPolicy: 'no-referrer',
     } as RequestInit),
-  responsible: async (
+  responsible: async <T>(
     url: string,
     params: { [key: string]: string } = {},
     config: RequestInit,
@@ -30,17 +31,16 @@ const API = {
       )
       .join('&');
     const response = await fetch(linkApi + url + (linkParam && '?' + linkParam), config);
-    const res = await response.json();
+    const res: Responses<T> = await response.json();
     if (response.ok) {
       return res;
     } else if (res.message) {
       await Message.error({ text: res.message });
     }
 
-    if (url === `${routerLinks('Auth', 'api')}/refresh`) {
-      return false;
-    } else if (
+    if (
       response.status === 401 &&
+      url !== `${routerLinks('Auth', 'api')}/refresh` &&
       url !== `${routerLinks('Auth', 'api')}/login` &&
       url !== `${routerLinks('Auth', 'api')}/logout`
     ) {
@@ -48,71 +48,32 @@ const API = {
       if (accessToken) {
         config.headers = { ...config.headers, authorization: accessToken };
         const response = await fetch(linkApi + url + (linkParam && '?' + linkParam), config);
-        return response.json();
+        return (await response.json()) as Responses<T>;
       }
     }
     if (response.status === 401 && url !== `${routerLinks('Auth', 'api')}/login`) {
       localStorage.removeItem(keyUser);
       window.location.href = routerLinks('Login');
     }
-    return false;
+    return {};
   },
-  get: async (url: string, params = {}, headers?: RequestInit['headers']) => {
-    return API.responsible(
-      url,
-      params,
-      {
-        ...API.init(),
-        method: 'GET',
-      },
-      headers,
-    );
-  },
-  post: (url: string, data = {}, params = {}, headers?: RequestInit['headers']) =>
-    API.responsible(
-      url,
-      params,
-      {
-        ...API.init(),
-        method: 'POST',
-        body: JSON.stringify(data),
-      },
-      headers,
-    ),
-  put: (url: string, data = {}, params = {}, headers?: RequestInit['headers']) =>
-    API.responsible(
-      url,
-      params,
-      {
-        ...API.init(),
-        method: 'PUT',
-        body: JSON.stringify(data),
-      },
-      headers,
-    ),
-  delete: async (url: string, params = {}, headers?: RequestInit['headers']) => {
-    return API.responsible(
-      url,
-      params,
-      {
-        ...API.init(),
-        method: 'DELETE',
-      },
-      headers,
-    );
-  },
+  get: <T>(url: string, params = {}, headers?: RequestInit['headers']) =>
+    API.responsible<T>(url, params, { ...API.init(), method: 'GET' }, headers),
+  post: <T>(url: string, data = {}, params = {}, headers?: RequestInit['headers']) =>
+    API.responsible<T>(url, params, { ...API.init(), method: 'POST', body: JSON.stringify(data) }, headers),
+  put: <T>(url: string, data = {}, params = {}, headers?: RequestInit['headers']) =>
+    API.responsible<T>(url, params, { ...API.init(), method: 'PUT', body: JSON.stringify(data) }, headers),
+  delete: <T>(url: string, params = {}, headers?: RequestInit['headers']) =>
+    API.responsible<T>(url, params, { ...API.init(), method: 'DELETE' }, headers),
   refresh: async () => {
-    const data = await API.get(
+    const res = await API.get<{ accessToken: string; refreshToken: null }>(
       `${routerLinks('Auth', 'api')}/refresh`,
       {},
-      {
-        authorization: 'Bearer ' + localStorage.getItem(keyRefreshToken),
-      },
+      { authorization: 'Bearer ' + localStorage.getItem(keyRefreshToken) },
     );
-    if (data) {
-      const { accessToken } = data.data;
-      localStorage.setItem(keyToken, accessToken);
-      return 'Bearer ' + accessToken;
+    if (res) {
+      localStorage.setItem(keyToken, res.data!.accessToken);
+      return 'Bearer ' + res.data!.accessToken;
     }
   },
 };

@@ -6,6 +6,7 @@ import { UserRoleFacade, UserFacade } from '@reducers';
 import { routerLinks } from '@utils';
 import { Button, Form } from '@components';
 import { ColumnFormUser } from './column';
+import { User } from '../../../reducers/global';
 
 const Page = () => {
   const { t } = useTranslation();
@@ -19,12 +20,14 @@ const Page = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    if (!result.data) get({});
+    if (!result?.data) get({});
 
     if (id) userFacade.getById({ id });
     else userFacade.set({ data: {} });
 
-    return () => isReload.current && userFacade.get(param);
+    return () => {
+      isReload.current && userFacade.get(param);
+    };
   }, [id]);
 
   useEffect(() => {
@@ -43,7 +46,7 @@ const Page = () => {
   }, [status]);
 
   const handleBack = () => navigate(routerLinks('User/List') + '?' + new URLSearchParams(param).toString());
-  const handleSubmit = (values: any) => {
+  const handleSubmit = (values: User) => {
     if (id) userFacade.put({ ...values, id });
     else userFacade.post(values);
   };
@@ -53,7 +56,7 @@ const Page = () => {
       <Form
         values={{ ...data }}
         className="intro-x"
-        columns={ColumnFormUser({ t, listRole: result.data || [] })}
+        columns={ColumnFormUser({ t, listRole: result?.data || [] })}
         extendButton={(form) => (
           <Button
             text={t('Save and Add new')}

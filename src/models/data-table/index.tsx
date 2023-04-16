@@ -34,3 +34,7 @@ export class TableItemFilterList {
   label?: string;
   value?: string | number;
 }
+export class TableRefObject {
+  onChange?: (request?: any) => void;
+  handleDelete?: (id: string) => void;
+}

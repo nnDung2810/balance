@@ -5,6 +5,7 @@ import { ModalForm, Spin, Form } from '@components';
 import { routerLinks } from '@utils';
 import { GlobalFacade } from '@reducers';
 import { ColumnForgottenPassword, ColumnLogin } from './column';
+import { FormModalRefObject } from '@models';
 
 const Page = () => {
   const { t } = useTranslation();
@@ -12,12 +13,11 @@ const Page = () => {
   const globalFacade = GlobalFacade();
   const { isLoading, status, user, data, login } = globalFacade;
   useEffect(() => {
-    if (status === 'login.fulfilled' && Object.keys(user).length > 0) {
+    if (status === 'login.fulfilled' && user && Object.keys(user).length > 0) {
       navigate(routerLinks('Dashboard'), { replace: true });
     }
   }, [status]);
-  const submit = async (values: any) => login(values);
-  const modalFormRef = useRef<any>();
+  const modalFormRef = useRef<FormModalRefObject>(null);
   return (
     <Fragment>
       <div className="mb-8">
@@ -32,13 +32,13 @@ const Page = () => {
           className="intro-x"
           columns={ColumnLogin({ t })}
           textSubmit={'routes.auth.login.Log In'}
-          handSubmit={submit}
+          handSubmit={login}
           disableSubmit={isLoading}
         />
       </Spin>
       <div className="mt-3 intro-x">
         {t('routes.auth.login.Account')}
-        <button className={'text-blue-600'} onClick={() => modalFormRef.current.handleEdit()}>
+        <button className={'text-blue-600'} onClick={() => modalFormRef?.current?.handleEdit!()}>
           {' '}
           {t('routes.auth.login.Forgot Password')}
         </button>
