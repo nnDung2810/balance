@@ -11,7 +11,7 @@ const Page = () => {
   const { t } = useTranslation();
   const { formatDate, user } = GlobalFacade();
   const { result, get } = CodeTypeFacade();
-  const listType = (result?.data || []).map((item: any) => ({ value: item.code, label: item.name }));
+  const listType = (result?.data || []).map((item) => ({ value: item.code, label: item.name }));
   useEffect(() => {
     if (!result?.data) get({});
   }, []);

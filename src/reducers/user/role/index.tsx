@@ -29,8 +29,12 @@ export const UserRoleFacade = () => {
   };
 };
 export class UserRole extends CommonEntity {
-  name?: string;
-  isSystemAdmin?: boolean;
-  permissions?: string[];
-  users?: User[];
+  constructor(
+    public name?: string,
+    public isSystemAdmin?: boolean,
+    public permissions?: string[],
+    public users?: User[],
+  ) {
+    super();
+  }
 }

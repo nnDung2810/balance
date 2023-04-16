@@ -18,7 +18,7 @@ export default class Slice<T extends CommonEntity> {
   };
   constructor(
     action: Action<T>,
-    initialState: object = {},
+    initialState: State<T> = {},
     extraReducers = (builder: ActionReducerMapBuilder<State<T>>) => builder,
   ) {
     this.name = action.name;

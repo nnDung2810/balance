@@ -24,10 +24,14 @@ export const CodeFacade = () => {
   };
 };
 export class Code extends CommonEntity {
-  code?: string;
-  type?: string;
-  name?: string;
-  description?: string;
-  item?: CodeType;
-  users?: User[];
+  constructor(
+    public code?: string,
+    public type?: string,
+    public name?: string,
+    public description?: string,
+    public item?: CodeType,
+    public users?: User[],
+  ) {
+    super();
+  }
 }

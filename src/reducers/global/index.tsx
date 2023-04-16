@@ -65,16 +65,20 @@ interface resetPassword {
   token: string;
 }
 export class User extends CommonEntity {
-  name?: string;
-  avatar?: string;
-  password?: string;
-  email?: string;
-  phoneNumber?: string;
-  dob?: string;
-  description?: string;
-  positionCode?: string;
-  retypedPassword?: string;
-  role?: UserRole;
+  constructor(
+    public name?: string,
+    public avatar?: string,
+    public password?: string,
+    public email?: string,
+    public phoneNumber?: string,
+    public dob?: string,
+    public description?: string,
+    public positionCode?: string,
+    public retypedPassword?: string,
+    public role?: UserRole,
+  ) {
+    super();
+  }
 }
 const checkLanguage = (language: 'vn' | 'en') => {
   const formatDate = language === 'vn' ? 'DD-MM-YYYY' : 'DD-MM-YYYY';

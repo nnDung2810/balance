@@ -1,23 +1,24 @@
 export class Responses<T> {
-  statusCode?: 200 | 500 | 404;
-  message?: string;
-  data?: T;
-  count?: number;
+  constructor(
+    public statusCode?: 200 | 201 | 500 | 404,
+    public message?: string,
+    public data?: T,
+    public count?: number,
+  ) {}
 }
 
 export class CommonEntity {
-  id?: string;
-  created_at?: string;
-  updated_at?: string;
-  isDeleted?: string;
+  constructor(public id?: string, public created_at?: string, public updated_at?: string, public isDeleted?: string) {}
 }
 
 export class PaginationQuery<T = object> {
-  perPage?: number;
-  page?: number;
-  filter?: string | T;
-  sorts?: string | T;
-  extend?: string | T;
-  skip?: string | T;
-  fullTextSearch?: string;
+  constructor(
+    public perPage?: number,
+    public page?: number,
+    public filter?: string | T,
+    public sorts?: string | T,
+    public extend?: string | T,
+    public skip?: string | T,
+    public fullTextSearch?: string,
+  ) {}
 }

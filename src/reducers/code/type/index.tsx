@@ -22,8 +22,12 @@ export const CodeTypeFacade = () => {
   };
 };
 export class CodeType extends CommonEntity {
-  name?: string;
-  code?: string;
-  isPrimary?: boolean;
-  items?: Code[];
+  constructor(
+    public name: string = '',
+    public code: string = '',
+    public isPrimary: boolean = false,
+    public items?: Code[],
+  ) {
+    super();
+  }
 }

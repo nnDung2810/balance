@@ -23,19 +23,23 @@ export const DataFacade = () => {
   };
 };
 export class Data extends CommonEntity {
-  type?: string;
-  image?: string;
-  order?: number;
-  item?: DataType;
-  translations?: {
-    language: string;
-    name: string;
-    description?: string;
-    slug: string;
-    seoTitle: string;
-    seoDescription: string;
-    content?: Record<string, object>;
-    dataId?: string;
-    data?: Data;
-  }[];
+  constructor(
+    public type?: string,
+    public image?: string,
+    public order?: number,
+    public item?: DataType,
+    public translations?: {
+      language: string;
+      name: string;
+      description?: string;
+      slug: string;
+      seoTitle: string;
+      seoDescription: string;
+      content?: Record<string, object>;
+      dataId?: string;
+      data?: Data;
+    }[],
+  ) {
+    super();
+  }
 }
