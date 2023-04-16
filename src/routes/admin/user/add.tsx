@@ -33,6 +33,8 @@ const Page = () => {
   useEffect(() => {
     switch (status) {
       case 'post.fulfilled':
+        navigate(routerLinks('User') + '/' + data?.id);
+        break;
       case 'put.fulfilled':
         if (Object.keys(param).length > 0) isReload.current = true;
 
@@ -53,24 +55,26 @@ const Page = () => {
 
   return (
     <div className={'max-w-4xl mx-auto'}>
-      <Form
-        values={{ ...data }}
-        className="intro-x"
-        columns={ColumnFormUser({ t, listRole: result?.data || [] })}
-        extendButton={(form) => (
-          <Button
-            text={t('Save and Add new')}
-            className={'md:min-w-[12rem] w-full justify-center out-line'}
-            onClick={() => {
-              form.submit();
-              isBack.current = false;
-            }}
-          />
-        )}
-        handSubmit={handleSubmit}
-        disableSubmit={isLoading}
-        handCancel={handleBack}
-      />
+      {!!result?.data && (
+        <Form
+          values={{ ...data }}
+          className="intro-x"
+          columns={ColumnFormUser({ t, listRole: result?.data || [] })}
+          extendButton={(form) => (
+            <Button
+              text={t('components.button.Save and Add new')}
+              className={'md:min-w-[12rem] w-full justify-center out-line'}
+              onClick={() => {
+                form.submit();
+                isBack.current = false;
+              }}
+            />
+          )}
+          handSubmit={handleSubmit}
+          disableSubmit={isLoading}
+          handCancel={handleBack}
+        />
+      )}
     </div>
   );
 };
