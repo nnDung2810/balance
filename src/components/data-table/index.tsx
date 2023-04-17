@@ -32,7 +32,7 @@ const getQueryStringParams = (query: string) => {
   return query
     ? (/^[?#]/.test(query) ? query.slice(1) : query)
         .split('&')
-        .reduce((params: { [selector: string]: string }, param: any) => {
+        .reduce((params: { [selector: string]: string }, param: string) => {
           const [key, value] = param.split('=');
           params[key] = value ? decodeURIComponent(value.replace(/\+/g, ' ')) : '';
           return params;
@@ -152,7 +152,7 @@ const Hook = forwardRef(
         />
       </div>
     );
-    const valueFilter = useRef<any>({});
+    const valueFilter = useRef<{ [selector: string]: boolean }>({});
     const columnSearch = (get: TableGet, fullTextSearch = '', value?: any, facade: any = {}) => {
       if (get?.facade) {
         const params = get.params ? get.params(fullTextSearch, value) : { fullTextSearch };

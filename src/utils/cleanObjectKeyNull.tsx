@@ -1,4 +1,4 @@
-export default (obj: any) => {
+export default (obj: { [selector: string]: any }) => {
   for (const propName in obj) {
     if (Object.prototype.hasOwnProperty.call(obj, propName)) {
       if (

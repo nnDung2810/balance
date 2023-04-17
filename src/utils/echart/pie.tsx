@@ -1,5 +1,5 @@
-const Util = ({ id }: any) => {
-  import('echarts').then((echarts: any) => {
+const Util = ({ id }: { id: string }) => {
+  import('echarts').then((echarts) => {
     const element = document.getElementById(id);
     if (element) {
       const img =
@@ -58,7 +58,7 @@ const Util = ({ id }: any) => {
             show: true,
             position: 'outside',
             color: '#fff',
-            formatter: function (params: any) {
+            formatter: function (params: { value: number; name: string }) {
               let total = 0;
               for (let i = 0; i < datasource.length; i++) {
                 total += datasource[i].value;
