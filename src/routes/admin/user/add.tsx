@@ -23,7 +23,7 @@ const Page = () => {
     if (!result?.data) get({});
 
     if (id) userFacade.getById({ id });
-    else userFacade.set({ data: {} });
+    else userFacade.set({ data: undefined });
 
     return () => {
       isReload.current && userFacade.get(param);
