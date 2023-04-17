@@ -42,11 +42,12 @@ const Page = () => {
         dataTableRef,
       })}
       rightHeader={
-        <div className={'flex gap-2'}>
+        <div className={'flex gap-2 '}>
           {user?.role?.permissions?.includes(keyRole.P_USER_CREATE) && (
             <Button
+              className='!bg-green-900 rounded-lg'
               icon={<Plus className="icon-cud !h-5 !w-5" />}
-              text={t('components.button.New')}
+              text={t('Thêm quản trị viên')}
               onClick={() => navigate(routerLinks('User/Add'))}
             />
           )}

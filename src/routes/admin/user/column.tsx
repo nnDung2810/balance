@@ -83,42 +83,7 @@ export const ColumnTableUser = ({ t, formatDate, permissions, navigate, dataTabl
         render: (text: string) => dayjs(text).format(formatDate),
       },
     },
-    {
-      title: t('user.Action'),
-      tableItem: {
-        width: 80,
-        align: 'center',
-        onCell: () => ({
-          style: { paddingTop: '0.25rem', paddingBottom: '0.25rem' },
-        }),
-        render: (text: string, data: any) => (
-          <div className={'flex gap-2'}>
-            {permissions?.includes(keyRole.P_USER_UPDATE) && (
-              <Tooltip title={t('routes.admin.Layout.Edit')}>
-                <Edit
-                  className="icon-cud bg-blue-600 hover:bg-blue-400"
-                  onClick={() => navigate(routerLinks('User') + '/' + data.id)}
-                />
-              </Tooltip>
-            )}
 
-            {permissions?.includes(keyRole.P_USER_DELETE) && (
-              <Tooltip title={t('routes.admin.Layout.Delete')}>
-                <Popconfirm
-                  placement="left"
-                  title={t('components.datatable.areYouSureWant')}
-                  onConfirm={() => dataTableRef?.current?.handleDelete(data.id)}
-                  okText={t('components.datatable.ok')}
-                  cancelText={t('components.datatable.cancel')}
-                >
-                  <Trash className="icon-cud bg-red-600 hover:bg-red-400" />
-                </Popconfirm>
-              </Tooltip>
-            )}
-          </div>
-        ),
-      },
-    },
   ];
   return col;
 };

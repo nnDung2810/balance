@@ -137,172 +137,172 @@ const Hook = forwardRef(
       params[sort] = JSON.parse(params[sort]);
     }
 
-    const groupButton = (confirm: any, clearFilters: any, key: any, value: any) => (
-      <div className="grid grid-cols-2 gap-2 mt-1">
-        <Button
-          text={t('components.datatable.reset')}
-          onClick={() => {
-            clearFilters();
-            confirm();
-          }}
-          className={'justify-center'}
-        />
-        <Button
-          icon={<Search className="fill-white h-4 w-4" />}
-          text={t('components.datatable.search')}
-          onClick={() => confirm(value)}
-          className={'justify-center'}
-        />
-      </div>
-    );
-    const valueFilter = useRef<any>({});
-    const columnSearch = (get: TableGet, fullTextSearch = '', value?: any, facade: any = {}) => {
-      if (get?.facade) {
-        const params = get.params ? get.params(fullTextSearch, value) : { fullTextSearch };
-        if (new Date().getTime() > facade.time || JSON.stringify(cleanObjectKeyNull(params)) != facade.queryParams) {
-          facade.get(cleanObjectKeyNull(params));
-        }
-      }
-    };
+    // const groupButton = (confirm: any, clearFilters: any, key: any, value: any) => (
+    //   <div className="grid grid-cols-2 gap-2 mt-1">
+    //     <Button
+    //       text={t('components.datatable.reset')}
+    //       onClick={() => {
+    //         clearFilters();
+    //         confirm();
+    //       }}
+    //       className={'justify-center'}
+    //     />
+    //     <Button
+    //       icon={<Search className="fill-white h-4 w-4" />}
+    //       text={t('components.datatable.search')}
+    //       onClick={() => confirm(value)}
+    //       className={'justify-center'}
+    //     />
+    //   </div>
+    // );
+    // const valueFilter = useRef<any>({});
+    // const columnSearch = (get: TableGet, fullTextSearch = '', value?: any, facade: any = {}) => {
+    //   if (get?.facade) {
+    //     const params = get.params ? get.params(fullTextSearch, value) : { fullTextSearch };
+    //     if (new Date().getTime() > facade.time || JSON.stringify(cleanObjectKeyNull(params)) != facade.queryParams) {
+    //       facade.get(cleanObjectKeyNull(params));
+    //     }
+    //   }
+    // };
     // noinspection JSUnusedGlobalSymbols
-    const getColumnSearchRadio = (filters: CheckboxOptionType[], key: string, get: TableGet = {}) => ({
-      onFilterDropdownOpenChange: async (visible: boolean) => (valueFilter.current[key] = visible),
-      filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }: any) => {
-        const facade = get?.facade ? get?.facade() : {};
-        useEffect(() => {
-          if (get && !facade?.result?.data && valueFilter.current[key]) {
-            columnSearch(get, '', undefined, facade);
-          }
-        }, [valueFilter.current[key]]);
-        return (
-          <div className={'p-1'}>
-            <input
-              className="w-full sm:w-52 h-10 rounded-xl text-gray-600 bg-white border border-solid border-gray-100 pr-9 pl-4 mb-1"
-              type="text"
-              placeholder={t('components.datatable.pleaseEnterValueToSearch') || ''}
-              onChange={(e) => {
-                clearTimeout(timeoutSearch.current);
-                timeoutSearch.current = setTimeout(() => columnSearch(get, e.target.value, selectedKeys), 500);
-              }}
-              onKeyUp={async (e) => {
-                if (e.key === 'Enter') {
-                  await columnSearch(get, e.currentTarget.value, undefined, facade);
-                }
-              }}
-            />
-            <div>
-              <RadioGroup
-                options={
-                  filters || get?.facade?.result?.data?.map(get.format).filter((item: any) => !!item.value) || []
-                }
-                value={selectedKeys}
-                onChange={(e) => setSelectedKeys(e.target.value + '')}
-              />
-            </div>
-            {groupButton(confirm, clearFilters, key, selectedKeys)}
-          </div>
-        );
-      },
-      filterIcon: () => <CheckCircle className="h-4 w-4 fill-gray-600" />,
-    });
+    // const getColumnSearchRadio = (filters: CheckboxOptionType[], key: string, get: TableGet = {}) => ({
+    //   onFilterDropdownOpenChange: async (visible: boolean) => (valueFilter.current[key] = visible),
+    //   filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }: any) => {
+    //     const facade = get?.facade ? get?.facade() : {};
+    //     useEffect(() => {
+    //       if (get && !facade?.result?.data && valueFilter.current[key]) {
+    //         columnSearch(get, '', undefined, facade);
+    //       }
+    //     }, [valueFilter.current[key]]);
+    //     return (
+    //       <div className={'p-1'}>
+    //         <input
+    //           className="w-full sm:w-52 h-10 rounded-xl text-gray-600 bg-white border border-solid border-gray-100 pr-9 pl-4 mb-1"
+    //           type="text"
+    //           placeholder={t('components.datatable.pleaseEnterValueToSearch') || ''}
+    //           onChange={(e) => {
+    //             clearTimeout(timeoutSearch.current);
+    //             timeoutSearch.current = setTimeout(() => columnSearch(get, e.target.value, selectedKeys), 500);
+    //           }}
+    //           onKeyUp={async (e) => {
+    //             if (e.key === 'Enter') {
+    //               await columnSearch(get, e.currentTarget.value, undefined, facade);
+    //             }
+    //           }}
+    //         />
+    //         <div>
+    //           <RadioGroup
+    //             options={
+    //               filters || get?.facade?.result?.data?.map(get.format).filter((item: any) => !!item.value) || []
+    //             }
+    //             value={selectedKeys}
+    //             onChange={(e) => setSelectedKeys(e.target.value + '')}
+    //           />
+    //         </div>
+    //         {groupButton(confirm, clearFilters, key, selectedKeys)}
+    //       </div>
+    //     );
+    //   },
+    //   filterIcon: () => <CheckCircle className="h-4 w-4 fill-gray-600" />,
+    // });
     // noinspection JSUnusedGlobalSymbols
-    const getColumnSearchCheckbox = (filters: any, key: any, get: TableGet = {}) => ({
-      onFilterDropdownOpenChange: async (visible: boolean) => (valueFilter.current[key] = visible),
-      filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }: any) => {
-        const facade = get?.facade ? get?.facade() : {};
-        useEffect(() => {
-          if (get && !facade?.result?.data && valueFilter.current[key]) {
-            columnSearch(get, '', undefined, facade);
-          }
-        }, [valueFilter.current[key]]);
-        return (
-          <div className={'p-1'}>
-            <input
-              className="w-full sm:w-52 h-10 rounded-xl text-gray-600 bg-white border border-solid border-gray-100 pr-9 pl-4 mb-1"
-              type="text"
-              placeholder={t('components.datatable.pleaseEnterValueToSearch') || ''}
-              onChange={(e) => {
-                clearTimeout(timeoutSearch.current);
-                timeoutSearch.current = setTimeout(() => columnSearch(get, e.target.value, selectedKeys, facade), 500);
-              }}
-              onKeyUp={async (e) => {
-                if (e.key === 'Enter') {
-                  await columnSearch(get, e.currentTarget.value, undefined, facade);
-                }
-              }}
-            />
-            <div>
-              <CheckboxGroup
-                options={filters || facade?.result?.data?.map(get.format).filter((item: any) => !!item.value) || []}
-                defaultValue={selectedKeys}
-                onChange={(e) => setSelectedKeys(e)}
-              />
-            </div>
-            {groupButton(confirm, clearFilters, key, selectedKeys)}
-          </div>
-        );
-      },
-      filterIcon: (filtered: boolean) => (
-        <CheckSquare className={classNames('h-4 w-4', { 'fill-[#3699FF]': filtered, 'fill-gray-600': !filtered })} />
-      ),
-    });
+    // const getColumnSearchCheckbox = (filters: any, key: any, get: TableGet = {}) => ({
+    //   onFilterDropdownOpenChange: async (visible: boolean) => (valueFilter.current[key] = visible),
+    //   filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }: any) => {
+    //     const facade = get?.facade ? get?.facade() : {};
+    //     useEffect(() => {
+    //       if (get && !facade?.result?.data && valueFilter.current[key]) {
+    //         columnSearch(get, '', undefined, facade);
+    //       }
+    //     }, [valueFilter.current[key]]);
+    //     return (
+    //       <div className={'p-1'}>
+    //         <input
+    //           className="w-full sm:w-52 h-10 rounded-xl text-gray-600 bg-white border border-solid border-gray-100 pr-9 pl-4 mb-1"
+    //           type="text"
+    //           placeholder={t('components.datatable.pleaseEnterValueToSearch') || ''}
+    //           onChange={(e) => {
+    //             clearTimeout(timeoutSearch.current);
+    //             timeoutSearch.current = setTimeout(() => columnSearch(get, e.target.value, selectedKeys, facade), 500);
+    //           }}
+    //           onKeyUp={async (e) => {
+    //             if (e.key === 'Enter') {
+    //               await columnSearch(get, e.currentTarget.value, undefined, facade);
+    //             }
+    //           }}
+    //         />
+    //         <div>
+    //           <CheckboxGroup
+    //             options={filters || facade?.result?.data?.map(get.format).filter((item: any) => !!item.value) || []}
+    //             defaultValue={selectedKeys}
+    //             onChange={(e) => setSelectedKeys(e)}
+    //           />
+    //         </div>
+    //         {groupButton(confirm, clearFilters, key, selectedKeys)}
+    //       </div>
+    //     );
+    //   },
+    //   // filterIcon: (filtered: boolean) => (
+    //   //   <CheckSquare className={classNames('h-4 w-4', { 'fill-[#3699FF]': filtered, 'fill-gray-600': !filtered })} />
+    //   // ),
+    // });
     // noinspection JSUnusedGlobalSymbols
-    const getColumnSearchInput = (key: any) => ({
-      filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }: any) => (
-        <div className="p-1">
-          <input
-            id={idTable.current + '_input_filter_' + key}
-            className="w-full h-10 rounded-xl text-gray-600 bg-white border border-solid border-gray-100 pr-9 pl-4"
-            value={selectedKeys}
-            type="text"
-            placeholder={t('components.datatable.pleaseEnterValueToSearch') || ''}
-            onChange={(e) => setSelectedKeys(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') {
-                confirm();
-              }
-              e.stopPropagation();
-            }}
-          />
-          {groupButton(confirm, clearFilters, key, selectedKeys)}
-        </div>
-      ),
-      filterIcon: (filtered: boolean) => (
-        <Search className={classNames('h-4 w-4', { 'fill-[#3699FF]': filtered, 'fill-gray-600': !filtered })} />
-      ),
-      onFilterDropdownOpenChange: (visible: boolean) => {
-        if (visible) {
-          setTimeout(
-            () => (document.getElementById(idTable.current + '_input_filter_' + key) as HTMLInputElement).select(),
-            100,
-          );
-        }
-      },
-    });
+    // const getColumnSearchInput = (key: any) => ({
+    //   filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }: any) => (
+    //     <div className="p-1">
+    //       <input
+    //         id={idTable.current + '_input_filter_' + key}
+    //         className="w-full h-10 rounded-xl text-gray-600 bg-white border border-solid border-gray-100 pr-9 pl-4"
+    //         value={selectedKeys}
+    //         type="text"
+    //         placeholder={t('components.datatable.pleaseEnterValueToSearch') || ''}
+    //         onChange={(e) => setSelectedKeys(e.target.value)}
+    //         onKeyDown={(e) => {
+    //           if (e.key === 'Enter') {
+    //             confirm();
+    //           }
+    //           e.stopPropagation();
+    //         }}
+    //       />
+    //       {groupButton(confirm, clearFilters, key, selectedKeys)}
+    //     </div>
+    //   ),
+    //   // filterIcon: (filtered: boolean) => (
+    //   //   <Search className={classNames('h-4 w-4', { 'fill-[#3699FF]': filtered, 'fill-gray-600': !filtered })} />
+    //   // ),
+    //   onFilterDropdownOpenChange: (visible: boolean) => {
+    //     if (visible) {
+    //       setTimeout(
+    //         () => (document.getElementById(idTable.current + '_input_filter_' + key) as HTMLInputElement).select(),
+    //         100,
+    //       );
+    //     }
+    //   },
+    // });
     // noinspection JSUnusedGlobalSymbols
-    const getColumnSearchDate = (key: any) => ({
-      filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }: any) => (
-        <div className={'p-1'}>
-          <RangePicker
-            renderExtraFooter={() => (
-              <Button
-                icon={<CheckCircle className="h-5 w-5 fill-white" />}
-                text={t('components.datatable.ok')}
-                onClick={() => (document.activeElement as HTMLElement).blur()}
-                className={'w-full justify-center !py-0'}
-              />
-            )}
-            format={['DD/MM/YYYY', 'DD/MM/YY']}
-            value={!!selectedKeys && selectedKeys.length && [dayjs(selectedKeys[0]), dayjs(selectedKeys[1])]}
-            onChange={(e) => setSelectedKeys(e)}
-          />
-          {groupButton(confirm, clearFilters, key, selectedKeys)}
-        </div>
-      ),
-      filterIcon: (filtered: boolean) => (
-        <Calendar className={classNames('h-4 w-4', { 'fill-[#3699FF]': filtered, 'fill-gray-600': !filtered })} />
-      ),
-    });
+    // const getColumnSearchDate = (key: any) => ({
+    //   filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }: any) => (
+    //     <div className={'p-1'}>
+    //       <RangePicker
+    //         renderExtraFooter={() => (
+    //           <Button
+    //             icon={<CheckCircle className="h-5 w-5 fill-white" />}
+    //             text={t('components.datatable.ok')}
+    //             onClick={() => (document.activeElement as HTMLElement).blur()}
+    //             className={'w-full justify-center !py-0'}
+    //           />
+    //         )}
+    //         format={['DD/MM/YYYY', 'DD/MM/YY']}
+    //         value={!!selectedKeys && selectedKeys.length && [dayjs(selectedKeys[0]), dayjs(selectedKeys[1])]}
+    //         onChange={(e) => setSelectedKeys(e)}
+    //       />
+    //       {groupButton(confirm, clearFilters, key, selectedKeys)}
+    //     </div>
+    //   ),
+    //   // filterIcon: (filtered: boolean) => (
+    //   //   <Calendar className={classNames('h-4 w-4', { 'fill-[#3699FF]': filtered, 'fill-gray-600': !filtered })} />
+    //   // ),
+    // });
     cols.current = columns
       .filter((col: any) => !!col && !!col.tableItem)
       .map((col: any) => {
@@ -317,20 +317,20 @@ const Hook = forwardRef(
             case 'radio':
               item = {
                 ...item,
-                ...getColumnSearchRadio(item.filter.list, item.filter.name || col.name, item.filter.get),
+          //      ...getColumnSearchRadio(item.filter.list, item.filter.name || col.name, item.filter.get),
               };
               break;
             case 'checkbox':
               item = {
                 ...item,
-                ...getColumnSearchCheckbox(item.filter.list, item.filter.name || col.name, item.filter.get),
+          //      ...getColumnSearchCheckbox(item.filter.list, item.filter.name || col.name, item.filter.get),
               };
               break;
             case 'date':
-              item = { ...item, ...getColumnSearchDate(item.filter.name || col.name) };
+         //     item = { ...item, ...getColumnSearchDate(item.filter.name || col.name) };
               break;
             default:
-              item = { ...item, ...getColumnSearchInput(item.filter.name || col.name) };
+         //     item = { ...item, ...getColumnSearchInput(item.filter.name || col.name) };
           }
           delete item.filter;
         }
@@ -410,7 +410,7 @@ const Hook = forwardRef(
                   }
                 }}
               />
-              {!params[fullTextSearch] ? (
+              {/* {!params[fullTextSearch] ? (
                 <Search
                   className="w-5 h-5 my-1 fill-gray-500 text-lg las absolute top-1.5 right-3 z-10"
                   onClick={() => {
@@ -432,7 +432,7 @@ const Hook = forwardRef(
                     }}
                   />
                 )
-              )}
+              )} */}
             </div>
           ) : (
             <div />
