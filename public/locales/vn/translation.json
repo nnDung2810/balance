@@ -81,7 +81,7 @@
     "Page": "Trang"
   },
   "pages": {
-    "User/List": "Danh sách Người dùng",
+    "User/List": "Quản lý Người dùng",
     "User/Add": "Tạo mới người dùng",
     "User/Edit": "Chỉnh sửa người dùng"
   },

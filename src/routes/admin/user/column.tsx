@@ -17,7 +17,7 @@ export const ColumnTableUser = ({ t, formatDate, permissions, navigate, dataTabl
         filter: { type: 'search' },
         width: 200,
         fixed: window.innerWidth > 767,
-        sorter: true,
+      //  sorter: true,
         onCell: () => ({
           style: { paddingTop: '0.25rem', paddingBottom: 0 },
           onClick: async () => null,
@@ -45,7 +45,7 @@ export const ColumnTableUser = ({ t, formatDate, permissions, navigate, dataTabl
             }),
           },
         },
-        sorter: true,
+      //  sorter: true,
         render: (item) => item?.name,
       },
     },
@@ -54,7 +54,7 @@ export const ColumnTableUser = ({ t, formatDate, permissions, navigate, dataTabl
       name: 'email',
       tableItem: {
         filter: { type: 'search' },
-        sorter: true,
+    //    sorter: true,
       },
     },
     {
@@ -62,7 +62,7 @@ export const ColumnTableUser = ({ t, formatDate, permissions, navigate, dataTabl
       name: 'phoneNumber',
       tableItem: {
         filter: { type: 'search' },
-        sorter: true,
+    //    sorter: true,
       },
     },
     {
@@ -70,7 +70,7 @@ export const ColumnTableUser = ({ t, formatDate, permissions, navigate, dataTabl
       name: 'dob',
       tableItem: {
         filter: { type: 'date' },
-        sorter: true,
+    //    sorter: true,
         render: (text: string) => dayjs(text).format(formatDate),
       },
     },
@@ -79,7 +79,7 @@ export const ColumnTableUser = ({ t, formatDate, permissions, navigate, dataTabl
       name: 'startDate',
       tableItem: {
         filter: { type: 'search' },
-        sorter: true,
+      //  sorter: true,
         render: (text: string) => dayjs(text).format(formatDate),
       },
     },

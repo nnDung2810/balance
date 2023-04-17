@@ -84,7 +84,7 @@ const Layout = ({ children }: PropsWithChildren) => {
       )}
     >
       <div className="flex items-center justify-end sm:justify-between px-5 h-20">
-        <h1 className={'text-xl font-bold hidden sm:block'}>{t('pages.' + title)}</h1>
+        <h1 className={'text-3xl font-bold hidden sm:block text-green-800'}>{t('pages.' + title)}</h1>
 
         <div className="flex items-center gap-5">
           <Select value={globalFacade?.language} onChange={(e: 'vn' | 'en') => globalFacade.setLanguage(e)}>
