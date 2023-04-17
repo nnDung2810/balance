@@ -15,6 +15,8 @@ export class TableItem {
   align?: 'left' | 'right' | 'center' | null;
   onClick?: any;
   render?: (text: any, item: any) => JSX.Element | string;
+  defaultSortOrder?: string;
+  defaultFilteredValue?: string;
 }
 
 export class TableItemFilter {

@@ -31,7 +31,7 @@ i18n
     },
   });
 const store = setupStore();
-let container: any = null;
+let container: HTMLElement;
 document.addEventListener('DOMContentLoaded', function () {
   if (!container) {
     container = document.getElementById('root') as HTMLElement;
