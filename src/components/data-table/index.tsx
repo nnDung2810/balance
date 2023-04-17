@@ -137,33 +137,33 @@ const Hook = forwardRef(
       params[sort] = JSON.parse(params[sort]);
     }
 
-    const groupButton = (confirm: any, clearFilters: any, key: any, value: any) => (
-      <div className="grid grid-cols-2 gap-2 mt-1">
-        <Button
-          text={t('components.datatable.reset')}
-          onClick={() => {
-            clearFilters();
-            confirm();
-          }}
-          className={'justify-center'}
-        />
-        <Button
-          icon={<Search className="fill-white h-4 w-4" />}
-          text={t('components.datatable.search')}
-          onClick={() => confirm(value)}
-          className={'justify-center'}
-        />
-      </div>
-    );
-    const valueFilter = useRef<any>({});
-    const columnSearch = (get: TableGet, fullTextSearch = '', value?: any, facade: any = {}) => {
-      if (get?.facade) {
-        const params = get.params ? get.params(fullTextSearch, value) : { fullTextSearch };
-        if (new Date().getTime() > facade.time || JSON.stringify(cleanObjectKeyNull(params)) != facade.queryParams) {
-          facade.get(cleanObjectKeyNull(params));
-        }
-      }
-    };
+    // const groupButton = (confirm: any, clearFilters: any, key: any, value: any) => (
+    //   <div className="grid grid-cols-2 gap-2 mt-1">
+    //     <Button
+    //       text={t('components.datatable.reset')}
+    //       onClick={() => {
+    //         clearFilters();
+    //         confirm();
+    //       }}
+    //       className={'justify-center'}
+    //     />
+    //     <Button
+    //       icon={<Search className="fill-white h-4 w-4" />}
+    //       text={t('components.datatable.search')}
+    //       onClick={() => confirm(value)}
+    //       className={'justify-center'}
+    //     />
+    //   </div>
+    // );
+    // const valueFilter = useRef<any>({});
+    // const columnSearch = (get: TableGet, fullTextSearch = '', value?: any, facade: any = {}) => {
+    //   if (get?.facade) {
+    //     const params = get.params ? get.params(fullTextSearch, value) : { fullTextSearch };
+    //     if (new Date().getTime() > facade.time || JSON.stringify(cleanObjectKeyNull(params)) != facade.queryParams) {
+    //       facade.get(cleanObjectKeyNull(params));
+    //     }
+    //   }
+    // };
     // noinspection JSUnusedGlobalSymbols
     // const getColumnSearchRadio = (filters: CheckboxOptionType[], key: string, get: TableGet = {}) => ({
     //   onFilterDropdownOpenChange: async (visible: boolean) => (valueFilter.current[key] = visible),
@@ -382,6 +382,15 @@ const Hook = forwardRef(
         <div className="sm:flex justify-between mb-2.5">
           {showSearch ? (
             <div className="relative">
+                              <Search
+                  className="w-5 h-5 my-1 fill-gray-500 text-lg las absolute top-1.5 right-3 z-10"
+                  onClick={() => {
+                    if (params[fullTextSearch]) {
+                      (document.getElementById(idTable.current + '_input_search') as HTMLInputElement).value = '';
+                      handleTableChange(null, params[filter], params[sort], '');
+                    }
+                  }}
+                />
               <input
                 id={idTable.current + '_input_search'}
                 className="w-full sm:w-52 h-10 rounded-xl text-gray-600 bg-white border border-solid border-gray-100 pr-9 pl-4"
@@ -410,29 +419,7 @@ const Hook = forwardRef(
                   }
                 }}
               />
-              {!params[fullTextSearch] ? (
-                <Search
-                  className="w-5 h-5 my-1 fill-gray-500 text-lg las absolute top-1.5 right-3 z-10"
-                  onClick={() => {
-                    if (params[fullTextSearch]) {
-                      (document.getElementById(idTable.current + '_input_search') as HTMLInputElement).value = '';
-                      handleTableChange(null, params[filter], params[sort], '');
-                    }
-                  }}
-                />
-              ) : (
-                !!params[fullTextSearch] && (
-                  <Times
-                    className="w-5 h-5 my-1 fill-gray-500 text-lg las absolute top-1.5 right-3 z-10"
-                    onClick={() => {
-                      if (params[fullTextSearch]) {
-                        (document.getElementById(idTable.current + '_input_search') as HTMLInputElement).value = '';
-                        handleTableChange(null, params[filter], params[sort], '');
-                      }
-                    }}
-                  />
-                )
-              )}
+
             </div>
           ) : (
             <div />
