@@ -148,6 +148,7 @@
         "Add": "Add new",
         "Edit": "Edit",
         "Delete": "Delete",
+        "Change Password": "Change Password",
         "My Profile": "My Profile",
         "No Data": "No Data",
         "Pagination": "Show {{from}} - {{to}} /Total {{total}} categories",

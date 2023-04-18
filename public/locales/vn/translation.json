@@ -148,6 +148,7 @@
         "Add": "Thêm mới",
         "Edit": "Sửa",
         "Delete": "Xóa",
+        "Change Password": "Đổi mật khẩu",
         "My Profile": "Thông tin cá nhân",
         "No Data": "Trống",
         "Pagination": "Hiển thị {{from}} - {{to}} /Tổng số {{total}} danh mục",
