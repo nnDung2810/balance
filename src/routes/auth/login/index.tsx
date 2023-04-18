@@ -6,6 +6,7 @@ import { routerLinks } from '@utils';
 import { GlobalFacade } from '@reducers';
 import { ColumnForgottenPassword, ColumnLogin } from './column';
 import { FormModalRefObject } from '@models';
+import '../../../layouts/auth/index.less'
 
 const Page = () => {
   const { t } = useTranslation();
@@ -21,23 +22,23 @@ const Page = () => {
   return (
     <Fragment>
       <div className="text-center mb-8">
-        <h1 className="intro-x text-5xl mb-7 font-bold text-green-900 max-lg:text-3xl" id={'title-login'}>
+        <h1 className="intro-x text-5xl mb-10 font-bold text-teal-900 leading-10 max-md:text-3xl max-lg:leading-8" id={'title-login'}>
           {t('routes.auth.login.title')}
         </h1>
-        <h5 className="intro-x font-semibold tracking-wide text-green-800 ">{t('routes.auth.login.subTitle')}</h5>
+        <h5 className="intro-x font-semibold tracking-wide text-teal-900 ">{t('routes.auth.login.subTitle')}</h5>
       </div>
-      <div className='w-3/5 max-lg:w-3/4 mx-auto'>
+      <div className='mx-auto w-3/4'>
         <Spin spinning={isLoading} >
           <Form
             values={{ ...data }}
-            className="intro-x"
+            className="intro-x ant-form1"
             columns={ColumnLogin({ t })}
             textSubmit={'routes.auth.login.Log In'}
             handSubmit={login}
             disableSubmit={isLoading}
           />
         </Spin>
-        <div className="mt-3 intro-x text-right">
+        <div className="mt-3 text-right">
           <button className={'text-green-900 font-semibold underline text-base'} onClick={() => modalFormRef?.current?.handleEdit!()}>
             {' '}
             {t('routes.auth.login.Forgot Password')}

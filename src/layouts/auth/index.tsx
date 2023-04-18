@@ -1,9 +1,9 @@
 import React, { PropsWithChildren, useEffect } from 'react';
-import { Select } from 'antd';
+
 import { useTranslation } from 'react-i18next';
 
 import { GlobalFacade } from '@reducers';
-import bg from '../../assets/images/login-bg.png'
+
 
 // import './index.less';
 
@@ -17,15 +17,17 @@ const Layout = ({ children }: PropsWithChildren) => {
 
   return (
     <div className="overflow-scroll bg-white bg-cover bg-center h-full relative ">
-      {/* <div className="grid grid-cols-2 gap-7 max-lg:grid-cols-1"> */}
-      <div className="flex h-full">
-        <div className="max-lg:hidden w-full into relative z-10 justify-between flex-col">
-          <div className="bg-[url('../../assets/images/login-bg.png')] w-full bg-cover bg-no-repeat min-h-full h-screen">
-          </div>
+      {/* <div className="grid grid-cols-2 max-lg:grid-cols-1 h-full"> */}
+      <div className="max-lg:block flex h-full">
+        <div className="bg-[url('../../assets/images/login-bg.png')] w-full bg-cover bg-no-repeat min-h-full h-screen max-lg:hidden">
         </div>
-        <div className="w-full h-screen grid items-center max-lg:items-start max-lg:pt-10 m-auto px-10">
-          <div>
-          {children}
+        <div className="w-full h-screen grid items-center max-lg:items-start max-lg:p-10">
+          {/* <div className='grid px-10 w-11/12 m-auto'> */}
+          <div className='flex justify-center max-lg:block'>
+            <div>
+              {children}
+            </div>
+            <div></div>
           </div>
         </div>
       </div>

@@ -626,7 +626,7 @@ const Component = ({
             id={idSubmit}
             onClick={() => form && form.submit()}
             disabled={disableSubmit}
-            className={'md:min-w-[12rem] w-full justify-center text-base !font-medium !text-green-900 !bg-green-500'}
+            className={'md:min-w-[12rem] w-full justify-center'}
             type={'submit'}
           />
         )}
