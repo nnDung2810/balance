@@ -378,12 +378,13 @@ const Hook = forwardRef(
     };
     if (!data) data = result?.data;
     return (
-      <div className={classNames(className, 'intro-x')}>
-        <div className="sm:flex justify-between mb-2.5">
+      <div className={classNames(className, 'intro-x bg-white px-6')}>
+        <div className="sm:flex justify-between pt-6 pb-3 table-user">
           {showSearch ? (
             <div className="relative">
-                              <Search
-                  className="w-5 h-5 my-1 fill-gray-500 text-lg las absolute top-1.5 right-3 z-10"
+                 {!params[fullTextSearch] ? (
+                <Search
+                  className="w-5 h-5 m-1 pl-1 fill-gray-500 text-lg las absolute top-1.5 z-10"
                   onClick={() => {
                     if (params[fullTextSearch]) {
                       (document.getElementById(idTable.current + '_input_search') as HTMLInputElement).value = '';
@@ -391,9 +392,22 @@ const Hook = forwardRef(
                     }
                   }}
                 />
+              ) : (
+                !!params[fullTextSearch] && (
+                  <Times
+                    className="w-5 h-5 my-1 fill-gray-500 text-lg las absolute top-1.5 right-3 z-10"
+                    onClick={() => {
+                      if (params[fullTextSearch]) {
+                        (document.getElementById(idTable.current + '_input_search') as HTMLInputElement).value = '';
+                        handleTableChange(null, params[filter], params[sort], '');
+                      }
+                    }}
+                  />
+                )
+              )}
               <input
                 id={idTable.current + '_input_search'}
-                className="w-full sm:w-52 h-10 rounded-xl text-gray-600 bg-white border border-solid border-gray-100 pr-9 pl-4"
+                className="w-full sm:w-80 h-10 rounded-xl text-gray-600 bg-white border border-solid border-gray-400 pr-9 pl-7 "
                 defaultValue={params[fullTextSearch]}
                 type="text"
                 placeholder={searchPlaceholder || t('components.datatable.pleaseEnterValueToSearch')}

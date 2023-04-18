@@ -123,7 +123,7 @@ export const Pagination: any = ({
   return (
     total > 0 && (
       <div
-        className={classNames(className, 'flex flex-col md:flex-row md:items-center justify-between mt-3 select-none')}
+        className={classNames(className, 'flex flex-col md:flex-row md:items-center justify-between pt-4 pb-7 select-none ')}
       >
         <div className={'left'}>
           <label htmlFor={idElement + '_page_size'}>

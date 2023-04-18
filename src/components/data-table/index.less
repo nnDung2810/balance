@@ -2,16 +2,20 @@
   &-content {
     .ant-table-thead > tr > th {
       @apply font-bold border-gray-400;
-      &.ant-table-cell-fix-left,
+      &.ant-table-cell-fix-left ,
       &.ant-table-cell-fix-right{ @apply ~'mt-[1px]'; }
     }
+    .ant-table-thead > tr > th:first-child {
+      font-weight: bold;
+      border-left: 1px solid #ddd;
+      }
     .ant-table-tbody > tr.ant-table-row{
-      &:nth-of-type(odd) > td {@apply bg-gray-50;}
+      &:nth-of-type(odd) > td {@apply bg-gray-50 ;}
       &:hover > td{
-      @apply bg-gray-200 text-black;
+      @apply bg-gray-200 text-black border-none ;
       }
       > td {
-      @apply border-gray-200;
+      @apply border-gray-200 ;
 
         &.hover:hover {
         @apply text-blue-700;

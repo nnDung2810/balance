@@ -14,8 +14,8 @@ import { Chips, SelectTag, Select, TreeSelect, TableTransfer, Password, Mask, Ad
 const Component = ({
   className,
   columns,
-  textSubmit = 'components.form.modal.save',
-  textCancel = 'components.form.modal.cancel',
+  textSubmit = 'Lưu',
+  textCancel = 'Trở về',
   handSubmit,
   handCancel,
   values = {},
@@ -607,15 +607,15 @@ const Component = ({
       </div>
 
       <div
-        className={classNames('gap-2 flex mt-5', {
+        className={classNames('gap-2 flex mt-5 ', {
           'justify-center': !extendButton && !handCancel,
-          'md:inline-flex md:float-right': extendButton || handCancel,
+          ' flex sm:flex-row flex-col sm:justify-between': extendButton || handCancel,
         })}
       >
         {handCancel && (
           <Button
             text={t(textCancel)}
-            className={'md:min-w-[12rem] w-full justify-center out-line'}
+            className={'md:min-w-[5rem] h-10 rounded-lg justify-center out-line left-3 flex sm:flex-row flex-col items-center '}
             onClick={handCancel}
           />
         )}
@@ -626,7 +626,7 @@ const Component = ({
             id={idSubmit}
             onClick={() => form && form.submit()}
             disabled={disableSubmit}
-            className={'md:min-w-[12rem] w-full justify-center'}
+            className={'md:min-w-[5rem] h-10 rounded-lg justify-center sm:flex items-end text-sm'}
             type={'submit'}
           />
         )}

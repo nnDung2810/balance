@@ -109,7 +109,7 @@
     }
   },
   "layout": {
-    "footer": "Công ty cổ phần Cồng nghệ Ari. ©{{year}}"
+    "footer": "Copyright ©{{year}} ARI Technology Co ., JSC. All rights reserved. "
   },
   "routes": {
     "auth": {
@@ -150,7 +150,7 @@
         "Delete": "Xóa",
         "My Profile": "Thông tin cá nhân",
         "No Data": "Trống",
-        "Pagination": "Hiển thị {{from}} - {{to}} /Tổng số {{total}} danh mục",
+        "Pagination": "Hiển thị {{from}} - {{to}} / Tổng số {{total}} người dùng",
         "Day": "Ngày phép"
       }
     }

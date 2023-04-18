@@ -210,7 +210,7 @@ const Layout = ({ children }: PropsWithChildren) => {
           {children}
         </div>
 
-        <footer className="text-center bg-blue-50 pt-5 w-full">
+        <footer className="text-left bg-white py-5 w-full  ">
           {t('layout.footer', { year: new Date().getFullYear() })}
         </footer>
       </section>
