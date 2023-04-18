@@ -17,13 +17,16 @@ const Layout = ({ children }: PropsWithChildren) => {
 
   return (
     <div className="overflow-scroll bg-white bg-cover bg-center h-full relative ">
-      <div className="grid grid-cols-2">
-        <div className="w-full into relative z-10 justify-between flex-col">
+      {/* <div className="grid grid-cols-2 gap-7 max-lg:grid-cols-1"> */}
+      <div className="flex h-full">
+        <div className="max-lg:hidden w-full into relative z-10 justify-between flex-col">
           <div className="bg-[url('../../assets/images/login-bg.png')] w-full bg-cover bg-no-repeat min-h-full h-screen">
           </div>
         </div>
-        <div className="w-full flex justify-center items-center flex-col px-5">
+        <div className="w-full h-screen grid items-center max-lg:items-start max-lg:pt-10 m-auto px-10">
+          <div>
           {children}
+          </div>
         </div>
       </div>
       <div className="bg-[url('../../assets/images/login-f.png')] overflow-hidden w-full h-28 bg-cover bg-no-repeat absolute bottom-0 z-10">

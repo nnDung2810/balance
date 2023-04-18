@@ -20,13 +20,13 @@ const Page = () => {
   const modalFormRef = useRef<FormModalRefObject>(null);
   return (
     <Fragment>
-      <div className="text-center mb-10">
-        <h1 className="intro-x text-6xl mb-9 font-bold  text-green-900" id={'title-login'}>
+      <div className="text-center mb-8">
+        <h1 className="intro-x text-5xl mb-7 font-bold text-green-900 max-lg:text-3xl" id={'title-login'}>
           {t('routes.auth.login.title')}
         </h1>
-        <h5 className="intro-x  font-semibold tracking-wider text-green-800">{t('routes.auth.login.subTitle')}</h5>
+        <h5 className="intro-x font-semibold tracking-wide text-green-800 ">{t('routes.auth.login.subTitle')}</h5>
       </div>
-      <div className='w-3/5'>
+      <div className='w-3/5 max-lg:w-3/4 mx-auto'>
         <Spin spinning={isLoading} >
           <Form
             values={{ ...data }}

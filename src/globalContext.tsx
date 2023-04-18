@@ -14,7 +14,7 @@ const GlobalContext = ({ children }: PropsWithChildren) => {
       theme={{
         token: {
           fontFamily:
-            'Google Sans, -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Noto Sans,Ubuntu,Droid Sans,Helvetica Neue,sans-serif',
+            'Lexend Deca, -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Noto Sans,Ubuntu,Droid Sans,Helvetica Neue,sans-serif',
         },
       }}
     >
