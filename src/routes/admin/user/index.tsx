@@ -13,22 +13,23 @@ const Page = () => {
   const { t } = useTranslation();
   const { formatDate, user } = GlobalFacade();
   const navigate = useNavigate();
-
   const userFacade = UserFacade();
+  const { data, isLoading, queryParams, status } = userFacade;
+
   useEffect(() => {
     switch (userFacade.status) {
       case 'delete.fulfilled':
         dataTableRef?.current?.onChange!();
         break;
     }
-  }, [userFacade.status]);
+  }, [userFacade.status, data]);
 
   const dataTableRef = useRef<TableRefObject>(null);
   return (
     <DataTable
       facade={userFacade}
       ref={dataTableRef}
-      onRow={() => ({ onDoubleClick: () => null })}
+      onRow={(data: any) => ({ onDoubleClick: () =>  navigate(`${routerLinks('User/Edit')}?id=${data.id}`)})}
       pageSizeRender={(sizePage: number) => sizePage}
       pageSizeWidth={'50px'}
       paginationDescription={(from: number, to: number, total: number) =>

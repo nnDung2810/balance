@@ -378,7 +378,7 @@ const Hook = forwardRef(
     };
     if (!data) data = result?.data;
     return (
-      <div className={classNames(className, 'intro-x bg-white px-6')}>
+      <div className={classNames(className, 'intro-x bg-white rounded-md px-6')}>
         <div className="sm:flex justify-between pt-6 pb-3 table-user">
           {showSearch ? (
             <div className="relative">
