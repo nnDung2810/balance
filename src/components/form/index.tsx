@@ -587,13 +587,13 @@ const Component = ({
                   className={classNames(
                     column?.formItem?.classItem,
                     'col-span-12' +
-                      (' sm:col-span-' +
-                        (column?.formItem?.colTablet
-                          ? column?.formItem?.colTablet
-                          : column?.formItem?.col
+                    (' sm:col-span-' +
+                      (column?.formItem?.colTablet
+                        ? column?.formItem?.colTablet
+                        : column?.formItem?.col
                           ? column?.formItem?.col
                           : 12)) +
-                      (' lg:col-span-' + (column?.formItem?.col ? column?.formItem?.col : 12)),
+                    (' lg:col-span-' + (column?.formItem?.col ? column?.formItem?.col : 12)),
                   )}
                   key={index}
                 >
@@ -626,7 +626,7 @@ const Component = ({
             id={idSubmit}
             onClick={() => form && form.submit()}
             disabled={disableSubmit}
-            className={'md:min-w-[12rem] w-full justify-center'}
+            className={'md:min-w-[12rem] w-full justify-center text-base !font-medium !text-green-900 !bg-green-500'}
             type={'submit'}
           />
         )}

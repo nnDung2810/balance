@@ -20,28 +20,29 @@ const Page = () => {
   const modalFormRef = useRef<FormModalRefObject>(null);
   return (
     <Fragment>
-      <div className="mb-8">
-        <h1 className="intro-x text-4xl mb-3 font-bold" id={'title-login'}>
+      <div className="text-center mb-10">
+        <h1 className="intro-x text-6xl mb-9 font-bold  text-green-900" id={'title-login'}>
           {t('routes.auth.login.title')}
         </h1>
-        <h5 className="intro-x font-medium text-gray-300">{t('routes.auth.login.subTitle')}</h5>
+        <h5 className="intro-x  font-semibold tracking-wider text-green-800">{t('routes.auth.login.subTitle')}</h5>
       </div>
-      <Spin spinning={isLoading}>
-        <Form
-          values={{ ...data }}
-          className="intro-x"
-          columns={ColumnLogin({ t })}
-          textSubmit={'routes.auth.login.Log In'}
-          handSubmit={login}
-          disableSubmit={isLoading}
-        />
-      </Spin>
-      <div className="mt-3 intro-x">
-        {t('routes.auth.login.Account')}
-        <button className={'text-blue-600'} onClick={() => modalFormRef?.current?.handleEdit!()}>
-          {' '}
-          {t('routes.auth.login.Forgot Password')}
-        </button>
+      <div className='w-3/5'>
+        <Spin spinning={isLoading} >
+          <Form
+            values={{ ...data }}
+            className="intro-x"
+            columns={ColumnLogin({ t })}
+            textSubmit={'routes.auth.login.Log In'}
+            handSubmit={login}
+            disableSubmit={isLoading}
+          />
+        </Spin>
+        <div className="mt-3 intro-x text-right">
+          <button className={'text-green-900 font-semibold underline text-base'} onClick={() => modalFormRef?.current?.handleEdit!()}>
+            {' '}
+            {t('routes.auth.login.Forgot Password')}
+          </button>
+        </div>
       </div>
       <ModalForm
         facade={globalFacade}
