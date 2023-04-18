@@ -11,7 +11,7 @@ import slug from 'slug';
 
 const Page = () => {
   const { t } = useTranslation();
-  const { formatDate, user } = GlobalFacade();
+  const { user } = GlobalFacade();
 
   const { result, get } = DataTypeFacade();
   useEffect(() => {

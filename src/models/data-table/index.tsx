@@ -10,7 +10,7 @@ export class DataTableModel {
 export class TableItem {
   filter?: TableItemFilter;
   width?: number;
-  fixed?: boolean;
+  fixed?: string;
   sorter?: boolean;
   onCell?: () => { style: any; onClick?: any };
   align?: 'left' | 'right' | 'center' | null;
