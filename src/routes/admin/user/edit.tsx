@@ -54,6 +54,7 @@ const Page = () => {
     else userFacade.post(values);
   };
 
+  console.log(data)
   return (
     <div className={'w-full'}>
       <Fragment>

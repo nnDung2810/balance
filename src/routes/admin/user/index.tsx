@@ -29,7 +29,7 @@ const Page = () => {
     <DataTable
       facade={userFacade}
       ref={dataTableRef}
-      onRow={(data: any) => ({ onDoubleClick: () =>  navigate(`${routerLinks('User/Edit')}?id=${data.id}`)})}
+      onRow={(data: any) => ({ onDoubleClick: () =>  navigate(routerLinks('User/Edit') + '/' + data.id)})}
       pageSizeRender={(sizePage: number) => sizePage}
       pageSizeWidth={'50px'}
       paginationDescription={(from: number, to: number, total: number) =>
@@ -43,7 +43,7 @@ const Page = () => {
         dataTableRef,
       })}
       rightHeader={
-        <div className={'flex gap-2 '}>
+        <div className={'flex gap-2'}>
           {user?.role?.permissions?.includes(keyRole.P_USER_CREATE) && (
             <Button
               className='!bg-green-900 !rounded-xl'

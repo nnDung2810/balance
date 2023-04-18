@@ -1,4 +1,4 @@
-import { Popconfirm, Tooltip } from 'antd';
+import { FormInstance, Popconfirm, Tooltip } from 'antd';
 import React from 'react';
 import dayjs from 'dayjs';
 
@@ -8,6 +8,7 @@ import { DataTableModel, FormModel } from '@models';
 import { CodeFacade } from '@reducers';
 import { Edit, Trash } from '@svgs';
 import classNames from 'classnames';
+import { LockOutlined } from '@ant-design/icons';
 
 export const ColumnTableUser = ({ t, formatDate, permissions, navigate, dataTableRef }: any) => {
   const col: DataTableModel[] = [
@@ -313,6 +314,8 @@ export const ColumnFormUserEdit = ({ t, listRole }: any) => {
       title: t('Số điện thoại'),
       name: 'phoneNumber',
       formItem: {
+        disabled: () => true,
+        addonAfter: () => <LockOutlined />,
         col: 6,
         rules: [{ type: 'required' }, { type: 'phone', min: 10, max: 15 }],
       },
@@ -321,6 +324,7 @@ export const ColumnFormUserEdit = ({ t, listRole }: any) => {
       title: t('user.Date of birth'),
       name: 'dob',
       formItem: {
+        disabled: () => true,
         col: 6,
         type: 'date',
         rules: [{ type: 'required' }],
@@ -330,6 +334,7 @@ export const ColumnFormUserEdit = ({ t, listRole }: any) => {
       title: t('user.Position'),
       name: 'positionCode',
       formItem: {
+        disabled: () => true,
         col: 6,
         type: 'select',
         rules: [{ type: 'required' }],
