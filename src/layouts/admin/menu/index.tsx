@@ -9,16 +9,16 @@ import listMenu from '../menus';
 import './index.less';
 import { v4 } from 'uuid';
 
-const Layout = ({ isCollapsed = false, permission = [] }: any) => {
+const Layout = ({ isCollapsed = false, permission = [] }: { isCollapsed: boolean; permission?: string[] }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
-  const refMenu = useRef<any>();
+  const refMenu = useRef<HTMLUListElement>(null);
 
-  const [menuActive, set_menuActive] = useState<any>();
+  const [menuActive, set_menuActive] = useState<string[]>();
   useEffect(() => {
     let linkActive = '';
-    listMenu().forEach((item: any) => {
+    listMenu.forEach((item) => {
       if (!linkActive && !!item.child && location.pathname.indexOf(routerLinks(item.name)) > -1) {
         linkActive = routerLinks(item.name);
       }
@@ -39,15 +39,15 @@ const Layout = ({ isCollapsed = false, permission = [] }: any) => {
 
   useEffect(() => {
     if (isCollapsed) {
-      refMenu.current.scrollTop = 0;
+      refMenu!.current!.scrollTop = 0;
     }
   }, [isCollapsed]);
 
-  const subMenu = (child: any[]) => (
+  const subMenu = (child: { name: string; permission: string }[]) => (
     <ul>
       {child
-        .filter((subItem: any) => !subItem.permission || permission?.includes(subItem.permission))
-        .map((subItem: any, index: number) => (
+        .filter((subItem) => !subItem.permission || permission?.includes(subItem.permission))
+        .map((subItem, index: number) => (
           <li
             key={index + v4()}
             className={classNames('child-item py-2 cursor-pointer', {
@@ -64,18 +64,15 @@ const Layout = ({ isCollapsed = false, permission = [] }: any) => {
   return (
     <ul className="menu relative h-[calc(100vh-5rem)]" id={'menu-sidebar'} ref={refMenu}>
       {!!menuActive &&
-        listMenu()
-          .filter((item: any) => {
-            if (!item.permission || permission?.includes(item.permission)) {
-              return (
-                !item.child ||
-                item.child.filter((subItem: any) => !subItem.permission || permission?.includes(subItem.permission))
-                  .length > 0
-              );
-            }
-            return false;
+        listMenu
+          .filter((item) => {
+            return (
+              !item.child ||
+              item.child.filter((subItem: any) => !subItem.permission || permission?.includes(subItem.permission))
+                .length > 0
+            );
           })
-          .map((item: any, index) => {
+          .map((item, index) => {
             if (!item.child) {
               return (
                 <li

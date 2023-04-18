@@ -42,7 +42,7 @@ const Page = () => {
           tableItem: {
             filter: { type: 'search' },
             width: 200,
-            fixed: window.innerWidth > 767,
+            fixed: window.innerWidth > 767 ? 'left' : '',
             sorter: true,
             onCell: () => ({
               style: { paddingTop: '0.25rem', paddingBottom: 0 },

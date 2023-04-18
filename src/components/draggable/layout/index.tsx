@@ -14,7 +14,7 @@ export const DraggableLayout = ({
   onChange,
 }: {
   value?: { col: object; name: string }[];
-  onChange?: (list: object[]) => any;
+  onChange?: (list: object[]) => void;
 }) => {
   const id = useRef(v4());
   const idNext = useRef<number>();

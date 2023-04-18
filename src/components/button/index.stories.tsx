@@ -65,13 +65,13 @@ export default {
   },
 } as ComponentMeta<typeof Button>;
 
-const Template: ComponentStory<typeof Button> = (args: any) => <Button {...args} />;
+const Template: ComponentStory<typeof Button> = (args) => <Button {...args} />;
 
 export const Primary: ComponentStory<typeof Button> = Template.bind({});
 Primary.args = {
   text: 'Primary',
 };
-Primary.play = async ({ canvasElement }: any) => {
+Primary.play = async ({ canvasElement }) => {
   // args
   const canvas = within(canvasElement);
   await userEvent.click(canvas.getByText('Primary'));
