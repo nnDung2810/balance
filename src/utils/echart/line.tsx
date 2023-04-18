@@ -8,14 +8,14 @@ const Util = ({
   xAxis = {},
 }: {
   id: string;
-  label: string;
+  label: string[];
   series: object[];
   color: string[];
-  legend: object;
-  grid: object;
-  xAxis: object;
+  legend?: object;
+  grid?: object;
+  xAxis?: object;
 }) => {
-  import('echarts').then((echarts: any) => {
+  import('echarts').then((echarts) => {
     const element = document.getElementById(id);
     if (element) {
       echarts.init(element).setOption({

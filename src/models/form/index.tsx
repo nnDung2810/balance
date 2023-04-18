@@ -1,10 +1,9 @@
 import { CheckboxOptionType, FormInstance } from 'antd';
 import { TableGet } from '../data-table';
+import { DefaultTFuncReturn } from 'i18next';
 
 export class FormModel {
-  name?: string;
-  title?: any;
-  formItem?: FormItem;
+  constructor(public name: string, public title?: DefaultTFuncReturn, public formItem?: FormItem) {}
 }
 
 export class FormItem {
@@ -73,6 +72,7 @@ export class FormItem {
   showRemove?: any;
   idCheck?: any;
   tabIndex?: number;
+  onlyImage?: boolean;
 }
 export class FormItemList {
   label?: string | JSX.Element;

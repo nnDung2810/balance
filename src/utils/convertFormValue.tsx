@@ -4,17 +4,18 @@ import { FormModel } from '@models';
 const Util = (columns: FormModel[], values: { [selector: string]: any }, exportData = true) => {
   columns
     .filter((item) => !!item && !!item.formItem)
-    .map((item: any) => {
+    .map((item) => {
       if (item.formItem && item.formItem.convert) {
         values[item.name] = item.formItem.convert(values[item.name]);
       } else {
-        switch (item.formItem.type) {
+        switch (item.formItem!.type) {
           case 'switch':
             if (typeof values[item.name] === 'undefined') values[item.name] = false;
             break;
           case 'upload':
             if (values[item.name] && typeof values[item.name] === 'object' && exportData) {
-              if (item.formItem.onlyImage && values[item.name].length > 0) values[item.name] = values[item.name][0].url;
+              if (item.formItem?.onlyImage && values[item.name].length > 0)
+                values[item.name] = values[item.name][0].url;
               else if (values[item.name].length > 1) {
                 values[item.name] = values[item.name].filter((_item: any) => _item.status === 'done' || !_item.status);
               }
@@ -49,10 +50,10 @@ const Util = (columns: FormModel[], values: { [selector: string]: any }, exportD
             break;
           case 'tab':
             if (!exportData && !values[item.name]) {
-              values[item.name] = item?.formItem?.list?.map((subItem: any) => {
-                const result = { [item?.formItem?.tab?.label]: subItem.value };
-                item?.formItem?.column.forEach((col: any) => {
-                  if (col.formItem.type === 'layout') {
+              values[item.name] = item?.formItem?.list?.map((subItem) => {
+                const result: { [selector: string]: any } = { [item!.formItem!.tab!.label!]: subItem.value };
+                item!.formItem!.column!.forEach((col) => {
+                  if (col!.formItem!.type === 'layout') {
                     result[col.name] = [];
                   }
                 });
@@ -66,7 +67,7 @@ const Util = (columns: FormModel[], values: { [selector: string]: any }, exportD
             }
             break;
           case 'select':
-            if (!exportData && item.formItem.mode === 'multiple' && values[item.name]) {
+            if (!exportData && item?.formItem?.mode === 'multiple' && values[item.name]) {
               values[item.name] = values[item.name].map((item: any) => (item.id ? item.id : item));
             }
             break;

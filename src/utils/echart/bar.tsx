@@ -8,12 +8,12 @@ const Util = ({
   tooltip = {},
 }: {
   id: string;
-  label: string;
+  label: string[];
   series: object[];
-  legend: object;
-  grid: object;
-  xAxis: object;
-  tooltip: object;
+  legend?: object;
+  grid?: object;
+  xAxis?: object;
+  tooltip?: object;
 }) => {
   import('echarts').then((echarts) => {
     const element = document.getElementById(id);
