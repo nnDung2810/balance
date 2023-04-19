@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router';
 import { ModalForm, Spin, Form } from '@components';
 import { routerLinks } from '@utils';
 import { GlobalFacade } from '@reducers';
+import { ColumnForgottenPassword, ColumnLogin } from './column';
 import { FormModalRefObject } from '@models';
 import '../../../layouts/auth/index.less'
 

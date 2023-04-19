@@ -1,4 +1,4 @@
-import React, { MouseEventHandler } from 'react';
+import React from 'react';
 import classNames from 'classnames';
 import { DefaultTFuncReturn } from 'i18next';
 
@@ -27,7 +27,7 @@ type Type = {
   text?: string | DefaultTFuncReturn;
   className?: string;
   disabled?: boolean;
-  onClick?: MouseEventHandler<HTMLButtonElement>;
+  onClick?: any;
   id?: string;
   type?: 'button' | 'submit' | 'reset';
 };

@@ -16,7 +16,7 @@ export const CodeFacade = () => {
     ...useTypedSelector((state) => state[action.name] as State<Code>),
     set: (values: State<Code>) => dispatch(action.set(values)),
     get: (params: PaginationQuery<Code>) => dispatch(action.get(params)),
-    getById: ({ id, keyState = 'isVisible' }: { id: string; keyState?: keyof State<Code> }) =>
+    getById: ({ id, keyState = 'isVisible' }: { id: string; keyState: keyof State<Code> }) =>
       dispatch(action.getById({ id, keyState })),
     post: (values: Code) => dispatch(action.post(values)),
     put: (values: Code) => dispatch(action.put(values)),

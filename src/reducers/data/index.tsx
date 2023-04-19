@@ -15,7 +15,7 @@ export const DataFacade = () => {
     ...useTypedSelector((state) => state[action.name] as State<Data>),
     set: (values: State<Data>) => dispatch(action.set(values)),
     get: (params: PaginationQuery<Data>) => dispatch(action.get(params)),
-    getById: ({ id, keyState = 'isVisible' }: { id: string; keyState?: keyof State<Data> }) =>
+    getById: ({ id, keyState = 'isVisible' }: { id: string; keyState: keyof State<Data> }) =>
       dispatch(action.getById({ id, keyState })),
     post: (values: Data) => dispatch(action.post(values)),
     put: (values: Data) => dispatch(action.put(values)),

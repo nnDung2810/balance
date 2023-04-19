@@ -1,10 +1,10 @@
 import React from 'react';
 import classNames from 'classnames';
 
-const Component = ({ steps = [], current = 0 }: { steps: { title: string }[]; current: number }) => {
+const Component = ({ steps = [], current = 0 }: { steps: any[]; current: number }) => {
   return (
     <div className={`w-full flex flex-wrap items-center my-5`}>
-      {steps.map((step, index: number) => {
+      {steps.map((step: any, index: number) => {
         let bgRec = 'bg-gray-500';
         let bg = 'bg-gray-500 lg:bg-gray-500';
         let border = 'border-l-gray-500';

@@ -1,23 +1,20 @@
 import { CheckboxOptionType } from 'antd';
-import { DefaultTFuncReturn } from 'i18next';
 
 export class DataTableModel {
   name?: string;
-  title?: DefaultTFuncReturn;
+  title?: string;
   tableItem?: TableItem;
 }
 
 export class TableItem {
   filter?: TableItemFilter;
   width?: number;
-  fixed?: string;
+  fixed?: boolean;
   sorter?: boolean;
   onCell?: () => { style: any; onClick?: any };
   align?: 'left' | 'right' | 'center' | null;
   onClick?: any;
   render?: (text: any, item: any) => JSX.Element | string;
-  defaultSortOrder?: string;
-  defaultFilteredValue?: string;
 }
 
 export class TableItemFilter {
@@ -38,5 +35,6 @@ export class TableItemFilterList {
   value?: string | number;
 }
 export class TableRefObject {
-  constructor(public onChange: (request?: any) => void, public handleDelete: (id: string) => void) {}
+  onChange?: (request?: any) => void;
+  handleDelete?: (id: string) => void;
 }

@@ -9,7 +9,8 @@ function withClearCache(Component: any) {
         .then((response) => response.json())
         .then((meta) => {
           const latestVersionDate = meta.buildDate;
-          const currentVersionDate = parseInt(localStorage.getItem(timeBuild) || '0');
+          let currentVersionDate: any = localStorage.getItem(timeBuild);
+          currentVersionDate = parseInt(currentVersionDate);
           if (!currentVersionDate || latestVersionDate > currentVersionDate) {
             localStorage.clear();
             localStorage.setItem(timeBuild, new Date().getTime().toString());

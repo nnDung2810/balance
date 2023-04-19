@@ -1,7 +1,5 @@
 const Util = (name: string, type?: string) => {
-  const array: {
-    [selector: string]: string;
-  } = {
+  const array: any = {
     Login: '/auth/login',
     ResetPassword: '/auth/reset-password',
     MyProfile: '/my-profile',
@@ -16,9 +14,7 @@ const Util = (name: string, type?: string) => {
     Store:"/store",
   }; // 💬 generate link to here
 
-  const apis: {
-    [selector: string]: string;
-  } = {
+  const apis: any = {
     Auth: '/auth',
     CodeType: '/code-type',
     Code: '/code',

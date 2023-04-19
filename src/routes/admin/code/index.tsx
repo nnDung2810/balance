@@ -4,13 +4,12 @@ import { useTranslation } from 'react-i18next';
 import { DataTable, ModalForm, Button } from '@components';
 import { keyRole } from '@utils';
 import { GlobalFacade, CodeFacade, CodeTypeFacade } from '@reducers';
-import { Edit, Plus, Trash } from '@svgs';
+import { Plus } from '@svgs';
+import { ColumnCodeForm, ColumnCodeTable } from './column';
 import { FormModalRefObject, TableRefObject } from '@models';
-import { Popconfirm, Tooltip } from 'antd';
-import slug from 'slug';
 const Page = () => {
   const { t } = useTranslation();
-  const { user } = GlobalFacade();
+  const { formatDate, user } = GlobalFacade();
   const { result, get } = CodeTypeFacade();
   const listType = (result?.data || []).map((item) => ({ value: item.code, label: item.name }));
   useEffect(() => {
@@ -44,81 +43,13 @@ const Page = () => {
         paginationDescription={(from: number, to: number, total: number) =>
           t('routes.admin.Layout.Pagination', { from, to, total })
         }
-        columns={[
-          {
-            title: t('titles.Code'),
-            name: 'code',
-            tableItem: {
-              width: 100,
-              filter: { type: 'search' },
-              sorter: true,
-            },
-          },
-          {
-            title: t('Code.Name'),
-            name: 'name',
-            tableItem: {
-              filter: { type: 'search' },
-              sorter: true,
-            },
-          },
-          {
-            title: t('Code.Type'),
-            name: 'type',
-            tableItem: {
-              filter: {
-                type: 'radio',
-                list: listType || [],
-              },
-              width: 110,
-              sorter: true,
-              render: (text: string) => text && listType.filter((item) => item.value === text)[0]?.label,
-            },
-          },
-          {
-            title: t('user.Description'),
-            name: 'description',
-            tableItem: {
-              filter: { type: 'search' },
-              sorter: true,
-            },
-          },
-          {
-            title: t('user.Action'),
-            tableItem: {
-              width: 100,
-              align: 'center',
-              onCell: () => ({
-                style: { paddingTop: '0.25rem', paddingBottom: '0.25rem' },
-              }),
-              render: (text: string, data) => (
-                <div className={'flex gap-2'}>
-                  {user?.role?.permissions?.includes(keyRole.P_CODE_UPDATE) && (
-                    <Tooltip title={t('routes.admin.Layout.Edit')}>
-                      <Edit
-                        className="icon-cud bg-blue-600 hover:bg-blue-400"
-                        onClick={() => modalFormRef?.current?.handleEdit!(data)}
-                      />
-                    </Tooltip>
-                  )}
-                  {user?.role?.permissions?.includes(keyRole.P_CODE_DELETE) && (
-                    <Tooltip title={t('routes.admin.Layout.Delete')}>
-                      <Popconfirm
-                        placement="left"
-                        title={t('components.datatable.areYouSureWant')}
-                        onConfirm={() => modalFormRef?.current?.handleDelete!(data.id)}
-                        okText={t('components.datatable.ok')}
-                        cancelText={t('components.datatable.cancel')}
-                      >
-                        <Trash className="icon-cud bg-red-600 hover:bg-red-400" />
-                      </Popconfirm>
-                    </Tooltip>
-                  )}
-                </div>
-              ),
-            },
-          },
-        ]}
+        columns={ColumnCodeTable({
+          t,
+          formatDate,
+          listType,
+          modalFormRef,
+          permissions: user?.role?.permissions,
+        })}
         rightHeader={
           <div className={'flex gap-2'}>
             {user?.role?.permissions?.includes(keyRole.P_CODE_CREATE) && (
@@ -135,46 +66,11 @@ const Page = () => {
         facade={codeFacade}
         ref={modalFormRef}
         title={() => (!codeFacade.data?.id ? t('routes.admin.Layout.Add') : t('routes.admin.Layout.Edit'))}
-        columns={[
-          {
-            title: t('Code.Name'),
-            name: 'name',
-            formItem: {
-              col: 4,
-              rules: [{ type: 'required' }],
-              onBlur: (e, form) => {
-                if (e.target.value && !form.getFieldValue('code')) {
-                  form.setFieldValue('code', slug(e.target.value).toUpperCase());
-                }
-              },
-            },
-          },
-          {
-            title: t('Code.Type'),
-            name: 'type',
-            formItem: {
-              type: 'select',
-              col: 4,
-              rules: [{ type: 'required' }],
-              list: listType || [],
-            },
-          },
-          {
-            title: t('titles.Code'),
-            name: 'code',
-            formItem: {
-              col: 4,
-              rules: [{ type: 'required' }],
-            },
-          },
-          {
-            title: t('user.Description'),
-            name: 'description',
-            formItem: {
-              type: 'textarea',
-            },
-          },
-        ]}
+        columns={ColumnCodeForm({
+          t,
+          formatDate,
+          listType,
+        })}
         widthModal={600}
         idElement={'user'}
       />

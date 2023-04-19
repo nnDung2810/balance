@@ -66,7 +66,7 @@ export default {
   },
 } as ComponentMeta<typeof Pagination>;
 
-const Template: ComponentStory<typeof Pagination> = (args) => <Pagination {...args} />;
+const Template: ComponentStory<typeof Pagination> = (args: any) => <Pagination {...args} />;
 
 export const OnlyPagination: ComponentStory<typeof Pagination> = Template.bind({});
 OnlyPagination.args = {

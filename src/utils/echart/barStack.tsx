@@ -1,5 +1,5 @@
-const Util = ({ id }: { id: string }) => {
-  import('echarts').then((echarts) => {
+const Util = ({ id }: any) => {
+  import('echarts').then((echarts: any) => {
     const element = document.getElementById(id);
     if (element) {
       const label = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dev'];

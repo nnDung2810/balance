@@ -46,7 +46,7 @@ export default {
   },
 } as ComponentMeta<typeof Spin>;
 
-const Template: ComponentStory<typeof Spin> = (args) => (
+const Template: ComponentStory<typeof Spin> = (args: any) => (
   <Spin {...args}>
     <p>
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus vel dapibus nibh. Proin gravida volutpat ex non

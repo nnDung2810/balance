@@ -1,5 +1,5 @@
-import React, { PropsWithChildren } from 'react';
+import React from 'react';
 import '../../assets/styles/index.less';
 
-const Component = ({ children }: PropsWithChildren) => <>{children}</>;
+const Component = ({ children }: any) => <>{children}</>;
 export default Component;
