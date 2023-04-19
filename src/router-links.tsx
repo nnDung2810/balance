@@ -4,6 +4,7 @@ const Util = (name: string, type?: string) => {
     ResetPassword: '/auth/reset-password',
     MyProfile: '/my-profile',
     Dashboard: '/',
+    Supplier: '/supplier',
     User: '/user',
     'User/List': '/user/list',
     'User/Add': '/user/add',
@@ -20,6 +21,7 @@ const Util = (name: string, type?: string) => {
     User: '/user',
     DataType: '/data-type',
     Data: '/data',
+    Supplier: '/supplier',
   }; // 💬 generate api to here
 
   switch (type) {

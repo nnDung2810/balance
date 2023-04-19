@@ -33,6 +33,11 @@ export const pages = [
         title: 'Dashboard',
       },
       {
+        path: routerLinks('Supplier'),
+        component: React.lazy(() => import('./admin/supplier')),
+        title: 'Supplier',
+      },
+      {
         path: routerLinks('Code'),
         component: React.lazy(() => import('./admin/code')),
         title: 'Code',

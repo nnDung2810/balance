@@ -273,8 +273,8 @@ const Layout = ({ children }: PropsWithChildren) => {
           {/* <h1 className={'text-xl font-bold block sm:hidden pb-5'}>{t('pages.' + title)}</h1> */}
           <h1 className={'text-xl font-bold block pb-5'}>{t('titles.' + title)}</h1>
           {children}
-        </div>
-        <footer className="text-left bg-gray-100 pt-5 w-full">
+        </div>  
+        <footer className="text-left sm:-mx-5 pt-5  mt-10 bg-white p-4 !mr-0">
           {t('layout.footer', { year: new Date().getFullYear() })}
         </footer>
       </section>

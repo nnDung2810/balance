@@ -120,7 +120,7 @@ const Layout = ({ isCollapsed = false, permission = [] }: any) => {
               );
             } else {
               return isCollapsed ? (
-                <Popover key={index} placement="rightTop" trigger={'click'} content={subMenu1(item.child)} >
+                <Popover key={index} placement="rightTop" trigger={'hover'} content={subMenu1(item.child)} >
                   <li className="flex items-center justify-center h-11 m-3 px-2 text-gray-300 fill-gray-300 ">
                     {/* <img src={item.icon} className={classNames('h-8  w-8 block !fill-red-700', { 'ml-1': !isCollapsed})}/> */}
                     <div className={classNames({ 'ml-1': !isCollapsed })}>{item.icon}</div>

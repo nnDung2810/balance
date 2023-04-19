@@ -78,7 +78,8 @@
     "Setting": "Thiết lập",
     "Code": "Mã",
     "Data": "Dữ liệu",
-    "Page": "Trang"
+    "Page": "Trang",
+    "Supplier": "Quản lý nhà cung cấp"
   },
   "pages": {
     "User/List": "Danh sách Người dùng",
@@ -170,6 +171,14 @@
     "Fullname": "Họ và tên",
     "Phone Number": "Số điện thoại",
     "Action": "Hoạt động"
+  },
+  "supplier": {
+    "Code": "Mã NCC",
+    "Name": "Tên nhà cung cấp",
+    "Address": "Địa chỉ",
+    "Representative": "Người đại diện",
+    "Phone Number": "Số điện thoại",
+    "Status": "Trạng thái"
   },
   "Code": {
     "Type": "Loại mã",

@@ -109,7 +109,7 @@
     }
   },
   "layout": {
-    "footer": "Ari Technology Company Ltd. ©{{year}}"
+    "footer": "Copyright ©2023 ARI Technology Co ., JSC. All rights reserved."
   },
   "routes": {
     "auth": {
