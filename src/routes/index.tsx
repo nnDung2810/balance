@@ -7,7 +7,13 @@ import { keyUser, routerLinks } from '@utils';
 import { useTranslation } from 'react-i18next';
 import { GlobalFacade } from '@reducers';
 
-const Layout = ({ layout: Layout, isPublic = false }: any) => {
+const Layout = ({
+  layout: Layout,
+  isPublic = false,
+}: {
+  layout: React.LazyExoticComponent<({ children }: { children?: React.ReactNode }) => JSX.Element>;
+  isPublic: boolean;
+}) => {
   const { user } = GlobalFacade();
   if (isPublic === true || !!user?.email || !!JSON.parse(localStorage.getItem(keyUser) || '{}')?.email)
     return (
@@ -18,13 +24,20 @@ const Layout = ({ layout: Layout, isPublic = false }: any) => {
   return <Navigate to={routerLinks('Login')} />;
 };
 
-const Page = ({ title = '', component: Comp, ...props }: { title: string; component: any }) => {
+const Page = ({
+  title = '',
+  component: Comp,
+  ...props
+}: {
+  title: string;
+  component: React.LazyExoticComponent<() => JSX.Element>;
+}) => {
   const { t } = useTranslation();
   const globalFacade = GlobalFacade();
 
   useEffect(() => {
     document.title = t('pages.' + title || '');
-    globalFacade.set({ title });
+    globalFacade.set({ title, formatDate: globalFacade.formatDate });
   }, [title]);
 
   if (typeof Comp === 'string') {
@@ -35,9 +48,9 @@ const Page = ({ title = '', component: Comp, ...props }: { title: string; compon
 const Pages = () => (
   <BrowserRouter>
     <Routes>
-      {pages.map(({ layout, isPublic, child }: any, index) => (
+      {pages.map(({ layout, isPublic, child }, index) => (
         <Route key={index} element={<Layout layout={layout} isPublic={isPublic} />}>
-          {child.map(({ path = '', title = '', component }: any, subIndex: number) => (
+          {child.map(({ path = '', title = '', component }, subIndex: number) => (
             <Route
               key={path + subIndex}
               path={path}

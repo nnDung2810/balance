@@ -9,12 +9,18 @@ import { Arrows, Edit, Plus, Trash } from '@svgs';
 // import { ModalForm } from '@components';
 // import { listStyle } from '@utils';
 
-export const DraggableLayout = ({ value, onChange }: { value: any; onChange?: any }) => {
+export const DraggableLayout = ({
+  value,
+  onChange,
+}: {
+  value?: { col: object; name: string }[];
+  onChange?: (list: object[]) => void;
+}) => {
   const id = useRef(v4());
-  const idNext = useRef();
+  const idNext = useRef<number>();
   const indexEdit = useRef(-1);
   const [isLoading, set_isLoading] = useState(false);
-  const [list, set_list] = useState(value);
+  const [list, set_list] = useState(value || []);
 
   useEffect(() => {
     if (!isLoading) {
@@ -25,7 +31,7 @@ export const DraggableLayout = ({ value, onChange }: { value: any; onChange?: an
       style.appendChild(document.createTextNode(convertCSS()));
       head.appendChild(style);
     } else {
-      const style: any = document.getElementById('style' + id.current);
+      const style = document.getElementById('style' + id.current) as HTMLElement;
       style.innerHTML = '';
       style.appendChild(document.createTextNode(convertCSS()));
     }
@@ -40,12 +46,15 @@ export const DraggableLayout = ({ value, onChange }: { value: any; onChange?: an
             constrainDimensions: true,
           },
         });
-        draggable.on('drag:out', ({ originalSource, over }: any) => {
-          if (over.id !== originalSource.id) {
-            idNext.current = over.id;
-          }
-        });
-        draggable.on('drag:stop', ({ originalSource }: any) => {
+        draggable.on(
+          'drag:out',
+          ({ originalSource, over }: { originalSource: { id: number }; over: { id: number } }) => {
+            if (over.id !== originalSource.id) {
+              idNext.current = over.id;
+            }
+          },
+        );
+        draggable.on('drag:stop', ({ originalSource }: { originalSource: { id: number }; over: { id: number } }) => {
           const indexNext: number = idNext.current || 0;
           const indexPrev = originalSource.id;
           const dataPrev = list[indexPrev];
@@ -61,12 +70,12 @@ export const DraggableLayout = ({ value, onChange }: { value: any; onChange?: an
   const reload = () => {
     set_isLoading(true);
     set_list([...list]);
-    onChange(list);
+    onChange && onChange(list);
   };
 
   const convertCSS = () => {
     let css = '';
-    list.forEach((item: any, index: number) => {
+    list.forEach((item: { col: object }, index: number) => {
       if (index === 0) {
         css += `#draggable${id.current} .draggable:first-child {grid-column: span ${item.col} / span ${item.col};}`;
       } else {
@@ -79,7 +88,7 @@ export const DraggableLayout = ({ value, onChange }: { value: any; onChange?: an
     });
     return css;
   };
-  const modalFormRef = useRef<any>();
+  // const modalFormRef = useRef<any>();
 
   return (
     <Fragment>
@@ -88,7 +97,7 @@ export const DraggableLayout = ({ value, onChange }: { value: any; onChange?: an
           className="bg-blue-500 text-white px-2 h-7 rounded-md hover:bg-blue-400 inline-flex items-center gap-1 hover:opacity-80"
           onClick={() => {
             indexEdit.current = -1;
-            modalFormRef.current.handleEdit({ col: 4 });
+            // modalFormRef.current.handleEdit({ col: 4 });
           }}
         >
           <Plus className="icon-cud" />
@@ -166,7 +175,7 @@ export const DraggableLayout = ({ value, onChange }: { value: any; onChange?: an
       {/*/>*/}
       {!isLoading && (
         <article id={'draggable' + id.current} className="w-full grid gap-2 grid-cols-4 mb-2">
-          {list.map((item: any, index: number) => (
+          {list.map((item, index: number) => (
             <div className="draggable" id={index.toString()} key={index}>
               <div className="flex items-center gap-2 cursor-move">
                 <Arrows className="w-5 h-5" />
@@ -178,7 +187,7 @@ export const DraggableLayout = ({ value, onChange }: { value: any; onChange?: an
                     className="icon-cud "
                     onClick={() => {
                       indexEdit.current = index;
-                      modalFormRef.current.handleEdit(item);
+                      // modalFormRef.current.handleEdit(item);
                     }}
                   />
                 </Tooltip>

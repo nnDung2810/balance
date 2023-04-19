@@ -236,7 +236,7 @@ interface State {
   isVisible?: boolean;
   status?: string;
   title?: string;
-  formatDate?: string;
+  formatDate: string;
   language?: 'vn' | 'en' | null;
   locale?: typeof viVN | typeof enUS;
 }

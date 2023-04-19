@@ -1,5 +1,21 @@
-const Util = ({ id, label, series, tooltip = {}, grid = {}, legend = {}, xAxis = {} }: any) => {
-  import('echarts').then((echarts: any) => {
+const Util = ({
+  id,
+  label,
+  series,
+  legend = {},
+  grid = {},
+  xAxis = {},
+  tooltip = {},
+}: {
+  id: string;
+  label: string[];
+  series: object[];
+  legend?: object;
+  grid?: object;
+  xAxis?: object;
+  tooltip?: object;
+}) => {
+  import('echarts').then((echarts) => {
     const element = document.getElementById(id);
     if (element) {
       echarts.init(element).setOption({

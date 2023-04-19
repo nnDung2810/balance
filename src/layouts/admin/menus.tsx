@@ -4,7 +4,7 @@ import { keyRole } from '@utils';
 import './index.less';
 import { Chart, Cog, User } from '@svgs';
 
-const Layout = () => [
+const Layout = [
   {
     icon: <Chart className="icon-menu" />,
     name: 'Dashboard',

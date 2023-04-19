@@ -43,8 +43,8 @@ const Hook = forwardRef(
         textSubmit={textSubmit}
         className={className}
         footerCustom={footerCustom}
-        title={(data: any) => title(data)}
-        onOk={async (data: any) => {
+        title={() => title(data)}
+        onOk={async () => {
           return form
             .validateFields()
             .then(async (values) => {

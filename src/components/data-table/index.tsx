@@ -5,12 +5,12 @@ import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
 import dayjs from 'dayjs';
 import classNames from 'classnames';
-// @ts-ignore
 
 import { Button, Pagination } from '@components';
-import { TableGet, TableRefObject } from '@models';
+import { DataTableModel, PaginationQuery, TableGet, TableRefObject } from '@models';
 import { cleanObjectKeyNull } from '@utils';
 import { Calendar, CheckCircle, CheckSquare, Search, Times } from '@svgs';
+import { SorterResult } from 'antd/lib/table/interface';
 
 const RadioGroup = Radio.Group;
 const CheckboxGroup = Checkbox.Group;
@@ -28,13 +28,15 @@ const checkTextToShort = (text: string) => {
   );
 };
 
-const getQueryStringParams = (query: any) => {
+const getQueryStringParams = (query: string) => {
   return query
-    ? (/^[?#]/.test(query) ? query.slice(1) : query).split('&').reduce((params: any, param: any) => {
-        const [key, value] = param.split('=');
-        params[key] = value ? decodeURIComponent(value.replace(/\+/g, ' ')) : '';
-        return params;
-      }, {})
+    ? (/^[?#]/.test(query) ? query.slice(1) : query)
+        .split('&')
+        .reduce((params: { [selector: string]: string }, param: string) => {
+          const [key, value] = param.split('=');
+          params[key] = value ? decodeURIComponent(value.replace(/\+/g, ' ')) : '';
+          return params;
+        }, {})
     : {}; // Trim - from end of text
 };
 
@@ -48,11 +50,6 @@ const Hook = forwardRef(
         page: 1,
         perPage: 10,
       },
-      pageIndex = 'page',
-      pageSize = 'perPage',
-      sort = 'sorts',
-      filter = 'filter',
-      fullTextSearch = 'fullTextSearch',
       showPagination = true,
       leftHeader,
       rightHeader,
@@ -85,8 +82,8 @@ const Hook = forwardRef(
     const navigate = useNavigate();
     const idTable = useRef(idElement);
     const param = useRef(defaultRequest);
-    const timeoutSearch = useRef<any>();
-    const cols = useRef<any>();
+    const timeoutSearch = useRef<ReturnType<typeof setTimeout>>();
+    const cols = useRef<DataTableModel[]>();
     const { result, isLoading, queryParams, time } = facade;
     const params =
       save && location.search && location.search.indexOf('=') > -1
@@ -96,8 +93,8 @@ const Hook = forwardRef(
       if (facade) {
         param.current = cleanObjectKeyNull({
           ...params,
-          [sort]: JSON.stringify(params[sort]),
-          [filter]: JSON.stringify(params[filter]),
+          sorts: JSON.stringify(params.sorts),
+          filter: JSON.stringify(params.filter),
         });
         localStorage.setItem(idTable.current, JSON.stringify(cleanObjectKeyNull(param.current)));
         if (!result?.data || new Date().getTime() > time || JSON.stringify(param.current) != queryParams)
@@ -108,18 +105,18 @@ const Hook = forwardRef(
       };
     }, []);
 
-    const onChange = (request?: any) => {
+    const onChange = (request?: PaginationQuery) => {
       if (request) {
         localStorage.setItem(idTable.current, JSON.stringify(request));
         param.current = { ...request };
         if (save) {
-          if (request[sort] && typeof request[sort] === 'object') {
-            request[sort] = JSON.stringify(request[sort]);
+          if (request.sorts && typeof request.sorts === 'object') {
+            request.sorts = JSON.stringify(request.sorts);
           }
-          if (request[filter] && typeof request[filter] === 'object') {
-            request[filter] = JSON.stringify(request[filter]);
+          if (request.filter && typeof request.filter === 'object') {
+            request.filter = JSON.stringify(request.filter);
           }
-          navigate(location.pathname + '?' + new URLSearchParams(request).toString());
+          navigate(location.pathname + '?' + new URLSearchParams(request as Record<string, string>).toString());
         }
       } else if (localStorage.getItem(idTable.current)) {
         param.current = JSON.parse(localStorage.getItem(idTable.current) || '{}');
@@ -130,11 +127,11 @@ const Hook = forwardRef(
       }
     };
 
-    if (params[filter] && typeof params[filter] === 'string') {
-      params[filter] = JSON.parse(params[filter]);
+    if (params.filter && typeof params.filter === 'string') {
+      params.filter = JSON.parse(params.filter);
     }
-    if (params[sort] && typeof params[sort] === 'string') {
-      params[sort] = JSON.parse(params[sort]);
+    if (params.sorts && typeof params.sorts === 'string') {
+      params.sorts = JSON.parse(params.sorts);
     }
 
     const groupButton = (confirm: any, clearFilters: any, key: any, value: any) => (
@@ -155,7 +152,7 @@ const Hook = forwardRef(
         />
       </div>
     );
-    const valueFilter = useRef<any>({});
+    const valueFilter = useRef<{ [selector: string]: boolean }>({});
     const columnSearch = (get: TableGet, fullTextSearch = '', value?: any, facade: any = {}) => {
       if (get?.facade) {
         const params = get.params ? get.params(fullTextSearch, value) : { fullTextSearch };
@@ -304,20 +301,25 @@ const Hook = forwardRef(
       ),
     });
     cols.current = columns
-      .filter((col: any) => !!col && !!col.tableItem)
-      .map((col: any) => {
+      .filter((col: DataTableModel) => !!col && !!col.tableItem)
+      .map((col: DataTableModel) => {
         let item = col.tableItem;
 
-        if (item.filter) {
-          if (params[filter] && params[filter][col.name]) {
-            item = { ...item, defaultFilteredValue: params[filter][col.name] };
+        if (item?.filter) {
+          const filter = params?.filter as any;
+          if (params.filter && filter[col!.name!]) {
+            item = { ...item, defaultFilteredValue: filter[col!.name!] };
           }
 
-          switch (item.filter.type) {
+          switch (item?.filter?.type) {
             case 'radio':
               item = {
                 ...item,
-                ...getColumnSearchRadio(item.filter.list, item.filter.name || col.name, item.filter.get),
+                ...getColumnSearchRadio(
+                  item.filter.list as CheckboxOptionType[],
+                  item.filter.name || col!.name!,
+                  item.filter.get,
+                ),
               };
               break;
             case 'checkbox':
@@ -330,17 +332,17 @@ const Hook = forwardRef(
               item = { ...item, ...getColumnSearchDate(item.filter.name || col.name) };
               break;
             default:
-              item = { ...item, ...getColumnSearchInput(item.filter.name || col.name) };
+              item = { ...item, ...getColumnSearchInput(item?.filter?.name || col.name) };
           }
           delete item.filter;
         }
-
-        if (item.sorter && params[sort] && params[sort][col.name]) {
+        const sorts = params?.sorts as any;
+        if (item?.sorter && sorts && sorts[col!.name!]) {
           item.defaultSortOrder =
-            params[sort][col.name] === 'ASC' ? 'ascend' : params[sort][col.name] === 'DESC' ? 'descend' : '';
+            sorts[col!.name!] === 'ASC' ? 'ascend' : sorts[col!.name!] === 'DESC' ? 'descend' : '';
         }
-        if (!item.render) {
-          item.render = (text: string) => text && checkTextToShort(text);
+        if (!item?.render) {
+          item!.render = (text: string) => text && checkTextToShort(text);
         }
         // noinspection JSUnusedGlobalSymbols
         return {
@@ -350,29 +352,34 @@ const Hook = forwardRef(
         };
       });
 
-    const handleTableChange = (pagination: any, filters = {}, sorts: any, tempFullTextSearch: string) => {
-      let tempPageIndex = pagination?.current || params[pageIndex];
-      const tempPageSize = pagination?.pageSize || params[pageSize];
+    const handleTableChange = (
+      pagination?: { page?: number; perPage?: number },
+      filters = {},
+      sorts?: SorterResult<any>,
+      tempFullTextSearch?: string,
+    ) => {
+      let tempPageIndex = pagination?.page || params.page;
+      const tempPageSize = pagination?.perPage || params.perPage;
 
       const tempSort =
         sorts && sorts?.field && sorts?.order
           ? {
-              [sorts.field]: sorts.order === 'ascend' ? 'ASC' : sorts.order === 'descend' ? 'DESC' : '',
+              [sorts.field as string]: sorts.order === 'ascend' ? 'ASC' : sorts.order === 'descend' ? 'DESC' : '',
             }
           : sorts?.field
           ? null
           : sorts;
 
-      if (tempFullTextSearch !== params[fullTextSearch]) {
+      if (tempFullTextSearch !== params.fullTextSearch) {
         tempPageIndex = 1;
       }
       const tempParams = cleanObjectKeyNull({
         ...params,
-        [pageIndex]: tempPageIndex,
-        [pageSize]: tempPageSize,
-        [sort]: JSON.stringify(tempSort),
-        [filter]: JSON.stringify(cleanObjectKeyNull(filters)),
-        [fullTextSearch]: tempFullTextSearch,
+        page: tempPageIndex,
+        perPage: tempPageSize,
+        sorts: JSON.stringify(tempSort),
+        filter: JSON.stringify(cleanObjectKeyNull(filters)),
+        fullTextSearch: tempFullTextSearch,
       });
       onChange && onChange(tempParams);
     };
@@ -384,17 +391,17 @@ const Hook = forwardRef(
             <div className="relative">
               <input
                 id={idTable.current + '_input_search'}
-                className="w-full sm:w-80 h-10 rounded-xl text-gray-600 font-semibold bg-white border border-solid border-gray-400 pr-9 pl-8"
-                defaultValue={params[fullTextSearch]}
+                className="w-full sm:w-52 h-10 rounded-xl text-gray-600 bg-white border border-solid border-gray-100 pr-9 pl-4"
+                defaultValue={params.fullTextSearch}
                 type="text"
-                placeholder={searchPlaceholder || t('components.datatable.pleaseEnterValueToSearch')}
+                placeholder={searchPlaceholder || (t('components.datatable.pleaseEnterValueToSearch') as string)}
                 onChange={() => {
                   clearTimeout(timeoutSearch.current);
                   timeoutSearch.current = setTimeout(() => {
                     handleTableChange(
-                      null,
-                      params[filter],
-                      params[sort],
+                      undefined,
+                      params.filter,
+                      params.sorts as SorterResult<any>,
                       (document.getElementById(idTable.current + '_input_search') as HTMLInputElement).value,
                     );
                   }, 500);
@@ -402,32 +409,32 @@ const Hook = forwardRef(
                 onKeyUp={(e) => {
                   if (e.key === 'Enter') {
                     handleTableChange(
-                      null,
-                      params[filter],
-                      params[sort],
+                      undefined,
+                      params.filter,
+                      params.sorts as SorterResult<any>,
                       (document.getElementById(idTable.current + '_input_search') as HTMLInputElement).value,
                     );
                   }
                 }}
               />
-              {!params[fullTextSearch] ? (
+              {!params.fullTextSearch ? (
                 <Search
                   className="w-4 h-4 my-1 fill-gray-500 text-lg las absolute top-2 left-2.5 z-10"
                   onClick={() => {
-                    if (params[fullTextSearch]) {
+                    if (params.fullTextSearch) {
                       (document.getElementById(idTable.current + '_input_search') as HTMLInputElement).value = '';
-                      handleTableChange(null, params[filter], params[sort], '');
+                      handleTableChange(undefined, params.filter, params.sorts as SorterResult<any>, '');
                     }
                   }}
                 />
               ) : (
-                !!params[fullTextSearch] && (
+                !!params.fullTextSearch && (
                   <Times
                     className="w-4 h-4 my-1 fill-gray-500 text-lg las absolute top-2 right-3 z-10"
                     onClick={() => {
-                      if (params[fullTextSearch]) {
+                      if (params.fullTextSearch) {
                         (document.getElementById(idTable.current + '_input_search') as HTMLInputElement).value = '';
-                        handleTableChange(null, params[filter], params[sort], '');
+                        handleTableChange(undefined, params.filter, params.sorts as SorterResult<any>, '');
                       }
                     }}
                   />
@@ -457,7 +464,9 @@ const Hook = forwardRef(
                 ...item,
                 key: item.id || v4(),
               }))}
-              onChange={(pagination, filters, sorts) => handleTableChange(null, filters, sorts, params[fullTextSearch])}
+              onChange={(pagination, filters, sorts) =>
+                handleTableChange(undefined, filters, sorts as SorterResult<any>, params.fullTextSearch)
+              }
               showSorterTooltip={false}
               scroll={{ x: xScroll, y: yScroll }}
               size="small"
@@ -466,13 +475,13 @@ const Hook = forwardRef(
             {showPagination && (
               <Pagination
                 total={result?.count}
-                pageIndex={+params[pageIndex]}
-                pageSize={+params[pageSize]}
+                page={+params!.page!}
+                perPage={+params!.perPage!}
                 pageSizeOptions={pageSizeOptions}
                 pageSizeRender={pageSizeRender}
                 pageSizeWidth={pageSizeWidth}
-                queryParams={(pagination: any) =>
-                  handleTableChange(pagination, params[filter], params[sort], params[fullTextSearch])
+                queryParams={(pagination: { page?: number; perPage?: number }) =>
+                  handleTableChange(pagination, params.filter, params.sorts as SorterResult<any>, params.fullTextSearch)
                 }
                 paginationDescription={paginationDescription}
                 idElement={idTable.current}
@@ -488,21 +497,16 @@ const Hook = forwardRef(
 );
 Hook.displayName = 'HookTable';
 type Type = {
-  columns: any[];
+  columns: DataTableModel[];
   showList?: boolean;
   footer?: (result: any) => any;
-  defaultRequest?: any;
-  pageIndex?: string;
-  pageSize?: string;
-  sort?: string;
-  filter?: string;
-  fullTextSearch?: string;
+  defaultRequest?: PaginationQuery;
   showPagination?: boolean;
   leftHeader?: JSX.Element;
   rightHeader?: JSX.Element;
   showSearch?: boolean;
   save?: boolean;
-  searchPlaceholder?: any;
+  searchPlaceholder?: string;
   subHeader?: (count: number) => any;
   xScroll?: string | number | true;
   yScroll?: string | number;

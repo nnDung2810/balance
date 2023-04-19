@@ -106,12 +106,12 @@ const Component = {
     ),
 };
 type Type = {
-  text: any;
+  text: string;
   title?: any;
   cancelButtonText?: any;
   confirmButtonText?: any;
-  onConfirm?: any;
-  onDenied?: any;
+  onConfirm?: () => void;
+  onDenied?: () => void;
   confirmButtonColor?: string;
   cancelButtonColor?: string;
   showCloseButton?: boolean;

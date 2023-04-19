@@ -72,7 +72,7 @@ const Layout = ({ children }: PropsWithChildren) => {
     }
   }, [location]);
 
-  const Header = ({ isCollapsed, isDesktop }: any) => (
+  const Header = ({ isCollapsed, isDesktop }: { isCollapsed: boolean; isDesktop: boolean }) => (
     <header
       className={classNames(
         'bg-blue-50 w-full header h-20 transition-all duration-300 ease-in-out sticky top-0 block z-10',

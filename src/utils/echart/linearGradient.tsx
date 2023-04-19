@@ -1,5 +1,5 @@
-const Util = ({ hex }: any) => {
-  import('echarts').then((echarts: any) => {
+const Util = ({ hex }: { hex: string }) => {
+  import('echarts').then((echarts) => {
     return new echarts.graphic.LinearGradient(
       0,
       0,
@@ -13,7 +13,7 @@ const Util = ({ hex }: any) => {
     );
   });
 };
-const hexToRgba = ({ hex, alpha = 1 }: any) => {
+const hexToRgba = ({ hex, alpha = 1 }: { hex: string; alpha?: number }) => {
   const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
   hex = hex.replace(shorthandRegex, function (m: string, r: string, g: string, b: string) {
     return r + r + g + g + b + b;
