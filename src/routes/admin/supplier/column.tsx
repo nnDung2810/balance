@@ -14,14 +14,14 @@ export const ColumnTableUser = ({ t, formatDate, permissions, navigate, dataTabl
       title: t(`supplier.Code`),
       name: 'name',
       tableItem: {
-        filter: { type: 'search' },
-        width: 200,
+        // filter: { type: 'search' },
+        width: 140,
         fixed: window.innerWidth > 767,
-        sorter: true,
-        onCell: () => ({
-          style: { paddingTop: '0.25rem', paddingBottom: 0 },
-          onClick: async () => null,
-        }),
+        // sorter: true,
+        // onCell: () => ({
+        //   style: { paddingTop: '0.25rem', paddingBottom: 0 },
+        //   onClick: async () => null,
+        // }),
         render: (text: string, item: any) => text && <Avatar src={item.avatar} text={item.name} />,
       },
     },
@@ -29,23 +29,24 @@ export const ColumnTableUser = ({ t, formatDate, permissions, navigate, dataTabl
       title: t(`supplier.Name`),
       name: 'positionCode',
       tableItem: {
-        filter: {
-          type: 'checkbox',
-          name: 'positionCode',
-          get: {
-            facade: CodeFacade,
-            format: (item: any) => ({
-              label: item.name,
-              value: item.code,
-            }),
-            params: (fullTextSearch: string, value) => ({
-              fullTextSearch,
-              filter: { type: 'POS' },
-              extend: { code: value },
-            }),
-          },
-        },
-        sorter: true,
+        width: 170,
+        // filter: {
+        //   type: 'checkbox',
+        //   name: 'positionCode',
+        //   get: {
+        //     facade: CodeFacade,
+        //     format: (item: any) => ({
+        //       label: item.name,
+        //       value: item.code,
+        //     }),
+        //     params: (fullTextSearch: string, value) => ({
+        //       fullTextSearch,
+        //       filter: { type: 'POS' },
+        //       extend: { code: value },
+        //     }),
+        //   },
+        // },
+        // sorter: true,
         render: (item) => item?.name,
       },
     },
@@ -53,30 +54,33 @@ export const ColumnTableUser = ({ t, formatDate, permissions, navigate, dataTabl
       title: t(`supplier.Address`),
       name: 'email',
       tableItem: {
-        filter: { type: 'search' },
-        sorter: true,
+        width: 380,
+        // filter: { type: 'search' },
+        // sorter: true,
       },
     },
     {
       title: t(`supplier.Representative`),
       name: 'phoneNumber',
       tableItem: {
-        filter: { type: 'search' },
-        sorter: true,
+        width: 180  ,
+        // filter: { type: 'search' },
+        // sorter: true,
       },
     },
     {
       title: t(`supplier.Phone Number`),
       name: 'phoneNumber',
       tableItem: {
-        filter: { type: 'search' },
-        sorter: true,
+        width: 115,
+        // filter: { type: 'search' },
+        // sorter: true,
       },
     },
     {
       title: t(`supplier.Status`),
       tableItem: {
-        width: 80,
+        width: 100,  
         align: 'center',
         onCell: () => ({
           style: { paddingTop: '0.25rem', paddingBottom: '0.25rem' },

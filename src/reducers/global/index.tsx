@@ -10,7 +10,7 @@ import { useAppDispatch, useTypedSelector } from '@reducers';
 import { CommonEntity } from '@models';
 import { UserRole } from '../user/role';
 
-const name = 'Auth';
+const name = 'User-admin';
 const action = {
   name,
   set: createAsyncThunk(name + '/set', async (values: State) => values),
@@ -31,9 +31,9 @@ const action = {
     const { data } = await API.put<User>(`${routerLinks(name, 'api')}/profile`, values);
     return data || {};
   }),
-  login: createAsyncThunk(name + '/login', async (values: { password: string; email: string }) => {
+  login: createAsyncThunk(name + '/sign-in', async (values: { password: string; email: string; username: string }) => {
     const { data, message } = await API.post<{ user: User; accessToken: string; refreshToken: string }>(
-      `${routerLinks(name, 'api')}/login`,
+      `${routerLinks(name, 'api')}/sign-in`,
       values,
     );
     if (data) {
@@ -260,7 +260,7 @@ export const GlobalFacade = () => {
     logout: () => dispatch(action.logout()),
     profile: () => dispatch(action.profile()),
     putProfile: (values: User) => dispatch(action.putProfile(values)),
-    login: (values: { password: string; email: string }) => dispatch(action.login(values)),
+    login: (values: { password: string; email: string; username: string }) => dispatch(action.login(values)),
     forgottenPassword: (values: { email: string }) => dispatch(action.forgottenPassword(values)),
     resetPassword: (values: resetPassword) => dispatch(action.resetPassword(values)),
     setLanguage: (value: 'vn' | 'en') => dispatch(globalSlice.actions.setLanguage(value)),

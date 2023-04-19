@@ -46,7 +46,7 @@ const Page = () => {
           })}
           rightHeader={
             <div className={'flex gap-2'}>
-              {user?.role?.permissions?.includes(keyRole.P_USER_CREATE) && (
+              {user && (
                 <Button
                   className='!bg-green-900 !rounded-xl'
                   icon={<Plus className="icon-cud !h-5 !w-5" />}

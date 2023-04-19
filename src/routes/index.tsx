@@ -9,7 +9,7 @@ import { GlobalFacade } from '@reducers';
 
 const Layout = ({ layout: Layout, isPublic = false }: any) => {
   const { user } = GlobalFacade();
-  if (isPublic === true || !!user?.email || !!JSON.parse(localStorage.getItem(keyUser) || '{}')?.email)
+  // if (isPublic === true || !!user?.email || !!JSON.parse(localStorage.getItem(keyUser) || '{}')?.email)
     return (
       <Layout>
         <Outlet />

@@ -38,11 +38,11 @@ const Layout = () => [
     child: [
       {
         name: 'Code',
-        permission: keyRole.P_CODE_LISTED,
+        // permission: keyRole.P_CODE_LISTED,
       },
       {
         name: 'Data',
-        permission: keyRole.P_DATA_LISTED,
+        // permission: keyRole.P_DATA_LISTED,
       },
     ],
   },

@@ -16,13 +16,12 @@ export const ColumnTableUser = ({ t, formatDate, permissions, navigate, dataTabl
       title: t(`user.Fullname`),
       name: 'name',
       tableItem: {
-        filter: { type: 'search' },
+        // filter: { type: 'search' },
         width: 400,
-      //  sorter: true,
-        onCell: () => ({
-          style: { paddingTop: '0.25rem', paddingBottom: 0 },
-          onClick: async () => null,
-        }),
+        // onCell: () => ({
+        //   style: { paddingTop: '0.25rem', paddingBottom: 0 },
+        //   onClick: async () => null,
+        // }),
         render: (text: string, item: any) => text && <Avatar src={item.avatar} text={item.name} />,
       },
     },
@@ -31,23 +30,22 @@ export const ColumnTableUser = ({ t, formatDate, permissions, navigate, dataTabl
       name: 'positionCode',
       tableItem: {
         width: 90,
-        filter: {
-          type: 'checkbox',
-          name: 'positionCode',
-          get: {
-            facade: CodeFacade,
-            format: (item: any) => ({
-              label: item.name,
-              value: item.code,
-            }),
-            params: (fullTextSearch: string, value) => ({
-              fullTextSearch,
-              filter: { type: 'POS' },
-              extend: { code: value },
-            }),
-          },
-        },
-      //  sorter: true,
+        // filter: {
+        //   type: 'checkbox',
+        //   name: 'positionCode',
+        //   get: {
+        //     facade: CodeFacade,
+        //     format: (item: any) => ({
+        //       label: item.name,
+        //       value: item.code,
+        //     }),
+        //     params: (fullTextSearch: string, value) => ({
+        //       fullTextSearch,
+        //       filter: { type: 'POS' },
+        //       extend: { code: value },
+        //     }),
+        //   },
+        // },
         render: (item) => item?.name,
       },
     },
@@ -56,7 +54,7 @@ export const ColumnTableUser = ({ t, formatDate, permissions, navigate, dataTabl
       name: 'email',
       tableItem: {
         width: 200,
-        filter: { type: 'search' },
+        // filter: { type: 'search' },
     //    sorter: true,
       },
     },
@@ -65,17 +63,15 @@ export const ColumnTableUser = ({ t, formatDate, permissions, navigate, dataTabl
       name: 'phoneNumber',
       tableItem: {
         width: 200,
-        filter: { type: 'search' },
-    //    sorter: true,
+        // filter: { type: 'search' },
       },
     },
     {
       title: t('user.Date of birth'),
       name: 'dob',
       tableItem: {
-        filter: { type: 'date' },
+        // filter: { type: 'date' },
         width: 200,
-    //    sorter: true,
         render: (text: string) => dayjs(text).format(formatDate),
       },
     },
@@ -83,9 +79,8 @@ export const ColumnTableUser = ({ t, formatDate, permissions, navigate, dataTabl
       title: t('user.Start Date'),
       name: 'startDate',
       tableItem: {
-        filter: { type: 'search' },
+        // filter: { type: 'search' },
         width: 200,
-      //  sorter: true,
         render: (text: string) => dayjs(text).format(formatDate),
       },
     },
@@ -93,9 +88,8 @@ export const ColumnTableUser = ({ t, formatDate, permissions, navigate, dataTabl
       title: t('user.Start Date'),
       name: 'startDate',
       tableItem: {
-        filter: { type: 'search' },
+        // filter: { type: 'search' },
         width: 200,
-      //  sorter: true,
         render: (text: string) => dayjs(text).format(formatDate),
       },
     },
@@ -104,9 +98,8 @@ export const ColumnTableUser = ({ t, formatDate, permissions, navigate, dataTabl
       name: 'startDate',
       tableItem:permissions?.includes() &&  {
         fixed: window.innerWidth > 767 && 'right',
-        filter: { type: 'search' },
+        // filter: { type: 'search' },
         width: 200,
-      //  sorter: true,
         render: (text: string) => dayjs(text).format(formatDate),
       },
     },

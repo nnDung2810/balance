@@ -1,6 +1,7 @@
 const Util = (name: string, type?: string) => {
   const array: any = {
     Login: '/auth/login',
+    'Sign-in': '/user-admin/sign-in',
     ResetPassword: '/auth/reset-password',
     MyProfile: '/my-profile',
     Dashboard: '/',
@@ -17,10 +18,11 @@ const Util = (name: string, type?: string) => {
 
   const apis: any = {
     Auth: '/auth',
+    'User-admin': '/user-admin',
     CodeType: '/code-type',
     Code: '/code',
-    UserRole: '/user-role',
-    User: '/user',
+    UserRole: '/mt-role',
+    User: '/user-admin',
     DataType: '/data-type',
     Data: '/data',
     Supplier: '/supplier',
