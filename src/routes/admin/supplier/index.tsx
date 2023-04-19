@@ -46,8 +46,8 @@ const Page = () => {
           {user?.role?.permissions?.includes(keyRole.P_USER_CREATE) && (
             <Button
               icon={<Plus className="icon-cud !h-5 !w-5" />}
-              text={t('components.button.New')}
-              onClick={() => navigate(routerLinks('User/Add'))}
+              text={t('titles.Supplier/Add')}
+              onClick={() => navigate(routerLinks('Supplier/Add'))}
             />
           )}
         </div>

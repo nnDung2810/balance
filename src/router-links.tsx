@@ -5,6 +5,7 @@ const Util = (name: string, type?: string) => {
     MyProfile: '/my-profile',
     Dashboard: '/',
     Supplier: '/supplier',
+    'Supplier/Add': '/supplier/add',
     User: '/user',
     'User/List': '/user/list',
     'User/Add': '/user/add',

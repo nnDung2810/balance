@@ -67,24 +67,14 @@ export const ColumnTableUser = ({ t, formatDate, permissions, navigate, dataTabl
     },
     {
       title: t(`supplier.Phone Number`),
-      name: 'dob',
+      name: 'phoneNumber',
       tableItem: {
-        filter: { type: 'date' },
+        filter: { type: 'search' },
         sorter: true,
-        render: (text: string) => dayjs(text).format(formatDate),
       },
     },
     {
       title: t(`supplier.Status`),
-      name: 'startDate',
-      tableItem: {
-        filter: { type: 'search' },
-        sorter: true,
-        render: (text: string) => dayjs(text).format(formatDate),
-      },
-    },
-    {
-      title: t(`supplier.`),
       tableItem: {
         width: 80,
         align: 'center',
