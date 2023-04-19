@@ -153,7 +153,7 @@
         "Delete": "Xóa",
         "My Profile": "Thông tin cá nhân",
         "No Data": "Trống",
-        "Pagination": "Hiển thị {{from}} - {{to}} /Tổng số {{total}} danh mục",
+        "Pagination": "Hiển thị {{from}} - {{to}} / Tổng số {{total}} danh mục",
         "Day": "Ngày phép"
       }
     }
