@@ -3,13 +3,19 @@ import { routerLinks } from '@utils';
 
 export const pages = [
   {
-    layout: React.lazy(() => import('../layouts/auth')),
+    // layout: React.lazy(() => import('../layouts/auth')),
+    layout: React.lazy(() => import('../layouts/user-admin')),
     isPublic: true,
     child: [
+      // {
+      //   path: routerLinks('Login'),
+      //   component: React.lazy(() => import('./auth/login')),
+      //   title: 'Login',
+      // },
       {
-        path: routerLinks('Login'),
-        component: React.lazy(() => import('./auth/login')),
-        title: 'Login',
+        path: routerLinks('Sign-in'),
+        component: React.lazy(() => import('./user-admin/sign-in')),
+        title: 'Sign-in',
       },
       {
         path: routerLinks('ResetPassword'),

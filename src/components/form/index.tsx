@@ -112,7 +112,7 @@ const Component = ({
         return (
           <Password
             tabIndex={formItem.tabIndex || index}
-            placeholder={formItem.placeholder || t('components.form.Enter') + ' ' + item.title.toLowerCase()}
+            placeholder={formItem.placeholder || t('components.form.Enter') + ' ' + item.title!.toLowerCase()}
             disabled={!!formItem.disabled && formItem.disabled(values, form)}
           />
         );
@@ -129,7 +129,7 @@ const Component = ({
             )}
             rows={4}
             maxLength={1000}
-            placeholder={formItem.placeholder || t('components.form.Enter') + ' ' + item.title.toLowerCase()}
+            placeholder={formItem.placeholder || t('components.form.Enter') + ' ' + item.title!.toLowerCase()}
             onChange={(e) => formItem.onChange && formItem.onChange(e.target.value, form, reRender)}
           />
         );
@@ -215,7 +215,7 @@ const Component = ({
         return (
           <SelectTag
             maxTagCount={formItem.maxTagCount || 'responsive'}
-            placeholder={formItem.placeholder || t('components.form.Enter') + ' ' + item.title.toLowerCase()}
+            placeholder={formItem.placeholder || t('components.form.Enter') + ' ' + item.title!.toLowerCase()}
             tag={formItem.tag}
             form={form}
             disabled={!!formItem.disabled && formItem.disabled(values, form)}
@@ -224,7 +224,7 @@ const Component = ({
       case 'chips':
         return (
           <Chips
-            placeholder={formItem.placeholder || t('components.form.Enter') + ' ' + item.title.toLowerCase()}
+            placeholder={formItem.placeholder || t('components.form.Enter') + ' ' + item.title!.toLowerCase()}
             disabled={!!formItem.disabled && formItem.disabled(values, form)}
           />
         );
@@ -235,7 +235,7 @@ const Component = ({
             showSearch={formItem.showSearch}
             maxTagCount={formItem.maxTagCount || 'responsive'}
             onChange={(value: any) => formItem.onChange && formItem.onChange(value, form, reRender)}
-            placeholder={formItem.placeholder || t('components.form.Enter') + ' ' + item.title.toLowerCase()}
+            placeholder={formItem.placeholder || t('components.form.Enter') + ' ' + item.title!.toLowerCase()}
             formItem={formItem}
             form={form}
             disabled={!!formItem.disabled && formItem.disabled(values, form)}
@@ -249,7 +249,7 @@ const Component = ({
             showSearch={formItem.showSearch}
             form={form}
             disabled={!!formItem.disabled && formItem.disabled(values, form)}
-            placeholder={formItem.placeholder || t('components.form.Enter') + ' ' + item.title.toLowerCase()}
+            placeholder={formItem.placeholder || t('components.form.Enter') + ' ' + item.title!.toLowerCase()}
           />
         );
       case 'switch':
@@ -269,7 +269,7 @@ const Component = ({
             addonBefore={formItem.addonBefore}
             addonAfter={formItem.addonAfter}
             maxLength={formItem.maxLength}
-            placeholder={formItem.placeholder || t('components.form.Enter') + ' ' + item.title.toLowerCase()}
+            placeholder={formItem.placeholder || t('components.form.Enter') + ' ' + item.title!.toLowerCase()}
             onBlur={(e: React.FocusEvent<HTMLInputElement, Element>) =>
               formItem.onBlur && formItem.onBlur(e, form, name)
             }

@@ -12,7 +12,7 @@ export const ColumnTableStore = ({ t, formatDate, permissions, navigate, dataTab
   const col: DataTableModel[] = [
     {
       title: 'Mã cửa hàng',
-      name: 'name',
+      name: 'code',
       tableItem: {
         width: 200,
         fixed: window.innerWidth > 767,
@@ -20,35 +20,35 @@ export const ColumnTableStore = ({ t, formatDate, permissions, navigate, dataTab
     },
     {
       title: 'Tên cửa hàng',
-      name: 'email',
+      name: 'name',
       tableItem: {
       },
     },
     {
       title: 'Địa chỉ',
-      name: 'phoneNumber',
+      name: 'address',
       tableItem: {
       },
     },
     {
       title: 'Loại cửa hàng',
-      name: 'dob',
-      tableItem: {
-        render: (text: string) => dayjs(text).format(formatDate),
-      },
+      // name: 'dob',
+      // tableItem: {
+      //   render: (text: string) => dayjs(text).format(formatDate),
+      // },
     },
     {
       title: 'Người đại diện',
-      name: 'startDate',
-      tableItem: {
-        render: (text: string) => dayjs(text).format(formatDate),
-      },
+      // name: 'startDate',
+      // tableItem: {
+      //   render: (text: string) => dayjs(text).format(formatDate),
+      // },
     },
     {
         title: 'Số điện thoại',
-        name: 'phoneNumber',
-        tableItem: {
-        },
+        // name: 'phoneNumber',
+        // tableItem: {
+        // },
       },
   ];
   return col;

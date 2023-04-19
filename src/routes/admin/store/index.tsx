@@ -43,14 +43,12 @@ const Page = () => {
       })}
       rightHeader={
         <div className={'flex gap-2 !bg-teal-900 !rounded-lg'}>
-          {user?.role?.permissions?.includes(keyRole.P_USER_CREATE) && (
-            <Button
-              className='!bg-teal-900 !rounded-3xl'
-              icon={<Plus className="icon-cud !h-5 !w-5 !fill-slate-200 " />}
-              text='Thêm quản trị viên'
-              onClick={() => navigate(routerLinks('User/Add'))}
-            />
-          )}
+          <Button
+            className='!bg-teal-900 !rounded-3xl'
+            icon={<Plus className="icon-cud !h-5 !w-5 !fill-slate-200 " />}
+            text='Thêm quản trị viên'
+            onClick={() => navigate(routerLinks('User/Add'))}
+          />
         </div>
       }
     />
