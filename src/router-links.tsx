@@ -10,6 +10,7 @@ const Util = (name: string, type?: string) => {
     Setting: '/setting',
     Data: '/setting/data',
     Code: '/setting/code',
+    ForgetPassword: '/auth/forgot-password'
   }; // 💬 generate link to here
 
   const apis: any = {

@@ -81,6 +81,7 @@
     "Page": "Trang"
   },
   "pages": {
+    "Login": "Đăng Nhập",
     "User/List": "Danh sách Người dùng",
     "User/Add": "Tạo mới người dùng",
     "User/Edit": "Chỉnh sửa người dùng"
@@ -128,9 +129,11 @@
       "reset-password": {
         "Recovery Email": "Email khôi phục",
         "Enter Recovery Email": "Email khôi phục",
-        "title": "Đặt lại mật khẩu",
+        "title": "Quên Mật Khẩu",
         "Submit": "Gửi đi",
-        "Back To Login": "Quay lại đăng nhập"
+        "Back To Login": "Quay trở lại Đăng nhập",
+        "subTitle": "Vui lòng nhập e-mail của bạn. Mã xác minh OTP sẽ được gửi cho bạn",
+        "OTP":"Lấy Mã OTP"
       }
     },
     "admin": {

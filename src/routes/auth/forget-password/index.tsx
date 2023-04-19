@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router';
 import { ModalForm, Spin, Form } from '@components';
 import { routerLinks } from '@utils';
 import { GlobalFacade } from '@reducers';
-import { ColumnForgottenPassword, ColumnLogin } from './column';
+import { ColumnForgetPassword } from './column';
 import { FormModalRefObject } from '@models';
 import '../../../layouts/auth/index.less'
 
@@ -22,26 +22,26 @@ const Page = () => {
   return (
     <Fragment>
       <div className="text-center mb-8">
-        <h1 className="intro-x text-5xl mb-10 font-bold text-teal-900 leading-10 max-md:text-3xl max-lg:leading-8" id={'title-login'}>
-          {t('routes.auth.login.title')}
+        <h1 className="intro-x text-5xl mb-10 font-bold text-green-900 leading-10 max-md:text-3xl max-lg:leading-8" id={'title-login'}>
+          {t('routes.auth.reset-password.title')}
         </h1>
-        <h5 className="intro-x font-semibold tracking-wide text-teal-900 ">{t('routes.auth.login.subTitle')}</h5>
+        <h5 className="intro-x font-semibold tracking-wide text-green-900 ">{t('routes.auth.reset-password.subTitle')}</h5>
       </div>
       <div className='mx-auto w-3/4'>
         <Spin spinning={isLoading} >
           <Form
             values={{ ...data }}
             className="intro-x ant-form1"
-            columns={ColumnLogin({ t })}
-            textSubmit={'routes.auth.login.Log In'}
+            columns={ColumnForgetPassword({ t })}
+            textSubmit={'routes.auth.reset-password.OTP'}
             handSubmit={login}
             disableSubmit={isLoading}
           />
         </Spin>
-        <div className="mt-3 text-right">
-          <button className={'text-green-900 font-semibold underline text-base hover:no-underline'} onClick={() => navigate(routerLinks('ForgetPassword'))}>
+        <div className="mt-3 text-center">
+          <button className={'text-sky-600 font-medium underline tracking-wide hover:no-underline hover:text-sky-500'} onClick={() => navigate(routerLinks('Login'))}>
             {' '}
-            {t('routes.auth.login.Forgot Password')}
+            {t('routes.auth.reset-password.Back To Login')}
           </button>
         </div>
       </div>
