@@ -5,7 +5,7 @@ import { useNavigate, useParams } from 'react-router';
 import { UserRoleFacade, UserFacade } from '@reducers';
 import { routerLinks } from '@utils';
 import { Button, Form } from '@components';
-import { ColumnFormUser } from './column';
+import { ColumnFormUser, ColumnFormUserEdit } from './column';
 import { User } from '../../../reducers/global';
 import classNames from 'classnames';
 
@@ -29,7 +29,7 @@ const Page = () => {
     return () => {
       isReload.current && userFacade.get(param);
     };
-  }, [id]);
+  }, [id, data]);
 
   useEffect(() => {
     switch (status) {
@@ -54,6 +54,7 @@ const Page = () => {
     else userFacade.post(values);
   };
 
+  console.log(data)
   return (
     <div className={'w-full'}>
       <Fragment>
@@ -65,7 +66,7 @@ const Page = () => {
         <Form
           values={{ ...data }}
           className="intro-x p-6 pb-4 pt-3 rounded-lg w-full "
-          columns={ColumnFormUser({ t, listRole: result?.data || [] })}
+          columns={ColumnFormUserEdit({ t, listRole: result?.data || [] })}
           handSubmit={handleSubmit}
           disableSubmit={isLoading}
           handCancel={handleBack}

@@ -384,7 +384,7 @@ const Hook = forwardRef(
             <div className="relative">
               <input
                 id={idTable.current + '_input_search'}
-                className="w-full sm:w-52 h-10 rounded-xl text-gray-600 bg-white border border-solid border-gray-100 pr-9 pl-4"
+                className="w-full sm:w-80 h-10 rounded-xl text-gray-600 bg-white border border-solid border-black pr-9 pl-9"
                 defaultValue={params[fullTextSearch]}
                 type="text"
                 placeholder={searchPlaceholder || t('components.datatable.pleaseEnterValueToSearch')}
@@ -412,7 +412,7 @@ const Hook = forwardRef(
               />
               {!params[fullTextSearch] ? (
                 <Search
-                  className="w-5 h-5 my-1 fill-gray-500 text-lg las absolute top-1.5 right-3 z-10"
+                  className="w-5 h-5 my-1 fill-gray-500 text-lg las absolute top-1.5 left-3 z-10"
                   onClick={() => {
                     if (params[fullTextSearch]) {
                       (document.getElementById(idTable.current + '_input_search') as HTMLInputElement).value = '';

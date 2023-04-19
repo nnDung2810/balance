@@ -157,8 +157,8 @@ export const Pagination: any = ({
                   {
                     'text-blue-400 hover:text-blue-600':
                       pageIndex !== page.index && !['next_5', 'prev_5'].includes(page.type),
-                    'bg-blue-600 rounded-full text-white hover:bg-blue-400 !px-2.5 mx-1': pageIndex === page.index,
-                    'text-blue-300': page.disabled,
+                    'bg-teal-900 rounded-full text-white !px-2.5 mx-1': pageIndex === page.index,
+                    'text-teal-700': page.disabled,
                     'text-gray-600 text-xs': ['next_5', 'prev_5'].includes(page.type),
                   },
                 )}

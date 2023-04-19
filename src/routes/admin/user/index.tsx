@@ -13,46 +13,52 @@ const Page = () => {
   const { t } = useTranslation();
   const { formatDate, user } = GlobalFacade();
   const navigate = useNavigate();
-
   const userFacade = UserFacade();
+  const { data, isLoading, queryParams, status } = userFacade;
+
   useEffect(() => {
     switch (userFacade.status) {
       case 'delete.fulfilled':
         dataTableRef?.current?.onChange!();
         break;
     }
-  }, [userFacade.status]);
+  }, [userFacade.status, data]);
 
   const dataTableRef = useRef<TableRefObject>(null);
   return (
-    <DataTable
-      facade={userFacade}
-      ref={dataTableRef}
-      onRow={() => ({ onDoubleClick: () => null })}
-      pageSizeRender={(sizePage: number) => sizePage}
-      pageSizeWidth={'50px'}
-      paginationDescription={(from: number, to: number, total: number) =>
-        t('routes.admin.Layout.Pagination', { from, to, total })
-      }
-      columns={ColumnTableUser({
-        t,
-        formatDate,
-        permissions: user?.role?.permissions,
-        navigate,
-        dataTableRef,
-      })}
-      rightHeader={
-        <div className={'flex gap-2'}>
-          {user?.role?.permissions?.includes(keyRole.P_USER_CREATE) && (
-            <Button
-              icon={<Plus className="icon-cud !h-5 !w-5" />}
-              text={t('components.button.New')}
-              onClick={() => navigate(routerLinks('User/Add'))}
-            />
-          )}
-        </div>
-      }
-    />
+    <div className='bg-gray-50 pr-5 h-full pb-10'>
+      <div className='bg-white rounded-xl p-4 pb-10 relative text-center flex justify-center'>
+        <DataTable
+          facade={userFacade}
+          ref={dataTableRef}
+          onRow={(data: any) => ({ onDoubleClick: () =>  navigate(routerLinks('User/Edit') + '/' + data.id)})}
+          pageSizeRender={(sizePage: number) => sizePage}
+          pageSizeWidth={'50px'}
+          paginationDescription={(from: number, to: number, total: number) =>
+            t('routes.admin.Layout.Pagination', { from, to, total })
+          }
+          columns={ColumnTableUser({
+            t,
+            formatDate,
+            permissions: user?.role?.permissions,
+            navigate,
+            dataTableRef,
+          })}
+          rightHeader={
+            <div className={'flex gap-2'}>
+              {user?.role?.permissions?.includes(keyRole.P_USER_CREATE) && (
+                <Button
+                  className='!bg-green-900 !rounded-xl'
+                  icon={<Plus className="icon-cud !h-5 !w-5" />}
+                  text={t('Thêm quản trị viên')}
+                  onClick={() => navigate(routerLinks('User/Add'))}
+                />
+              )}
+            </div>
+          }
+        />
+      </div>
+    </div>
   );
 };
 export default Page;

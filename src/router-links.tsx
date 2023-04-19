@@ -9,6 +9,7 @@ const Util = (name: string, type?: string) => {
     User: '/user',
     'User/List': '/user/list',
     'User/Add': '/user/add',
+    'User/Edit': '/user/edit',
     Setting: '/setting',
     Data: '/setting/data',
     Code: '/setting/code',

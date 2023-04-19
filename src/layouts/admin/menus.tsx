@@ -13,19 +13,24 @@ const Layout = () => [
     icon: <Cart className="icon-menu" />,
     name: 'Supplier',
   },
+  // {
+  //   icon: <User className="icon-menu" />,
+  //   name: 'User',  
+  //   child: [
+  //     {
+  //       name: 'User/List',
+  //       permission: keyRole.P_USER_LISTED,
+  //     },
+  //     {
+  //       name: 'User/Add',
+  //       permission: keyRole.P_DATA_LISTED,
+  //     },
+  //   ],
+  // },
   {
     icon: <User className="icon-menu" />,
-    name: 'User',
-    child: [
-      {
-        name: 'User/List',
-        permission: keyRole.P_USER_LISTED,
-      },
-      {
-        name: 'User/Add',
-        permission: keyRole.P_DATA_LISTED,
-      },
-    ],
+    name: 'User/List',
+    
   },
   {
     icon: <Cog className="icon-menu" />,
