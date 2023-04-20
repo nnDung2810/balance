@@ -25,7 +25,7 @@ const Util = (name: string, type?: string) => {
     User: '/user-admin',
     DataType: '/data-type',
     Data: '/data',
-    Supplier: '/supplier',
+    Supplier: '/sub-organization',
   }; // 💬 generate api to here
 
   switch (type) {

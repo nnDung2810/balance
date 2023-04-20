@@ -264,17 +264,17 @@ const Layout = ({ children }: PropsWithChildren) => {
       )}
       <section
         id={'main'}
-        className={classNames('px-5 transition-all duration-300 ease-in-out z-10 h-[calc(100vh-5rem)] relative', {
+        className={classNames('px-5 transition-all duration-300 ease-in-out z-10  relative', {
           'ml-64': !isCollapsed && isDesktop,
           'ml-16': isCollapsed && isDesktop,
         })}
       >
-        <div className={'h-[calc(100vh-9rem)]'}>
+        <div className={''}>
           {/* <h1 className={'text-xl font-bold block sm:hidden pb-5'}>{t('pages.' + title)}</h1> */}
           <h1 className={'text-xl font-bold block pb-5'}>{t('titles.' + title)}</h1>
           {children}
         </div>  
-        <footer className="text-left sm:-mx-5 pt-5  mt-10 bg-white p-4 !mr-0">
+        <footer className="text-left sm:-mx-5 pt-5  mt-10  bg-white p-4 !mr-0">
           {t('layout.footer', { year: new Date().getFullYear() })}
         </footer>
       </section>

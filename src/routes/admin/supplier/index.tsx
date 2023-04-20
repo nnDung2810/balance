@@ -4,9 +4,9 @@ import { useNavigate } from 'react-router';
 
 import { Button, DataTable } from '@components';
 import { keyRole, routerLinks } from '@utils';
-import { UserFacade, GlobalFacade } from '@reducers';
+import { UserFacade, GlobalFacade, SupplierFacade } from '@reducers';
 import { Plus } from '@svgs';
-import { ColumnTableUser } from './column';
+import { ColumnTableSupplier } from './column';
 import { TableRefObject } from '@models';
 
 const Page = () => {
@@ -14,45 +14,49 @@ const Page = () => {
   const { formatDate, user } = GlobalFacade();
   const navigate = useNavigate();
 
-  const userFacade = UserFacade();
+  const supplierFacade = SupplierFacade();
   useEffect(() => {
-    switch (userFacade.status) {
+    switch (supplierFacade.status) {
       case 'delete.fulfilled':
         dataTableRef?.current?.onChange!();
         break;
     }
-  }, [userFacade.status]);
+  }, [supplierFacade.status]);
 
   const dataTableRef = useRef<TableRefObject>(null);
   return (
-    <DataTable
-      facade={userFacade}
-      ref={dataTableRef}
-      onRow={() => ({ onDoubleClick: () => null })}
-      pageSizeRender={(sizePage: number) => sizePage}
-      pageSizeWidth={'50px'}
-      paginationDescription={(from: number, to: number, total: number) =>
-        t('routes.admin.Layout.Pagination', { from, to, total })
-      }
-      columns={ColumnTableUser({
-        t,
-        formatDate,
-        permissions: user?.role?.permissions,
-        navigate,
-        dataTableRef,
-      })}
-      rightHeader={
-        <div className={'flex gap-2'}>
-          {user?.role?.permissions?.includes(keyRole.P_USER_CREATE) && (
-            <Button
-              icon={<Plus className="icon-cud !h-5 !w-5" />}
-              text={t('titles.Supplier/Add')}
-              onClick={() => navigate(routerLinks('Supplier/Add'))}
-            />
-          )}
-        </div>
-      }
-    />
+    <div className=' pr-5 h-full pb-10'>
+      <div className='bg-white rounded-xl p-4 pb-10 relative text-center '>
+        <DataTable
+          facade={supplierFacade}
+          ref={dataTableRef}
+          onRow={() => ({ onDoubleClick: () => null })}
+          pageSizeRender={(sizePage: number) => sizePage}
+          pageSizeWidth={'50px'}
+          paginationDescription={(from: number, to: number, total: number) =>
+            t('routes.admin.Layout.Pagination', { from, to, total })
+          }
+          columns={ColumnTableSupplier({
+            t,
+            formatDate,
+            permissions: user?.role?.permissions,
+            navigate,
+            dataTableRef,
+          })}
+          rightHeader={
+            <div className={'flex gap-2'}>
+              {user && (
+                <Button
+                  icon={<Plus className="icon-cud !h-5 !w-5" />}
+                  text={t('titles.Supplier/Add')}
+                  onClick={() => navigate(routerLinks('Supplier/Add'))}
+                />
+              )}
+            </div>
+          }
+        />
+      </div>
+    </div>
   );
 };
 export default Page;

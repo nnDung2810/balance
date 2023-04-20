@@ -465,7 +465,8 @@ const Hook = forwardRef(
             />
             {showPagination && (
               <Pagination
-                total={result?.count}
+                // total={result?.count}
+                total={result?.pagination?.total}
                 pageIndex={+params[pageIndex]}
                 pageSize={+params[pageSize]}
                 pageSizeOptions={pageSizeOptions}

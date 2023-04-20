@@ -5,14 +5,14 @@ import dayjs from 'dayjs';
 import { Avatar } from '@components';
 import { keyRole, routerLinks } from '@utils';
 import { DataTableModel, FormModel } from '@models';
-import { CodeFacade } from '@reducers';
+import { CodeFacade, SupplierFacade } from '@reducers';
 import { Edit, Trash } from '@svgs';
 
-export const ColumnTableUser = ({ t, formatDate, permissions, navigate, dataTableRef }: any) => {
+export const ColumnTableSupplier = ({ t, permissions, navigate, dataTableRef }: any) => {
   const col: DataTableModel[] = [
     {
       title: t(`supplier.Code`),
-      name: 'name',
+      name: 'code',
       tableItem: {
         // filter: { type: 'search' },
         width: 140,
@@ -22,14 +22,14 @@ export const ColumnTableUser = ({ t, formatDate, permissions, navigate, dataTabl
         //   style: { paddingTop: '0.25rem', paddingBottom: 0 },
         //   onClick: async () => null,
         // }),
-        render: (text: string, item: any) => text && <Avatar src={item.avatar} text={item.name} />,
+        // render: (item) => item?.name,
       },
     },
     {
       title: t(`supplier.Name`),
-      name: 'positionCode',
+      name: 'name',
       tableItem: {
-        width: 170,
+        width: 230,
         // filter: {
         //   type: 'checkbox',
         //   name: 'positionCode',
@@ -47,79 +47,55 @@ export const ColumnTableUser = ({ t, formatDate, permissions, navigate, dataTabl
         //   },
         // },
         // sorter: true,
-        render: (item) => item?.name,
+        // render: (item) => item?.name,
       },
     },
     {
       title: t(`supplier.Address`),
-      name: 'email',
+      name: ('address'),
       tableItem: {
-        width: 380,
-        // filter: { type: 'search' },
-        // sorter: true,
-      },
+        width: 555,
+        render: (value: any,item: any) => item?.address?.street + ', ' + item?.address?.ward?.name + ', ' + item?.address?.district?.name + ', ' + item?.address?.province?.name,
+      }
     },
     {
       title: t(`supplier.Representative`),
-      name: 'phoneNumber',
+      name: 'contract',
       tableItem: {
-        width: 180  ,
+        width: 242  ,
         // filter: { type: 'search' },
         // sorter: true,
+        render: (value: any,item: any) => item?.contract[0].name,
       },
     },
     {
       title: t(`supplier.Phone Number`),
-      name: 'phoneNumber',
+      name: 'userRole',
       tableItem: {
         width: 115,
         // filter: { type: 'search' },
         // sorter: true,
+        render: (value: any,item: any) => item?.userRole[0].userAdmin.phoneNumber,
       },
     },
     {
       title: t(`supplier.Status`),
+      name: "isActive",
       tableItem: {
         width: 100,  
         align: 'center',
-        onCell: () => ({
-          style: { paddingTop: '0.25rem', paddingBottom: '0.25rem' },
-        }),
-        render: (text: string, data: any) => (
-          <div className={'flex gap-2'}>
-            {permissions?.includes(keyRole.P_USER_UPDATE) && (
-              <Tooltip title={t('routes.admin.Layout.Edit')}>
-                <Edit
-                  className="icon-cud bg-blue-600 hover:bg-blue-400"
-                  onClick={() => navigate(routerLinks('User') + '/' + data.id)}
-                />
-              </Tooltip>
-            )}
-
-            {permissions?.includes(keyRole.P_USER_DELETE) && (
-              <Tooltip title={t('routes.admin.Layout.Delete')}>
-                <Popconfirm
-                  placement="left"
-                  title={t('components.datatable.areYouSureWant')}
-                  onConfirm={() => dataTableRef?.current?.handleDelete(data.id)}
-                  okText={t('components.datatable.ok')}
-                  cancelText={t('components.datatable.cancel')}
-                >
-                  <Trash className="icon-cud bg-red-600 hover:bg-red-400" />
-                </Popconfirm>
-              </Tooltip>
-            )}
-          </div>
-        ),
+        render: (text: string) => text
+        ? (<div className='bg-green-100 text-center p-1 border border-green-500 text-green-600 rounded'>Đã ký</div>) 
+        : (<div className='bg-red-100 text-center p-1 border border-red-500 text-red-600 rounded'>Chờ ký</div>),
       },
     },
   ];
   return col;
 };
-export const ColumnFormUser = ({ t, listRole }: any) => {
+export const ColumnFormSupplier1= ({ t, listRole }: any) => {
   const col: FormModel[] = [
     {
-      title: t('dayoff.Fullname'),
+      title: t('Tên nhà cung cấp'),
       name: 'name',
       formItem: {
         tabIndex: 1,
@@ -128,127 +104,96 @@ export const ColumnFormUser = ({ t, listRole }: any) => {
       },
     },
     {
-      title: t('columns.auth.login.password'),
+      title: t('Số fax'),
       name: 'password',
       formItem: {
         tabIndex: 2,
         col: 6,
-        type: 'password',
-        condition: (value: string, form: any, index: number, values: any) => !values?.id,
+        rules: [{ type: 'required' }, { type: 'min', value: 6 }],
+      },
+    },
+  ];
+  return col;
+};
+
+export const ColumnFormSupplier2= ({ t, listRole }: any) => {
+  const col: FormModel[] = [
+    {
+      title: t('Tỉnh/Thành phố'),
+      name: 'email',
+      formItem: {
+        tabIndex: 1,
+        col: 3,
         rules: [{ type: 'required' }, { type: 'min', value: 6 }],
       },
     },
     {
-      title: t('Email'),
+      title: t('Quận/Huyện'),
       name: 'email',
       formItem: {
         tabIndex: 1,
-        col: 6,
-        rules: [{ type: 'required' }, { type: 'email' }, { type: 'min', value: 6 }],
+        col: 3,
+        rules: [{ type: 'required' }, { type: 'min', value: 6 }],
       },
     },
     {
-      title: t('columns.auth.register.retypedPassword'),
-      name: 'retypedPassword',
+      title: t('Phường/Xã'),
+      name: 'email',
       formItem: {
-        placeholder: t('columns.auth.register.retypedPassword'),
-        tabIndex: 2,
-        col: 6,
-        type: 'password',
-        condition: (value: string, form: any, index: number, values: any) => !values?.id,
-        rules: [
-          { type: 'required' },
-          {
-            type: 'custom',
-            validator: ({ getFieldValue }: any) => ({
-              validator(rule: any, value: string) {
-                if (!value || getFieldValue('password') === value) {
-                  return Promise.resolve();
-                }
-                return Promise.reject(new Error('Hai mật khẩu không giống nhau!'));
-              },
-            }),
-          },
-        ],
+        tabIndex: 1,
+        col: 3,
+        rules: [{ type: 'required' }, { type: 'min', value: 6 }],
       },
     },
     {
-      title: t('Số điện thoại'),
-      name: 'phoneNumber',
+      title: t('Địa chỉ cụ thể'),
+      name: 'email',
       formItem: {
-        col: 6,
-        rules: [{ type: 'required' }, { type: 'phone', min: 10, max: 15 }],
+        tabIndex: 1,
+        col: 3,
+        rules: [{ type: 'required' }, { type: 'min', value: 6 }],
       },
     },
+  ];
+  return col;
+};
+
+export const ColumnFormSupplier3= ({ t, listRole }: any) => {
+  const col: FormModel[] = [
     {
-      title: t('user.Date of birth'),
-      name: 'dob',
+      title: t('Họ tên đại diện'),
+      name: 'name',
       formItem: {
-        col: 6,
-        type: 'date',
-        rules: [{ type: 'required' }],
-      },
-    },
-    {
-      title: t('user.Position'),
-      name: 'positionCode',
-      formItem: {
-        col: 6,
-        type: 'select',
-        rules: [{ type: 'required' }],
-        convert: (data: any) =>
-          data?.map ? data.map((_item: any) => (_item?.id !== undefined ? +_item.id : _item)) : data,
-        get: {
-          facade: CodeFacade,
-          params: (fullTextSearch: string) => ({
-            fullTextSearch,
-            filter: { type: 'POS' },
-            extend: {},
-          }),
-          format: (item: any) => ({
-            label: item.name,
-            value: item.code,
-          }),
-        },
-      },
-    },
-    {
-      title: t('user.Start Date'),
-      name: 'startDate',
-      formItem: {
-        col: 6,
-        type: 'date',
-        rules: [{ type: 'required' }],
-      },
-    },
-    {
-      title: t('components.button.Role'),
-      name: 'roleId',
-      formItem: {
-        col: 6,
-        type: 'select',
-        rules: [{ type: 'required' }],
-        list: listRole.map((item: any) => ({
-          value: item?.id,
-          label: item?.name,
-        })),
-      },
-    },
-    {
-      title: t('user.Description'),
-      name: 'description',
-      formItem: {
-        col: 8,
-        type: 'textarea',
-      },
-    },
-    {
-      name: 'avatar',
-      title: t('user.Upload avatar'),
-      formItem: {
+        tabIndex: 1,
         col: 4,
-        type: 'upload',
-        mode: 'multiple',
+        rules: [{ type: 'required' }],
+      },
+    },
+    {
+      title: t('Số điện thoại đại diện'),
+      name: 'password',
+      formItem: {
+        tabIndex: 2,
+        col: 4,
+        rules: [{ type: 'required' }],
+      },
+    },
+    {
+      title: t('Email đại diện'),
+      name: 'email',
+      formItem: {
+        tabIndex: 1,
+        col: 4,
+        rules: [{ type: 'required' }],
+      },
+    },
+    {
+      title: t('Ghi chú'),
+      name: 'email',
+      formItem: {
+        type: 'textarea',
+        tabIndex: 1,
+        col: 12,
       },
     },
   ];

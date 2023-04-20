@@ -8,6 +8,7 @@ import { codeSlice, CodeFacade } from './code';
 import { codeTypeSlice, CodeTypeFacade } from './code/type';
 import { dataSlice, DataFacade } from './data';
 import { dataTypeSlice, DataTypeFacade } from './data/type';
+import { SupplierFacade, supplierSlice } from './supplier';
 
 const rootReducer = combineReducers({
   [globalSlice.name]: globalSlice.reducer,
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   [codeTypeSlice.name]: codeTypeSlice.reducer,
   [dataSlice.name]: dataSlice.reducer,
   [dataTypeSlice.name]: dataTypeSlice.reducer,
+  [supplierSlice.name]: supplierSlice.reducer,
 });
 
 const setupStore = () => {
@@ -39,4 +41,5 @@ export {
   CodeTypeFacade,
   DataFacade,
   DataTypeFacade,
+  SupplierFacade,
 };
