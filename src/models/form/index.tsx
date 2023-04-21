@@ -1,5 +1,7 @@
 import { CheckboxOptionType, FormInstance } from 'antd';
 import { TableGet } from '../data-table';
+import { CSSProperties } from 'react';
+import classNames from 'classnames';
 
 export class FormModel {
   name?: string;
@@ -44,7 +46,7 @@ export class FormItem {
   sliderMarks?: Record<number, string>;
   symbol?: string;
   initialValues?: { start: string; end: string };
-  convert?: (data: any) => any;
+  convert?: (data: any,text :any) => string | JSX.Element;
   onChange?: (value: any, form: FormInstance, reRender: any) => void;
   onBlur?: (e: React.FocusEvent<HTMLInputElement, Element>, form: FormInstance, name: string) => void;
   disabledDate?: (current: any, form: FormInstance) => boolean;
@@ -59,7 +61,7 @@ export class FormItem {
     avatar: string;
     label: string;
     value: string;
-    params: (getFieldValue: any, fullTextSearch: string, value: any) => any;
+    params: (getFieldValue: any, fullTextSearch: string, value: any, text: any) => any;
     api: string;
   };
   showSearch?: boolean;
@@ -76,6 +78,8 @@ export class FormItem {
   render?:
       | ((form: FormInstance, values: any, generateForm: void, index: number, reRender: void, text: any) => string | JSX.Element)
       | null;
+  style?: CSSProperties;
+  className?:string;
 }
 export class FormItemList {
   label?: string | JSX.Element;
@@ -93,8 +97,8 @@ export class FormItemRule {
 }
 
 export class FormItemTab {
-  label?: string;
-  value: any;
+  label?:(value: any) => string;
+  value?:(value: any)=>  any;
   disabled?: boolean;
 }
 export class FormApi {

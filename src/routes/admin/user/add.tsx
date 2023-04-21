@@ -23,10 +23,6 @@ const Page = () => {
   const {profile } = GlobalFacade();
 
   useEffect(() => {
-    profile();
-  }, []);
-
-  useEffect(() => {
     if (!result?.data) get({});
 
     if (id) userFacade.getById({ id });

@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { DataTableModel, FormModel } from '@models';
 import { GlobalFacade, UserFacade, UserRoleFacade } from '@reducers';
 import { LockOutlined } from '@ant-design/icons';
-import { Avatar } from '@components';
 
 export const ColumnTableUser = ({ t }: any) => {
   const col: DataTableModel[] = [
@@ -48,13 +47,13 @@ export const ColumnTableUser = ({ t }: any) => {
       tableItem: {
         width: 200,
         filter: { type: 'search' },
-        render: (text: string, item: any) =>{
-          if((text=item.userRole[0].mtRole.code) === "ADMIN"){
+        render:(text:any, item:any) => {
+          if (text=item.userRole[0].mtRole.code === "ADMIN") {
             return "Quản trị viên";
-          } else if((text=item.userRole[0].mtRole.code) === "OWNER_SUPPLIER"){
+          } else if (text=item.userRole[0].mtRole.code === "OWNER_SUPPLIER") {
             return "Đại diện NCC";
           } else {
-            return "Đại diện cửa hàng"
+            return "Đại diện cửa hàng";
           }
         }
       },
@@ -128,6 +127,9 @@ export const ColumnFormUserEdit = ({ t, listRole }: any) => {
       title: t('Email'),
       name: 'email',
       formItem: {
+        disabled: () => true,
+      //  type: 'select',
+        addonAfter: () => <LockOutlined />,
         tabIndex: 1,
         col: 6,
         rules: [{ type: 'required' }, { type: 'email' }, { type: 'min', value: 6 }],
@@ -137,8 +139,6 @@ export const ColumnFormUserEdit = ({ t, listRole }: any) => {
       title: t('Số điện thoại'),
       name: 'phoneNumber',
       formItem: {
-        disabled: () => true,
-        addonAfter: () => <LockOutlined />,
         col: 6,
         rules: [{ type: 'required' }, { type: 'phone', min: 10, max: 15 }],
       },
@@ -149,6 +149,7 @@ export const ColumnFormUserEdit = ({ t, listRole }: any) => {
       formItem: {
         disabled: () => true,
         col: 6,
+        type: 'select',
         render: (text , values) =>{
           if((text=values.roleCode) === "ADMIN"){
             return "Quản trị viên";

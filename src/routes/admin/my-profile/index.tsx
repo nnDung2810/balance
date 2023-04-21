@@ -15,7 +15,9 @@ const Page = () => {
   const getProfile = () => navigate(routerLinks('User/List'));
   const listPosition = useRef([]);
   // @ts-ignore
-  useEffect(() => profile(), []);
+  useEffect(() => {
+    profile();
+  }, []);
   return (
     <Fragment>
       <div className='flex justify-between'>
