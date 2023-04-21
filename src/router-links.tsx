@@ -10,7 +10,8 @@ const Util = (name: string, type?: string) => {
     Setting: '/setting',
     Data: '/setting/data',
     Code: '/setting/code',
-    ForgetPassword: '/auth/forgot-password',
+    ForgetPassword: '/user-admin/forgot-password',
+    VerifyForotPassword: '/user-admin/verify-forgot-password',
     Store: "/store-managerment",
     'store-managerment/create': '/store-managerment/create'
   }; // 💬 generate link to here

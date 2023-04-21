@@ -43,27 +43,36 @@ const action = {
     }
     return data!.userInfor;
   }),
-  forgottenPassword: createAsyncThunk(name + '/forgotten-password', async (values: { email: string }) => {
-    const { data, message } = await API.post(`${routerLinks(name, 'api')}/forgotten-password`, values);
+  forgotPassword: createAsyncThunk(name + '/forgot-password', async (values: { email: string }) => {
+    const { data, message } = await API.put<{otp: string; uuid: string}>(`${routerLinks(name, 'api')}/forgot-password`, values);
     if (message) await Message.success({ text: message });
+    console.log(data)
     return !!data;
   }),
-  resetPassword: createAsyncThunk(name + '/reset-password', async ({ token, ...values }: resetPassword) => {
-    const { data, message } = await API.post(
-      `${routerLinks(name, 'api')}/reset-password`,
-      values,
-      {},
-      { authorization: 'Bearer ' + token },
-    );
-    if (message) await Message.success({ text: message });
+  verifyForgotPassword: createAsyncThunk(name + '/verify-forgot-password', async (values: { email: string, otp: string, uuid: string }) => {
+    const { data, message } = await API.put<{email: string; uuid: string}>(`${routerLinks(name, 'api')}/verify-forgot-password`, values);
+    if (message) await Message.success({ text: message })
     return !!data;
   }),
+  // resetPassword: createAsyncThunk(name + '/reset-password', async ({ token, ...values }: resetPassword) => {
+  //   const { data, message } = await API.post(
+  //     `${routerLinks(name, 'api')}/reset-password`,
+  //     values,
+  //     {},
+  //     { authorization: 'Bearer ' + token },
+  //   );
+  //   if (message) await Message.success({ text: message });
+  //   return !!data;
+  // }),
 };
 interface resetPassword {
-  password: string;
-  retypedPassword: string;
-  token: string;
+  // password: string;
+  // retypedPassword: string;
+  // token: string;
+  otp?: string;
+  uuid?: string;
 }
+
 export class User extends CommonEntity {
   constructor(
     // public userName?: string,
@@ -191,7 +200,7 @@ export const globalSlice = createSlice({
       })
 
       .addCase(
-        action.forgottenPassword.pending,
+        action.forgotPassword.pending,
         (
           state: State,
           action: PayloadAction<
@@ -202,41 +211,63 @@ export const globalSlice = createSlice({
         ) => {
           state.data = action.meta.arg;
           state.isLoading = true;
-          state.status = 'forgottenPassword.pending';
+          state.status = 'forgotPassword.pending';
         },
       )
-      .addCase(action.forgottenPassword.fulfilled, (state: State, action: PayloadAction<boolean>) => {
+      .addCase(action.forgotPassword.fulfilled, (state: State, action: PayloadAction<boolean>) => {
         if (action.payload) {
           state.data = {};
-          state.status = 'forgottenPassword.fulfilled';
+          state.status = 'forgotPassword.fulfilled';
+        } else state.status = 'idle';
+        state.isLoading = false;
+      })
+      .addCase(
+        action.verifyForgotPassword.pending,
+        (
+          state: State,
+          action: PayloadAction<
+            undefined,
+            string,
+            { arg: { email?: string, uuid?: string }; requestId: string; requestStatus: 'pending' }
+          >,
+        ) => {
+          state.data = action.meta.arg;
+          state.isLoading = true;
+          state.status = 'verifyForgotPassword.pending';
+        },
+      )
+      .addCase(action.verifyForgotPassword.fulfilled, (state: State, action: PayloadAction<boolean>) => {
+        if (action.payload) {
+          state.data = {};
+          state.status = 'verifyForgotPassword.fulfilled';
         } else state.status = 'idle';
         state.isLoading = false;
       })
 
-      .addCase(
-        action.resetPassword.pending,
-        (
-          state: State,
-          action: PayloadAction<undefined, string, { arg: resetPassword; requestId: string; requestStatus: 'pending' }>,
-        ) => {
-          state.data = action.meta.arg;
-          state.isLoading = true;
-          state.status = 'resetPassword.pending';
-        },
-      )
-      .addCase(action.resetPassword.fulfilled, (state: State, action: PayloadAction<boolean>) => {
-        if (action.payload) {
-          state.data = {};
-          state.status = 'resetPassword.fulfilled';
-        } else state.status = 'idle';
-        state.isLoading = false;
-      });
+      // .addCase(
+      //   action.resetPassword.pending,
+      //   (
+      //     state: State,
+      //     action: PayloadAction<undefined, string, { arg: resetPassword; requestId: string; requestStatus: 'pending' }>,
+      //   ) => {
+      //     state.data = action.meta.arg;
+      //     state.isLoading = true;
+      //     state.status = 'resetPassword.pending';
+      //   },
+      // )
+      // .addCase(action.resetPassword.fulfilled, (state: State, action: PayloadAction<boolean>) => {
+      //   if (action.payload) {
+      //     state.data = {};
+      //     state.status = 'resetPassword.fulfilled';
+      //   } else state.status = 'idle';
+      //   state.isLoading = false;
+      // });
   },
 });
 interface State {
   [selector: string]: any;
   user?: User;
-  data?: resetPassword | { email?: string } | { password?: string; email?: string };
+  data?: resetPassword | { email?: string } | { password?: string; email?: string } ;
   isLoading?: boolean;
   isVisible?: boolean;
   status?: string;
@@ -266,8 +297,9 @@ export const GlobalFacade = () => {
     profile: () => dispatch(action.profile()),
     putProfile: (values: User) => dispatch(action.putProfile(values)),
     login: (values: { password: string; username: string }) => dispatch(action.login(values)),
-    forgottenPassword: (values: { email: string }) => dispatch(action.forgottenPassword(values)),
-    resetPassword: (values: resetPassword) => dispatch(action.resetPassword(values)),
+    forgotPassword: (values: { email: string }) => dispatch(action.forgotPassword(values)),
+    verifyForgotPassword: (values: { email: string, otp: string, uuid: string }) => dispatch(action.verifyForgotPassword(values)),
+    // resetPassword: (values: resetPassword) => dispatch(action.resetPassword(values)),
     setLanguage: (value: 'vn' | 'en') => dispatch(globalSlice.actions.setLanguage(value)),
   };
 };

@@ -1,43 +1,43 @@
 import React, { Fragment, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
-import { ModalForm, Spin, Form } from '@components';
+import { Spin, Form } from '@components';
 import { routerLinks } from '@utils';
 import { GlobalFacade } from '@reducers';
-import { ColumnForgetPassword } from './column';
+import { ColumnOTP } from './column';
 import { FormModalRefObject } from '@models';
 import '../../../layouts/auth/index.less'
 
 const Page = () => {
-  const { search } = useLocation();
+const isReload = useRef(false);
   const { t } = useTranslation();
   const navigate = useNavigate();
   const globalFacade = GlobalFacade();
-  const { isLoading, status, data, forgotPassword } = globalFacade;
+  const { isLoading, status, data, verifyForgotPassword } = globalFacade;
   useEffect(() => {
-    if (status === 'forgotPassword.fulfilled') {
-      navigate(routerLinks('VerifyForotPassword'));
+    if (status === 'verifyFotgotPassword.fulfilled') {
+      navigate(routerLinks('setPassword'));
     }
-    console.log(status)
   }, [status]);
 
+console.log(data)
   return (
     <Fragment>
       <div className="text-center mb-8">
-        <h1 className="intro-x text-5xl mb-10 font-bold text-green-900 leading-10 max-md:text-3xl max-lg:leading-8" id={'title-login'}>
+        <h1 className="intro-x text-5xl mb-10 font-bold text-green-900 leading-10 max-md:text-3xl max-lg:leading-8">
           {t('routes.auth.reset-password.title')}
         </h1>
-        <h5 className="intro-x font-semibold tracking-wide text-green-900 ">{t('routes.auth.reset-password.subTitle')}</h5>
+        <h5 className="intro-x font-semibold tracking-wide text-green-900 ">Vui lòng nhập mã OTP đã gửi đến email của bạn</h5>
       </div>
-      <div className='mx-auto w-3/4'>
+      <div className='mx-auto w-full'>
         <Spin spinning={isLoading} >
           <Form
             values={{ ...data }}
             className="intro-x ant-form1"
-            columns={ColumnForgetPassword({ t })}
+            columns={ColumnOTP({ t })}
             textSubmit={'routes.auth.reset-password.OTP'}
             // handleForgetPassword={}
-            handSubmit={(values) => forgotPassword({ ...values})}
+            handSubmit={(values) => verifyForgotPassword({ ...values})}
             disableSubmit={isLoading}
           />
         </Spin>

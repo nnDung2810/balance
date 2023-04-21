@@ -32,7 +32,7 @@ const Page = () => {
         <Spin spinning={isLoading} >
           <Form
             values={{ ...data }}
-            className="intro-x ant-form1 space-y-12 "
+            className="intro-x ant-form1 space-y-12"
             columns={ColumnLogin({ t })}
             textSubmit={'routes.auth.login.Log In'}
             handSubmit={login}

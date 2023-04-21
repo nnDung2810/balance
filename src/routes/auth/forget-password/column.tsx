@@ -13,3 +13,16 @@ export const ColumnForgetPassword = ({ t }: any) => {
   ];
   return col;
 };
+export const ColumnOTP = ({ t }: any) => {
+  const col: FormModel[] = [
+    {
+      name: 'otp',
+      title: 'Mã OTP',
+      formItem: {
+        placeholder: 'Mã OTP',
+        rules: [{ type: 'required' }, { type: 'min', value: 6 }, { type: 'max', value: 6 }],
+      },
+    },
+  ];
+  return col;
+};
