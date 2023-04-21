@@ -19,13 +19,13 @@ const Page = () => {
   const isReload = useRef(false);
   const param = JSON.parse(queryParams || '{}');
   const { id } = useParams();
-
+  const { getPermission } = UserRoleFacade();
   useEffect(() => {
     if (!result?.data) get({});
 
     if (id) userFacade.getById({ id });
     else userFacade.set({ data: {} });
-
+  //  getPermission();
     return () => {
       isReload.current && userFacade.get(param);
     };

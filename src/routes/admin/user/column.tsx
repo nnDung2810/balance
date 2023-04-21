@@ -3,6 +3,17 @@ import React, { useState } from 'react';
 import { DataTableModel, FormModel } from '@models';
 import { GlobalFacade, UserFacade, UserRoleFacade } from '@reducers';
 import { LockOutlined } from '@ant-design/icons';
+import { Avatar } from 'antd';
+
+const renderRoleCode = (text: any, values: any) => {
+  if ((text=values.roleCode) === "ADMIN") {
+    return text="Quản trị viên";
+  } else if ((text=values.roleCode) === "OWNER_SUPPLIER") {
+    return text="Nhà cung cấp";
+  } else {
+    return text="Chủ cửa hàng";
+  }
+};
 
 export const ColumnTableUser = ({ t }: any) => {
   const col: DataTableModel[] = [
@@ -143,14 +154,14 @@ export const ColumnFormUserEdit = ({ t, listRole }: any) => {
         rules: [{ type: 'required' }, { type: 'phone', min: 10, max: 15 }],
       },
     },
-    {
-      title: t('Vai trò'),
+     {
+    title: t('Vai trò'),
       name: 'roleCode',
       formItem: {
         disabled: () => true,
         col: 6,
         type: 'select',
-        render: (text , values) =>{
+        render: (text : any , values) =>{
           if((text=values.roleCode) === "ADMIN"){
             return "Quản trị viên";
           } else if((text=values.roleCode) === "OWNER_SUPPLIER"){
