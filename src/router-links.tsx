@@ -1,5 +1,8 @@
 const Util = (name: string, type?: string) => {
-  const array: any = {
+  const array: {
+    [selector: string]: string;
+  } = {
+    'Sign-in': '/user-admin/sign-in',
     Login: '/auth/login',
     ResetPassword: '/auth/reset-password',
     MyProfile: '/my-profile',
@@ -13,12 +16,16 @@ const Util = (name: string, type?: string) => {
     Code: '/setting/code',
   }; // 💬 generate link to here
 
-  const apis: any = {
+  const apis: {
+    [selector: string]: string;
+  } = {
+    'User-admin': '/user-admin',
     Auth: '/auth',
     CodeType: '/code-type',
     Code: '/code',
-    UserRole: '/user-role',
-    User: '/user',
+    UserRole: '/mt-role',
+    User: '/user-admin',
+    'User-register': '/user-admin/register',
     DataType: '/data-type',
     Data: '/data',
   }; // 💬 generate api to here

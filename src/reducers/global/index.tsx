@@ -10,7 +10,7 @@ import { useAppDispatch, useTypedSelector } from '@reducers';
 import { CommonEntity } from '@models';
 import { UserRole } from '../user/role';
 
-const name = 'Auth';
+const name = 'User-admin';
 const action = {
   name,
   set: createAsyncThunk(name + '/set', async (values: State) => values),
@@ -20,8 +20,8 @@ const action = {
     // }
     return true;
   }),
-  profile: createAsyncThunk(name + '/profile', async () => {
-    const { data } = await API.get<User>(`${routerLinks(name, 'api')}/profile`);
+  profile: createAsyncThunk(name + '/get-my-info', async () => {
+    const { data } = await API.get<User>(`${routerLinks(name, 'api')}/get-my-info`);
     return data || {};
   }),
   putProfile: createAsyncThunk(name + '/putProfile', async (values: User) => {
@@ -31,9 +31,9 @@ const action = {
     const { data } = await API.put<User>(`${routerLinks(name, 'api')}/profile`, values);
     return data || {};
   }),
-  login: createAsyncThunk(name + '/login', async (values: { password: string; email: string }) => {
+  login: createAsyncThunk(name + '/sign-in', async (values: { password: string; email: string; username: string }) => {
     const { data, message } = await API.post<{ user: User; accessToken: string; refreshToken: string }>(
-      `${routerLinks(name, 'api')}/login`,
+      `${routerLinks(name, 'api')}/sign-in`,
       values,
     );
     if (data) {
@@ -67,26 +67,31 @@ interface resetPassword {
 export class User extends CommonEntity {
   constructor(
     public name?: string,
-    public avatar?: string,
+    public userName?: string,
     public password?: string,
     public email?: string,
     public phoneNumber?: string,
-    public dob?: string,
-    public description?: string,
-    public positionCode?: string,
-    public retypedPassword?: string,
-    public role?: UserRole,
+    public profileImage?: string,
+    public createdOn?: string,
+    public updatedAt?: string,
+    public note?: string,
+    public roleCode?: string,
+    public status ?: string,
+    public code?: string,
+    public userRoleId?: UserRole,
+    public roleId?: User,
+    public roleName?: User,
   ) {
     super();
   }
 }
-const checkLanguage = (language: 'vn' | 'en') => {
-  const formatDate = language === 'vn' ? 'DD-MM-YYYY' : 'DD-MM-YYYY';
-  const locale = language === 'vn' ? viVN : enUS;
-  dayjs.locale(language === 'vn' ? 'vi' : language);
-  localStorage.setItem('i18nextLng', language);
-  return { language, formatDate, locale };
-};
+// const checkLanguage = (language: 'vn' | 'en') => {
+//   const formatDate = language === 'vn' ? 'DD-MM-YYYY' : 'DD-MM-YYYY';
+//   const locale = language === 'vn' ? viVN : enUS;
+//   dayjs.locale(language === 'vn' ? 'vi' : language);
+//   localStorage.setItem('i18nextLng', language);
+//   return { language, formatDate, locale };
+// };
 const initialState: State = {
   data: {},
   user: JSON.parse(localStorage.getItem(keyUser) || '{}'),
@@ -94,22 +99,22 @@ const initialState: State = {
   isVisible: false,
   status: 'idle',
   title: '',
-  ...checkLanguage(JSON.parse(JSON.stringify(localStorage.getItem('i18nextLng') || 'en'))),
+//  ...checkLanguage(JSON.parse(JSON.stringify(localStorage.getItem('i18nextLng') || 'en'))),
 };
 export const globalSlice = createSlice({
   name: action.name,
   initialState,
   reducers: {
-    setLanguage: (state: State, action: PayloadAction<'vn' | 'en'>) => {
-      if (action.payload !== state.language) {
-        const { language, formatDate, locale } = checkLanguage(action.payload);
-        i18n.changeLanguage(language).then(() => {
-          state.language = language;
-          state.formatDate = formatDate;
-          state.locale = locale;
-        });
-      }
-    },
+    // setLanguage: (state: State, action: PayloadAction<'vn' | 'en'>) => {
+    //   if (action.payload !== state.language) {
+    //     const { language, formatDate, locale } = checkLanguage(action.payload);
+    //     i18n.changeLanguage(language).then(() => {
+    //       state.language = language;
+    //       state.formatDate = formatDate;
+    //       state.locale = locale;
+    //     });
+    //   }
+    // },
   },
   extraReducers: (builder) => {
     builder
@@ -236,7 +241,7 @@ interface State {
   isVisible?: boolean;
   status?: string;
   title?: string;
-  formatDate?: string;
+  formatDate: string;
   language?: 'vn' | 'en' | null;
   locale?: typeof viVN | typeof enUS;
 }
@@ -260,9 +265,9 @@ export const GlobalFacade = () => {
     logout: () => dispatch(action.logout()),
     profile: () => dispatch(action.profile()),
     putProfile: (values: User) => dispatch(action.putProfile(values)),
-    login: (values: { password: string; email: string }) => dispatch(action.login(values)),
+    login: (values: { password: string; email: string; username:string }) => dispatch(action.login(values)),
     forgottenPassword: (values: { email: string }) => dispatch(action.forgottenPassword(values)),
     resetPassword: (values: resetPassword) => dispatch(action.resetPassword(values)),
-    setLanguage: (value: 'vn' | 'en') => dispatch(globalSlice.actions.setLanguage(value)),
+  //  setLanguage: (value: 'vn' | 'en') => dispatch(globalSlice.actions.setLanguage(value)),
   };
 };

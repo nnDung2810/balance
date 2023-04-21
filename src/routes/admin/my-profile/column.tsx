@@ -1,22 +1,14 @@
 import { FormModel } from '@models';
+import { User } from '@svgs';
 
 export const ColumnProfile = ({ t, listPosition }: any) => {
   const col: FormModel[] = [
     {
-      title: t('dayoff.Fullname'),
+      title: t('Họ và tên'),
       name: 'name',
       formItem: {
         col: 6,
         rules: [{ type: 'required' }],
-      },
-    },
-    {
-      title: t('columns.auth.login.password'),
-      name: 'password',
-      formItem: {
-        col: 6,
-        type: 'password',
-        rules: [{ type: 'min', value: 6 }],
       },
     },
     {
@@ -28,29 +20,7 @@ export const ColumnProfile = ({ t, listPosition }: any) => {
       },
     },
     {
-      title: t('columns.auth.register.retypedPassword'),
-      name: 'retypedPassword',
-      formItem: {
-        placeholder: t('columns.auth.register.retypedPassword'),
-        col: 6,
-        type: 'password',
-        rules: [
-          {
-            type: 'custom',
-            validator: ({ getFieldValue }: any) => ({
-              validator(rule: any, value: string) {
-                if (!value || getFieldValue('password') === value) {
-                  return Promise.resolve();
-                }
-                return Promise.reject(new Error('Hai mật khẩu không giống nhau!'));
-              },
-            }),
-          },
-        ],
-      },
-    },
-    {
-      title: t('customer.Phone Number'),
+      title: t('Số điện thoại'),
       name: 'phoneNumber',
       formItem: {
         col: 6,
@@ -58,40 +28,48 @@ export const ColumnProfile = ({ t, listPosition }: any) => {
       },
     },
     {
-      title: t('user.Date of birth'),
-      name: 'dob',
-      formItem: {
-        col: 6,
-        type: 'date',
-        rules: [{ type: 'required' }],
-      },
-    },
-    {
-      title: t('user.Position'),
-      name: 'positionCode',
-      formItem: {
-        col: 6,
-        type: 'select',
-        rules: [{ type: 'required' }],
-        list: listPosition.map((item: any) => ({ value: item.code, label: item.name })),
-      },
-    },
-    {
-      title: t('user.Description'),
-      name: 'description',
+      title: t('Ghi chú'),
+      name: 'note',
       formItem: {
         col: 8,
         type: 'textarea',
       },
     },
-    {
-      name: 'avatar',
-      title: t('user.Upload avatar'),
+  ];
+  return col;
+};
+export const ColumnProfileAvatar = ({t}:any)=>{
+  const col: FormModel[]=[
+     {
+      name: 'profileImage',
       formItem: {
-        col: 4,
         type: 'upload',
         mode: 'multiple',
       },
+      //title: t('Avatar'),
+    },
+     {
+      name: 'name',
+      formItem: {
+        render: (text: string, item: any) => text=item.name,
+      },
+      //title: t('Avatar'),
+    },
+     {
+      name: 'userRole',
+      formItem: {
+       render: (text: string, item: any) =>{
+            if((text=item.userRole[0].mtRole.code) === "ADMIN"){
+              return   "Quản trị viên" ;
+            } else if((text=item.userRole[0].mtRole.code) === "OWNER_SUPPLIER"){
+              return   "Đại diện NCC";
+            } else {
+              return   "Đại diện cửa hàng"
+            }
+          }
+        //  render: (text: string, item: any) => text && <Avatar src={item.avatar} text={item.name} />,
+      },
+      //title: t('Avatar'),
     },
   ];
   return col;

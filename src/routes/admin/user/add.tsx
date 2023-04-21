@@ -2,11 +2,11 @@ import React, { Fragment, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router';
 
-import { UserRoleFacade, UserFacade } from '@reducers';
+import { UserRoleFacade, UserFacade, CodeFacade } from '@reducers';
 import { routerLinks } from '@utils';
 import { Button, Form } from '@components';
 import { ColumnFormUser } from './column';
-import { User } from '../../../reducers/global';
+import { GlobalFacade, User } from '../../../reducers/global/index';
 import classNames from 'classnames';
 
 const Page = () => {
@@ -20,16 +20,22 @@ const Page = () => {
   const param = JSON.parse(queryParams || '{}');
   const { id } = useParams();
 
+  const {profile } = GlobalFacade();
+
+  useEffect(() => {
+    profile();
+  }, []);
+
   useEffect(() => {
     if (!result?.data) get({});
 
     if (id) userFacade.getById({ id });
-    else userFacade.set({ data: {} });
-
+    else userFacade.set({ data: undefined });
+    profile();
     return () => {
       isReload.current && userFacade.get(param);
     };
-  }, [id]);
+  }, [id, data]);
 
   useEffect(() => {
     switch (status) {

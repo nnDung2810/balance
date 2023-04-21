@@ -609,7 +609,7 @@ const Component = ({
       <div
         className={classNames('gap-2 flex mt-5 ', {
           'justify-center': !extendButton && !handCancel,
-          ' flex sm:flex-row flex-col sm:justify-between': extendButton || handCancel,
+          ' flex sm:flex-row flex-col w-full sm:justify-between md:float-right': extendButton || handCancel,
         })}
       >
         {handCancel && (

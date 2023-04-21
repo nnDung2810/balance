@@ -73,6 +73,9 @@ export class FormItem {
   showRemove?: any;
   idCheck?: any;
   tabIndex?: number;
+  render?:
+      | ((form: FormInstance, values: any, generateForm: void, index: number, reRender: void, text: any) => string | JSX.Element)
+      | null;
 }
 export class FormItemList {
   label?: string | JSX.Element;

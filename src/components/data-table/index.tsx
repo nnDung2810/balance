@@ -137,74 +137,74 @@ const Hook = forwardRef(
       params[sort] = JSON.parse(params[sort]);
     }
 
-    // const groupButton = (confirm: any, clearFilters: any, key: any, value: any) => (
-    //   <div className="grid grid-cols-2 gap-2 mt-1">
-    //     <Button
-    //       text={t('components.datatable.reset')}
-    //       onClick={() => {
-    //         clearFilters();
-    //         confirm();
-    //       }}
-    //       className={'justify-center'}
-    //     />
-    //     <Button
-    //       icon={<Search className="fill-white h-4 w-4" />}
-    //       text={t('components.datatable.search')}
-    //       onClick={() => confirm(value)}
-    //       className={'justify-center'}
-    //     />
-    //   </div>
-    // );
-    // const valueFilter = useRef<any>({});
-    // const columnSearch = (get: TableGet, fullTextSearch = '', value?: any, facade: any = {}) => {
-    //   if (get?.facade) {
-    //     const params = get.params ? get.params(fullTextSearch, value) : { fullTextSearch };
-    //     if (new Date().getTime() > facade.time || JSON.stringify(cleanObjectKeyNull(params)) != facade.queryParams) {
-    //       facade.get(cleanObjectKeyNull(params));
-    //     }
-    //   }
-    // };
+    const groupButton = (confirm: any, clearFilters: any, key: any, value: any) => (
+      <div className="grid grid-cols-2 gap-2 mt-1">
+        <Button
+          text={t('components.datatable.reset')}
+          onClick={() => {
+            clearFilters();
+            confirm();
+          }}
+          className={'justify-center'}
+        />
+        <Button
+          icon={<Search className="fill-white h-4 w-4" />}
+          text={t('components.datatable.search')}
+          onClick={() => confirm(value)}
+          className={'justify-center'}
+        />
+      </div>
+    );
+    const valueFilter = useRef<any>({});
+    const columnSearch = (get: TableGet, fullTextSearch = '', value?: any, facade: any = {}) => {
+      if (get?.facade) {
+        const params = get.params ? get.params(fullTextSearch, value) : { fullTextSearch };
+        if (new Date().getTime() > facade.time || JSON.stringify(cleanObjectKeyNull(params)) != facade.queryParams) {
+          facade.get(cleanObjectKeyNull(params));
+        }
+      }
+    };
     // noinspection JSUnusedGlobalSymbols
-    // const getColumnSearchRadio = (filters: CheckboxOptionType[], key: string, get: TableGet = {}) => ({
-    //   onFilterDropdownOpenChange: async (visible: boolean) => (valueFilter.current[key] = visible),
-    //   filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }: any) => {
-    //     const facade = get?.facade ? get?.facade() : {};
-    //     useEffect(() => {
-    //       if (get && !facade?.result?.data && valueFilter.current[key]) {
-    //         columnSearch(get, '', undefined, facade);
-    //       }
-    //     }, [valueFilter.current[key]]);
-    //     return (
-    //       <div className={'p-1'}>
-    //         <input
-    //           className="w-full sm:w-52 h-10 rounded-xl text-gray-600 bg-white border border-solid border-gray-100 pr-9 pl-4 mb-1"
-    //           type="text"
-    //           placeholder={t('components.datatable.pleaseEnterValueToSearch') || ''}
-    //           onChange={(e) => {
-    //             clearTimeout(timeoutSearch.current);
-    //             timeoutSearch.current = setTimeout(() => columnSearch(get, e.target.value, selectedKeys), 500);
-    //           }}
-    //           onKeyUp={async (e) => {
-    //             if (e.key === 'Enter') {
-    //               await columnSearch(get, e.currentTarget.value, undefined, facade);
-    //             }
-    //           }}
-    //         />
-    //         <div>
-    //           <RadioGroup
-    //             options={
-    //               filters || get?.facade?.result?.data?.map(get.format).filter((item: any) => !!item.value) || []
-    //             }
-    //             value={selectedKeys}
-    //             onChange={(e) => setSelectedKeys(e.target.value + '')}
-    //           />
-    //         </div>
-    //         {groupButton(confirm, clearFilters, key, selectedKeys)}
-    //       </div>
-    //     );
-    //   },
-    //   filterIcon: () => <CheckCircle className="h-4 w-4 fill-gray-600" />,
-    // });
+    const getColumnSearchRadio = (filters: CheckboxOptionType[], key: string, get: TableGet = {}) => ({
+      onFilterDropdownOpenChange: async (visible: boolean) => (valueFilter.current[key] = visible),
+      filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }: any) => {
+        const facade = get?.facade ? get?.facade() : {};
+        useEffect(() => {
+          if (get && !facade?.result?.data && valueFilter.current[key]) {
+            columnSearch(get, '', undefined, facade);
+          }
+        }, [valueFilter.current[key]]);
+        return (
+          <div className={'p-1'}>
+            <input
+              className="w-full sm:w-52 h-10 rounded-xl text-gray-600 bg-white border border-solid border-gray-100 pr-9 pl-4 mb-1"
+              type="text"
+              placeholder={t('components.datatable.pleaseEnterValueToSearch') || ''}
+              onChange={(e) => {
+                clearTimeout(timeoutSearch.current);
+                timeoutSearch.current = setTimeout(() => columnSearch(get, e.target.value, selectedKeys), 500);
+              }}
+              onKeyUp={async (e) => {
+                if (e.key === 'Enter') {
+                  await columnSearch(get, e.currentTarget.value, undefined, facade);
+                }
+              }}
+            />
+            <div>
+              <RadioGroup
+                options={
+                  filters || get?.facade?.result?.data?.map(get.format).filter((item: any) => !!item.value) || []
+                }
+                value={selectedKeys}
+                onChange={(e) => setSelectedKeys(e.target.value + '')}
+              />
+            </div>
+            {groupButton(confirm, clearFilters, key, selectedKeys)}
+          </div>
+        );
+      },
+      filterIcon: () => <CheckCircle className="h-4 w-4 fill-gray-600" />,
+    });
     // noinspection JSUnusedGlobalSymbols
     // const getColumnSearchCheckbox = (filters: any, key: any, get: TableGet = {}) => ({
     //   onFilterDropdownOpenChange: async (visible: boolean) => (valueFilter.current[key] = visible),
@@ -242,11 +242,12 @@ const Hook = forwardRef(
     //       </div>
     //     );
     //   },
-    //   // filterIcon: (filtered: boolean) => (
-    //   //   <CheckSquare className={classNames('h-4 w-4', { 'fill-[#3699FF]': filtered, 'fill-gray-600': !filtered })} />
-    //   // ),
+    //   filterIcon: (filtered: boolean) => (
+    //     <CheckSquare className={classNames('h-4 w-4', { 'fill-[#3699FF]': filtered, 'fill-gray-600': !filtered })} />
+    //   ),
     // });
     // noinspection JSUnusedGlobalSymbols
+    //tìm kiếm
     // const getColumnSearchInput = (key: any) => ({
     //   filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }: any) => (
     //     <div className="p-1">
@@ -267,9 +268,9 @@ const Hook = forwardRef(
     //       {groupButton(confirm, clearFilters, key, selectedKeys)}
     //     </div>
     //   ),
-    //   // filterIcon: (filtered: boolean) => (
-    //   //   <Search className={classNames('h-4 w-4', { 'fill-[#3699FF]': filtered, 'fill-gray-600': !filtered })} />
-    //   // ),
+    //   filterIcon: (filtered: boolean) => (
+    //     <Search className={classNames('h-4 w-4', { 'fill-[#3699FF]': filtered, 'fill-gray-600': !filtered })} />
+    //   ),
     //   onFilterDropdownOpenChange: (visible: boolean) => {
     //     if (visible) {
     //       setTimeout(
@@ -280,6 +281,7 @@ const Hook = forwardRef(
     //   },
     // });
     // noinspection JSUnusedGlobalSymbols
+    //Ngày sinh
     // const getColumnSearchDate = (key: any) => ({
     //   filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }: any) => (
     //     <div className={'p-1'}>
@@ -299,9 +301,9 @@ const Hook = forwardRef(
     //       {groupButton(confirm, clearFilters, key, selectedKeys)}
     //     </div>
     //   ),
-    //   // filterIcon: (filtered: boolean) => (
-    //   //   <Calendar className={classNames('h-4 w-4', { 'fill-[#3699FF]': filtered, 'fill-gray-600': !filtered })} />
-    //   // ),
+    //   filterIcon: (filtered: boolean) => (
+    //     <Calendar className={classNames('h-4 w-4', { 'fill-[#3699FF]': filtered, 'fill-gray-600': !filtered })} />
+    //   ),
     // });
     cols.current = columns
       .filter((col: any) => !!col && !!col.tableItem)
@@ -317,28 +319,28 @@ const Hook = forwardRef(
             case 'radio':
               item = {
                 ...item,
-          //      ...getColumnSearchRadio(item.filter.list, item.filter.name || col.name, item.filter.get),
+                ...getColumnSearchRadio(item.filter.list, item.filter.name || col.name, item.filter.get),
               };
               break;
             case 'checkbox':
               item = {
                 ...item,
-          //      ...getColumnSearchCheckbox(item.filter.list, item.filter.name || col.name, item.filter.get),
+              //  ...getColumnSearchCheckbox(item.filter.list, item.filter.name || col.name, item.filter.get),
               };
               break;
             case 'date':
-         //     item = { ...item, ...getColumnSearchDate(item.filter.name || col.name) };
+            // item = { ...item, ...getColumnSearchDate(item.filter.name || col.name) };
               break;
             default:
-         //     item = { ...item, ...getColumnSearchInput(item.filter.name || col.name) };
+            //  item = { ...item, ...getColumnSearchInput(item.filter.name || col.name) };
           }
           delete item.filter;
         }
 
-        if (item.sorter && params[sort] && params[sort][col.name]) {
-          item.defaultSortOrder =
-            params[sort][col.name] === 'ASC' ? 'ascend' : params[sort][col.name] === 'DESC' ? 'descend' : '';
-        }
+        // if (item.sorter && params[sort] && params[sort][col.name]) {
+        //   item.defaultSortOrder =
+        //     params[sort][col.name] === 'ASC' ? 'ascend' : params[sort][col.name] === 'DESC' ? 'descend' : '';
+        // }
         if (!item.render) {
           item.render = (text: string) => text && checkTextToShort(text);
         }
@@ -354,60 +356,37 @@ const Hook = forwardRef(
       let tempPageIndex = pagination?.current || params[pageIndex];
       const tempPageSize = pagination?.pageSize || params[pageSize];
 
-      const tempSort =
-        sorts && sorts?.field && sorts?.order
-          ? {
-              [sorts.field]: sorts.order === 'ascend' ? 'ASC' : sorts.order === 'descend' ? 'DESC' : '',
-            }
-          : sorts?.field
-          ? null
-          : sorts;
+      // const tempSort =
+      //   sorts && sorts?.field && sorts?.order
+      //     ? {
+      //         [sorts.field]: sorts.order === 'ascend' ? 'ASC' : sorts.order === 'descend' ? 'DESC' : '',
+      //       }
+      //     : sorts?.field
+      //     ? null
+      //     : sorts;
 
       if (tempFullTextSearch !== params[fullTextSearch]) {
         tempPageIndex = 1;
       }
       const tempParams = cleanObjectKeyNull({
         ...params,
-        [pageIndex]: tempPageIndex,
+       [pageIndex]: tempPageIndex,
         [pageSize]: tempPageSize,
-        [sort]: JSON.stringify(tempSort),
-        [filter]: JSON.stringify(cleanObjectKeyNull(filters)),
+    //    [sort]: JSON.stringify(tempSort),
+    //    [filter]: JSON.stringify(cleanObjectKeyNull(filters)),
         [fullTextSearch]: tempFullTextSearch,
       });
       onChange && onChange(tempParams);
     };
     if (!data) data = result?.data;
     return (
-      <div className={classNames(className, 'intro-x bg-white rounded-md px-6')}>
-        <div className="sm:flex justify-between pt-6 pb-3 table-user">
+      <div className={classNames(className, 'intro-x bg-white px-6 rounded-lg')}>
+        <div className="sm:flex justify-between py-2 ">
           {showSearch ? (
             <div className="relative">
-                 {!params[fullTextSearch] ? (
-                <Search
-                  className="w-5 h-5 m-1 pl-1 fill-gray-500 text-lg las absolute top-1.5 z-10"
-                  onClick={() => {
-                    if (params[fullTextSearch]) {
-                      (document.getElementById(idTable.current + '_input_search') as HTMLInputElement).value = '';
-                      handleTableChange(null, params[filter], params[sort], '');
-                    }
-                  }}
-                />
-              ) : (
-                !!params[fullTextSearch] && (
-                  <Times
-                    className="w-5 h-5 my-1 fill-gray-500 text-lg las absolute top-1.5 right-3 z-10"
-                    onClick={() => {
-                      if (params[fullTextSearch]) {
-                        (document.getElementById(idTable.current + '_input_search') as HTMLInputElement).value = '';
-                        handleTableChange(null, params[filter], params[sort], '');
-                      }
-                    }}
-                  />
-                )
-              )}
               <input
                 id={idTable.current + '_input_search'}
-                className="w-full sm:w-80 h-10 rounded-xl text-gray-600 bg-white border border-solid border-gray-400 pr-9 pl-7 "
+                className="w-full sm:w-80 h-10 rounded-xl text-gray-600 bg-white border border-solid border-gray-500 pr-9 pl-8"
                 defaultValue={params[fullTextSearch]}
                 type="text"
                 placeholder={searchPlaceholder || t('components.datatable.pleaseEnterValueToSearch')}
@@ -433,7 +412,29 @@ const Hook = forwardRef(
                   }
                 }}
               />
-
+              {!params[fullTextSearch] ? (
+                <Search
+                  className="w-8 h-5 my-1 fill-gray-500 text-lg las absolute top-1.5 z-10"
+                  onClick={() => {
+                    if (params[fullTextSearch]) {
+                      (document.getElementById(idTable.current + '_input_search') as HTMLInputElement).value = '';
+                      handleTableChange(null, params[filter], params[sort], '');
+                    }
+                  }}
+                />
+              ) : (
+                !!params[fullTextSearch] && (
+                  <Times
+                    className="w-5 h-5 my-1 fill-gray-500 text-lg las absolute top-1.5 right-3 z-10"
+                    onClick={() => {
+                      if (params[fullTextSearch]) {
+                        (document.getElementById(idTable.current + '_input_search') as HTMLInputElement).value = '';
+                        handleTableChange(null, params[filter], params[sort], '');
+                      }
+                    }}
+                  />
+                )
+              )}
             </div>
           ) : (
             <div />
@@ -445,10 +446,12 @@ const Hook = forwardRef(
         {!!showList && (
           <Fragment>
             <Table
+              className='py-1 px-1 border rounded-2xl'
               onRow={onRow}
               locale={{
                 emptyText: (
-                  <div className="bg-gray-100 text-gray-400 py-4">{t(`components.datatable.${emptyText}`)}</div>
+                  <div className="bg-gray-100 text-gray-400 py-4">
+                    {t(`components.datatable.${emptyText}`)}</div>
                 ),
               }}
               loading={isLoading}
@@ -466,7 +469,7 @@ const Hook = forwardRef(
             />
             {showPagination && (
               <Pagination
-                total={result?.count}
+                total={result?.pagination?.total}
                 pageIndex={+params[pageIndex]}
                 pageSize={+params[pageSize]}
                 pageSizeOptions={pageSizeOptions}

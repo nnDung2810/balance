@@ -1,117 +1,64 @@
-import { FormInstance, Popconfirm, Tooltip } from 'antd';
 import React from 'react';
-import dayjs from 'dayjs';
 
-import { Avatar } from '@components';
-import { keyRole, routerLinks } from '@utils';
 import { DataTableModel, FormModel } from '@models';
-import { CodeFacade } from '@reducers';
-import { Edit, Trash } from '@svgs';
-import classNames from 'classnames';
+import { GlobalFacade, UserFacade, UserRoleFacade } from '@reducers';
 import { LockOutlined } from '@ant-design/icons';
+import { Avatar } from '@components';
 
-export const ColumnTableUser = ({ t, formatDate, permissions, navigate, dataTableRef }: any) => {
+export const ColumnTableUser = ({ t }: any) => {
   const col: DataTableModel[] = [
     {
-      title: t(`user.Fullname`),
+      title: t(`Mã người dùng`),
+      name: 'code',
+      tableItem: {
+        width: 140,
+      },
+    },
+    {
+      title: t('Họ và tên'),
       name: 'name',
       tableItem: {
-        filter: { type: 'search' },
         width: 400,
-      //  sorter: true,
+        filter: { type: 'search' },
         onCell: () => ({
           style: { paddingTop: '0.25rem', paddingBottom: 0 },
           onClick: async () => null,
         }),
-        render: (text: string, item: any) => text && <Avatar src={item.avatar} text={item.name} />,
-      },
-    },
-    {
-      title: t('user.Position'),
-      name: 'positionCode',
-      tableItem: {
-        width: 90,
-        filter: {
-          type: 'checkbox',
-          name: 'positionCode',
-          get: {
-            facade: CodeFacade,
-            format: (item: any) => ({
-              label: item.name,
-              value: item.code,
-            }),
-            params: (fullTextSearch: string, value) => ({
-              fullTextSearch,
-              filter: { type: 'POS' },
-              extend: { code: value },
-            }),
-          },
-        },
-      //  sorter: true,
-        render: (item) => item?.name,
+        render: (text: string, item: any) => text ,
       },
     },
     {
       title: t('Email'),
       name: 'email',
       tableItem: {
-        width: 200,
+        width: 130,
         filter: { type: 'search' },
-    //    sorter: true,
       },
     },
     {
-      title: t('user.Phone Number'),
+      title: t('Số điện thoại'),
       name: 'phoneNumber',
       tableItem: {
-        width: 200,
-        filter: { type: 'search' },
-    //    sorter: true,
+        width: 100,
       },
     },
     {
-      title: t('user.Date of birth'),
-      name: 'dob',
+      title: t('Vai trò'),
+      name: 'userRole',
       tableItem: {
-        filter: { type: 'date' },
         width: 200,
-    //    sorter: true,
-        render: (text: string) => dayjs(text).format(formatDate),
-      },
-    },
-    {
-      title: t('user.Start Date'),
-      name: 'startDate',
-      tableItem: {
         filter: { type: 'search' },
-        width: 200,
-      //  sorter: true,
-        render: (text: string) => dayjs(text).format(formatDate),
+        render: (text: string, item: any) =>{
+          if((text=item.userRole[0].mtRole.code) === "ADMIN"){
+            return "Quản trị viên";
+          } else if((text=item.userRole[0].mtRole.code) === "OWNER_SUPPLIER"){
+            return "Đại diện NCC";
+          } else {
+            return "Đại diện cửa hàng"
+          }
+        }
       },
     },
-    {
-      title: t('user.Start Date'),
-      name: 'startDate',
-      tableItem: {
-        filter: { type: 'search' },
-        width: 200,
-      //  sorter: true,
-        render: (text: string) => dayjs(text).format(formatDate),
-      },
-    },
-    {
-      title: t('user.Start Date'),
-      name: 'startDate',
-      tableItem:permissions?.includes() &&  {
-        fixed: window.innerWidth > 767 && 'right',
-        filter: { type: 'search' },
-        width: 200,
-      //  sorter: true,
-        render: (text: string) => dayjs(text).format(formatDate),
-      },
-    },
-
-
   ];
   return col;
 };
@@ -126,17 +73,6 @@ export const ColumnFormUser = ({ t, listRole }: any) => {
         rules: [{ type: 'required' }],
       },
     },
-    // {
-    //   title: t('columns.auth.login.password'),
-    //   name: 'password',
-    //   formItem: {
-    //     tabIndex: 2,
-    //     col: 6,
-    //     type: 'password',
-    //     condition: (value: string, form: any, index: number, values: any) => !values?.id,
-    //     rules: [{ type: 'required' }, { type: 'min', value: 6 }],
-    //   },
-    // },
     {
       title: t('Email'),
       name: 'email',
@@ -146,31 +82,6 @@ export const ColumnFormUser = ({ t, listRole }: any) => {
         rules: [{ type: 'required' }, { type: 'email' }, { type: 'min', value: 6 }],
       },
     },
-    // {
-    //   title: t('columns.auth.register.retypedPassword'),
-    //   name: 'retypedPassword',
-    //   formItem: {
-    //     placeholder: t('columns.auth.register.retypedPassword'),
-    //     tabIndex: 2,
-    //     col: 6,
-    //     type: 'password',
-    //     condition: (value: string, form: any, index: number, values: any) => !values?.id,
-    //     rules: [
-    //       { type: 'required' },
-    //       {
-    //         type: 'custom',
-    //         validator: ({ getFieldValue }: any) => ({
-    //           validator(rule: any, value: string) {
-    //             if (!value || getFieldValue('password') === value) {
-    //               return Promise.resolve();
-    //             }
-    //             return Promise.reject(new Error('Hai mật khẩu không giống nhau!'));
-    //           },
-    //         }),
-    //       },
-    //     ],
-    //   },
-    // },
     {
       title: t('Số điện thoại'),
       name: 'phoneNumber',
@@ -179,83 +90,31 @@ export const ColumnFormUser = ({ t, listRole }: any) => {
         rules: [{ type: 'required' }, { type: 'phone', min: 10, max: 15 }],
       },
     },
-    // {
-    //   title: t('user.Date of birth'),
-    //   name: 'dob',
-    //   formItem: {
-    //     col: 6,
-    //     type: 'date',
-    //     rules: [{ type: 'required' }],
-    //   },
-    // },
-    // {
-    //   title: t('user.Position'),
-    //   name: 'positionCode',
-    //   formItem: {
-    //     col: 6,
-    //     type: 'select',
-    //     rules: [{ type: 'required' }],
-    //     convert: (data: any) =>
-    //       data?.map ? data.map((_item: any) => (_item?.id !== undefined ? +_item.id : _item)) : data,
-    //     get: {
-    //       facade: CodeFacade,
-    //       params: (fullTextSearch: string) => ({
-    //         fullTextSearch,
-    //         filter: { type: 'POS' },
-    //         extend: {},
-    //       }),
-    //       format: (item: any) => ({
-    //         label: item.name,
-    //         value: item.code,
-    //       }),
-    //     },
-    //   },
-    // },
-    // {
-    //   title: t('user.Start Date'),
-    //   name: 'startDate',
-    //   formItem: {
-    //     col: 6,
-    //     type: 'date',
-    //     rules: [{ type: 'required' }],
-    //   },
-    // },
-    // {
-    //   title: t('components.button.Role'),
-    //   name: 'roleId',
-    //   formItem: {
-    //     col: 6,
-    //     type: 'select',
-    //     rules: [{ type: 'required' }],
-    //     list: listRole.map((item: any) => ({
-    //       value: item?.id,
-    //       label: item?.name,
-    //     })),
-    //   },
-    // },
     {
-      title: t('user.Description'),
-      name: 'description',
+      title: t('Ghi chú'),
+      name: 'note',
       formItem: {
         col: 12,
         type: 'textarea',
       },
     },
-    // {
-    //   name: 'avatar',
-    //   title: t('user.Upload avatar'),
-    //   formItem: {
-    //     col: 4,
-    //     type: 'upload',
-    //     mode: 'multiple',
-    //   },
-    // },
   ];
   return col;
 };
 
 export const ColumnFormUserEdit = ({ t, listRole }: any) => {
   const col: FormModel[] = [
+    {
+      title: t('Mã người dùng'),
+      name: 'code',
+      formItem: {
+        disabled: () => true,
+        addonAfter: () => <LockOutlined />,
+        tabIndex: 1,
+        col: 6,
+        rules: [{ type: 'required' }],
+      },
+    },
     {
       title: t('Họ và tên'),
       name: 'name',
@@ -265,17 +124,6 @@ export const ColumnFormUserEdit = ({ t, listRole }: any) => {
         rules: [{ type: 'required' }],
       },
     },
-    // {
-    //   title: t('columns.auth.login.password'),
-    //   name: 'password',
-    //   formItem: {
-    //     tabIndex: 2,
-    //     col: 6,
-    //     type: 'password',
-    //     condition: (value: string, form: any, index: number, values: any) => !values?.id,
-    //     rules: [{ type: 'required' }, { type: 'min', value: 6 }],
-    //   },
-    // },
     {
       title: t('Email'),
       name: 'email',
@@ -285,31 +133,6 @@ export const ColumnFormUserEdit = ({ t, listRole }: any) => {
         rules: [{ type: 'required' }, { type: 'email' }, { type: 'min', value: 6 }],
       },
     },
-    // {
-    //   title: t('columns.auth.register.retypedPassword'),
-    //   name: 'retypedPassword',
-    //   formItem: {
-    //     placeholder: t('columns.auth.register.retypedPassword'),
-    //     tabIndex: 2,
-    //     col: 6,
-    //     type: 'password',
-    //     condition: (value: string, form: any, index: number, values: any) => !values?.id,
-    //     rules: [
-    //       { type: 'required' },
-    //       {
-    //         type: 'custom',
-    //         validator: ({ getFieldValue }: any) => ({
-    //           validator(rule: any, value: string) {
-    //             if (!value || getFieldValue('password') === value) {
-    //               return Promise.resolve();
-    //             }
-    //             return Promise.reject(new Error('Hai mật khẩu không giống nhau!'));
-    //           },
-    //         }),
-    //       },
-    //     ],
-    //   },
-    // },
     {
       title: t('Số điện thoại'),
       name: 'phoneNumber',
@@ -321,79 +144,30 @@ export const ColumnFormUserEdit = ({ t, listRole }: any) => {
       },
     },
     {
-      title: t('user.Date of birth'),
-      name: 'dob',
+      title: t('Vai trò'),
+      name: 'roleCode',
       formItem: {
         disabled: () => true,
         col: 6,
-        type: 'date',
-        rules: [{ type: 'required' }],
+        render: (text , values) =>{
+          if((text=values.roleCode) === "ADMIN"){
+            return "Quản trị viên";
+          } else if((text=values.roleCode) === "OWNER_SUPPLIER"){
+            return "Nhà cung cấp";
+          } else {
+            return "Chủ cửa hàng";
+          }
+        }
       },
     },
     {
-      title: t('user.Position'),
-      name: 'positionCode',
-      formItem: {
-        disabled: () => true,
-        col: 6,
-        type: 'select',
-        rules: [{ type: 'required' }],
-        convert: (data: any) =>
-          data?.map ? data.map((_item: any) => (_item?.id !== undefined ? +_item.id : _item)) : data,
-        get: {
-          facade: CodeFacade,
-          params: (fullTextSearch: string) => ({
-            fullTextSearch,
-            filter: { type: 'POS' },
-            extend: {},
-          }),
-          format: (item: any) => ({
-            label: item.name,
-            value: item.code,
-          }),
-        },
-      },
-    },
-    // {
-    //   title: t('user.Start Date'),
-    //   name: 'startDate',
-    //   formItem: {
-    //     col: 6,
-    //     type: 'date',
-    //     rules: [{ type: 'required' }],
-    //   },
-    // },
-    // {
-    //   title: t('components.button.Role'),
-    //   name: 'roleId',
-    //   formItem: {
-    //     col: 6,
-    //     type: 'select',
-    //     rules: [{ type: 'required' }],
-    //     list: listRole.map((item: any) => ({
-    //       value: item?.id,
-    //       label: item?.name,
-    //     })),
-    //   },
-    // },
-    {
-      title: t('user.Description'),
-      name: 'description',
+      title: t('Ghi chú'),
+      name: 'note',
       formItem: {
         col: 12,
         type: 'textarea',
       },
     },
-    // {
-    //   name: 'avatar',
-    //   title: t('user.Upload avatar'),
-    //   formItem: {
-    //     col: 4,
-    //     type: 'upload',
-    //     mode: 'multiple',
-    //   },
-    // },
   ];
   return col;
 };
-

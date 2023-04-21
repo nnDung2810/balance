@@ -40,9 +40,9 @@ const API = {
 
     if (
       response.status === 401 &&
-      url !== `${routerLinks('Auth', 'api')}/refresh` &&
-      url !== `${routerLinks('Auth', 'api')}/login` &&
-      url !== `${routerLinks('Auth', 'api')}/logout`
+      url !== `${routerLinks('User-admin', 'api')}/refresh` &&
+      url !== `${routerLinks('User-admin', 'api')}/login` &&
+      url !== `${routerLinks('User-admin', 'api')}/logout`
     ) {
       const accessToken = await API.refresh();
       if (accessToken) {
@@ -51,8 +51,8 @@ const API = {
         return (await response.json()) as Responses<T>;
       }
     }
-    if (response.status === 401 && url !== `${routerLinks('Auth', 'api')}/login`) {
-      localStorage.removeItem(keyUser);
+    if (response.status === 401 && url !== `${routerLinks('User-admin', 'api')}/login`) {
+    //  localStorage.removeItem(keyUser);
       window.location.href = routerLinks('Login');
     }
     return {};
@@ -67,7 +67,7 @@ const API = {
     API.responsible<T>(url, params, { ...API.init(), method: 'DELETE' }, headers),
   refresh: async () => {
     const res = await API.get<{ accessToken: string; refreshToken: null }>(
-      `${routerLinks('Auth', 'api')}/refresh`,
+      `${routerLinks('User-admin', 'api')}/refresh`,
       {},
       { authorization: 'Bearer ' + localStorage.getItem(keyRefreshToken) },
     );

@@ -15,11 +15,11 @@ const Layout = () => [
     child: [
       {
         name: 'User/List',
-        permission: keyRole.P_USER_LISTED,
+      //  permission: keyRole.P_USER_LISTED,
       },
       {
         name: 'User/Add',
-        permission: keyRole.P_DATA_LISTED,
+      //  permission: keyRole.P_DATA_LISTED,
       },
     ],
   },
@@ -29,11 +29,11 @@ const Layout = () => [
     child: [
       {
         name: 'Code',
-        permission: keyRole.P_CODE_LISTED,
+      //  permission: keyRole.P_CODE_LISTED,
       },
       {
         name: 'Data',
-        permission: keyRole.P_DATA_LISTED,
+      //  permission: keyRole.P_DATA_LISTED,
       },
     ],
   },
