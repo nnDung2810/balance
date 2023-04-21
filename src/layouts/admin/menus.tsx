@@ -23,7 +23,7 @@ const Layout = () => [
       },
       {
         name: 'User/Add',
-       // permission: keyRole.P_DATA_LISTED,
+      //  permission: keyRole.P_DATA_LISTED,
       },
     ],
   },

@@ -41,7 +41,7 @@ const API = {
     if (
       response.status === 401 &&
       url !== `${routerLinks('User-admin', 'api')}/refresh` &&
-      url !== `${routerLinks('User-admin', 'api')}/sign-in` &&
+      url !== `${routerLinks('User-admin', 'api')}/login` &&
       url !== `${routerLinks('User-admin', 'api')}/logout`
     ) {
       const accessToken = await API.refresh();
@@ -51,9 +51,9 @@ const API = {
         return (await response.json()) as Responses<T>;
       }
     }
-    if (response.status === 401 && url !== `${routerLinks('User-admin', 'api')}/sign-in`) {
-      localStorage.removeItem(keyUser);
-      window.location.href = routerLinks('Sign-in');
+    if (response.status === 401 && url !== `${routerLinks('User-admin', 'api')}/login`) {
+    //  localStorage.removeItem(keyUser);
+      window.location.href = routerLinks('Login');
     }
     return {};
   },

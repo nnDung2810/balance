@@ -14,8 +14,8 @@ import { Chips, SelectTag, Select, TreeSelect, TableTransfer, Password, Mask, Ad
 const Component = ({
   className,
   columns,
-  textSubmit = 'components.form.modal.save',
-  textCancel = 'components.form.modal.cancel',
+  textSubmit = 'Lưu',
+  textCancel = 'Trở về',
   handSubmit,
   handCancel,
   values = {},

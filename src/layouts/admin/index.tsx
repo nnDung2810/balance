@@ -84,7 +84,7 @@ const Layout = ({ children }: PropsWithChildren) => {
       )}
     >
       <div className="flex items-center justify-end sm:justify-between px-5 h-20">
-        <h1 className={'text-xl font-bold hidden sm:block'}>{t('pages.' + title)}</h1>
+        <h1 className={'text-3xl font-bold hidden sm:block text-green-800'}>{t('pages.' + title)}</h1>
 
         <div className="flex items-center gap-5">
           <Select value={globalFacade?.language} onChange={(e: 'vn' | 'en') => globalFacade.setLanguage(e)}>
@@ -210,7 +210,7 @@ const Layout = ({ children }: PropsWithChildren) => {
           {children}
         </div>
 
-        <footer className="text-center bg-blue-50 pt-5 w-full">
+        <footer className="text-left bg-white py-5 w-full  ">
           {t('layout.footer', { year: new Date().getFullYear() })}
         </footer>
       </section>

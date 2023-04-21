@@ -2,11 +2,11 @@ import React, { Fragment, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router';
 
-import { UserRoleFacade, UserFacade, CodeFacade } from '@reducers';
+import { UserRoleFacade, UserFacade } from '@reducers';
 import { routerLinks } from '@utils';
 import { Button, Form } from '@components';
-import { ColumnFormUser } from './column';
-import { GlobalFacade, User } from '../../../reducers/global/index';
+import { ColumnFormUser, ColumnFormUserEdit } from './column';
+import { User } from '../../../reducers/global';
 import classNames from 'classnames';
 
 const Page = () => {
@@ -19,15 +19,13 @@ const Page = () => {
   const isReload = useRef(false);
   const param = JSON.parse(queryParams || '{}');
   const { id } = useParams();
-
-  const {profile } = GlobalFacade();
-
+  const { getPermission } = UserRoleFacade();
   useEffect(() => {
     if (!result?.data) get({});
 
     if (id) userFacade.getById({ id });
-    else userFacade.set({ data: undefined });
-    profile();
+    else userFacade.set({ data: {} });
+  //  getPermission();
     return () => {
       isReload.current && userFacade.get(param);
     };
@@ -55,20 +53,8 @@ const Page = () => {
     if (id) userFacade.put({ ...values, id });
     else userFacade.post(values);
   };
-  const listRole = [
-    {
-      id: 1,
-      label: t('ADMIN'),
-    },
-    {
-      id: 2,
-      label: t('OWNER_STORE'),
-    },
-    {
-      id: 3,
-      label: t('OWNER_SUPPLIER'),
-    },
-  ];
+
+  console.log(data)
   return (
     <div className={'w-full'}>
       <Fragment>
@@ -80,7 +66,7 @@ const Page = () => {
         <Form
           values={{ ...data }}
           className="intro-x p-6 pb-4 pt-3 rounded-lg w-full "
-          columns={ColumnFormUser({ t, listRole})}
+          columns={ColumnFormUserEdit({ t, listRole: result?.data || [] })}
           handSubmit={handleSubmit}
           disableSubmit={isLoading}
           handCancel={handleBack}

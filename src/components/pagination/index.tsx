@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { Arrow, DoubleArrow } from '@svgs';
 
 export const Pagination: any = ({
-  total = 4,
+  total =4,
   pageSizeOptions = [],
   pageSize = 10,
   pageIndex = 1,
@@ -35,7 +35,7 @@ export const Pagination: any = ({
   }, [buildIndexes]);
 
   const getLastIndex = (total: any, pageSize: any) => {
-    return Math.ceil(total / pageSize);
+    return Math.ceil(total /pageSize);
   };
 
   const onPageSizeChange = (size: any) => {
@@ -123,7 +123,7 @@ export const Pagination: any = ({
   return (
     total > 0 && (
       <div
-        className={classNames(className, 'flex flex-col md:flex-row md:items-center justify-between mt-3 select-none')}
+        className={classNames(className, 'flex flex-col md:flex-row md:items-center justify-between pt-4 pb-7 select-none ')}
       >
         <div className={'left'}>
           <label htmlFor={idElement + '_page_size'}>
@@ -142,7 +142,7 @@ export const Pagination: any = ({
               </Select>
             )}
           </label>
-          {showTotal && <span className="ml-3 text-black">{paginationDescription(ranges[0], ranges[1], total)}</span>}
+          {showTotal && <span className="ml-3 text-black">{paginationDescription(ranges[0],ranges[1],total)}</span>}
         </div>
         <div className="mt-3 sm:mt-0 right flex justify-center  p-1 rounded-xl bg-white">
           <div className="flex sm:flex-wrap justify-center duration-300 transition-all">
@@ -155,21 +155,20 @@ export const Pagination: any = ({
                 className={classNames(
                   'text-center p-1 mx-2 text-sm font-medium leading-normal relative',
                   {
-                    'text-teal-900':
-                      pageIndex !== page.index && !['next_5', 'prev_5'].includes(page.type),
-                    'bg-teal-900 rounded-full text-white !px-2.5 ': pageIndex === page.index,
-                    'text-blue-300': page.disabled,
+                    'text-green-700 hover:text-green-700':pageIndex !== page.index && !['next_5', 'prev_5'].includes(page.type),
+                    'bg-green-900 rounded-full text-white hover:bg-green-900 !px-2.5 mx-1': pageIndex === page.index,
+                    'text-green-500': page.disabled,
                     'text-gray-600 text-xs': ['next_5', 'prev_5'].includes(page.type),
                   },
                 )}
                 onClick={() => onPageIndexChange(page)}
                 aria-label={page.type}
               >
-                {page.type === 'prev' && <Arrow className={'w-3 h-3 mx-1.5 rotate-180'} />}
-                {page.type === 'next' && <Arrow className={'w-3 h-3 mx-1.5'} />}
-                {page.type === 'prev_10' && <DoubleArrow className={'w-3 h-3 text-gray-400 rotate-180'} />}
-                {page.type === 'next_10' && <DoubleArrow className={'w-3 h-3'} />}
-                {page.type.indexOf('page') === 0 && page.index}
+                {page.type === 'prev' && <Arrow className={'w-4 h-4 rotate-180'} />}
+                {page.type === 'next' && <Arrow className={'w-4 h-4'} />}
+                {page.type === 'prev_10' && <DoubleArrow className={'w-4 h-4 rotate-180'} />}
+                {page.type === 'next_10' && <DoubleArrow className={'w-4 h-4'} />}
+                {page.type.indexOf('page')===0 && page.index}
                 {(page.type === 'prev_5' || page.type === 'next_5') && '...'}
               </button>
             ))}

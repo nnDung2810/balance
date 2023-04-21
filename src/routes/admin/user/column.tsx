@@ -1,122 +1,72 @@
-import { Popconfirm, Tooltip } from 'antd';
-import React from 'react';
-import dayjs from 'dayjs';
+import React, { useState } from 'react';
 
-import { Avatar } from '@components';
-import { keyRole, routerLinks } from '@utils';
 import { DataTableModel, FormModel } from '@models';
-import { CodeFacade } from '@reducers';
-import { Edit, Trash } from '@svgs';
+import { GlobalFacade, UserFacade, UserRoleFacade } from '@reducers';
+import { LockOutlined } from '@ant-design/icons';
+import { Avatar } from 'antd';
 
-export const ColumnTableUser = ({ t, formatDate, permissions, navigate, dataTableRef }: any) => {
+const renderRoleCode = (text: any, values: any) => {
+  if ((text=values.roleCode) === "ADMIN") {
+    return text="Quản trị viên";
+  } else if ((text=values.roleCode) === "OWNER_SUPPLIER") {
+    return text="Nhà cung cấp";
+  } else {
+    return text="Chủ cửa hàng";
+  }
+};
+
+export const ColumnTableUser = ({ t }: any) => {
   const col: DataTableModel[] = [
     {
-      title: t(`user.Fullname`),
+      title: t(`Mã người dùng`),
+      name: 'code',
+      tableItem: {
+        width: 140,
+      },
+    },
+    {
+      title: t('Họ và tên'),
       name: 'name',
       tableItem: {
+        width: 400,
         filter: { type: 'search' },
-        width: 200,
-        fixed: window.innerWidth > 767,
-        sorter: true,
         onCell: () => ({
           style: { paddingTop: '0.25rem', paddingBottom: 0 },
           onClick: async () => null,
         }),
-        render: (text: string, item: any) => text && <Avatar src={item.avatar} text={item.name} />,
-      },
-    },
-    {
-      title: t('user.Position'),
-      name: 'positionCode',
-      tableItem: {
-        filter: {
-          type: 'checkbox',
-          name: 'positionCode',
-          get: {
-            facade: CodeFacade,
-            format: (item: any) => ({
-              label: item.name,
-              value: item.code,
-            }),
-            params: (fullTextSearch: string, value) => ({
-              fullTextSearch,
-              filter: { type: 'POS' },
-              extend: { code: value },
-            }),
-          },
-        },
-        sorter: true,
-        render: (item) => item?.name,
+        render: (text: string, item: any) => text ,
       },
     },
     {
       title: t('Email'),
       name: 'email',
       tableItem: {
+        width: 130,
         filter: { type: 'search' },
-        sorter: true,
       },
     },
     {
-      title: t('user.Phone Number'),
+      title: t('Số điện thoại'),
       name: 'phoneNumber',
       tableItem: {
+        width: 100,
+      },
+    },
+    {
+      title: t('Vai trò'),
+      name: 'userRole',
+      tableItem: {
+        width: 200,
         filter: { type: 'search' },
-        sorter: true,
-      },
-    },
-    {
-      title: t('user.Date of birth'),
-      name: 'dob',
-      tableItem: {
-        filter: { type: 'date' },
-        sorter: true,
-        render: (text: string) => dayjs(text).format(formatDate),
-      },
-    },
-    {
-      title: t('user.Start Date'),
-      name: 'startDate',
-      tableItem: {
-        filter: { type: 'search' },
-        sorter: true,
-        render: (text: string) => dayjs(text).format(formatDate),
-      },
-    },
-    {
-      title: t('user.Action'),
-      tableItem: {
-        width: 80,
-        align: 'center',
-        onCell: () => ({
-          style: { paddingTop: '0.25rem', paddingBottom: '0.25rem' },
-        }),
-        render: (text: string, data: any) => (
-          <div className={'flex gap-2'}>
-            {permissions?.includes(keyRole.P_USER_UPDATE) && (
-              <Tooltip title={t('routes.admin.Layout.Edit')}>
-                <Edit
-                  className="icon-cud bg-blue-600 hover:bg-blue-400"
-                  onClick={() => navigate(routerLinks('User') + '/' + data.id)}
-                />
-              </Tooltip>
-            )}
-
-            {permissions?.includes(keyRole.P_USER_DELETE) && (
-              <Tooltip title={t('routes.admin.Layout.Delete')}>
-                <Popconfirm
-                  placement="left"
-                  title={t('components.datatable.areYouSureWant')}
-                  onConfirm={() => dataTableRef?.current?.handleDelete(data.id)}
-                  okText={t('components.datatable.ok')}
-                  cancelText={t('components.datatable.cancel')}
-                >
-                  <Trash className="icon-cud bg-red-600 hover:bg-red-400" />
-                </Popconfirm>
-              </Tooltip>
-            )}
-          </div>
-        ),
+        render:(text:any, item:any) => {
+          if (text=item.userRole[0].mtRole.code === "ADMIN") {
+            return "Quản trị viên";
+          } else if (text=item.userRole[0].mtRole.code === "OWNER_SUPPLIER") {
+            return "Đại diện NCC";
+          } else {
+            return "Đại diện cửa hàng";
+          }
+        }
       },
     },
   ];
@@ -125,23 +75,12 @@ export const ColumnTableUser = ({ t, formatDate, permissions, navigate, dataTabl
 export const ColumnFormUser = ({ t, listRole }: any) => {
   const col: FormModel[] = [
     {
-      title: t('dayoff.Fullname'),
+      title: t('Họ và tên'),
       name: 'name',
       formItem: {
         tabIndex: 1,
         col: 6,
         rules: [{ type: 'required' }],
-      },
-    },
-    {
-      title: t('columns.auth.login.password'),
-      name: 'password',
-      formItem: {
-        tabIndex: 2,
-        col: 6,
-        type: 'password',
-        condition: (value: string, form: any, index: number, values: any) => !values?.id,
-        rules: [{ type: 'required' }, { type: 'min', value: 6 }],
       },
     },
     {
@@ -154,28 +93,57 @@ export const ColumnFormUser = ({ t, listRole }: any) => {
       },
     },
     {
-      title: t('columns.auth.register.retypedPassword'),
-      name: 'retypedPassword',
+      title: t('Số điện thoại'),
+      name: 'phoneNumber',
       formItem: {
-        placeholder: t('columns.auth.register.retypedPassword'),
-        tabIndex: 2,
         col: 6,
-        type: 'password',
-        condition: (value: string, form: any, index: number, values: any) => !values?.id,
-        rules: [
-          { type: 'required' },
-          {
-            type: 'custom',
-            validator: ({ getFieldValue }: any) => ({
-              validator(rule: any, value: string) {
-                if (!value || getFieldValue('password') === value) {
-                  return Promise.resolve();
-                }
-                return Promise.reject(new Error('Hai mật khẩu không giống nhau!'));
-              },
-            }),
-          },
-        ],
+        rules: [{ type: 'required' }, { type: 'phone', min: 10, max: 15 }],
+      },
+    },
+    {
+      title: t('Ghi chú'),
+      name: 'note',
+      formItem: {
+        col: 12,
+        type: 'textarea',
+      },
+    },
+  ];
+  return col;
+};
+
+export const ColumnFormUserEdit = ({ t, listRole }: any) => {
+  const col: FormModel[] = [
+    {
+      title: t('Mã người dùng'),
+      name: 'code',
+      formItem: {
+        disabled: () => true,
+        addonAfter: () => <LockOutlined />,
+        tabIndex: 1,
+        col: 6,
+        rules: [{ type: 'required' }],
+      },
+    },
+    {
+      title: t('Họ và tên'),
+      name: 'name',
+      formItem: {
+        tabIndex: 1,
+        col: 6,
+        rules: [{ type: 'required' }],
+      },
+    },
+    {
+      title: t('Email'),
+      name: 'email',
+      formItem: {
+        disabled: () => true,
+      //  type: 'select',
+        addonAfter: () => <LockOutlined />,
+        tabIndex: 1,
+        col: 6,
+        rules: [{ type: 'required' }, { type: 'email' }, { type: 'min', value: 6 }],
       },
     },
     {
@@ -186,75 +154,30 @@ export const ColumnFormUser = ({ t, listRole }: any) => {
         rules: [{ type: 'required' }, { type: 'phone', min: 10, max: 15 }],
       },
     },
-    {
-      title: t('user.Date of birth'),
-      name: 'dob',
+     {
+    title: t('Vai trò'),
+      name: 'roleCode',
       formItem: {
-        col: 6,
-        type: 'date',
-        rules: [{ type: 'required' }],
-      },
-    },
-    {
-      title: t('user.Position'),
-      name: 'positionCode',
-      formItem: {
+        disabled: () => true,
         col: 6,
         type: 'select',
-        rules: [{ type: 'required' }],
-        convert: (data: any) =>
-          data?.map ? data.map((_item: any) => (_item?.id !== undefined ? +_item.id : _item)) : data,
-        get: {
-          facade: CodeFacade,
-          params: (fullTextSearch: string) => ({
-            fullTextSearch,
-            filter: { type: 'POS' },
-            extend: {},
-          }),
-          format: (item: any) => ({
-            label: item.name,
-            value: item.code,
-          }),
-        },
+        render: (text : any , values) =>{
+          if((text=values.roleCode) === "ADMIN"){
+            return "Quản trị viên";
+          } else if((text=values.roleCode) === "OWNER_SUPPLIER"){
+            return "Nhà cung cấp";
+          } else {
+            return "Chủ cửa hàng";
+          }
+        }
       },
     },
     {
-      title: t('user.Start Date'),
-      name: 'startDate',
+      title: t('Ghi chú'),
+      name: 'note',
       formItem: {
-        col: 6,
-        type: 'date',
-        rules: [{ type: 'required' }],
-      },
-    },
-    {
-      title: t('components.button.Role'),
-      name: 'roleId',
-      formItem: {
-        col: 6,
-        type: 'select',
-        rules: [{ type: 'required' }],
-        list: listRole.map((item: any) => ({
-          value: item?.id,
-          label: item?.name,
-        })),
-      },
-    },
-    {
-      title: t('user.Description'),
-      name: 'description',
-      formItem: {
-        col: 8,
+        col: 12,
         type: 'textarea',
-      },
-    },
-    {
-      name: 'avatar',
-      title: t('user.Upload avatar'),
-      formItem: {
-        col: 4,
-        type: 'upload',
-        mode: 'multiple',
       },
     },
   ];
