@@ -6,7 +6,7 @@ import { routerLinks } from '@utils';
 import { GlobalFacade } from '@reducers';
 import { ColumnLogin } from './column';
 import { FormModalRefObject } from '@models';
-import '../../../layouts/auth/index.less'
+import '../../../layouts/user-admin/index.less'
 
 const Page = () => {
   const { t } = useTranslation();
@@ -14,6 +14,7 @@ const Page = () => {
   const globalFacade = GlobalFacade();
   const { isLoading, status, user, data, login } = globalFacade;
   useEffect(() => {
+    console.log(status)
     if (status === 'login.fulfilled' && user && Object.keys(user).length > 0) {
       navigate(routerLinks('Dashboard'), { replace: true });
     }
@@ -27,19 +28,18 @@ const Page = () => {
         </h1>
         <h5 className="intro-x font-semibold tracking-wide text-teal-900 ">{t('routes.auth.login.subTitle')}</h5>
       </div>
-      <div className='mx-auto w-3/4'>
+      <div className='mx-auto w-3/4 relative'>
         <Spin spinning={isLoading} >
           <Form
             values={{ ...data }}
-            className="intro-x ant-form1"
+            className="intro-x ant-form1 space-y-12 "
             columns={ColumnLogin({ t })}
             textSubmit={'routes.auth.login.Log In'}
             handSubmit={login}
             disableSubmit={isLoading}
-            
           />
         </Spin>
-        <div className="mt-3 text-right">
+        <div className="absolute -mt-20 right-0 max-sm:right-6 text-right">
           <button className={'text-green-900 font-semibold underline text-base hover:no-underline'} onClick={() => navigate(routerLinks('ForgetPassword'))}>
             {' '}
             {t('routes.auth.login.Forgot Password')}

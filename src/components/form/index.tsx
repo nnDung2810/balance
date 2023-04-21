@@ -26,6 +26,7 @@ const Component = ({
   idSubmit = 'idSubmit',
   disableSubmit = false,
   formAnt,
+  handleForgetPassword,
 }: Type) => {
   const { t } = useTranslation();
   const { formatDate } = GlobalFacade();
@@ -577,7 +578,7 @@ const Component = ({
           'lg:col-span-1 lg:col-span-2 lg:col-span-3 lg:col-span-4 lg:col-span-5 lg:col-span-6 lg:col-span-7 lg:col-span-8 lg:col-span-9 lg:col-span-10 lg:col-span-11 lg:col-span-12 hidden'
         }
       />
-      <div className={'group-input'}>
+      <div className={'group-input p-5'}>
         <div className={'grid gap-x-5 grid-cols-12'}>
           {_columns.map(
             (column: any, index: number) =>
@@ -607,15 +608,16 @@ const Component = ({
       </div>
 
       <div
-        className={classNames('gap-2 flex mt-5', {
+        className={classNames('gap-2 flex', {
           'justify-center': !extendButton && !handCancel,
           'md:inline-flex md:float-right': extendButton || handCancel,
+          'w-full flex max-sm:flex-col max-sm:items-center max-sm:mb-10 justify-between mt-8': handSubmit && handCancel,
         })}
       >
         {handCancel && (
           <Button
             text={t(textCancel)}
-            className={'md:min-w-[12rem] w-full justify-center out-line'}
+            className={'w-32 justify-center out-line !border-black max-sm:w-3/5'}
             onClick={handCancel}
           />
         )}
@@ -626,7 +628,7 @@ const Component = ({
             id={idSubmit}
             onClick={() => form && form.submit()}
             disabled={disableSubmit}
-            className={'md:min-w-[12rem] w-full justify-center'}
+            className={'w-32 justify-center !bg-teal-800 hover:!bg-teal-700 !border !border-teal-900 max-sm:w-3/5'}
             type={'submit'}
           />
         )}
@@ -641,6 +643,7 @@ type Type = {
   textCancel?: string;
   handSubmit?: (values: any) => void;
   handCancel?: () => void;
+  handleForgetPassword?: () => void;
   values?: any;
   formAnt?: FormInstance;
   onFirstChange?: () => void;

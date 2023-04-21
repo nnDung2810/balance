@@ -112,7 +112,7 @@ const Layout = ({ children }: PropsWithChildren) => {
                 {
                   key: '2',
                   label: (
-                    <div onClick={() => navigate(routerLinks('Login'), { replace: true })}>
+                    <div onClick={() => navigate(routerLinks('Sign-in'), { replace: true })}>
                       {t('routes.admin.Layout.Sign out')}
                     </div>
                   ),

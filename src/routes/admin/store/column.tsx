@@ -1,21 +1,16 @@
 import { Popconfirm, Tooltip } from 'antd';
 import React from 'react';
-import dayjs from 'dayjs';
-
-import { Avatar } from '@components';
 import { keyRole, routerLinks } from '@utils';
 import { DataTableModel, FormModel } from '@models';
-import { CodeFacade } from '@reducers';
-import { Edit, Trash } from '@svgs';
 
-export const ColumnTableStore = ({ t, formatDate, permissions, navigate, dataTableRef }: any) => {
+export const ColumnTableStore = ({ t, navigate, dataTableRef }: any) => {
   const col: DataTableModel[] = [
     {
       title: 'Mã cửa hàng',
       name: 'code',
       tableItem: {
-        width: 200,
-        fixed: window.innerWidth > 767,
+        width: 150,
+        // fixed: window.innerWidth > 767,
       },
     },
     {
@@ -28,36 +23,38 @@ export const ColumnTableStore = ({ t, formatDate, permissions, navigate, dataTab
       title: 'Địa chỉ',
       name: 'address',
       tableItem: {
+        render: (value, item) => item.address?.street + ', ' + item.address?.ward.name + ', ' + item.address?.district.name + ', ' + item.address?.province  .name,
       },
     },
     {
       title: 'Loại cửa hàng',
-      // name: 'dob',
-      // tableItem: {
-      //   render: (text: string) => dayjs(text).format(formatDate),
-      // },
+      name: 'isMain',
+      tableItem: {
+        render: (text: string ) => text ? 'Cửa hàng chính' : 'Cửa hàng chi nhánh'
+      },
     },
     {
       title: 'Người đại diện',
-      // name: 'startDate',
-      // tableItem: {
-      //   render: (text: string) => dayjs(text).format(formatDate),
-      // },
+      name: 'userRole',
+      tableItem: {
+        render: (value, item) => item.userRole[0]?.userAdmin.name,
+      },
     },
     {
-        title: 'Số điện thoại',
-        // name: 'phoneNumber',
-        // tableItem: {
-        // },
+      title: 'Số điện thoại',
+      name: 'userRole',
+      tableItem: {
+        render: (value, item) => item.userRole[0]?.userAdmin.phoneNumber,
       },
+    },
   ];
   return col;
 };
-export const ColumnFormUser = ({ t, listRole }: any) => {
+export const ColumnFormStore = ({ t, listRole }: any) => {
   const col: FormModel[] = [
     {
-      title: t('dayoff.Fullname'),
-      name: 'name',
+      title: 'Tên cửa hàng',
+      name: 'code',
       formItem: {
         tabIndex: 1,
         col: 6,
@@ -65,127 +62,76 @@ export const ColumnFormUser = ({ t, listRole }: any) => {
       },
     },
     {
-      title: t('columns.auth.login.password'),
-      name: 'password',
-      formItem: {
-        tabIndex: 2,
-        col: 6,
-        type: 'password',
-        condition: (value: string, form: any, index: number, values: any) => !values?.id,
-        rules: [{ type: 'required' }, { type: 'min', value: 6 }],
-      },
-    },
-    {
-      title: t('Email'),
-      name: 'email',
+      title: 'Số fax',
+      name: 'code',
       formItem: {
         tabIndex: 1,
         col: 6,
-        rules: [{ type: 'required' }, { type: 'email' }, { type: 'min', value: 6 }],
-      },
-    },
-    {
-      title: t('columns.auth.register.retypedPassword'),
-      name: 'retypedPassword',
-      formItem: {
-        placeholder: t('columns.auth.register.retypedPassword'),
-        tabIndex: 2,
-        col: 6,
-        type: 'password',
-        condition: (value: string, form: any, index: number, values: any) => !values?.id,
-        rules: [
-          { type: 'required' },
-          {
-            type: 'custom',
-            validator: ({ getFieldValue }: any) => ({
-              validator(rule: any, value: string) {
-                if (!value || getFieldValue('password') === value) {
-                  return Promise.resolve();
-                }
-                return Promise.reject(new Error('Hai mật khẩu không giống nhau!'));
-              },
-            }),
-          },
-        ],
-      },
-    },
-    {
-      title: t('Số điện thoại'),
-      name: 'phoneNumber',
-      formItem: {
-        col: 6,
-        rules: [{ type: 'required' }, { type: 'phone', min: 10, max: 15 }],
-      },
-    },
-    {
-      title: t('user.Date of birth'),
-      name: 'dob',
-      formItem: {
-        col: 6,
-        type: 'date',
         rules: [{ type: 'required' }],
       },
     },
     {
-      title: t('user.Position'),
-      name: 'positionCode',
+      name: 'type',
+      title: 'Tỉnh/Thành phố',
       formItem: {
-        col: 6,
         type: 'select',
-        rules: [{ type: 'required' }],
-        convert: (data: any) =>
-          data?.map ? data.map((_item: any) => (_item?.id !== undefined ? +_item.id : _item)) : data,
-        get: {
-          facade: CodeFacade,
-          params: (fullTextSearch: string) => ({
-            fullTextSearch,
-            filter: { type: 'POS' },
-            extend: {},
-          }),
-          format: (item: any) => ({
-            label: item.name,
-            value: item.code,
-          }),
-        },
+        col: 3,
       },
     },
     {
-      title: t('user.Start Date'),
-      name: 'startDate',
+      name: 'type',
+      title: 'Quận/Huyện',
       formItem: {
-        col: 6,
-        type: 'date',
-        rules: [{ type: 'required' }],
-      },
-    },
-    {
-      title: t('components.button.Role'),
-      name: 'roleId',
-      formItem: {
-        col: 6,
         type: 'select',
-        rules: [{ type: 'required' }],
-        list: listRole.map((item: any) => ({
-          value: item?.id,
-          label: item?.name,
-        })),
+        col: 3,
       },
     },
     {
-      title: t('user.Description'),
-      name: 'description',
+      name: 'type',
+      title: 'Phường/Xã',
       formItem: {
-        col: 8,
-        type: 'textarea',
+        type: 'select',
+        col: 3,
       },
     },
     {
-      name: 'avatar',
-      title: t('user.Upload avatar'),
+      name: 'type',
+      title: 'Địa chỉ cụ thể',
+      formItem: {
+        type: 'select',
+        col: 3,
+      },
+    },
+    {
+      name: 'type',
+      title: 'Họ tên đại diện',
       formItem: {
         col: 4,
-        type: 'upload',
-        mode: 'multiple',
+        rules: [{ type: 'required' }],
+      },
+    },
+    {
+      name: 'type',
+      title: 'Số điện thoại đại diện',
+      formItem: {
+        col: 4,
+        rules: [{ type: 'required' }],
+      },
+    },
+    {
+      name: 'type',
+      title: 'Email đại diện',
+      formItem: {
+        col: 4,
+        rules: [{ type: 'required' }],
+      },
+    },
+    {
+      name: 'type',
+      title: 'Ghi chú',
+      formItem: {
+        type: 'textarea',
+        
       },
     },
   ];

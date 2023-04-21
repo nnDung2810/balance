@@ -84,7 +84,8 @@
     "Login": "Đăng Nhập",
     "User/List": "Danh sách Người dùng",
     "User/Add": "Tạo mới người dùng",
-    "User/Edit": "Chỉnh sửa người dùng"
+    "User/Edit": "Chỉnh sửa người dùng",
+    "store-managerment/create":"Thêm cửa hàng"
   },
   "columns": {
     "auth": {

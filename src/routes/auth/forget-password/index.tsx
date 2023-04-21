@@ -39,7 +39,7 @@ const Page = () => {
           />
         </Spin>
         <div className="mt-3 text-center">
-          <button className={'text-sky-600 font-medium underline tracking-wide hover:no-underline hover:text-sky-500'} onClick={() => navigate(routerLinks('Login'))}>
+          <button className={'text-sky-600 font-medium underline tracking-wide hover:no-underline hover:text-sky-500'} onClick={() => navigate(routerLinks('Sign-in'))}>
             {' '}
             {t('routes.auth.reset-password.Back To Login')}
           </button>

@@ -32,7 +32,7 @@ const action = {
     return data || {};
   }),
   login: createAsyncThunk(name + '/sign-in', async (values: { password: string; username: string }) => {
-    const { data, message } = await API.post<{ user: User; accessToken: string; refreshToken: string }>(
+    const { data, message } = await API.post<{ userInfor: User; accessToken: string; refreshToken: string }>(
       `${routerLinks(name, 'api')}/sign-in`,
       values,
     );
@@ -41,7 +41,7 @@ const action = {
       localStorage.setItem(keyToken, data?.accessToken);
       localStorage.setItem(keyRefreshToken, data?.refreshToken);
     }
-    return data!.user;
+    return data!.userInfor;
   }),
   forgottenPassword: createAsyncThunk(name + '/forgotten-password', async (values: { email: string }) => {
     const { data, message } = await API.post(`${routerLinks(name, 'api')}/forgotten-password`, values);
@@ -66,16 +66,21 @@ interface resetPassword {
 }
 export class User extends CommonEntity {
   constructor(
-    public name?: string,
-    public avatar?: string,
-    public password?: string,
+    // public userName?: string,
+    public code?: string,
     public email?: string,
+    public isMain?: boolean,
+    public name?: string,
+    public note?: string,
     public phoneNumber?: string,
-    public dob?: string,
-    public description?: string,
-    public positionCode?: string,
-    public retypedPassword?: string,
-    public role?: UserRole,
+    public roleCode?: string,
+    public roleId?: number,
+    public status?: string,
+    public subOrgId?: number,
+    public userRoleId?: number,
+    // public profileImage?: string,
+    // public subOrgName?: string,
+    // public roleName?: string,
   ) {
     super();
   }
@@ -166,7 +171,7 @@ export const globalSlice = createSlice({
           action: PayloadAction<
             undefined,
             string,
-            { arg: { password?: string; email?: string }; requestId: string; requestStatus: 'pending' }
+            { arg: { password?: string; username?: string; }; requestId: string; requestStatus: 'pending' }
           >,
         ) => {
           state.data = action.meta.arg;

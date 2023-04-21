@@ -23,9 +23,9 @@ export const action = {
   //   return data;
   // }),
 };
-export const userSlice = createSlice(new Slice<StoreManagement>(action));
+export const storeSlice = createSlice(new Slice<StoreManagement>(action));
 
-export const UserFacade = () => {
+export const StoreFacade = () => {
   const dispatch = useAppDispatch();
   return {
     ...(useTypedSelector((state) => state[action.name]) as State<StoreManagement>),

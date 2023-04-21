@@ -29,8 +29,8 @@ const API = {
         (key) =>
           key + '=' + encodeURIComponent(typeof params[key] === 'object' ? JSON.stringify(params[key]) : params[key]),
       )
-      .join('&');
-    const response = await fetch(linkApi + url + (linkParam && '?' + linkParam), config);
+      .join('&type=STORE&');
+    const response = await fetch(linkApi + url + (linkParam && '?' + linkParam ), config);
     const res: Responses<T> = await response.json();
     if (response.ok) {
       return res;

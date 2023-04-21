@@ -379,7 +379,7 @@ const Hook = forwardRef(
     if (!data) data = result?.data;
     return (
       <div className={classNames(className, 'intro-x rounded-lg bg-white p-5')}>
-        <div className="sm:flex justify-between mb-2.5">
+        <div className="lg:flex justify-between mb-2.5">
           {showSearch ? (
             <div className="relative">
               <input
@@ -465,7 +465,7 @@ const Hook = forwardRef(
             />
             {showPagination && (
               <Pagination
-                total={result?.count}
+                total={result?.pagination?.total}
                 pageIndex={+params[pageIndex]}
                 pageSize={+params[pageSize]}
                 pageSizeOptions={pageSizeOptions}
