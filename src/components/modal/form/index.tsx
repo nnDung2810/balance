@@ -2,7 +2,8 @@ import React, { forwardRef, Ref, useImperativeHandle } from 'react';
 import { Form as FormAnt } from 'antd';
 import { v4 } from 'uuid';
 
-import { Modal, Form } from '@components';
+import Form from '@components/form';
+import Modal from '@components/modal';
 import { convertFormValue } from '@utils';
 import { FormModel, FormModalRefObject } from '@models';
 

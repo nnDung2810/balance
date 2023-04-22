@@ -1,7 +1,8 @@
 import React, { Fragment, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useLocation } from 'react-router';
-import { Spin, Form } from '@components';
+import { Spin } from '@components/spin';
+import Form from '@components/form';
 import { routerLinks } from '@utils';
 import { GlobalFacade } from '@reducers';
 

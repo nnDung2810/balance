@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { API, routerLinks } from '@utils';
-import { Message } from '@components';
+import Message from '@components/message';
 import Action from '../action';
 import Slice, { State } from '../slice';
 import { useAppDispatch, useTypedSelector } from '@reducers';

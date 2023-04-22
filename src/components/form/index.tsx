@@ -4,7 +4,8 @@ import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import dayjs from 'dayjs';
 
-import { Upload, Editor, DraggableLayout, Button } from '@components';
+import { Upload } from '@components/upload';
+import { Button } from '@components/button';
 import { convertFormValue } from '@utils';
 import { FormItem, FormModel } from '@models';
 import { GlobalFacade } from '@reducers';
@@ -100,10 +101,6 @@ const Component = ({
             form={form}
           />
         );
-      case 'editor':
-        return <Editor />;
-      case 'layout':
-        return <DraggableLayout />;
       case 'upload':
         return <Upload multiple={!!formItem.mode} />;
       case 'table_transfer':

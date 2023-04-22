@@ -5,7 +5,9 @@ import classNames from 'classnames';
 import { v4 } from 'uuid';
 
 import { API, linkApi } from '@utils';
-import { Button, Message, Spin } from '@components';
+import { Button } from '@components/button';
+import { Spin } from '@components/spin';
+import Message from '@components/message';
 import { Plus, Copy, Paste, Times } from '@svgs';
 
 export const Upload = ({

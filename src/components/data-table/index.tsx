@@ -6,7 +6,8 @@ import { useLocation, useNavigate } from 'react-router';
 import dayjs from 'dayjs';
 import classNames from 'classnames';
 
-import { Button, Pagination } from '@components';
+import { Button } from '@components/button';
+import { Pagination } from '@components/pagination';
 import { DataTableModel, PaginationQuery, TableGet, TableRefObject } from '@models';
 import { cleanObjectKeyNull } from '@utils';
 import { Calendar, CheckCircle, CheckSquare, Search, Times } from '@svgs';

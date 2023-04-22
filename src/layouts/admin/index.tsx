@@ -7,7 +7,7 @@ import { useLocation } from 'react-router-dom';
 // import { initializeApp } from 'firebase/app';
 // import { getMessaging, isSupported, getToken, onMessage } from 'firebase/messaging';
 import { routerLinks } from '@utils';
-import { Avatar } from '@components';
+import Avatar from '@components/avatar';
 import { GlobalFacade } from '@reducers';
 import Menu from './menu';
 // import { firebaseConfig } from 'variable';

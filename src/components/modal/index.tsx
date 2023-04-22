@@ -3,7 +3,8 @@ import { Modal } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { v4 } from 'uuid';
 
-import { Button, Spin } from '@components';
+import { Button } from '@components/button';
+import { Spin } from '@components/spin';
 import { Spinner } from '@svgs';
 
 const Hook = forwardRef(

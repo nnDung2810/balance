@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Fragment, useCallback, useRef } from 'react';
 import { TreeSelect, Checkbox, FormInstance } from 'antd';
-import { Button } from '@components';
+import { Button } from '@components/button';
 import { API } from '@utils';
 import { Times } from '@svgs';
 

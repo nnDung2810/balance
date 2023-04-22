@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import { Button } from '@components';
+import { Button } from '@components/button';
 import { Times } from '@svgs';
 
 const Component = ({

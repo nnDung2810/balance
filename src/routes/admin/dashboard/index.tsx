@@ -2,7 +2,8 @@ import React, { useEffect, Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 
-import { DataTable, Spin } from '@components';
+import { Spin } from '@components/spin';
+import DataTable from '@components/data-table';
 
 const Page = () => {
   const { t } = useTranslation();
