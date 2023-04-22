@@ -94,11 +94,23 @@ const Layout = ({ children }: PropsWithChildren) => {
               onChange={(e: 'vn' | 'en') => globalFacade.setLanguage(e)}
             >
               <Select.Option value="en">
-                <img src="/assets/svg/us.svg" alt="US" className="mr-1 w-4 inline-block relative -top-0.5" />{' '}
+                <img
+                  width={'16'}
+                  height={'16'}
+                  src="/assets/svg/us.svg"
+                  alt="US"
+                  className="mr-1 w-4 inline-block relative -top-0.5"
+                />{' '}
                 {t('routes.admin.Layout.English')}
               </Select.Option>
               <Select.Option value="vn">
-                <img src="/assets/svg/vn.svg" alt="VN" className="mr-1 w-4 inline-block relative -top-0.5" />{' '}
+                <img
+                  width={'16'}
+                  height={'16'}
+                  src="/assets/svg/vn.svg"
+                  alt="VN"
+                  className="mr-1 w-4 inline-block relative -top-0.5"
+                />{' '}
                 {t('routes.admin.Layout.Vietnam')}
               </Select.Option>
             </Select>
