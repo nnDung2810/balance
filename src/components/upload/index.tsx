@@ -130,7 +130,7 @@ export const Upload = ({
           bodyFormData.append('file', file);
 
           try {
-            const data = await API.responsible(action, {}, { ...API.init(), method, body: bodyFormData });
+            const data = await API.responsible<any>(action, {}, { ...API.init(), method, body: bodyFormData });
             // const { data } = await axios({
             //   method,
             //   url: action,
