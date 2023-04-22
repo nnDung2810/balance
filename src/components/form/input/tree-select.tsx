@@ -183,8 +183,8 @@ const Component = ({ formItem, placeholder, onChange, value, form, disabled, sho
             checkShow && (
               <div className="bg-blue-100 rounded-xl py-1 px-2 relative mr-2.5 -left-2.5">
                 <Button
-                  icon={<Times className="h-5 w-5 fill-red-500" />}
-                  className="absolute rounded-full -top-1 -right-2 !bg-red-100 !text-red-500 leading-none z-10"
+                  icon={<Times className="h-5 w-5 fill-red-600" />}
+                  className="absolute rounded-full -top-1 -right-2 !bg-red-100 !text-red-600 leading-none z-10"
                   onClick={() => onChange && onChange(clearTag(item[0], value))}
                   disabled={disabled}
                 />

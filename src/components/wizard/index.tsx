@@ -5,22 +5,22 @@ const Component = ({ steps = [], current = 0 }: { steps: { title: string }[]; cu
   return (
     <div className={`w-full flex flex-wrap items-center my-5`}>
       {steps.map((step, index: number) => {
-        let bgRec = 'bg-gray-500';
-        let bg = 'bg-gray-500 lg:bg-gray-500';
-        let border = 'border-l-gray-500';
+        let bgRec = 'bg-gray-600';
+        let bg = 'bg-gray-600 lg:bg-gray-600';
+        let border = 'border-l-gray-600';
         let width = 'w-full md:w-1/3 lg:w-1/5';
 
         if (index === current) {
-          border = 'border-l-blue-500';
-          bgRec = 'bg-blue-500';
+          border = 'border-l-blue-600';
+          bgRec = 'bg-blue-600';
         }
         if (index < current) {
-          border = 'border-l-green-500';
-          bg = 'bg-green-500 lg:bg-green-500';
-          bgRec = 'bg-green-500';
+          border = 'border-l-green-600';
+          bg = 'bg-green-600 lg:bg-green-600';
+          bgRec = 'bg-green-600';
         }
         if (index === current - 1) {
-          bg = 'bg-blue-500 lg:bg-blue-500';
+          bg = 'bg-blue-600 lg:bg-blue-600';
         }
         if (index === steps.length - 1) {
           bg = 'bg-white';

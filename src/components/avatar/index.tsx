@@ -265,7 +265,7 @@ const Component = ({
           >
             <div
               className={classNames(
-                'rounded-xl inline-block text-center border border-blue-500 text-blue-500 bg-blue-200 text-xs -ml-2',
+                'rounded-xl inline-block text-center border border-blue-600 text-blue-600 bg-blue-200 text-xs -ml-2',
                 'w-' + size,
                 'h-' + size,
                 'leading-' + size,

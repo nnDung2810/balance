@@ -2,11 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 //
-@import "~perfect-scrollbar/css/perfect-scrollbar.css";
 @import "~glightbox/dist/css/glightbox.css";
 
 @import "/src/components";
-
+[aria-hidden=true] {
+  display:none;
+}
 .button {
   @apply px-4 ~'py-2.5' rounded-lg bg-blue-600 text-white hover:bg-blue-400 inline-flex items-center gap-1 border border-transparent font-semibold;
   &.icon {
@@ -20,13 +21,13 @@
   @apply bg-blue-300;
   }
   &.out-line {
-    @apply ~'!bg-transparent !border-blue-500 !text-blue-500 hover:!bg-blue-400 hover:!border-blue-400 hover:!text-white';
+    @apply ~'!bg-transparent !border-blue-600 !text-blue-600 hover:!bg-blue-400 hover:!border-blue-400 hover:!text-white';
   }
 }
 
 body {
   font-family: 'Manrope', -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Noto Sans,Ubuntu,Droid Sans,Helvetica Neue,sans-serif;
-  @apply text-sm overflow-x-hidden text-gray-500 bg-blue-50;
+  @apply text-sm overflow-x-hidden text-gray-700 bg-blue-50;
   .swal2-close:focus { @apply shadow-none; }
 }
 * > {
@@ -57,7 +58,7 @@ h1, h2, h3, h4, h5, h6 {
 .ant-btn {
 @apply border border-gray-300 text-sm rounded-lg mr-2 px-2;
 
-  &.ant-btn-primary { @apply bg-blue-500 text-white; }
+  &.ant-btn-primary { @apply bg-blue-600 text-white; }
 }
 .ant-picker-panel-container .ant-picker-panels {
   @apply overflow-auto ~'max-w-[560px] w-[90vw]';

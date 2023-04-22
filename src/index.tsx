@@ -32,27 +32,31 @@ i18n
   });
 const store = setupStore();
 let container: HTMLElement;
-document.addEventListener('DOMContentLoaded', function () {
-  if (!container) {
-    container = document.getElementById('root') as HTMLElement;
-    const root = createRoot(container);
-    root.render(
-      <Suspense
-        fallback={
-          <Spin>
-            <div className="w-screen h-screen" />
-          </Spin>
-        }
-      >
-        <Styling>
-          <Provider store={store}>
-            <AuthProvider>
-              <Router />
-            </AuthProvider>
-          </Provider>
-        </Styling>
-      </Suspense>,
-    );
-  }
-});
+document.addEventListener(
+  'DOMContentLoaded',
+  () => {
+    if (!container) {
+      container = document.getElementById('root') as HTMLElement;
+      const root = createRoot(container);
+      root.render(
+        <Suspense
+          fallback={
+            <Spin>
+              <div className="w-screen h-screen" />
+            </Spin>
+          }
+        >
+          <Styling>
+            <Provider store={store}>
+              <AuthProvider>
+                <Router />
+              </AuthProvider>
+            </Provider>
+          </Styling>
+        </Suspense>,
+      );
+    }
+  },
+  { passive: true },
+);
 reportWebVitals();

@@ -21,7 +21,7 @@ const Layout = ({ children }: PropsWithChildren) => {
         <div className="w-full lg:w-3/5 p-10 into relative z-10 overflow-hidden flex justify-between flex-col">
           <div className="mb-5">
             <h2 className="font-bold text-3xl -intro-x">
-              <a href="/" className="flex items-center text-white hover:text-yellow-500">
+              <a href="/" className="flex items-center text-white hover:text-yellow-600">
                 <Logo className={'w-14 h-14 mr-3 brightness-0 invert'} />
               </a>
             </h2>
@@ -54,16 +54,22 @@ const Layout = ({ children }: PropsWithChildren) => {
         <div className="w-full lg:w-2/5 p-10 flex justify-center flex-col">
           {children}
           <div className="intro-x text-center mt-5">
-            <Select value={globalFacade.language} onChange={(e: 'vn' | 'en') => globalFacade.setLanguage(e)}>
-              <Select.Option value="en">
-                <img src="/assets/svg/us.svg" alt="US" className="mr-1 w-4 inline-block relative -top-0.5" />{' '}
-                {t('routes.admin.Layout.English')}
-              </Select.Option>
-              <Select.Option value="vn">
-                <img src="/assets/svg/vn.svg" alt="VN" className="mr-1 w-4 inline-block relative -top-0.5" />{' '}
-                {t('routes.admin.Layout.Vietnam')}
-              </Select.Option>
-            </Select>
+            <label>
+              <Select
+                aria-hidden="true"
+                value={globalFacade.language}
+                onChange={(e: 'vn' | 'en') => globalFacade.setLanguage(e)}
+              >
+                <Select.Option value="en">
+                  <img src="/assets/svg/us.svg" alt="US" className="mr-1 w-4 inline-block relative -top-0.5" />{' '}
+                  {t('routes.admin.Layout.English')}
+                </Select.Option>
+                <Select.Option value="vn">
+                  <img src="/assets/svg/vn.svg" alt="VN" className="mr-1 w-4 inline-block relative -top-0.5" />{' '}
+                  {t('routes.admin.Layout.Vietnam')}
+                </Select.Option>
+              </Select>
+            </label>
           </div>
         </div>
       </div>
