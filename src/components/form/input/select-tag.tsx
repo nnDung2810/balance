@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { FormInstance, Select } from 'antd';
 
 import { Button } from '@components/button';
-import Avatar from '@components/avatar';
+import { Avatar } from '@components/avatar';
 import { API } from '@utils';
 import { Times } from '@svgs';
 

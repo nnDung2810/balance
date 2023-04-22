@@ -7,7 +7,7 @@ import { v4 } from 'uuid';
 import { API, linkApi } from '@utils';
 import { Button } from '@components/button';
 import { Spin } from '@components/spin';
-import Message from '@components/message';
+import { Message } from '@components/message';
 import { Plus, Copy, Paste, Times } from '@svgs';
 
 export const Upload = ({

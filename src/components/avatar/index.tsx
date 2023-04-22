@@ -2,7 +2,7 @@ import React, { MouseEventHandler } from 'react';
 import { Popover } from 'antd';
 import classNames from 'classnames';
 
-const Component = ({
+export const Avatar = ({
   text,
   src,
   onClick,
@@ -290,4 +290,3 @@ type Type = {
   maxCount?: number;
   index?: number;
 };
-export default Component;

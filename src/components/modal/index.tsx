@@ -1,5 +1,5 @@
 import React, { forwardRef, useImperativeHandle, PropsWithChildren, Ref } from 'react';
-import { Modal } from 'antd';
+import { Modal as AntModal } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { v4 } from 'uuid';
 
@@ -7,7 +7,7 @@ import { Button } from '@components/button';
 import { Spin } from '@components/spin';
 import { Spinner } from '@svgs';
 
-const Hook = forwardRef(
+export const Modal = forwardRef(
   (
     {
       facade,
@@ -34,7 +34,7 @@ const Hook = forwardRef(
     };
 
     return (
-      <Modal
+      <AntModal
         maskClosable={false}
         destroyOnClose={true}
         centered={true}
@@ -66,11 +66,11 @@ const Hook = forwardRef(
         <Spin spinning={isLoading} idElement={idElement}>
           {children}
         </Spin>
-      </Modal>
+      </AntModal>
     );
   },
 );
-Hook.displayName = 'HookModal';
+Modal.displayName = 'HookModal';
 type Type = PropsWithChildren<{
   facade: any;
   keyState?: string;
@@ -84,4 +84,3 @@ type Type = PropsWithChildren<{
   footerCustom?: (handleOk: () => Promise<void>, handleCancel: () => void) => JSX.Element[] | JSX.Element;
   idElement?: string;
 }>;
-export default Hook;

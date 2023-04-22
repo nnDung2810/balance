@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 
-const Component = ({ steps = [], current = 0 }: { steps: { title: string }[]; current: number }) => {
+export const Wizard = ({ steps = [], current = 0 }: { steps: { title: string }[]; current: number }) => {
   return (
     <div className={`w-full flex flex-wrap items-center my-5`}>
       {steps.map((step, index: number) => {
@@ -66,4 +66,3 @@ const Component = ({ steps = [], current = 0 }: { steps: { title: string }[]; cu
     </div>
   );
 };
-export default Component;

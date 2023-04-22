@@ -2,8 +2,8 @@ import React, { Fragment, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { Button } from '@components/button';
-import DataTable from '@components/data-table';
-import ModalForm from '@components/modal/form';
+import { DataTable } from '@components/data-table';
+import { ModalForm } from '@components/modal/form';
 import { keyRole } from '@utils';
 import { GlobalFacade, CodeFacade, CodeTypeFacade } from '@reducers';
 import { Edit, Plus, Trash } from '@svgs';

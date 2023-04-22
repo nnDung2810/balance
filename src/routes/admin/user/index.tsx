@@ -2,9 +2,9 @@ import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 
-import Avatar from '@components/avatar';
+import { Avatar } from '@components/avatar';
 import { Button } from '@components/button';
-import DataTable from '@components/data-table';
+import { DataTable } from '@components/data-table';
 
 import { keyRole, routerLinks } from '@utils';
 import { UserFacade, GlobalFacade, CodeFacade } from '@reducers';

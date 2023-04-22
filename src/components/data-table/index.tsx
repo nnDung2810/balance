@@ -41,7 +41,7 @@ const getQueryStringParams = (query: string) => {
     : {}; // Trim - from end of text
 };
 
-const Hook = forwardRef(
+export const DataTable = forwardRef(
   (
     {
       columns = [],
@@ -496,7 +496,7 @@ const Hook = forwardRef(
     );
   },
 );
-Hook.displayName = 'HookTable';
+DataTable.displayName = 'HookTable';
 type Type = {
   columns: DataTableModel[];
   showList?: boolean;
@@ -522,4 +522,3 @@ type Type = {
   facade?: any;
   data?: any[];
 };
-export default Hook;

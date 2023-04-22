@@ -1,7 +1,7 @@
 import { AsyncThunk, createAsyncThunk } from '@reduxjs/toolkit';
 
 import { API, routerLinks } from '@utils';
-import Message from '@components/message';
+import { Message } from '@components/message';
 import { CommonEntity, PaginationQuery, Responses } from '@models';
 import { State } from './slice';
 

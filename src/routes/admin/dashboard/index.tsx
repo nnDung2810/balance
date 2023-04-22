@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 
 import { Spin } from '@components/spin';
-import DataTable from '@components/data-table';
+import { DataTable } from '@components/data-table';
 
 const Page = () => {
   const { t } = useTranslation();

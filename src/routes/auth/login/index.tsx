@@ -2,8 +2,8 @@ import React, { Fragment, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 import { Spin } from '@components/spin';
-import Form from '@components/form';
-import ModalForm from '@components/modal/form';
+import { Form } from '@components/form';
+import { ModalForm } from '@components/modal/form';
 
 import { routerLinks } from '@utils';
 import { GlobalFacade } from '@reducers';

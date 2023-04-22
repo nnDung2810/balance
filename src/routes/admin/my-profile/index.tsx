@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import Form from '@components/form';
+import { Form } from '@components/form';
 import { Spin } from '@components/spin';
 import { GlobalFacade } from '@reducers';
 
