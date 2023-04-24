@@ -44,38 +44,37 @@ const action = {
     return data!.userInfor;
   }),
   forgotPassword: createAsyncThunk(name + '/forgot-password', async (values: { email: string }) => {
-    const { data, message } = await API.put<resetPassword>(`${routerLinks(name, 'api')}/forgot-password`, values);
+    const { data, message } = await API.put<verify>(`${routerLinks(name, 'api')}/forgot-password`, values);
     if (message) await Message.success({ text: message });
     return data;
   }),
-  verifyForgotPassword: createAsyncThunk(name + '/verify-forgot-password', async (values: { email: string, otp: string, uuid: string }) => {
+  verifyForgotPassword: createAsyncThunk(name + '/verify-forgot-password', async (values: verify) => {
     const { data, message } = await API.put<{email: string; uuid: string}>(`${routerLinks(name, 'api')}/verify-forgot-password`, values);
     if (message) await Message.success({ text: message })
-    console.log(data)
     return data;
   }),
-  // resetPassword: createAsyncThunk(name + '/reset-password', async ({ token, ...values }: resetPassword) => {
-  //   const { data, message } = await API.post(
-  //     `${routerLinks(name, 'api')}/reset-password`,
-  //     values,
-  //     {},
-  //     { authorization: 'Bearer ' + token },
-  //   );
-  //   if (message) await Message.success({ text: message });
-  //   return !!data;
-  // }),
+  setPassword: createAsyncThunk(name + '/reset-password', async (values : setPassword) => {
+    const { data, message } = await API.put(`${routerLinks(name, 'api')}/set-password`, values,);
+    if (message) await Message.success({ text: message });
+    return data;
+  }),
 };
 // interface StatePassword<T = object> {
 //   [selector: string]: any;
-//   result?: Responses<T[]>;
 //   data?: T;
 //   isLoading?: boolean;
 //   status?: string;
 // }
-interface resetPassword {
-  otp?: string;
-  uuid?: string;
-  email?: string
+interface verify {
+  otp: string;
+  uuid: string;
+  email: string
+}
+interface setPassword {
+  password: string;
+  retypedPassword: string;
+  email: string;
+  uuid: string;
 }
 
 export class User extends CommonEntity {
@@ -132,77 +131,77 @@ export const globalSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // .addCase(action.set.fulfilled, (state, action: PayloadAction<State>) => {
-      //   let key: keyof State;
-      //   for (key in action.payload) {
-      //     state[key] = action.payload[key];
-      //   }
-      // })
-      // // .addCase(action.logout.pending, (state: State) => {
-      // //   state.isLoading = true;
-      // //   state.status = 'logout.pending';
-      // // })
-      // .addCase(action.logout.fulfilled, (state) => {
-      //   state.user = {};
-      //   localStorage.removeItem(keyUser);
-      //   localStorage.removeItem(keyToken);
-      //   localStorage.removeItem(keyRefreshToken);
-      //   clearTempLocalStorage();
-      //   state.isLoading = false;
-      //   state.status = 'logout.fulfilled';
-      // })
-
-      // .addCase(action.profile.pending, (state: State) => {
+      .addCase(action.set.fulfilled, (state, action: PayloadAction<State>) => {
+        let key: keyof State;
+        for (key in action.payload) {
+          state[key] = action.payload[key];
+        }
+      })
+      // .addCase(action.logout.pending, (state: State) => {
       //   state.isLoading = true;
-      //   state.status = 'profile.pending';
+      //   state.status = 'logout.pending';
       // })
-      // .addCase(action.profile.fulfilled, (state: State, action: PayloadAction<User>) => {
-      //   if (action.payload) {
-      //     state.user = action.payload;
-      //     localStorage.setItem(keyUser, JSON.stringify(action.payload));
-      //     state.status = 'profile.fulfilled';
-      //   } else state.status = 'idle';
-      //   state.isLoading = false;
-      // })
+      .addCase(action.logout.fulfilled, (state) => {
+        state.user = {};
+        localStorage.removeItem(keyUser);
+        localStorage.removeItem(keyToken);
+        localStorage.removeItem(keyRefreshToken);
+        clearTempLocalStorage();
+        state.isLoading = false;
+        state.status = 'logout.fulfilled';
+      })
 
-      // .addCase(action.putProfile.pending, (state: State, action) => {
-      //   state.data = action.meta.arg;
-      //   state.isLoading = true;
-      //   state.status = 'putProfile.pending';
-      // })
-      // .addCase(action.putProfile.fulfilled, (state: State, action: PayloadAction<User>) => {
-      //   if (action.payload) {
-      //     state.user = action.payload;
-      //     state.status = 'putProfile.fulfilled';
-      //   } else state.status = 'idle';
-      //   state.isLoading = false;
-      // })
+      .addCase(action.profile.pending, (state: State) => {
+        state.isLoading = true;
+        state.status = 'profile.pending';
+      })
+      .addCase(action.profile.fulfilled, (state: State, action: PayloadAction<User>) => {
+        if (action.payload) {
+          state.user = action.payload;
+          localStorage.setItem(keyUser, JSON.stringify(action.payload));
+          state.status = 'profile.fulfilled';
+        } else state.status = 'idle';
+        state.isLoading = false;
+      })
 
-      // .addCase(
-      //   action.login.pending,
-      //   (
-      //     state: State,
-      //     action: PayloadAction<
-      //       undefined,
-      //       string,
-      //       { arg: { password?: string; username?: string; }; requestId: string; requestStatus: 'pending' }
-      //     >,
-      //   ) => {
-      //     state.data = action.meta.arg;
-      //     state.isLoading = true;
-      //     state.status = 'login.pending';
-      //   },
-      // )
-      // .addCase(action.login.fulfilled, (state: State, action: PayloadAction<User>) => {
-      //   if (action.payload) {
-      //     localStorage.setItem(keyUser, JSON.stringify(action.payload));
-      //     clearTempLocalStorage();
-      //     state.user = action.payload;
-      //     state.data = {};
-      //     state.status = 'login.fulfilled';
-      //   } else state.status = 'idle';
-      //   state.isLoading = false;
-      // })
+      .addCase(action.putProfile.pending, (state: State, action) => {
+        state.data = action.meta.arg;
+        state.isLoading = true;
+        state.status = 'putProfile.pending';
+      })
+      .addCase(action.putProfile.fulfilled, (state: State, action: PayloadAction<User>) => {
+        if (action.payload) {
+          state.user = action.payload;
+          state.status = 'putProfile.fulfilled';
+        } else state.status = 'idle';
+        state.isLoading = false;
+      })
+
+      .addCase(
+        action.login.pending,
+        (
+          state: State,
+          action: PayloadAction<
+            undefined,
+            string,
+            { arg: { password?: string; username?: string; }; requestId: string; requestStatus: 'pending' }
+          >,
+        ) => {
+          state.data = action.meta.arg;
+          state.isLoading = true;
+          state.status = 'login.pending';
+        },
+      )
+      .addCase(action.login.fulfilled, (state: State, action: PayloadAction<User>) => {
+        if (action.payload) {
+          localStorage.setItem(keyUser, JSON.stringify(action.payload));
+          clearTempLocalStorage();
+          state.user = action.payload;
+          state.data = {};
+          state.status = 'login.fulfilled';
+        } else state.status = 'idle';
+        state.isLoading = false;
+      })
 
       .addCase(
         action.forgotPassword.pending,
@@ -221,7 +220,7 @@ export const globalSlice = createSlice({
       )
       .addCase(action.forgotPassword.fulfilled, (state: State, action) => {
         if (action.payload) {
-          state.data = {...action.payload};
+          state.data = action.payload;
           state.status = 'forgotPassword.fulfilled';
         } else state.status = 'idle';
         state.isLoading = false;
@@ -233,7 +232,7 @@ export const globalSlice = createSlice({
           action: PayloadAction<
             undefined,
             string,
-            { arg: resetPassword; requestId: string; requestStatus: 'pending' }
+            { arg: verify; requestId: string; requestStatus: 'pending' }
           >,
         ) => {
           state.data = action.meta.arg;
@@ -249,35 +248,34 @@ export const globalSlice = createSlice({
         state.isLoading = false;
       })
 
-      // .addCase(
-      //   action.resetPassword.pending,
-      //   (
-      //     state: State,
-      //     action: PayloadAction<undefined, string, { arg: resetPassword; requestId: string; requestStatus: 'pending' }>,
-      //   ) => {
-      //     state.data = action.meta.arg;
-      //     state.isLoading = true;
-      //     state.status = 'resetPassword.pending';
-      //   },
-      // )
-      // .addCase(action.resetPassword.fulfilled, (state: State, action: PayloadAction<boolean>) => {
-      //   if (action.payload) {
-      //     state.data = {};
-      //     state.status = 'resetPassword.fulfilled';
-      //   } else state.status = 'idle';
-      //   state.isLoading = false;
-      // });
+      .addCase(
+        action.setPassword.pending,
+        (
+          state: State,
+          action: PayloadAction<undefined, string, { arg: setPassword; requestId: string; requestStatus: 'pending' }>,
+        ) => {
+          state.data = action.meta.arg;
+          state.isLoading = true;
+          state.status = 'setPassword.pending';
+        },
+      )
+      .addCase(action.setPassword.fulfilled, (state: State, action) => {
+        if (action.payload) {
+          state.data = {};
+          state.status = 'resetPassword.fulfilled';
+        } else state.status = 'idle';
+        state.isLoading = false;
+      });
   },
 });
 interface State {
   [selector: string]: any;
   user?: User;
-  data?: resetPassword | { email?: string } | { password?: string; email?: string } ;
+  data?: setPassword | verify | { email?: string } | { password?: string; email?: string } ;
   isLoading?: boolean;
   isVisible?: boolean;
   status?: string;
   title?: string;
-  // formatDate?: string;
   language?: 'vn' | 'en' | null;
   locale?: typeof viVN | typeof enUS;
 }
@@ -304,7 +302,7 @@ export const GlobalFacade = () => {
     login: (values: { password: string; username: string }) => dispatch(action.login(values)),
     forgotPassword: (values: { email: string }) => dispatch(action.forgotPassword(values)),
     verifyForgotPassword: (values: { email: string, otp: string, uuid: string }) => dispatch(action.verifyForgotPassword(values)),
-    // resetPassword: (values: resetPassword) => dispatch(action.resetPassword(values)),
+    setPassword: (values: setPassword) => dispatch(action.setPassword(values)),
     setLanguage: (value: 'vn' | 'en') => dispatch(globalSlice.actions.setLanguage(value)),
   };
 };
