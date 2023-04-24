@@ -4,7 +4,8 @@ import { useNavigate, useParams } from 'react-router';
 
 import { UserRoleFacade, UserFacade } from '@reducers';
 import { routerLinks } from '@utils';
-import { Button, Form } from '@components';
+import { Form } from '@components/form';
+import { Button } from '@components/button';
 import { ColumnFormUser, ColumnFormUserEdit } from './column';
 import { User } from '../../../reducers/global';
 import classNames from 'classnames';

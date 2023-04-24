@@ -5,15 +5,15 @@ import { GlobalFacade, UserFacade, UserRoleFacade } from '@reducers';
 import { LockOutlined } from '@ant-design/icons';
 import { Avatar } from 'antd';
 
-const renderRoleCode = (text: any, values: any) => {
-  if ((text=values.roleCode) === "ADMIN") {
-    return text="Quản trị viên";
-  } else if ((text=values.roleCode) === "OWNER_SUPPLIER") {
-    return text="Nhà cung cấp";
-  } else {
-    return text="Chủ cửa hàng";
-  }
-};
+// const renderRoleCode = (text: any, values: any) => {
+//   if ((text=values.roleCode) === "ADMIN") {
+//     return text="Quản trị viên";
+//   } else if ((text=values.roleCode) === "OWNER_SUPPLIER") {
+//     return text="Nhà cung cấp";
+//   } else {
+//     return text="Chủ cửa hàng";
+//   }
+// };
 
 export const ColumnTableUser = ({ t }: any) => {
   const col: DataTableModel[] = [
@@ -72,6 +72,7 @@ export const ColumnTableUser = ({ t }: any) => {
   ];
   return col;
 };
+
 export const ColumnFormUser = ({ t, listRole }: any) => {
   const col: FormModel[] = [
     {

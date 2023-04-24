@@ -7,7 +7,7 @@ import { Button } from '@components/button';
 import { DataTable } from '@components/data-table';
 
 import { keyRole, routerLinks } from '@utils';
-import { UserFacade, GlobalFacade, CodeFacade } from '@reducers';
+import { UserFacade, GlobalFacade, CodeFacade, UserRoleFacade } from '@reducers';
 import { Edit, Plus, Trash } from '@svgs';
 import { TableRefObject } from '@models';
 import dayjs from 'dayjs';

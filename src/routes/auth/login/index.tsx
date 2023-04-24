@@ -34,11 +34,11 @@ const Page = () => {
           className="intro-x"
           columns={[
             {
-              name: 'email',
+              name: 'username',
               title: t('columns.auth.login.Username'),
               formItem: {
                 placeholder: t('columns.auth.login.Enter Username'),
-                rules: [{ type: 'required' }, { type: 'email' }, { type: 'min', value: 6 }],
+                rules: [{ type: 'required' }],
               },
             },
             {
