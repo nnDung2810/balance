@@ -50,7 +50,7 @@ const Page = () => {
         break;
     }
   }, [status]);
-
+  console.log(data)
   const handleBack = () => navigate(routerLinks('User/List') + '?' + new URLSearchParams(param).toString());
   const handleSubmit = (values: User) => {
     if (id) userFacade.put({ ...values, id });

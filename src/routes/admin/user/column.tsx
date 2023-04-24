@@ -98,49 +98,15 @@ export const ColumnFormUser = ({ t }: any) => {
       name: 'roleId',
       formItem: {
         col: 6,
-        initialValue: 1,
+        initialValues: '1',
         label : 1
       },
     },
     {
-      title: t('orgId'),
-      name: 'orgId',
+      title: t('addressDto'),
+      name: 'addressDto.street',
       formItem: {
         col: 6,
-        initialValue: null,
-        label : null
-      },
-    },
-    {
-      title: t('city'),
-      name: 'city',
-      formItem: {
-        col: 6,
-        initialValue: null,
-      },
-    },
-    {
-      title: t('country'),
-      name: 'country',
-      formItem: {
-        col: 6,
-        initialValue: null,
-      },
-    },
-    {
-      title: t('district'),
-      name: 'district',
-      formItem: {
-        col: 6,
-        initialValue: null,
-      },
-    },
-    {
-      title: t('postCode'),
-      name: 'postCode',
-      formItem: {
-        col: 6,
-        initialValue: null,
       },
     },
     {

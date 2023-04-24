@@ -81,6 +81,13 @@ export class User extends CommonEntity {
     public userRoleId?: UserRole,
     public roleId?: User,
     public roleName?: User,
+    public addressDto?: {
+      street?:string,
+      wardId?:string,
+      districtId?:string,
+      provinceId?:string,
+      postCode?:string,
+    },
   ) {
     super();
   }

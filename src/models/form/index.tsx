@@ -42,9 +42,9 @@ export class FormItem {
   max?: number;
   sliderMarks?: Record<number, string>;
   symbol?: string;
-  initialValues?: { start: string; end: string };
+  initialValues?: { start: string; end: string } | string;
   convert?: (data: any) => any;
-  initialValue?: null | number;
+  initialValue?: null | number | string;
   onChange?: (value: any, form: FormInstance, reRender: any) => void;
   onBlur?: (e: React.FocusEvent<HTMLInputElement, Element>, form: FormInstance, name: string) => void;
   disabledDate?: (current: any, form: FormInstance) => boolean;

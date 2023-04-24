@@ -21,111 +21,56 @@ const Page = () => {
   }, []);
   return (
     <Fragment>
-      <div className='flex justify-between'>
-        <Spin className="intro-x" spinning={isLoading}>
+      <div className='grid grid-cols-3 w-full'>
+        <Spin className="col-span-1" spinning={isLoading}>
         <Form
-          className="intro-x w-[550px] mx-auto"
+          className=" border rounded-3xl bg-white text-center items-center"
           columns={[
             {
-              title: t('dayoff.Fullname'),
-              name: 'name',
+              name: 'profileImage',
               formItem: {
-                col: 6,
-                rules: [{ type: 'required' }],
-              },
-            },
-            {
-              title: t('columns.auth.login.password'),
-              name: 'password',
-              formItem: {
-                col: 6,
-                type: 'password',
-                rules: [{ type: 'min', value: 6 }],
-              },
-            },
-            {
-              title: t('Email'),
-              name: 'email',
-              formItem: {
-                col: 6,
-                rules: [{ type: 'required' }, { type: 'email' }, { type: 'min', value: 6 }],
-              },
-            },
-            {
-              title: t('columns.auth.register.retypedPassword'),
-              name: 'retypedPassword',
-              formItem: {
-                placeholder: t('columns.auth.register.retypedPassword'),
-                col: 6,
-                type: 'password',
-                rules: [
-                  {
-                    type: 'custom',
-                    validator: ({ getFieldValue }) => ({
-                      validator(rule, value: string) {
-                        if (!value || getFieldValue('password') === value) {
-                          return Promise.resolve();
-                        }
-                        return Promise.reject(new Error('Hai mật khẩu không giống nhau!'));
-                      },
-                    }),
-                  },
-                ],
-              },
-            },
-            {
-              title: t('customer.Phone Number'),
-              name: 'phoneNumber',
-              formItem: {
-                col: 6,
-                rules: [{ type: 'required' }, { type: 'phone', min: 10, max: 15 }],
-              },
-            },
-            {
-              title: t('user.Date of birth'),
-              name: 'dob',
-              formItem: {
-                col: 6,
-                type: 'date',
-                rules: [{ type: 'required' }],
-              },
-            },
-            {
-              title: t('user.Position'),
-              name: 'positionCode',
-              formItem: {
-                col: 6,
-                type: 'select',
-                rules: [{ type: 'required' }],
-                list: listPosition.current.map((item: any) => ({ value: item.code, label: item.name })),
-              },
-            },
-            {
-              title: t('user.Description'),
-              name: 'description',
-              formItem: {
-                col: 8,
-                type: 'textarea',
-              },
-            },
-            {
-              name: 'avatar',
-              title: t('user.Upload avatar'),
-              formItem: {
-                col: 4,
+              //  col: 4,
                 type: 'upload',
                 mode: 'multiple',
               },
             },
+            {
+              title: t('Họ và tên'),
+              name: 'name',
+              formItem: {
+                render: (form, values, generateForm, index, reRender) => {
+                  return (
+                    <div>
+                      {values.name}
+                    </div>
+                  );
+                }
+              },
+            },
+            {
+              title: t('Vai trò'),
+              name: 'userRole',
+              formItem: {
+                render: (text: any, item: any) => {
+                  if (text = item.userRole[0].mtRole.code === "ADMIN") {
+                    return "Quản trị viên";
+                  } else if (text = item.userRole[0].mtRole.code === "OWNER_SUPPLIER") {
+                    return "Đại diện NCC";
+                  } else {
+                    return "Đại diện cửa hàng";
+                  }
+                }
+              },
+            },
           ]}
-          handSubmit={putProfile}
+        //  handSubmit={putProfile}
           disableSubmit={isLoading}
           values={{ ...user }}
         />
       </Spin>
-      <Spin className="intro-x"  spinning={isLoading}>
+      <Spin className="col-span-2"  spinning={isLoading}>
         <Form
-          className="intro-x w-[750px] h-[350px] bg-white border rounded-3xl px-8 pt-4 pb-4 "
+          className=" bg-white border rounded-3xl "
           columns={ColumnProfile({ t, listPosition: listPosition.current })}
           handSubmit={putProfile}
           disableSubmit={isLoading}
