@@ -97,7 +97,7 @@ export const ColumnFormUser = ({ t }: any) => {
       title: t('RoleId'),
       name: 'roleId',
       formItem: {
-        col: 6,
+        type:'hidden',
         initialValues: '1',
         label : 1
       },
@@ -106,7 +106,7 @@ export const ColumnFormUser = ({ t }: any) => {
       title: t('addressDto'),
       name: 'addressDto.street',
       formItem: {
-        col: 6,
+        type:'hidden',
       },
     },
     {

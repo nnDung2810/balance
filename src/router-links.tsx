@@ -24,7 +24,7 @@ const Util = (name: string, type?: string) => {
     CodeType: '/code-type',
     Code: '/code',
     UserRole: '/mt-role',
-    User: '/user-admin/register',
+    User: '/user-admin',
     'User-register': '/user-admin/register',
     DataType: '/data-type',
     Data: '/data',

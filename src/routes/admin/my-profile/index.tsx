@@ -8,6 +8,7 @@ import { GlobalFacade } from '@reducers';
 import { ColumnProfile } from './column';
 import { routerLinks } from '@utils';
 import { useNavigate } from 'react-router';
+import classNames from 'classnames';
 
 const Page = () => {
   const { t } = useTranslation();
@@ -30,7 +31,6 @@ const Page = () => {
             {
               name: 'profileImage',
               formItem: {
-                col:12,
                 type: 'upload',
                 mode: 'multiple',
               },
@@ -39,7 +39,7 @@ const Page = () => {
               title: t('Họ và tên'),
               name: 'name',
               formItem: {
-                render: (form, values, generateForm, index, reRender) => {
+                render: (form, values) => {
                   return (
                     <div>
                       {values.name}
@@ -71,7 +71,7 @@ const Page = () => {
       </Spin>
 
         </div>
-        <div className='col-span-2 bg-white p-5 border rounded-3xl '>
+        <div className='col-span-2 bg-white p-5 border rounded-3xl'>
       <Spin className=""  spinning={isLoading}>
         <Form
           className=" "

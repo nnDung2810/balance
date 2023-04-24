@@ -56,20 +56,6 @@ const Page = () => {
     if (id) userFacade.put({ ...values, id });
     else userFacade.post(values);
   };
-  const listRole = [
-    {
-      id: 1,
-      label: t('ADMIN'),
-    },
-    {
-      id: 2,
-      label: t('OWNER_STORE'),
-    },
-    {
-      id: 3,
-      label: t('OWNER_SUPPLIER'),
-    },
-  ];
   return (
     <div className={'w-full'}>
       <Fragment>
@@ -80,7 +66,7 @@ const Page = () => {
       {!!result?.data && (
         <Form
           values={{ ...data }}
-          className="intro-x p-6 pb-4 pt-3 rounded-lg w-full "
+          className="intro-x p-6 pb-4 pt-3 rounded-lg w-full"
           columns={ColumnFormUser({ t})}
           handSubmit={handleSubmit}
           disableSubmit={isLoading}
