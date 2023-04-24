@@ -206,105 +206,103 @@ const Hook = forwardRef(
       filterIcon: () => <CheckCircle className="h-4 w-4 fill-gray-600" />,
     });
     // noinspection JSUnusedGlobalSymbols
-    // const getColumnSearchCheckbox = (filters: any, key: any, get: TableGet = {}) => ({
-    //   onFilterDropdownOpenChange: async (visible: boolean) => (valueFilter.current[key] = visible),
-    //   filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }: any) => {
-    //     const facade = get?.facade ? get?.facade() : {};
-    //     useEffect(() => {
-    //       if (get && !facade?.result?.data && valueFilter.current[key]) {
-    //         columnSearch(get, '', undefined, facade);
-    //       }
-    //     }, [valueFilter.current[key]]);
-    //     return (
-    //       <div className={'p-1'}>
-    //         <input
-    //           className="w-full sm:w-52 h-10 rounded-xl text-gray-600 bg-white border border-solid border-gray-100 pr-9 pl-4 mb-1"
-    //           type="text"
-    //           placeholder={t('components.datatable.pleaseEnterValueToSearch') || ''}
-    //           onChange={(e) => {
-    //             clearTimeout(timeoutSearch.current);
-    //             timeoutSearch.current = setTimeout(() => columnSearch(get, e.target.value, selectedKeys, facade), 500);
-    //           }}
-    //           onKeyUp={async (e) => {
-    //             if (e.key === 'Enter') {
-    //               await columnSearch(get, e.currentTarget.value, undefined, facade);
-    //             }
-    //           }}
-    //         />
-    //         <div>
-    //           <CheckboxGroup
-    //             options={filters || facade?.result?.data?.map(get.format).filter((item: any) => !!item.value) || []}
-    //             defaultValue={selectedKeys}
-    //             onChange={(e) => setSelectedKeys(e)}
-    //           />
-    //         </div>
-    //         {groupButton(confirm, clearFilters, key, selectedKeys)}
-    //       </div>
-    //     );
-    //   },
-    //   filterIcon: (filtered: boolean) => (
-    //     <CheckSquare className={classNames('h-4 w-4', { 'fill-[#3699FF]': filtered, 'fill-gray-600': !filtered })} />
-    //   ),
-    // });
+    const getColumnSearchCheckbox = (filters: any, key: any, get: TableGet = {}) => ({
+      onFilterDropdownOpenChange: async (visible: boolean) => (valueFilter.current[key] = visible),
+      filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }: any) => {
+        const facade = get?.facade ? get?.facade() : {};
+        useEffect(() => {
+          if (get && !facade?.result?.data && valueFilter.current[key]) {
+            columnSearch(get, '', undefined, facade);
+          }
+        }, [valueFilter.current[key]]);
+        return (
+          <div className={'p-1'}>
+            <input
+              className="w-full sm:w-52 h-10 rounded-xl text-gray-600 bg-white border border-solid border-gray-100 pr-9 pl-4 mb-1"
+              type="text"
+              placeholder={t('components.datatable.pleaseEnterValueToSearch') || ''}
+              onChange={(e) => {
+                clearTimeout(timeoutSearch.current);
+                timeoutSearch.current = setTimeout(() => columnSearch(get, e.target.value, selectedKeys, facade), 500);
+              }}
+              onKeyUp={async (e) => {
+                if (e.key === 'Enter') {
+                  await columnSearch(get, e.currentTarget.value, undefined, facade);
+                }
+              }}
+            />
+            <div>
+              <CheckboxGroup
+                options={filters || facade?.result?.data?.map(get.format).filter((item: any) => !!item.value) || []}
+                defaultValue={selectedKeys}
+                onChange={(e) => setSelectedKeys(e)}
+              />
+            </div>
+            {groupButton(confirm, clearFilters, key, selectedKeys)}
+          </div>
+        );
+      },
+      filterIcon: (filtered: boolean) => (
+        <CheckSquare className={classNames('h-4 w-4', { 'fill-[#3699FF]': filtered, 'fill-gray-600': !filtered })} />
+      ),
+    });
     // noinspection JSUnusedGlobalSymbols
-    //tìm kiếm
-    // const getColumnSearchInput = (key: any) => ({
-    //   filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }: any) => (
-    //     <div className="p-1">
-    //       <input
-    //         id={idTable.current + '_input_filter_' + key}
-    //         className="w-full h-10 rounded-xl text-gray-600 bg-white border border-solid border-gray-100 pr-9 pl-4"
-    //         value={selectedKeys}
-    //         type="text"
-    //         placeholder={t('components.datatable.pleaseEnterValueToSearch') || ''}
-    //         onChange={(e) => setSelectedKeys(e.target.value)}
-    //         onKeyDown={(e) => {
-    //           if (e.key === 'Enter') {
-    //             confirm();
-    //           }
-    //           e.stopPropagation();
-    //         }}
-    //       />
-    //       {groupButton(confirm, clearFilters, key, selectedKeys)}
-    //     </div>
-    //   ),
-    //   filterIcon: (filtered: boolean) => (
-    //     <Search className={classNames('h-4 w-4', { 'fill-[#3699FF]': filtered, 'fill-gray-600': !filtered })} />
-    //   ),
-    //   onFilterDropdownOpenChange: (visible: boolean) => {
-    //     if (visible) {
-    //       setTimeout(
-    //         () => (document.getElementById(idTable.current + '_input_filter_' + key) as HTMLInputElement).select(),
-    //         100,
-    //       );
-    //     }
-    //   },
-    // });
+    const getColumnSearchInput = (key: any) => ({
+      filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }: any) => (
+        <div className="p-1">
+          <input
+            id={idTable.current + '_input_filter_' + key}
+            className="w-full h-10 rounded-xl text-gray-600 bg-white border border-solid border-gray-100 pr-9 pl-4"
+            value={selectedKeys}
+            type="text"
+            placeholder={t('components.datatable.pleaseEnterValueToSearch') || ''}
+            onChange={(e) => setSelectedKeys(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                confirm();
+              }
+              e.stopPropagation();
+            }}
+          />
+          {groupButton(confirm, clearFilters, key, selectedKeys)}
+        </div>
+      ),
+      filterIcon: (filtered: boolean) => (
+        <Search className={classNames('h-4 w-4', { 'fill-[#3699FF]': filtered, 'fill-gray-600': !filtered })} />
+      ),
+      onFilterDropdownOpenChange: (visible: boolean) => {
+        if (visible) {
+          setTimeout(
+            () => (document.getElementById(idTable.current + '_input_filter_' + key) as HTMLInputElement).select(),
+            100,
+          );
+        }
+      },
+    });
     // noinspection JSUnusedGlobalSymbols
-    //Ngày sinh
-    // const getColumnSearchDate = (key: any) => ({
-    //   filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }: any) => (
-    //     <div className={'p-1'}>
-    //       <RangePicker
-    //         renderExtraFooter={() => (
-    //           <Button
-    //             icon={<CheckCircle className="h-5 w-5 fill-white" />}
-    //             text={t('components.datatable.ok')}
-    //             onClick={() => (document.activeElement as HTMLElement).blur()}
-    //             className={'w-full justify-center !py-0'}
-    //           />
-    //         )}
-    //         format={['DD/MM/YYYY', 'DD/MM/YY']}
-    //         value={!!selectedKeys && selectedKeys.length && [dayjs(selectedKeys[0]), dayjs(selectedKeys[1])]}
-    //         onChange={(e) => setSelectedKeys(e)}
-    //       />
-    //       {groupButton(confirm, clearFilters, key, selectedKeys)}
-    //     </div>
-    //   ),
-    //   filterIcon: (filtered: boolean) => (
-    //     <Calendar className={classNames('h-4 w-4', { 'fill-[#3699FF]': filtered, 'fill-gray-600': !filtered })} />
-    //   ),
-    // });
+    const getColumnSearchDate = (key: any) => ({
+      filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }: any) => (
+        <div className={'p-1'}>
+          <RangePicker
+            renderExtraFooter={() => (
+              <Button
+                icon={<CheckCircle className="h-5 w-5 fill-white" />}
+                text={t('components.datatable.ok')}
+                onClick={() => (document.activeElement as HTMLElement).blur()}
+                className={'w-full justify-center !py-0'}
+              />
+            )}
+            format={['DD/MM/YYYY', 'DD/MM/YY']}
+            value={!!selectedKeys && selectedKeys.length && [dayjs(selectedKeys[0]), dayjs(selectedKeys[1])]}
+            onChange={(e) => setSelectedKeys(e)}
+          />
+          {groupButton(confirm, clearFilters, key, selectedKeys)}
+        </div>
+      ),
+      filterIcon: (filtered: boolean) => (
+        <Calendar className={classNames('h-4 w-4', { 'fill-[#3699FF]': filtered, 'fill-gray-600': !filtered })} />
+      ),
+    });
     cols.current = columns
       .filter((col: any) => !!col && !!col.tableItem)
       .map((col: any) => {
@@ -325,22 +323,22 @@ const Hook = forwardRef(
             case 'checkbox':
               item = {
                 ...item,
-              //  ...getColumnSearchCheckbox(item.filter.list, item.filter.name || col.name, item.filter.get),
+                ...getColumnSearchCheckbox(item.filter.list, item.filter.name || col.name, item.filter.get),
               };
               break;
             case 'date':
-            // item = { ...item, ...getColumnSearchDate(item.filter.name || col.name) };
+              item = { ...item, ...getColumnSearchDate(item.filter.name || col.name) };
               break;
             default:
-            //  item = { ...item, ...getColumnSearchInput(item.filter.name || col.name) };
+              item = { ...item, ...getColumnSearchInput(item.filter.name || col.name) };
           }
           delete item.filter;
         }
 
-        // if (item.sorter && params[sort] && params[sort][col.name]) {
-        //   item.defaultSortOrder =
-        //     params[sort][col.name] === 'ASC' ? 'ascend' : params[sort][col.name] === 'DESC' ? 'descend' : '';
-        // }
+        if (item.sorter && params[sort] && params[sort][col.name]) {
+          item.defaultSortOrder =
+            params[sort][col.name] === 'ASC' ? 'ascend' : params[sort][col.name] === 'DESC' ? 'descend' : '';
+        }
         if (!item.render) {
           item.render = (text: string) => text && checkTextToShort(text);
         }
@@ -356,32 +354,32 @@ const Hook = forwardRef(
       let tempPageIndex = pagination?.current || params[pageIndex];
       const tempPageSize = pagination?.pageSize || params[pageSize];
 
-      // const tempSort =
-      //   sorts && sorts?.field && sorts?.order
-      //     ? {
-      //         [sorts.field]: sorts.order === 'ascend' ? 'ASC' : sorts.order === 'descend' ? 'DESC' : '',
-      //       }
-      //     : sorts?.field
-      //     ? null
-      //     : sorts;
+      const tempSort =
+        sorts && sorts?.field && sorts?.order
+          ? {
+              [sorts.field]: sorts.order === 'ascend' ? 'ASC' : sorts.order === 'descend' ? 'DESC' : '',
+            }
+          : sorts?.field
+          ? null
+          : sorts;
 
       if (tempFullTextSearch !== params[fullTextSearch]) {
         tempPageIndex = 1;
       }
       const tempParams = cleanObjectKeyNull({
         ...params,
-       [pageIndex]: tempPageIndex,
+        [pageIndex]: tempPageIndex,
         [pageSize]: tempPageSize,
-    //    [sort]: JSON.stringify(tempSort),
-    //    [filter]: JSON.stringify(cleanObjectKeyNull(filters)),
+        [sort]: JSON.stringify(tempSort),
+        [filter]: JSON.stringify(cleanObjectKeyNull(filters)),
         [fullTextSearch]: tempFullTextSearch,
       });
       onChange && onChange(tempParams);
     };
     if (!data) data = result?.data;
     return (
-      <div className={classNames(className, 'intro-x bg-white px-6 rounded-lg')}>
-        <div className="sm:flex justify-between py-2 ">
+      <div className={classNames(className, 'intro-x rounded-lg bg-white p-5')}>
+        <div className="lg:flex justify-between mb-2.5">
           {showSearch ? (
             <div className="relative">
               <input
@@ -414,7 +412,7 @@ const Hook = forwardRef(
               />
               {!params[fullTextSearch] ? (
                 <Search
-                  className="w-8 h-5 my-1 fill-gray-500 text-lg las absolute top-1.5 z-10"
+                  className="w-4 h-4 my-1 fill-gray-500 text-lg las absolute top-2 left-2.5 z-10"
                   onClick={() => {
                     if (params[fullTextSearch]) {
                       (document.getElementById(idTable.current + '_input_search') as HTMLInputElement).value = '';
@@ -446,12 +444,10 @@ const Hook = forwardRef(
         {!!showList && (
           <Fragment>
             <Table
-              className='py-1 px-1 border rounded-2xl'
               onRow={onRow}
               locale={{
                 emptyText: (
-                  <div className="bg-gray-100 text-gray-400 py-4">
-                    {t(`components.datatable.${emptyText}`)}</div>
+                  <div className="bg-gray-100 text-gray-400 py-4">{t(`components.datatable.${emptyText}`)}</div>
                 ),
               }}
               loading={isLoading}

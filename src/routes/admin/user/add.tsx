@@ -1,13 +1,12 @@
-import React, { Fragment, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router';
 
-import { UserRoleFacade, UserFacade, CodeFacade } from '@reducers';
+import { UserRoleFacade, UserFacade } from '@reducers';
 import { routerLinks } from '@utils';
 import { Button, Form } from '@components';
 import { ColumnFormUser } from './column';
-import { GlobalFacade, User } from '../../../reducers/global/index';
-import classNames from 'classnames';
+import { User } from '../../../reducers/global';
 
 const Page = () => {
   const { t } = useTranslation();
@@ -20,18 +19,16 @@ const Page = () => {
   const param = JSON.parse(queryParams || '{}');
   const { id } = useParams();
 
-  const {profile } = GlobalFacade();
-
   useEffect(() => {
     if (!result?.data) get({});
 
     if (id) userFacade.getById({ id });
-    else userFacade.set({ data: undefined });
-    profile();
+    else userFacade.set({ data: {} });
+
     return () => {
       isReload.current && userFacade.get(param);
     };
-  }, [id, data]);
+  }, [id]);
 
   useEffect(() => {
     switch (status) {
@@ -55,39 +52,29 @@ const Page = () => {
     if (id) userFacade.put({ ...values, id });
     else userFacade.post(values);
   };
-  const listRole = [
-    {
-      id: 1,
-      label: t('ADMIN'),
-    },
-    {
-      id: 2,
-      label: t('OWNER_STORE'),
-    },
-    {
-      id: 3,
-      label: t('OWNER_SUPPLIER'),
-    },
-  ];
+
   return (
-    <div className={'w-full'}>
-      <Fragment>
-        <div className='bg-white'>
-          <div className='text-xl text-green-900 px-6 pt-4 font-mono font-bold'>
-            Thông tin người dùng
-          </div>
+    <div className={'max-w-4xl mx-auto'}>
       {!!result?.data && (
         <Form
           values={{ ...data }}
-          className="intro-x p-6 pb-4 pt-3 rounded-lg w-full "
-          columns={ColumnFormUser({ t, listRole})}
+          className="intro-x"
+          columns={ColumnFormUser({ t, listRole: result?.data || [] })}
+          extendButton={(form) => (
+            <Button
+              text={t('components.button.Save and Add new')}
+              className={'md:min-w-[12rem] w-full justify-center out-line'}
+              onClick={() => {
+                form.submit();
+                isBack.current = false;
+              }}
+            />
+          )}
           handSubmit={handleSubmit}
           disableSubmit={isLoading}
           handCancel={handleBack}
         />
       )}
-      </div>
-      </Fragment>
     </div>
   );
 };

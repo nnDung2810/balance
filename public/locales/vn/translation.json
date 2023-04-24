@@ -82,7 +82,7 @@
   },
   "pages": {
     "Login": "Đăng Nhập",
-    "User/List": "Quản lý Người dùng",
+    "User/List": "Danh sách Người dùng",
     "User/Add": "Tạo mới người dùng",
     "User/Edit": "Chỉnh sửa người dùng",
     "store-managerment/create":"Thêm cửa hàng"
@@ -111,7 +111,7 @@
     }
   },
   "layout": {
-    "footer": "Copyright ©{{year}} ARI Technology Co ., JSC. All rights reserved. "
+    "footer": "Công ty cổ phần Cồng nghệ Ari. ©{{year}}"
   },
   "routes": {
     "auth": {
@@ -154,7 +154,7 @@
         "Delete": "Xóa",
         "My Profile": "Thông tin cá nhân",
         "No Data": "Trống",
-        "Pagination": "Hiển thị {{from}} - {{to}} / Tổng số {{total}} người dùng",
+        "Pagination": "Hiển thị {{from}} - {{to}} / Tổng số {{total}} danh mục",
         "Day": "Ngày phép"
       }
     }

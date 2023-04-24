@@ -3,7 +3,7 @@ import { FormModel } from '@models';
 export const ColumnLogin = ({ t }: any) => {
   const col: FormModel[] = [
     {
-      name: 'username',
+      name: 'email',
       title: t('columns.auth.login.Username'),
       formItem: {
         placeholder: t('columns.auth.login.Enter Username'),
