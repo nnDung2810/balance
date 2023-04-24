@@ -3,7 +3,7 @@ import { TableGet } from '../data-table';
 import { DefaultTFuncReturn } from 'i18next';
 
 export class FormModel {
-  constructor(public name: string, public title?: DefaultTFuncReturn, public formItem?: FormItem) {}
+  constructor(public name: string, public title?: React.ReactNode | DefaultTFuncReturn, public formItem?: FormItem) {}
 }
 
 export class FormItem {
@@ -42,7 +42,7 @@ export class FormItem {
   max?: number;
   sliderMarks?: Record<number, string>;
   symbol?: string;
-  initialValues?: { start: string; end: string };
+  initialValues?: { start: string; end: string } | string;
   convert?: (data: any) => any;
   onChange?: (value: any, form: FormInstance, reRender: any) => void;
   onBlur?: (e: React.FocusEvent<HTMLInputElement, Element>, form: FormInstance, name: string) => void;

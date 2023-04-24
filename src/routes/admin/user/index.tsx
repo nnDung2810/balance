@@ -7,10 +7,10 @@ import { Button } from '@components/button';
 import { DataTable } from '@components/data-table';
 
 import { keyRole, routerLinks } from '@utils';
-import { UserFacade, GlobalFacade, CodeFacade, UserRoleFacade } from '@reducers';
+import { UserFacade, GlobalFacade, UserRoleFacade } from '@reducers';
 import { Edit, Plus, Trash } from '@svgs';
 import { TableRefObject } from '@models';
-import dayjs from 'dayjs';
+
 import { Popconfirm, Tooltip } from 'antd';
 import { ColumnTableUser } from './column';
 
@@ -21,6 +21,7 @@ const Page = () => {
   const userFacade = UserFacade();
   const { data, isLoading, queryParams, status } = userFacade;
   const { result, get } = UserRoleFacade();
+
   useEffect(() => {
     switch (userFacade.status) {
       case 'delete.fulfilled':
@@ -44,7 +45,7 @@ const Page = () => {
       columns={ColumnTableUser({
         t,
         formatDate,
-        listRole: result?.data || [],
+      //  listRole: result?.data || [],
       //  permissions: user?.role?.permissions,
         navigate,
         dataTableRef,

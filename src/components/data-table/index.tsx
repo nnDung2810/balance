@@ -335,7 +335,7 @@ export const DataTable = forwardRef(
             // item = { ...item, ...getColumnSearchDate(item.filter.name || col.name) };
               break;
             default:
-              item = { ...item, ...getColumnSearchInput(item?.filter?.name || col.name) };
+            //  item = { ...item, ...getColumnSearchInput(item?.filter?.name || col.name) };
           }
           delete item.filter;
         }
@@ -395,7 +395,7 @@ export const DataTable = forwardRef(
               <input
                 id={idTable.current + '_input_search'}
                 className="w-full sm:w-80 h-10 rounded-xl text-gray-600 bg-white border border-solid border-gray-500 pr-9 pl-8"
-                defaultValue={params[fullTextSearch]}
+                defaultValue={params.fullTextSearch}
                 type="text"
                 placeholder={searchPlaceholder || (t('components.datatable.pleaseEnterValueToSearch') as string)}
                 onChange={() => {

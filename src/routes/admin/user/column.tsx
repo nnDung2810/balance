@@ -1,19 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { DataTableModel, FormModel } from '@models';
 import { GlobalFacade, UserFacade, UserRoleFacade } from '@reducers';
 import { LockOutlined } from '@ant-design/icons';
-import { Avatar } from 'antd';
-
-// const renderRoleCode = (text: any, values: any) => {
-//   if ((text=values.roleCode) === "ADMIN") {
-//     return text="Quản trị viên";
-//   } else if ((text=values.roleCode) === "OWNER_SUPPLIER") {
-//     return text="Nhà cung cấp";
-//   } else {
-//     return text="Chủ cửa hàng";
-//   }
-// };
+import { Avatar, Col, FormInstance, Row } from 'antd';
+import { Select } from 'antd';
+const { Option } = Select;
 
 export const ColumnTableUser = ({ t }: any) => {
   const col: DataTableModel[] = [
@@ -34,7 +26,7 @@ export const ColumnTableUser = ({ t }: any) => {
           style: { paddingTop: '0.25rem', paddingBottom: 0 },
           onClick: async () => null,
         }),
-        render: (text: string, item: any) => text ,
+        render: (text: string, item: any) => text,
       },
     },
     {
@@ -58,10 +50,10 @@ export const ColumnTableUser = ({ t }: any) => {
       tableItem: {
         width: 200,
         filter: { type: 'search' },
-        render:(text:any, item:any) => {
-          if (text=item.userRole[0].mtRole.code === "ADMIN") {
+        render: (text: any, item: any) => {
+          if (text = item.userRole[0].mtRole.code === "ADMIN") {
             return "Quản trị viên";
-          } else if (text=item.userRole[0].mtRole.code === "OWNER_SUPPLIER") {
+          } else if (text = item.userRole[0].mtRole.code === "OWNER_SUPPLIER") {
             return "Đại diện NCC";
           } else {
             return "Đại diện cửa hàng";
@@ -123,7 +115,6 @@ export const ColumnFormUserEdit = ({ t, listRole }: any) => {
         addonAfter: () => <LockOutlined />,
         tabIndex: 1,
         col: 6,
-        rules: [{ type: 'required' }],
       },
     },
     {
@@ -144,7 +135,6 @@ export const ColumnFormUserEdit = ({ t, listRole }: any) => {
         addonAfter: () => <LockOutlined />,
         tabIndex: 1,
         col: 6,
-        rules: [{ type: 'required' }, { type: 'email' }, { type: 'min', value: 6 }],
       },
     },
     {
@@ -155,22 +145,27 @@ export const ColumnFormUserEdit = ({ t, listRole }: any) => {
         rules: [{ type: 'required' }, { type: 'phone', min: 10, max: 15 }],
       },
     },
-     {
-    title: t('Vai trò'),
+    {
+      title: 'Vai trò',
       name: 'roleCode',
       formItem: {
-        disabled: () => true,
-        col: 6,
+        col: 12,
         type: 'select',
-        render: (text : any , values) =>{
-          if((text=values.roleCode) === "ADMIN"){
-            return "Quản trị viên";
-          } else if((text=values.roleCode) === "OWNER_SUPPLIER"){
-            return "Nhà cung cấp";
-          } else {
-            return "Chủ cửa hàng";
-          }
-        }
+        render: (form, values, generateForm, index, reRender) => {
+          const roleCode = values.roleCode;
+          return (
+            <div>
+              <Row>
+                <h2>Vai trò</h2>
+              </Row>
+              <Select value={roleCode} disabled={true} className="py-2" style={{ width: "100%" }}>
+                <Option value="ADMIN">Quản trị viên</Option>
+                <Option value="OWNER_SUPPLIER">Nhà cung cấp</Option>
+                <Option value="OWNER_STORE">Chủ cửa hàng</Option>
+              </Select>
+            </div>
+          );
+        },
       },
     },
     {
