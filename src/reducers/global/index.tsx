@@ -7,7 +7,7 @@ import i18n from 'i18next';
 import { API, keyRefreshToken, keyToken, keyUser, routerLinks } from '@utils';
 import { Message } from '@components';
 import { useAppDispatch, useTypedSelector } from '@reducers';
-import { CommonEntity } from '@models';
+import { CommonEntity, Responses } from '@models';
 import { UserRole } from '../user/role';
 // import Slice, { State } from '../slice';
 const name = 'User-admin';
@@ -65,6 +65,13 @@ const action = {
   //   return !!data;
   // }),
 };
+// interface StatePassword<T = object> {
+//   [selector: string]: any;
+//   result?: Responses<T[]>;
+//   data?: T;
+//   isLoading?: boolean;
+//   status?: string;
+// }
 interface resetPassword {
   otp?: string;
   uuid?: string;
@@ -216,7 +223,6 @@ export const globalSlice = createSlice({
         if (action.payload) {
           state.data = {...action.payload};
           state.status = 'forgotPassword.fulfilled';
-          console.log(state.data)
         } else state.status = 'idle';
         state.isLoading = false;
       })
@@ -237,7 +243,6 @@ export const globalSlice = createSlice({
       )
       .addCase(action.verifyForgotPassword.fulfilled, (state: State, action) => {
         if (action.payload) {
-          console.log(action.payload)
           state.data = action.payload;
           state.status = 'verifyForgotPassword.fulfilled';
         } else state.status = 'idle';
