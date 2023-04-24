@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { DataTableModel, FormModel } from '@models';
 import { GlobalFacade, UserFacade, UserRoleFacade } from '@reducers';
 import { LockOutlined } from '@ant-design/icons';
-import { Avatar, Col, FormInstance, Row } from 'antd';
+import { Input , Col, FormInstance, Row } from 'antd';
 import { Select } from 'antd';
 const { Option } = Select;
 
@@ -65,7 +65,7 @@ export const ColumnTableUser = ({ t }: any) => {
   return col;
 };
 
-export const ColumnFormUser = ({ t, listRole }: any) => {
+export const ColumnFormUser = ({ t }: any) => {
   const col: FormModel[] = [
     {
       title: t('Họ và tên'),
@@ -94,6 +94,56 @@ export const ColumnFormUser = ({ t, listRole }: any) => {
       },
     },
     {
+      title: t('RoleId'),
+      name: 'roleId',
+      formItem: {
+        col: 6,
+        initialValue: 1,
+        label : 1
+      },
+    },
+    {
+      title: t('orgId'),
+      name: 'orgId',
+      formItem: {
+        col: 6,
+        initialValue: null,
+        label : null
+      },
+    },
+    {
+      title: t('city'),
+      name: 'city',
+      formItem: {
+        col: 6,
+        initialValue: null,
+      },
+    },
+    {
+      title: t('country'),
+      name: 'country',
+      formItem: {
+        col: 6,
+        initialValue: null,
+      },
+    },
+    {
+      title: t('district'),
+      name: 'district',
+      formItem: {
+        col: 6,
+        initialValue: null,
+      },
+    },
+    {
+      title: t('postCode'),
+      name: 'postCode',
+      formItem: {
+        col: 6,
+        initialValue: null,
+      },
+    },
+    {
       title: t('Ghi chú'),
       name: 'note',
       formItem: {
@@ -105,7 +155,7 @@ export const ColumnFormUser = ({ t, listRole }: any) => {
   return col;
 };
 
-export const ColumnFormUserEdit = ({ t, listRole }: any) => {
+export const ColumnFormUserEdit = ({ t }: any) => {
   const col: FormModel[] = [
     {
       title: t('Mã người dùng'),

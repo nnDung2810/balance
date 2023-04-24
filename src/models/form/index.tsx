@@ -42,8 +42,9 @@ export class FormItem {
   max?: number;
   sliderMarks?: Record<number, string>;
   symbol?: string;
-  initialValues?: { start: string; end: string } | string;
+  initialValues?: { start: string; end: string };
   convert?: (data: any) => any;
+  initialValue?: null | number;
   onChange?: (value: any, form: FormInstance, reRender: any) => void;
   onBlur?: (e: React.FocusEvent<HTMLInputElement, Element>, form: FormInstance, name: string) => void;
   disabledDate?: (current: any, form: FormInstance) => boolean;
@@ -52,7 +53,7 @@ export class FormItem {
   onCalendarChange?: (current: any, form: FormInstance, reRender: any) => void;
   api?: FormApi;
   get?: TableGet;
-  label?: string;
+  label?: string | number | null;
   maxTagCount?: number;
   tag?: {
     avatar: string;

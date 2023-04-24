@@ -67,7 +67,7 @@ const Page = () => {
         <Form
           values={{ ...data }}
           className="intro-x p-6 pb-4 pt-3 rounded-lg w-full "
-          columns={ColumnFormUserEdit({ t, listRole: result?.data || [] })}
+          columns={ColumnFormUserEdit({ t })}
           handSubmit={handleSubmit}
           disableSubmit={isLoading}
           handCancel={handleBack}

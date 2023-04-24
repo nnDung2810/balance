@@ -81,7 +81,7 @@ const Page = () => {
         <Form
           values={{ ...data }}
           className="intro-x p-6 pb-4 pt-3 rounded-lg w-full "
-          columns={ColumnFormUser({ t, listRole})}
+          columns={ColumnFormUser({ t})}
           handSubmit={handleSubmit}
           disableSubmit={isLoading}
           handCancel={handleBack}
