@@ -8,8 +8,8 @@
       "@columns": [
         "src/columns"
       ],
-      "@components": [
-        "src/components"
+      "@components/*": [
+        "src/components/*"
       ],
       "@services": [
         "src/services"

@@ -9,16 +9,16 @@ import listMenu from '../menus';
 import './index.less';
 import { v4 } from 'uuid';
 
-const Layout = ({ isCollapsed = false, permission = [] }: any) => {
+const Layout = ({ isCollapsed = false, permission = [] }: { isCollapsed: boolean; permission?: string[] }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
-  const refMenu = useRef<any>();
+  const refMenu = useRef<HTMLUListElement>(null);
 
-  const [menuActive, set_menuActive] = useState<any>();
+  const [menuActive, set_menuActive] = useState<string[]>();
   useEffect(() => {
     let linkActive = '';
-    listMenu().forEach((item: any) => {
+    listMenu.forEach((item) => {
       if (!linkActive && !!item.child && location.pathname.indexOf(routerLinks(item.name)) > -1) {
         linkActive = routerLinks(item.name);
       }
@@ -27,31 +27,20 @@ const Layout = ({ isCollapsed = false, permission = [] }: any) => {
   }, []);
 
   useEffect(() => {
-    const ele = document.getElementById('menu-sidebar');
-    if (ele) {
-      import('perfect-scrollbar').then(({ default: PerfectScrollbar }) => {
-        new PerfectScrollbar(ele, {
-          suppressScrollX: true,
-        });
-      });
-    }
-  }, []);
-
-  useEffect(() => {
     if (isCollapsed) {
-      refMenu.current.scrollTop = 0;
+      refMenu!.current!.scrollTop = 0;
     }
   }, [isCollapsed]);
 
-  const subMenu = (child: any[]) => (
+  const subMenu = (child: { name: string; permission: string }[]) => (
     <ul>
       {child
-        .filter((subItem: any) => !subItem.permission || permission?.includes(subItem.permission))
-        .map((subItem: any, index: number) => (
+        .filter((subItem) => !subItem.permission || permission?.includes(subItem.permission))
+        .map((subItem, index: number) => (
           <li
             key={index + v4()}
             className={classNames('child-item py-2 cursor-pointer', {
-              'bg-white text-blue-500 !fill-blue-500': location.pathname.indexOf(routerLinks(subItem.name)) > -1,
+              'bg-white text-blue-600 !fill-blue-600': location.pathname.indexOf(routerLinks(subItem.name)) > -1,
             })}
             onClick={() => navigate(routerLinks(subItem.name))}
           >
@@ -64,24 +53,21 @@ const Layout = ({ isCollapsed = false, permission = [] }: any) => {
   return (
     <ul className="menu relative h-[calc(100vh-5rem)]" id={'menu-sidebar'} ref={refMenu}>
       {!!menuActive &&
-        listMenu()
-          .filter((item: any) => {
-            if (!item.permission || permission?.includes(item.permission)) {
-              return (
-                !item.child ||
-                item.child.filter((subItem: any) => !subItem.permission || permission?.includes(subItem.permission))
-                  .length > 0
-              );
-            }
-            return false;
+        listMenu
+          .filter((item) => {
+            return (
+              !item.child ||
+              item.child.filter((subItem: any) => !subItem.permission || permission?.includes(subItem.permission))
+                .length > 0
+            );
           })
-          .map((item: any, index) => {
+          .map((item, index) => {
             if (!item.child) {
               return (
                 <li
                   className={classNames('flex items-center h-11 m-3 px-2', {
-                    'bg-white text-blue-500 !fill-blue-500 rounded-2xl': location.pathname === routerLinks(item.name),
-                    'fill-gray-500': location.pathname !== routerLinks(item.name),
+                    'bg-white text-blue-600 !fill-blue-600 rounded-2xl': location.pathname === routerLinks(item.name),
+                    'fill-gray-600': location.pathname !== routerLinks(item.name),
                     'justify-center': isCollapsed,
                   })}
                   onClick={() => navigate(routerLinks(item.name))}
@@ -102,7 +88,7 @@ const Layout = ({ isCollapsed = false, permission = [] }: any) => {
             } else {
               return isCollapsed ? (
                 <Popover key={index} placement="rightTop" trigger={'hover'} content={subMenu(item.child)}>
-                  <li className="flex items-center justify-center h-11 m-3 px-2 fill-gray-500 ">
+                  <li className="flex items-center justify-center h-11 m-3 px-2 fill-gray-600 ">
                     {/* <img src={item.icon} className={classNames('h-8  w-8 block !fill-red-700', { 'ml-1': !isCollapsed})}/> */}
                     <div className={classNames({ 'ml-1': !isCollapsed })}>{item.icon}</div>
                   </li>
@@ -122,7 +108,7 @@ const Layout = ({ isCollapsed = false, permission = [] }: any) => {
                       showArrow={!isCollapsed}
                       header={
                         <div
-                          className={classNames('flex items-center text-gray-500 fill-gray-500  ', {
+                          className={classNames('flex items-center text-gray-600 fill-gray-600  ', {
                             'justify-center ': isCollapsed,
                           })}
                         >

@@ -4,10 +4,11 @@ import { useNavigate, useParams } from 'react-router';
 
 import { UserRoleFacade, UserFacade, CodeFacade } from '@reducers';
 import { routerLinks } from '@utils';
-import { Button, Form } from '@components';
+import { Button } from '@components/button';
+import { Form } from '@components/form';
+
+import { GlobalFacade, User } from '../../../reducers/global';
 import { ColumnFormUser } from './column';
-import { GlobalFacade, User } from '../../../reducers/global/index';
-import classNames from 'classnames';
 
 const Page = () => {
   const { t } = useTranslation();

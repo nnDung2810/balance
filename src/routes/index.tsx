@@ -1,7 +1,7 @@
 import React, { Suspense, useEffect } from 'react';
 import { BrowserRouter, Navigate, Outlet, Route, Routes } from 'react-router-dom';
 
-import { Spin } from '@components';
+import { Spin } from '@components/spin';
 import { pages } from './pages';
 import { keyUser, routerLinks } from '@utils';
 import { useTranslation } from 'react-i18next';

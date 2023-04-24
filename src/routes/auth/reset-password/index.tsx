@@ -1,10 +1,10 @@
 import React, { Fragment, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useLocation } from 'react-router';
-import { Spin, Form } from '@components';
+import { Spin } from '@components/spin';
+import { Form } from '@components/form';
 import { routerLinks } from '@utils';
 import { GlobalFacade } from '@reducers';
-import { ColumnResetPassword } from './column';
 
 const Page = () => {
   const { t } = useTranslation();
@@ -30,7 +30,26 @@ const Page = () => {
       <Spin spinning={isLoading}>
         <Form
           className="intro-x"
-          columns={ColumnResetPassword({ t })}
+          columns={[
+            {
+              name: 'password',
+              title: t('columns.auth.login.password'),
+              formItem: {
+                placeholder: t('columns.auth.login.Enter Password'),
+                type: 'password',
+                rules: [{ type: 'required' }, { type: 'min', value: 6 }],
+              },
+            },
+            {
+              name: 'retypedPassword',
+              title: t('columns.auth.register.retypedPassword'),
+              formItem: {
+                placeholder: t('columns.auth.register.retypedPassword'),
+                type: 'password',
+                rules: [{ type: 'required' }, { type: 'min', value: 6 }],
+              },
+            },
+          ]}
           textSubmit={'routes.auth.login.Reset password'}
           handSubmit={(values) => resetPassword({ ...values, token: new URLSearchParams(search).get('token') || '' })}
           disableSubmit={isLoading}

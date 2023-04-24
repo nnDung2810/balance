@@ -1,12 +1,13 @@
-import React, { forwardRef, useImperativeHandle, PropsWithChildren } from 'react';
-import { Modal } from 'antd';
+import React, { forwardRef, useImperativeHandle, PropsWithChildren, Ref } from 'react';
+import { Modal as AntModal } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { v4 } from 'uuid';
 
-import { Button, Spin } from '@components';
+import { Button } from '@components/button';
+import { Spin } from '@components/spin';
 import { Spinner } from '@svgs';
 
-const Hook = forwardRef(
+export const Modal = forwardRef(
   (
     {
       facade,
@@ -21,19 +22,19 @@ const Hook = forwardRef(
       children,
       idElement = 'modal-' + v4(),
     }: Type,
-    ref: any,
+    ref: Ref<{ handleCancel: () => any }>,
   ) => {
-    useImperativeHandle(ref, () => ({ handleCancel, data }));
+    useImperativeHandle(ref, () => ({ handleCancel }));
     const { data, isLoading, ...state } = facade;
     const { t } = useTranslation();
     const handleCancel = () => facade.set({ [keyState]: false });
     const handleOk = async () => {
-      if (onOk) onOk(data);
+      if (onOk) onOk();
       else handleCancel();
     };
 
     return (
-      <Modal
+      <AntModal
         maskClosable={false}
         destroyOnClose={true}
         centered={true}
@@ -65,22 +66,21 @@ const Hook = forwardRef(
         <Spin spinning={isLoading} idElement={idElement}>
           {children}
         </Spin>
-      </Modal>
+      </AntModal>
     );
   },
 );
-Hook.displayName = 'HookModal';
+Modal.displayName = 'HookModal';
 type Type = PropsWithChildren<{
   facade: any;
   keyState?: string;
   title?: (data: any) => string;
   widthModal: number;
-  onOk?: (data: any) => any;
-  onCancel?: (data: any) => void;
+  onOk?: () => any;
+  onCancel?: () => void;
   firstChange?: boolean;
   textSubmit?: string;
   className?: string;
-  footerCustom?: (handleOk: () => Promise<any>, handleCancel: () => void) => JSX.Element[] | JSX.Element;
+  footerCustom?: (handleOk: () => Promise<void>, handleCancel: () => void) => JSX.Element[] | JSX.Element;
   idElement?: string;
 }>;
-export default Hook;

@@ -6,89 +6,94 @@ import { Arrow, DoubleArrow } from '@svgs';
 export const Pagination: any = ({
   total =4,
   pageSizeOptions = [],
-  pageSize = 10,
-  pageIndex = 1,
+  perPage = 10,
+  page = 1,
   queryParams = () => null,
   pageSizeRender = (sizePage: number) => sizePage + ' / page',
   pageSizeWidth = '115px',
   paginationDescription = (from: number, to: number, total: number) => from + '-' + to + ' of ' + total + ' items',
   idElement = 'pagination',
   className = 'pagination',
-  firstPageDisabled = ({ pageIndex }: { pageIndex: number }) => pageIndex - 10 < 0,
-  lastPageDisabled = ({ pageIndex, lastIndex }: { pageIndex: number; lastIndex: number }) => pageIndex + 10 > lastIndex,
-  firstPage = ({ pageIndex }: { pageIndex: number }) => pageIndex - 10,
-  lastPage = ({ pageIndex }: { pageIndex: number }) => pageIndex + 10,
+  firstPageDisabled = ({ page }: { page: number }) => page - 10 < 0,
+  lastPageDisabled = ({ page, lastIndex }: { page: number; lastIndex: number }) => page + 10 > lastIndex,
+  firstPage = ({ page }: { page: number }) => page - 10,
+  lastPage = ({ page }: { page: number }) => page + 10,
   showSizeChanger = true,
   showTotal = true,
 }: Type) => {
-  const listOfPageItem = useRef<any>([]);
-  const [ranges, setRanges] = useState<any>([]);
+  const listOfPageItem = useRef<{ disabled: boolean; type: string; index: number }[]>([]);
+  const [ranges, setRanges] = useState<[number, number]>([(page - 1) * perPage + 1, Math.min(page * perPage, total)]);
   const [lastNumber, set_lastNumber] = useState(0);
   const buildIndexes = useCallback(() => {
-    const lastIndex = getLastIndex(total, pageSize);
-    listOfPageItem.current = getListOfPageItem(pageIndex, lastIndex);
-    setRanges([(pageIndex - 1) * pageSize + 1, Math.min(pageIndex * pageSize, total)]);
-  }, [pageIndex, pageSize, total]);
+    const lastIndex = getLastIndex(total, perPage);
+    listOfPageItem.current = getListOfPageItem(page, lastIndex);
+    setRanges([(page - 1) * perPage + 1, Math.min(page * perPage, total)]);
+  }, [page, perPage, total]);
 
   useEffect(() => {
     buildIndexes();
   }, [buildIndexes]);
 
-  const getLastIndex = (total: any, pageSize: any) => {
-    return Math.ceil(total /pageSize);
+  const getLastIndex = (total: number, pageSize: number) => {
+    return Math.ceil(total / pageSize);
   };
 
-  const onPageSizeChange = (size: any) => {
-    queryParams({ pageSize: size, current: pageIndex });
+  const onPageSizeChange = (size: number) => {
+    queryParams({ perPage: size, page });
     buildIndexes();
   };
 
-  const onPageIndexChange = ({ type, index }: any) => {
+  const onPageIndexChange = ({ type, index }: { type: string; index: number }) => {
     switch (type) {
       case 'prev':
-        index = pageIndex - 1;
+        index = page - 1;
         break;
       case 'prev_10':
-        index = firstPage({ pageIndex, lastIndex: lastNumber });
+        index = firstPage({ page, lastIndex: lastNumber });
         break;
       case 'next':
-        index = pageIndex + 1;
+        index = page + 1;
         break;
       case 'next_10':
-        index = lastPage({ pageIndex, lastIndex: lastNumber });
+        index = lastPage({ page, lastIndex: lastNumber });
         break;
       default:
     }
-    queryParams({ pageSize, current: index });
+    queryParams({ perPage, page: index });
   };
 
   const getListOfPageItem = (pageIndex: number, lastIndex: number) => {
-    const concatWithPrevNext = (listOfPage: any) => {
+    const concatWithPrevNext = (listOfPage: { index: number; type: string; disabled: boolean }[]) => {
       const prev10Item = {
         type: 'prev_10',
-        disabled: firstPageDisabled({ pageIndex, lastIndex }),
+        index: -1,
+        disabled: firstPageDisabled({ page, lastIndex }),
       };
       const prevItem = {
         type: 'prev',
+        index: -1,
         disabled: pageIndex === 1,
       };
       const nextItem = {
         type: 'next',
+        index: -1,
         disabled: pageIndex === lastIndex,
       };
       const next10Item = {
         type: 'next_10',
-        disabled: lastPageDisabled({ pageIndex, lastIndex }),
+        index: -1,
+        disabled: lastPageDisabled({ page, lastIndex }),
       };
       set_lastNumber(listOfPage.length);
       return [prev10Item, prevItem, ...listOfPage, nextItem, next10Item];
     };
     const generatePage = (start: number, end: number) => {
-      const list = [];
+      const list: { index: number; type: string; disabled: boolean }[] = [];
       for (let i = start; i <= end; i++) {
         list.push({
           index: i,
           type: 'page_' + i,
+          disabled: false,
         });
       }
       return list;
@@ -98,12 +103,16 @@ export const Pagination: any = ({
       return concatWithPrevNext(generatePage(1, lastIndex));
     } else {
       const generateRangeItem = (selected: number, last: number) => {
-        let listOfRange;
+        let listOfRange: { index: number; type: string; disabled: boolean }[];
         const prevFiveItem = {
           type: 'prev_5',
+          index: -1,
+          disabled: false,
         };
         const nextFiveItem = {
           type: 'next_5',
+          index: -1,
+          disabled: false,
         };
         const firstPageItem = generatePage(1, 1);
         const lastPageItem = generatePage(lastIndex, lastIndex);
@@ -130,7 +139,7 @@ export const Pagination: any = ({
             {showSizeChanger && (
               <Select
                 id={idElement + '_page_size'}
-                defaultValue={pageSize}
+                defaultValue={perPage}
                 style={{ minWidth: pageSizeWidth }}
                 onChange={(value) => onPageSizeChange(value)}
               >
@@ -146,30 +155,32 @@ export const Pagination: any = ({
         </div>
         <div className="mt-3 sm:mt-0 right flex justify-center border border-gray-100 p-1 rounded-xl bg-white">
           <div className="flex sm:flex-wrap justify-center duration-300 transition-all">
-            {listOfPageItem.current.map((page: any, index: number) => (
+            {/* { disabled: boolean; type: string; index: number;   } */}
+            {listOfPageItem.current.map((item: any, index: number) => (
               <button
                 type={'button'}
-                disabled={page.disabled}
+                disabled={item.disabled}
                 key={index}
-                id={idElement + '_' + page.type}
+                id={idElement + '_' + item.type}
                 className={classNames(
                   'text-center duration-300 transition-all p-1 text-sm font-medium leading-normal relative',
                   {
-                    'text-green-700 hover:text-green-700':pageIndex !== page.index && !['next_5', 'prev_5'].includes(page.type),
-                    'bg-green-900 rounded-full text-white hover:bg-green-900 !px-2.5 mx-1': pageIndex === page.index,
-                    'text-green-500': page.disabled,
-                    'text-gray-600 text-xs': ['next_5', 'prev_5'].includes(page.type),
+                    'text-green-700 hover:text-green-700':
+                      page !== item.index && !['next_5', 'prev_5'].includes(item.type),
+                    'bg-green-900 rounded-full text-white hover:bg-green-900 !px-2.5 mx-1': page === item.index,
+                    'text-green-500': item.disabled,
+                    'text-gray-600 text-xs': ['next_5', 'prev_5'].includes(item.type),
                   },
                 )}
-                onClick={() => onPageIndexChange(page)}
-                aria-label={page.type}
+                onClick={() => onPageIndexChange(item)}
+                aria-label={item.type}
               >
-                {page.type === 'prev' && <Arrow className={'w-4 h-4 rotate-180'} />}
-                {page.type === 'next' && <Arrow className={'w-4 h-4'} />}
-                {page.type === 'prev_10' && <DoubleArrow className={'w-4 h-4 rotate-180'} />}
-                {page.type === 'next_10' && <DoubleArrow className={'w-4 h-4'} />}
-                {page.type.indexOf('page')===0 && page.index}
-                {(page.type === 'prev_5' || page.type === 'next_5') && '...'}
+                {item.type === 'prev' && <Arrow className={'w-4 h-4 rotate-180'} />}
+                {item.type === 'next' && <Arrow className={'w-4 h-4'} />}
+                {item.type === 'prev_10' && <DoubleArrow className={'w-4 h-4 rotate-180'} />}
+                {item.type === 'next_10' && <DoubleArrow className={'w-4 h-4'} />}
+                {item.type.indexOf('page') === 0 && item.index}
+                {(item.type === 'prev_5' || item.type === 'next_5') && '...'}
               </button>
             ))}
           </div>
@@ -182,18 +193,18 @@ export const Pagination: any = ({
 type Type = {
   total: number;
   pageSizeOptions: number[];
-  pageSize: number;
-  pageIndex: number;
-  queryParams: ({ pageSize, current }: { pageSize: number; current: number }) => void;
+  perPage: number;
+  page: number;
+  queryParams: ({ perPage, page }: { perPage: number; page: number }) => void;
   pageSizeRender: (sizePage: number) => string;
   pageSizeWidth: string;
   paginationDescription: (from: number, to: number, total: number) => string;
   idElement: string;
   className: string;
-  firstPageDisabled: ({ pageIndex, lastIndex }: { pageIndex: number; lastIndex: number }) => boolean;
-  lastPageDisabled: ({ pageIndex, lastIndex }: { pageIndex: number; lastIndex: number }) => boolean;
-  firstPage: ({ pageIndex, lastIndex }: { pageIndex: number; lastIndex: number }) => number;
-  lastPage: ({ pageIndex, lastIndex }: { pageIndex: number; lastIndex: number }) => number;
+  firstPageDisabled: ({ page, lastIndex }: { page: number; lastIndex: number }) => boolean;
+  lastPageDisabled: ({ page, lastIndex }: { page: number; lastIndex: number }) => boolean;
+  firstPage: ({ page, lastIndex }: { page: number; lastIndex: number }) => number;
+  lastPage: ({ page, lastIndex }: { page: number; lastIndex: number }) => number;
   showSizeChanger: boolean;
   showTotal: boolean;
 };

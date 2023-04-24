@@ -2,10 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 //
-@import "~perfect-scrollbar/css/perfect-scrollbar.css";
 @import "~glightbox/dist/css/glightbox.css";
 
 @import "/src/components";
+.ant-select:not(.ant-select-show-search) {
+  [aria-hidden=true] {
+    display:none;
+  }
+}
 
 .button {
   @apply px-4 ~'py-2.5' rounded-lg bg-green-900 text-white hover:bg-green-700 inline-flex items-center gap-1 border border-transparent font-semibold;
@@ -26,7 +30,7 @@
 
 body {
   font-family: 'Manrope', -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Noto Sans,Ubuntu,Droid Sans,Helvetica Neue,sans-serif;
-  @apply text-sm overflow-x-hidden text-gray-500 bg-blue-50;
+  @apply text-sm overflow-x-hidden text-gray-700 bg-blue-50;
   .swal2-close:focus { @apply shadow-none; }
 }
 * > {
@@ -57,7 +61,7 @@ h1, h2, h3, h4, h5, h6 {
 .ant-btn {
 @apply border border-gray-300 text-sm rounded-lg mr-2 px-2;
 
-  &.ant-btn-primary { @apply bg-blue-500 text-white; }
+  &.ant-btn-primary { @apply bg-blue-600 text-white; }
 }
 .ant-picker-panel-container .ant-picker-panels {
   @apply overflow-auto ~'max-w-[560px] w-[90vw]';

@@ -2,7 +2,7 @@ import React, { MouseEventHandler } from 'react';
 import { Popover } from 'antd';
 import classNames from 'classnames';
 
-const Component = ({
+export const Avatar = ({
   text,
   src,
   onClick,
@@ -12,7 +12,7 @@ const Component = ({
   keyName = 'fullName',
   maxCount = 4,
 }: Type) => {
-  const pickTextColorBasedOnBgColorAdvanced: any = (bgColor: string) => {
+  const pickTextColorBasedOnBgColorAdvanced = (bgColor: string) => {
     if (bgColor) {
       let color = String(bgColor)
         .toUpperCase()
@@ -33,7 +33,7 @@ const Component = ({
       const L = 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
       return pSBC(L > 0.4 ? -0.7 : 0.7, bgColor);
     }
-    return null;
+    return '';
   };
   const pSBC = (p: number, c0: string, c1?: string, l?: string) => {
     /* eslint-disable */
@@ -55,7 +55,7 @@ const Component = ({
       (c0[0] != 'r' && c0[0] != '#') ||
       (c1 && !a)
     )
-      return null;
+      return '';
     const pSBCr = (d: any) => {
       let n = d.length,
         x: any = {};
@@ -95,7 +95,7 @@ const Component = ({
           : { r: 255, g: 255, b: 255, a: -1 }),
       (p = P ? p * -1 : p),
       (P = 1 - p);
-    if (!f || !t) return null;
+    if (!f || !t) return '';
     // eslint-disable-next-line no-unused-expressions
     if (l) (r = m(P * f.r + p * t.r)), (g = m(P * f.g + p * t.g)), (b = m(P * f.b + p * t.b));
     // eslint-disable-next-line no-unused-expressions
@@ -194,7 +194,7 @@ const Component = ({
       return text.substr(0, numberLetter);
     } else {
       let letter = '';
-      text.split(' ').map((item: any, index: number) => {
+      text.split(' ').map((item: string, index: number) => {
         if (index < numberLetter) {
           letter += item.charAt(0);
         }
@@ -204,7 +204,7 @@ const Component = ({
     }
   };
 
-  const Avatar = ({ onClick, text, src, showName, size, index = 0 }: any) => (
+  const Avatar = ({ onClick, text, src, showName, size, index = 0 }: Type) => (
     <div onClick={onClick} className={classNames({ 'flex items-center': showName })}>
       {!text || (src && src.indexOf('/defaultAvatar.png') === -1) ? (
         <div className={classNames({ '-ml-2': index > 0 })}>
@@ -223,14 +223,16 @@ const Component = ({
             '-ml-2': index > 0,
           })}
           style={{
-            color: pickTextColorBasedOnBgColorAdvanced(getColorByLetter(text)),
-            backgroundColor: getColorByLetter(text),
+            color: pickTextColorBasedOnBgColorAdvanced(getColorByLetter(text as string)),
+            backgroundColor: getColorByLetter(text as string),
           }}
         >
-          <strong>{getFirstLetter(text)}</strong>
+          <strong>{getFirstLetter(text as string)}</strong>
         </div>
       )}
-      {!!showName && !!text && <span className={classNames('ml-1', { 'link-click': !!onClick })}>{text}</span>}
+      {!!showName && !!text && (
+        <span className={classNames('ml-1', { 'link-click': !!onClick })}>{text as string}</span>
+      )}
     </div>
   );
   if (typeof text !== 'object') {
@@ -240,11 +242,10 @@ const Component = ({
       <div onClick={onClick} className="flex items-center">
         {!!text &&
           text
-            .filter((item: any, index: number) => index < maxCount)
-            .map((item: any, index: number) => {
+            .filter((item, index: number) => index < maxCount)
+            .map((item, index: number) => {
               return (
                 <Avatar
-                  onClick={null}
                   text={item[keyName]}
                   src={item[keySrc]}
                   showName={false}
@@ -257,21 +258,14 @@ const Component = ({
         {!!text && text.length > maxCount && (
           <Popover
             content={text
-              .filter((item: any, index: number) => index >= maxCount)
-              .map((item: any, index: number) => (
-                <Avatar
-                  onClick={null}
-                  showName={true}
-                  text={item[keyName]}
-                  src={item[keySrc]}
-                  size={size}
-                  key={index}
-                />
+              .filter((item, index: number) => index >= maxCount)
+              .map((item, index: number) => (
+                <Avatar showName={true} text={item[keyName]} src={item[keySrc]} size={size} key={index} />
               ))}
           >
             <div
               className={classNames(
-                'rounded-xl inline-block text-center border border-blue-500 text-blue-500 bg-blue-200 text-xs -ml-2',
+                'rounded-xl inline-block text-center border border-blue-600 text-blue-600 bg-blue-200 text-xs -ml-2',
                 'w-' + size,
                 'h-' + size,
                 'leading-' + size,
@@ -287,12 +281,12 @@ const Component = ({
 };
 type Type = {
   src: string;
-  text?: string | any[];
+  text?: string | { [selector: string]: string }[];
   onClick?: MouseEventHandler<HTMLDivElement>;
   size?: number;
   showName?: boolean;
   keySrc?: string;
   keyName?: string;
   maxCount?: number;
+  index?: number;
 };
-export default Component;

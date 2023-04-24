@@ -7,7 +7,7 @@ import { useLocation } from 'react-router-dom';
 // import { initializeApp } from 'firebase/app';
 // import { getMessaging, isSupported, getToken, onMessage } from 'firebase/messaging';
 import { routerLinks } from '@utils';
-import { Avatar } from '@components';
+import { Avatar } from '@components/avatar';
 import { GlobalFacade } from '@reducers';
 import Menu from './menu';
 // import { firebaseConfig } from 'variable';
@@ -39,7 +39,7 @@ const Layout = ({ children }: PropsWithChildren) => {
       }
       set_isDesktop(window.innerWidth > 767);
     }
-    window.addEventListener('resize', handleResize, true);
+    window.addEventListener('resize', handleResize, { passive: true });
 
     // const init = async () => {
     //   if (await isSupported()) {
@@ -52,7 +52,7 @@ const Layout = ({ children }: PropsWithChildren) => {
     //         antNoti.open({
     //           message: <strong>{payload.notification.title}</strong>,
     //           description: payload.notification.body,
-    //           icon: <i className="las la-info-circle text-4xl text-blue-500" />,
+    //           icon: <i className="las la-info-circle text-4xl text-blue-600" />,
     //           // onClick: () => {},
     //         });
     //       });
@@ -72,7 +72,7 @@ const Layout = ({ children }: PropsWithChildren) => {
     }
   }, [location]);
 
-  const Header = ({ isCollapsed, isDesktop }: any) => (
+  const Header = ({ isCollapsed, isDesktop }: { isCollapsed: boolean; isDesktop: boolean }) => (
     <header
       className={classNames(
         'bg-blue-50 w-full header h-20 transition-all duration-300 ease-in-out sticky top-0 block z-10',
@@ -87,16 +87,35 @@ const Layout = ({ children }: PropsWithChildren) => {
         <h1 className={'text-3xl font-bold hidden sm:block text-green-800'}>{t('pages.' + title)}</h1>
 
         <div className="flex items-center gap-5">
-          <Select value={globalFacade?.language} onChange={(e: 'vn' | 'en') => globalFacade.setLanguage(e)}>
-            <Select.Option value="en">
-              <img src="/assets/svg/us.svg" alt="US" className="mr-1 w-4 inline-block relative -top-0.5" />{' '}
-              {t('routes.admin.Layout.English')}
-            </Select.Option>
-            <Select.Option value="vn">
-              <img src="/assets/svg/vn.svg" alt="VN" className="mr-1 w-4 inline-block relative -top-0.5" />{' '}
-              {t('routes.admin.Layout.Vietnam')}
-            </Select.Option>
-          </Select>
+          <label>
+            <Select
+              aria-hidden="true"
+              value={globalFacade?.language}
+              onChange={(e: 'vn' | 'en') => globalFacade.setLanguage(e)}
+            >
+              <Select.Option value="en">
+                <img
+                  width={'16'}
+                  height={'16'}
+                  src="/assets/svg/us.svg"
+                  alt="US"
+                  className="mr-1 w-4 inline-block relative -top-0.5"
+                />{' '}
+                {t('routes.admin.Layout.English')}
+              </Select.Option>
+              <Select.Option value="vn">
+                <img
+                  width={'16'}
+                  height={'16'}
+                  src="/assets/svg/vn.svg"
+                  alt="VN"
+                  className="mr-1 w-4 inline-block relative -top-0.5"
+                />{' '}
+                {t('routes.admin.Layout.Vietnam')}
+              </Select.Option>
+            </Select>
+          </label>
+
           <Dropdown
             trigger={['hover', 'click']}
             menu={{
@@ -124,7 +143,7 @@ const Layout = ({ children }: PropsWithChildren) => {
             <section className="flex items-center" id={'dropdown-profile'}>
               <div className="text-right leading-none mr-3 hidden sm:block">
                 <div className="font-bold text-black text-lg leading-snug mb-0.5">{user?.name}</div>
-                <div className="text-gray-500">{user?.email}</div>
+                <div className="text-gray-600">{user?.email}</div>
               </div>
               <Avatar src="/assets/images/avatar.jpeg" size={10} />
             </section>
@@ -139,7 +158,7 @@ const Layout = ({ children }: PropsWithChildren) => {
       <Header isCollapsed={isCollapsed} isDesktop={isDesktop} />
       <div
         className={classNames(
-          'flex items-center justify-between text-gray-800 hover:text-gray-500 h-20 fixed top-0 left-0 px-5 font-bold transition-all duration-300 ease-in-out z-10',
+          'flex items-center justify-between text-gray-800 hover:text-gray-600 h-20 fixed top-0 left-0 px-5 font-bold transition-all duration-300 ease-in-out z-10',
           {
             'w-52': !isCollapsed && isDesktop,
             'w-20': isCollapsed,

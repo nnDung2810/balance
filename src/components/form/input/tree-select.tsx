@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Fragment, useCallback, useRef } from 'react';
 import { TreeSelect, Checkbox, FormInstance } from 'antd';
-import { Button } from '@components';
+import { Button } from '@components/button';
 import { API } from '@utils';
 import { Times } from '@svgs';
 
@@ -18,7 +18,7 @@ const Component = ({ formItem, placeholder, onChange, value, form, disabled, sho
             const params = formItem.api.params
               ? formItem.api.params(form.getFieldValue, fullTextSearch)
               : { fullTextSearch };
-            const { data } = await API.get(url, {}, params);
+            const { data } = await API.get<any>(url, {}, params);
             const listData = data.data.map(formItem.api.format);
             if (formItem.mode === 'multiple' && value?.length) {
               const array = formItem.api.convertData ? formItem.api.convertData(listData) : listData;
@@ -183,8 +183,8 @@ const Component = ({ formItem, placeholder, onChange, value, form, disabled, sho
             checkShow && (
               <div className="bg-blue-100 rounded-xl py-1 px-2 relative mr-2.5 -left-2.5">
                 <Button
-                  icon={<Times className="h-5 w-5 fill-red-500" />}
-                  className="absolute rounded-full -top-1 -right-2 !bg-red-100 !text-red-500 leading-none z-10"
+                  icon={<Times className="h-5 w-5 fill-red-600" />}
+                  className="absolute rounded-full -top-1 -right-2 !bg-red-100 !text-red-600 leading-none z-10"
                   onClick={() => onChange && onChange(clearTag(item[0], value))}
                   disabled={disabled}
                 />

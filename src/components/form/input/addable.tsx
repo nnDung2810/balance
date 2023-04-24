@@ -4,7 +4,7 @@ import { Form, Checkbox, FormInstance } from 'antd';
 import classNames from 'classnames';
 
 import { FormModel } from '@models';
-import { Button } from '@components';
+import { Button } from '@components/button';
 import { Trash, Plus } from '@svgs';
 
 const Component = ({

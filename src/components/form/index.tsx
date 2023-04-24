@@ -1,17 +1,18 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Form, Checkbox, Radio, Switch, Slider, DatePicker as DateAntDesign, FormInstance } from 'antd';
+import { Form as AntForm, Checkbox, Radio, Switch, Slider, DatePicker as DateAntDesign, FormInstance } from 'antd';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import dayjs from 'dayjs';
 
-import { Upload, Editor, DraggableLayout, Button } from '@components';
+import { Upload } from '@components/upload';
+import { Button } from '@components/button';
 import { convertFormValue } from '@utils';
 import { FormItem, FormModel } from '@models';
 import { GlobalFacade } from '@reducers';
 import { Check, Times } from '@svgs';
 import { Chips, SelectTag, Select, TreeSelect, TableTransfer, Password, Mask, Addable, DatePicker, Tab } from './input';
 
-const Component = ({
+export const Form = ({
   className,
   columns,
   textSubmit = 'Lưu',
@@ -33,7 +34,7 @@ const Component = ({
   const timeout = useRef<any>();
   const refLoad = useRef(true);
   const [_render, set_render] = useState(false);
-  const [forms] = Form.useForm();
+  const [forms] = AntForm.useForm();
   const form = formAnt || forms;
 
   const reRender = () => {
@@ -100,10 +101,6 @@ const Component = ({
             form={form}
           />
         );
-      case 'editor':
-        return <Editor />;
-      case 'layout':
-        return <DraggableLayout />;
       case 'upload':
         return <Upload multiple={!!formItem.mode} />;
       case 'table_transfer':
@@ -112,7 +109,7 @@ const Component = ({
         return (
           <Password
             tabIndex={formItem.tabIndex || index}
-            placeholder={formItem.placeholder || t('components.form.Enter') + ' ' + item.title.toLowerCase()}
+            placeholder={formItem.placeholder || t('components.form.Enter') + ' ' + item.title!.toLowerCase()}
             disabled={!!formItem.disabled && formItem.disabled(values, form)}
           />
         );
@@ -129,7 +126,7 @@ const Component = ({
             )}
             rows={4}
             maxLength={1000}
-            placeholder={formItem.placeholder || t('components.form.Enter') + ' ' + item.title.toLowerCase()}
+            placeholder={formItem.placeholder || t('components.form.Enter') + ' ' + item.title!.toLowerCase()}
             onChange={(e) => formItem.onChange && formItem.onChange(e.target.value, form, reRender)}
           />
         );
@@ -215,7 +212,7 @@ const Component = ({
         return (
           <SelectTag
             maxTagCount={formItem.maxTagCount || 'responsive'}
-            placeholder={formItem.placeholder || t('components.form.Enter') + ' ' + item.title.toLowerCase()}
+            placeholder={formItem.placeholder || t('components.form.Enter') + ' ' + item.title!.toLowerCase()}
             tag={formItem.tag}
             form={form}
             disabled={!!formItem.disabled && formItem.disabled(values, form)}
@@ -224,7 +221,7 @@ const Component = ({
       case 'chips':
         return (
           <Chips
-            placeholder={formItem.placeholder || t('components.form.Enter') + ' ' + item.title.toLowerCase()}
+            placeholder={formItem.placeholder || t('components.form.Enter') + ' ' + item.title!.toLowerCase()}
             disabled={!!formItem.disabled && formItem.disabled(values, form)}
           />
         );
@@ -235,7 +232,7 @@ const Component = ({
             showSearch={formItem.showSearch}
             maxTagCount={formItem.maxTagCount || 'responsive'}
             onChange={(value: any) => formItem.onChange && formItem.onChange(value, form, reRender)}
-            placeholder={formItem.placeholder || t('components.form.Enter') + ' ' + item.title.toLowerCase()}
+            placeholder={formItem.placeholder || t('components.form.Enter') + ' ' + item.title!.toLowerCase()}
             formItem={formItem}
             form={form}
             disabled={!!formItem.disabled && formItem.disabled(values, form)}
@@ -249,7 +246,7 @@ const Component = ({
             showSearch={formItem.showSearch}
             form={form}
             disabled={!!formItem.disabled && formItem.disabled(values, form)}
-            placeholder={formItem.placeholder || t('components.form.Enter') + ' ' + item.title.toLowerCase()}
+            placeholder={formItem.placeholder || t('components.form.Enter') + ' ' + item.title!.toLowerCase()}
           />
         );
       case 'switch':
@@ -261,6 +258,7 @@ const Component = ({
           />
         );
       default:
+        // @ts-ignore
         return (
           <Mask
             tabIndex={formItem.tabIndex || index}
@@ -269,7 +267,7 @@ const Component = ({
             addonBefore={formItem.addonBefore}
             addonAfter={formItem.addonAfter}
             maxLength={formItem.maxLength}
-            placeholder={formItem.placeholder || t('components.form.Enter') + ' ' + item.title.toLowerCase()}
+            placeholder={formItem.placeholder || t('components.form.Enter') + ' ' + item.title!.toLowerCase()}
             onBlur={(e: React.FocusEvent<HTMLInputElement, Element>) =>
               formItem.onBlur && formItem.onBlur(e, form, name)
             }
@@ -532,7 +530,9 @@ const Component = ({
       }
 
       return item.formItem.type !== 'addable' ? (
-        <Form.Item {...otherProps}>{generateInput(item.formItem, item, values, otherProps.name, index)}</Form.Item>
+        <AntForm.Item {...otherProps}>
+          {generateInput(item.formItem, item, values, otherProps.name, index)}
+        </AntForm.Item>
       ) : (
         generateInput(item.formItem, item, values, otherProps.name, index)
       );
@@ -546,7 +546,7 @@ const Component = ({
   };
 
   return (
-    <Form
+    <AntForm
       className={className}
       form={form}
       layout={!widthLabel ? 'vertical' : 'horizontal'}
@@ -631,7 +631,7 @@ const Component = ({
           />
         )}
       </div>
-    </Form>
+    </AntForm>
   );
 };
 type Type = {
@@ -651,4 +651,3 @@ type Type = {
   idSubmit?: string;
   disableSubmit?: boolean;
 };
-export default Component;

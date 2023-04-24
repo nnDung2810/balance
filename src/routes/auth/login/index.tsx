@@ -1,10 +1,12 @@
 import React, { Fragment, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
-import { ModalForm, Spin, Form } from '@components';
+import { Spin } from '@components/spin';
+import { Form } from '@components/form';
+import { ModalForm } from '@components/modal/form';
+
 import { routerLinks } from '@utils';
 import { GlobalFacade } from '@reducers';
-import { ColumnForgottenPassword, ColumnLogin } from './column';
 import { FormModalRefObject } from '@models';
 
 const Page = () => {
@@ -30,7 +32,25 @@ const Page = () => {
         <Form
           values={{ ...data }}
           className="intro-x"
-          columns={ColumnLogin({ t })}
+          columns={[
+            {
+              name: 'email',
+              title: t('columns.auth.login.Username'),
+              formItem: {
+                placeholder: t('columns.auth.login.Enter Username'),
+                rules: [{ type: 'required' }, { type: 'email' }, { type: 'min', value: 6 }],
+              },
+            },
+            {
+              name: 'password',
+              title: t('columns.auth.login.password'),
+              formItem: {
+                placeholder: t('columns.auth.login.Enter Password'),
+                type: 'password',
+                rules: [{ type: 'required' }, { type: 'min', value: 6 }],
+              },
+            },
+          ]}
           textSubmit={'routes.auth.login.Log In'}
           handSubmit={login}
           disableSubmit={isLoading}
@@ -47,7 +67,16 @@ const Page = () => {
         facade={globalFacade}
         ref={modalFormRef}
         title={() => 'Quên mật khẩu'}
-        columns={ColumnForgottenPassword()}
+        columns={[
+          {
+            name: 'email',
+            title: 'Email',
+            formItem: {
+              placeholder: 'Email',
+              rules: [{ type: 'required' }, { type: 'email' }, { type: 'min', value: 6 }],
+            },
+          },
+        ]}
         widthModal={400}
         idElement={'user'}
       />
