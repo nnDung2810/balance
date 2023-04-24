@@ -7,7 +7,6 @@ export const ColumnProfile = ({ t, listPosition }: any) => {
       title: t('Họ và tên'),
       name: 'name',
       formItem: {
-        col: 6,
         rules: [{ type: 'required' }],
       },
     },
@@ -31,7 +30,6 @@ export const ColumnProfile = ({ t, listPosition }: any) => {
       title: t('Ghi chú'),
       name: 'note',
       formItem: {
-        col: 8,
         type: 'textarea',
       },
     },

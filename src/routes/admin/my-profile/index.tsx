@@ -21,15 +21,15 @@ const Page = () => {
   }, []);
   return (
     <Fragment>
-      <div className='grid grid-cols-3 w-full'>
-        <Spin className="col-span-1" spinning={isLoading}>
+      <div className='grid grid-cols-3 gap-5 w-full'>
+        <div className='col-span-1 bg-white p-5 border rounded-3xl '>
+        <Spin className="" spinning={isLoading}>
         <Form
-          className=" border rounded-3xl bg-white text-center items-center"
+          className="text-center items-center"
           columns={[
             {
               name: 'profileImage',
               formItem: {
-              //  col: 4,
                 type: 'upload',
                 mode: 'multiple',
               },
@@ -68,9 +68,12 @@ const Page = () => {
           values={{ ...user }}
         />
       </Spin>
-      <Spin className="col-span-2"  spinning={isLoading}>
+
+        </div>
+        <div className='col-span-2 bg-white p-5 border rounded-3xl '>
+      <Spin className=""  spinning={isLoading}>
         <Form
-          className=" bg-white border rounded-3xl "
+          className=" "
           columns={ColumnProfile({ t, listPosition: listPosition.current })}
           handSubmit={putProfile}
           disableSubmit={isLoading}
@@ -88,6 +91,8 @@ const Page = () => {
         //  handCancel={getProfile}
         />
       </Spin>
+
+        </div>
       </div>
     </Fragment>
   );
