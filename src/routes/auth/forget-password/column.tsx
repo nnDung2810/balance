@@ -13,7 +13,7 @@ export const ColumnForgetPassword = ({ t }: any) => {
   ];
   return col;
 };
-export const ColumnOTP = ({ t }: any) => {
+export const ColumnOTP = () => {
   const col: FormModel[] = [
     {
       name: 'otp',

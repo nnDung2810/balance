@@ -34,9 +34,8 @@ console.log(data)
           <Form
             values={{ ...data }}
             className="intro-x ant-form1"
-            columns={ColumnOTP({ t })}
-            textSubmit={'routes.auth.reset-password.OTP'}
-            // handleForgetPassword={}
+            columns={ColumnOTP()}
+            textSubmit={'Gửi OTP'}
             handSubmit={(values) => verifyForgotPassword({ ...values})}
             disableSubmit={isLoading}
           />
