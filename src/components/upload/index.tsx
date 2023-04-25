@@ -8,7 +8,7 @@ import { API, linkApi } from '@utils';
 import { Button } from '@components/button';
 import { Spin } from '@components/spin';
 import { Message } from '@components/message';
-import { Plus, Copy, Paste, Times } from '@svgs';
+import { Plus, Copy, Paste, Times, Eye } from '@svgs';
 
 export const Upload = ({
   value = [],
@@ -34,15 +34,15 @@ export const Upload = ({
   const [listFiles, set_listFiles] = useState(
     multiple && value && typeof value === 'object'
       ? value.map((_item: any) => {
-          if (_item.status) return _item;
-          return {
-            ..._item,
-            status: 'done',
-          };
-        })
+        if (_item.status) return _item;
+        return {
+          ..._item,
+          status: 'done',
+        };
+      })
       : typeof value === 'string'
-      ? [{ [keyImage]: value }]
-      : value || [],
+        ? [{ [keyImage]: value }]
+        : value || [],
   );
 
   // const handleDownload = async (file: any) => {
@@ -58,15 +58,15 @@ export const Upload = ({
     const tempData =
       !multiple && value && typeof value === 'object'
         ? value.map((_item: any) => {
-            if (_item.status) return _item;
-            return {
-              ..._item,
-              status: 'done',
-            };
-          })
+          if (_item.status) return _item;
+          return {
+            ..._item,
+            status: 'done',
+          };
+        })
         : typeof value === 'string'
-        ? [{ [keyImage]: value }]
-        : value || [];
+          ? [{ [keyImage]: value }]
+          : value || [];
     if (
       JSON.stringify(listFiles) !== JSON.stringify(tempData) &&
       listFiles.filter((item: any) => item.status === 'uploading').length === 0
@@ -151,11 +151,11 @@ export const Upload = ({
             // });
             const files = multiple
               ? listFiles.map((item: any) => {
-                  if (item.id === dataFile.id) {
-                    item = { ...item, ...data.data, status: 'done' };
-                  }
-                  return item;
-                })
+                if (item.id === dataFile.id) {
+                  item = { ...item, ...data.data, status: 'done' };
+                }
+                return item;
+              })
               : [{ ...data.data, status: 'done' }];
             set_listFiles(files);
             onChange && (await onChange(files));
@@ -179,11 +179,11 @@ export const Upload = ({
             });
             const files = multiple
               ? listFiles.map((item: any) => {
-                  if (item.id === dataFile.id) {
-                    item = { ...item, ...data.data, status: 'done' };
-                  }
-                  return item;
-                })
+                if (item.id === dataFile.id) {
+                  item = { ...item, ...data.data, status: 'done' };
+                }
+                return item;
+              })
               : [{ ...data.data, status: 'done' }];
             set_listFiles(files);
             onChange && (await onChange(files));
@@ -214,98 +214,104 @@ export const Upload = ({
     <Spin spinning={isLoading}>
       {showBtnUpload ? (
         <div className={classNames({ 'text-right': right }, 'relative inline-block')}>
+
           <input type="file" className={'hidden'} accept={accept} multiple={multiple} ref={ref} onChange={onUpload} />
           <div onClick={() => ref.current.click()}>
             <Fragment>
               {children ? (
                 children
               ) : !listFiles?.length || !listFiles[0][keyImage] ? (
-                <div className="border-dashed border border-gray-300 rounded-xl w-full h-full flex items-center justify-center ">
+                <div className="border-dashed border border-gray-300 rounded-2xl w-40 h-40 flex items-center justify-center">
                   <Plus className="w-12 h-12" />
                 </div>
               ) : (
-                <img alt={'Align'} className={'rounded-xl w-full h-[50vh] flex object-cover px-2'} src={listFiles[0][keyImage]} />
+                <div className='text-center justify-center'>
+                  <img alt={'Align'} className={'rounded-2xl w-80 h-72 flex object-cover'} src={listFiles[0][keyImage]} />
+                  <div
+                    // className={classNames({
+                    //   'grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-8 gap-4':
+                    //     viewGrid,
+                    // })}
+                    className='w-[55px] h-[45px] bg-teal-600 opacity-80 absolute right-0 bottom-0 rounded-tl-[0.625rem] rounded-br-[0.625rem] flex items-center justify-center'
+                  >
+                    {multiple &&
+                      listFiles.map((file: any, index: number) => (
+                        <div
+                          key={index}
+                          className={classNames({
+                            'bg-yellow-100': file.status === 'error',
+                            'flex items-center py-1 mb-8 sm:mb-1': !viewGrid,
+                          })}
+                        >
+                          <div className={'relative'}>
+                            <a href={file[keyImage] ? file[keyImage] : file} className="glightbox las la-camera text-white text-xl">
+                              <img
+                                //  className={classNames({ 'object-cover object-center h-20 w-20': !viewGrid })}
+                                //  src={file[keyImage] ? file[keyImage] : file}
+                                className='las la-camera text-white text-xl'
+                                alt={file.name}
+                              />
+                            </a>
+                            <div className={'flex gap-5 absolute bottom-0 justify-center w-full'}>
+                              {listFiles?.length > 0 && (
+                                <Copy
+                                  className={'h-5 w-5 cursor-pointer'}
+                                // onClick={() => copy(file[keyImage] ? file[keyImage] : file)}
+                                />
+                              )}
+                              <Paste
+                                className={'h-5 w-5 cursor-wait'}
+                                onPaste={async (event) => {
+                                  const text = event.clipboardData.getData('text/plain');
+                                  if (text.indexOf('http') === 0) {
+                                    if (!multiple) {
+                                      const files = [{ [keyImage]: text, status: 'done' }];
+                                      set_listFiles(files);
+                                      onChange && (await onChange(files));
+                                    } else {
+                                      listFiles.push(file[keyImage] ? { [keyImage]: text } : text);
+                                      set_listFiles(listFiles);
+                                      onChange && (await onChange(listFiles));
+                                    }
+                                  }
+                                }}
+                              />
+                            </div>
+                            {showBtnDelete(file) && (
+                              <Popconfirm
+                                placement="left"
+                                title={t('components.datatable.areYouSureWant')}
+                                onConfirm={async () => {
+                                  if (deleteFile && file?.id) {
+                                    const data = await deleteFile(file?.id);
+                                    if (!data) {
+                                      return false;
+                                    }
+                                  }
+                                  onChange && onChange(listFiles.filter((_item: any) => _item.id !== file.id));
+                                }}
+                                okText={t('components.datatable.ok')}
+                                cancelText={t('components.datatable.cancel')}
+                              >
+                                <Button
+                                  icon={<Eye className={'h-6 w-6'} />}
+                                  className={'!bg-gray-400 !rounded-full flex items-center justify-center'}
+                                />
+                              </Popconfirm>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                  </div>
+                </div>
               )}
             </Fragment>
           </div>
+
         </div>
       ) : (
         <div />
       )}
-      <div
-        className={classNames({
-          'grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-8 gap-4':
-            viewGrid,
-        })}
-      >
-        {multiple &&
-          listFiles.map((file: any, index: number) => (
-            <div
-              key={index}
-              className={classNames({
-                'bg-yellow-100': file.status === 'error',
-                'flex items-center py-1 mb-8 sm:mb-1': !viewGrid,
-              })}
-            >
-              <div className={'relative'}>
-                <a href={file[keyImage] ? file[keyImage] : file} className="glightbox">
-                  <img
-                    className={classNames({ 'object-cover object-center h-20 w-20': !viewGrid })}
-                    src={file[keyImage] ? file[keyImage] : file}
-                    alt={file.name}
-                  />
-                </a>
-                <div className={'flex gap-5 absolute bottom-0 justify-center w-full'}>
-                  {listFiles?.length > 0 && (
-                    <Copy
-                      className={'h-5 w-5 cursor-pointer'}
-                      onClick={() => copy(file[keyImage] ? file[keyImage] : file)}
-                    />
-                  )}
-                  <Paste
-                    className={'h-5 w-5 cursor-wait'}
-                    onPaste={async (event) => {
-                      const text = event.clipboardData.getData('text/plain');
-                      if (text.indexOf('http') === 0) {
-                        if (!multiple) {
-                          const files = [{ [keyImage]: text, status: 'done' }];
-                          set_listFiles(files);
-                          onChange && (await onChange(files));
-                        } else {
-                          listFiles.push(file[keyImage] ? { [keyImage]: text } : text);
-                          set_listFiles(listFiles);
-                          onChange && (await onChange(listFiles));
-                        }
-                      }
-                    }}
-                  />
-                </div>
-                {showBtnDelete(file) && (
-                  <Popconfirm
-                    placement="left"
-                    title={t('components.datatable.areYouSureWant')}
-                    onConfirm={async () => {
-                      if (deleteFile && file?.id) {
-                        const data = await deleteFile(file?.id);
-                        if (!data) {
-                          return false;
-                        }
-                      }
-                      onChange && onChange(listFiles.filter((_item: any) => _item.id !== file.id));
-                    }}
-                    okText={t('components.datatable.ok')}
-                    cancelText={t('components.datatable.cancel')}
-                  >
-                    <Button
-                      icon={<Times className={'h-4 w-4'} />}
-                      className={'!bg-gray-400 !rounded-full absolute top-0 right-0'}
-                    />
-                  </Popconfirm>
-                )}
-              </div>
-            </div>
-          ))}
-      </div>
     </Spin>
   );
 };
