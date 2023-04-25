@@ -1,11 +1,11 @@
-import React, { Fragment, useEffect, useRef } from 'react';
+import React, { Fragment, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router';
 
 import { UserRoleFacade, UserFacade, SupplierRoleFacade, SupplierFacade } from '@reducers';
 import { routerLinks } from '@utils';
 import { Button, Form } from '@components';
-import { ColumnFormSupplierDetail } from './column';
+import { ColumnFormSupplierDetail, ColumnFormSupplierProduct } from './column';
 import { User } from '../../../reducers/global';
 import classNames from 'classnames';
 
@@ -19,6 +19,8 @@ const Page = () => {
   const isReload = useRef(false);
   const param = JSON.parse(queryParams || '{}');
   const { id } = useParams();
+
+  const tab = useState(2);
 
   useEffect(() => {
     if (!result?.data) get({});
@@ -34,7 +36,7 @@ const Page = () => {
   useEffect(() => {
     switch (status) {
       case 'post.fulfilled':
-        navigate(routerLinks('Supplier') + '/' + data?.id);
+        navigate(routerLinks('Supplier') + '/' + data?.id + '/');
         break;
       case 'put.fulfilled':
         if (Object.keys(param).length > 0) isReload.current = true;

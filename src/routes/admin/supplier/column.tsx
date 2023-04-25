@@ -471,7 +471,7 @@ export const ColumnFormSupplierOrder = ({ t, listRole }: any) => {
 };
 
 export const ColumnFormSupplierProduct = ({ t, listRole }: any) => {
- const col: FormModel[] = [
+  const col: FormModel[] = [
   {
       title: t('Mã nhà cung cấp'),
       name: 'code',
