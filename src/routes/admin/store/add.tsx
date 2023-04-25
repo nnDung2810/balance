@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 
-import { Button, DataTable, Form } from '@components';
+import { Form } from '@components/form';
 import { routerLinks } from '@utils';
 import { UserFacade, GlobalFacade, StoreFacade } from '@reducers';
 import { Plus } from '@svgs';
