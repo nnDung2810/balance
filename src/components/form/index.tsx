@@ -26,6 +26,7 @@ const Component = ({
   idSubmit = 'idSubmit',
   disableSubmit = false,
   formAnt,
+  handleForgetPassword,
 }: Type) => {
   const { t } = useTranslation();
   const { formatDate } = GlobalFacade();
@@ -112,7 +113,7 @@ const Component = ({
         return (
           <Password
             tabIndex={formItem.tabIndex || index}
-            placeholder={formItem.placeholder || t('components.form.Enter') + ' ' + item.title.toLowerCase()}
+            placeholder={formItem.placeholder || t('components.form.Enter') + ' ' + item.title!.toLowerCase()}
             disabled={!!formItem.disabled && formItem.disabled(values, form)}
           />
         );
@@ -129,7 +130,7 @@ const Component = ({
             )}
             rows={4}
             maxLength={1000}
-            placeholder={formItem.placeholder || t('components.form.Enter') + ' ' + item.title.toLowerCase()}
+            placeholder={formItem.placeholder || t('components.form.Enter') + ' ' + item.title!.toLowerCase()}
             onChange={(e) => formItem.onChange && formItem.onChange(e.target.value, form, reRender)}
           />
         );
@@ -161,7 +162,7 @@ const Component = ({
             format={
               !formItem.picker || formItem.picker === 'date'
                 ? formatDate + (formItem.showTime ? ' HH:mm' : '')
-                : formatDate
+                : formatDate!
             }
             onChange={(date: any) => formItem.onChange && formItem.onChange(date, form, reRender)}
             disabledDate={(current: any) => (formItem.disabledDate ? formItem.disabledDate(current, form) : false)}
@@ -215,7 +216,7 @@ const Component = ({
         return (
           <SelectTag
             maxTagCount={formItem.maxTagCount || 'responsive'}
-            placeholder={formItem.placeholder || t('components.form.Enter') + ' ' + item.title.toLowerCase()}
+            placeholder={formItem.placeholder || t('components.form.Enter') + ' ' + item.title!.toLowerCase()}
             tag={formItem.tag}
             form={form}
             disabled={!!formItem.disabled && formItem.disabled(values, form)}
@@ -224,7 +225,7 @@ const Component = ({
       case 'chips':
         return (
           <Chips
-            placeholder={formItem.placeholder || t('components.form.Enter') + ' ' + item.title.toLowerCase()}
+            placeholder={formItem.placeholder || t('components.form.Enter') + ' ' + item.title!.toLowerCase()}
             disabled={!!formItem.disabled && formItem.disabled(values, form)}
           />
         );
@@ -235,7 +236,7 @@ const Component = ({
             showSearch={formItem.showSearch}
             maxTagCount={formItem.maxTagCount || 'responsive'}
             onChange={(value: any) => formItem.onChange && formItem.onChange(value, form, reRender)}
-            placeholder={formItem.placeholder || t('components.form.Enter') + ' ' + item.title.toLowerCase()}
+            placeholder={formItem.placeholder || t('components.form.Enter') + ' ' + item.title!.toLowerCase()}
             formItem={formItem}
             form={form}
             disabled={!!formItem.disabled && formItem.disabled(values, form)}
@@ -249,7 +250,7 @@ const Component = ({
             showSearch={formItem.showSearch}
             form={form}
             disabled={!!formItem.disabled && formItem.disabled(values, form)}
-            placeholder={formItem.placeholder || t('components.form.Enter') + ' ' + item.title.toLowerCase()}
+            placeholder={formItem.placeholder || t('components.form.Enter') + ' ' + item.title!.toLowerCase()}
           />
         );
       case 'switch':
@@ -269,7 +270,7 @@ const Component = ({
             addonBefore={formItem.addonBefore}
             addonAfter={formItem.addonAfter}
             maxLength={formItem.maxLength}
-            placeholder={formItem.placeholder || t('components.form.Enter') + ' ' + item.title.toLowerCase()}
+            placeholder={formItem.placeholder || t('components.form.Enter') + ' ' + item.title!.toLowerCase()}
             onBlur={(e: React.FocusEvent<HTMLInputElement, Element>) =>
               formItem.onBlur && formItem.onBlur(e, form, name)
             }
@@ -587,13 +588,13 @@ const Component = ({
                   className={classNames(
                     column?.formItem?.classItem,
                     'col-span-12' +
-                      (' sm:col-span-' +
-                        (column?.formItem?.colTablet
-                          ? column?.formItem?.colTablet
-                          : column?.formItem?.col
+                    (' sm:col-span-' +
+                      (column?.formItem?.colTablet
+                        ? column?.formItem?.colTablet
+                        : column?.formItem?.col
                           ? column?.formItem?.col
                           : 12)) +
-                      (' lg:col-span-' + (column?.formItem?.col ? column?.formItem?.col : 12)),
+                    (' lg:col-span-' + (column?.formItem?.col ? column?.formItem?.col : 12)),
                   )}
                   key={index}
                 >
@@ -607,15 +608,16 @@ const Component = ({
       </div>
 
       <div
-        className={classNames('gap-2 flex mt-5', {
+        className={classNames('gap-2 flex', {
           'justify-center': !extendButton && !handCancel,
           'md:inline-flex md:float-right': extendButton || handCancel,
+          'w-full flex max-sm:flex-col max-sm:items-center max-sm:mb-10 justify-between mt-8': handSubmit && handCancel,
         })}
       >
         {handCancel && (
           <Button
             text={t(textCancel)}
-            className={'md:min-w-[12rem] w-full justify-center out-line'}
+            className={'w-32 justify-center out-line !border-black max-sm:w-3/5'}
             onClick={handCancel}
           />
         )}
@@ -626,7 +628,7 @@ const Component = ({
             id={idSubmit}
             onClick={() => form && form.submit()}
             disabled={disableSubmit}
-            className={'md:min-w-[12rem] w-full justify-center'}
+            className={'w-32 justify-center !bg-teal-800 hover:!bg-teal-700 !border !border-teal-900 max-sm:w-3/5'}
             type={'submit'}
           />
         )}
@@ -641,6 +643,7 @@ type Type = {
   textCancel?: string;
   handSubmit?: (values: any) => void;
   handCancel?: () => void;
+  handleForgetPassword?: () => void;
   values?: any;
   formAnt?: FormInstance;
   onFirstChange?: () => void;

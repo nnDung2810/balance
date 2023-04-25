@@ -7,9 +7,8 @@ import i18n from 'i18next';
 import { API, keyRefreshToken, keyToken, keyUser, routerLinks } from '@utils';
 import { Message } from '@components';
 import { useAppDispatch, useTypedSelector } from '@reducers';
-import { CommonEntity } from '@models';
-import { UserRole } from '../user/role';
-
+import { CommonEntity, Responses } from '@models';
+// import Slice, { State } from '../slice';
 const name = 'User-admin';
 const action = {
   name,
@@ -31,8 +30,8 @@ const action = {
     const { data } = await API.put<User>(`${routerLinks(name, 'api')}/profile`, values);
     return data || {};
   }),
-  login: createAsyncThunk(name + '/sign-in', async (values: { password: string; email: string; username: string }) => {
-    const { data, message } = await API.post<{ user: User; accessToken: string; refreshToken: string }>(
+  login: createAsyncThunk(name + '/sign-in', async (values: { password: string; username: string }) => {
+    const { data, message } = await API.post<{ userInfor: User; accessToken: string; refreshToken: string }>(
       `${routerLinks(name, 'api')}/sign-in`,
       values,
     );
@@ -41,41 +40,59 @@ const action = {
       localStorage.setItem(keyToken, data?.accessToken);
       localStorage.setItem(keyRefreshToken, data?.refreshToken);
     }
-    return data!.user;
+    return data!.userInfor;
   }),
-  forgottenPassword: createAsyncThunk(name + '/forgotten-password', async (values: { email: string }) => {
-    const { data, message } = await API.post(`${routerLinks(name, 'api')}/forgotten-password`, values);
+  forgotPassword: createAsyncThunk(name + '/forgot-password', async (values: { email: string }) => {
+    const { data, message } = await API.put< verify >(`${routerLinks(name, 'api')}/forgot-password`, values);
     if (message) await Message.success({ text: message });
-    return !!data;
+    return data;
   }),
-  resetPassword: createAsyncThunk(name + '/reset-password', async ({ token, ...values }: resetPassword) => {
-    const { data, message } = await API.post(
-      `${routerLinks(name, 'api')}/reset-password`,
-      values,
-      {},
-      { authorization: 'Bearer ' + token },
-    );
+  verifyForgotPassword: createAsyncThunk(name + '/verify-forgot-password', async (values: verify) => {
+    const { data, message } = await API.put<{email: string; uuid: string}>(`${routerLinks(name, 'api')}/verify-forgot-password`, values);
+    if (message) await Message.success({ text: message })
+    return data;
+  }),
+  setPassword: createAsyncThunk(name + '/reset-password', async (values : setPassword) => {
+    const { data, message } = await API.put(`${routerLinks(name, 'api')}/set-password`, values,);
     if (message) await Message.success({ text: message });
-    return !!data;
+    return data;
   }),
 };
-interface resetPassword {
+// interface StatePassword<T = object> {
+//   [selector: string]: any;
+//   data?: T;
+//   isLoading?: boolean;
+//   status?: string;
+// }
+interface verify {
+  otp: string;
+  uuid: string;
+  email: string
+}
+interface setPassword {
   password: string;
   retypedPassword: string;
-  token: string;
+  email: string;
+  uuid: string;
 }
+
 export class User extends CommonEntity {
   constructor(
-    public name?: string,
-    public avatar?: string,
-    public password?: string,
+    // public userName?: string,
+    public code?: string,
     public email?: string,
+    public isMain?: boolean,
+    public name?: string,
+    public note?: string,
     public phoneNumber?: string,
-    public dob?: string,
-    public description?: string,
-    public positionCode?: string,
-    public retypedPassword?: string,
-    public role?: UserRole,
+    public roleCode?: string,
+    public roleId?: number,
+    public status?: string,
+    public subOrgId?: number,
+    public userRoleId?: number,
+    // public profileImage?: string,
+    // public subOrgName?: string,
+    // public roleName?: string,
   ) {
     super();
   }
@@ -167,7 +184,7 @@ export const globalSlice = createSlice({
           action: PayloadAction<
             undefined,
             string,
-            { arg: { password?: string; email?: string }; requestId: string; requestStatus: 'pending' }
+            { arg: { password?: string; username?: string; }; requestId: string; requestStatus: 'pending' }
           >,
         ) => {
           state.data = action.meta.arg;
@@ -187,7 +204,7 @@ export const globalSlice = createSlice({
       })
 
       .addCase(
-        action.forgottenPassword.pending,
+        action.forgotPassword.pending,
         (
           state: State,
           action: PayloadAction<
@@ -198,29 +215,51 @@ export const globalSlice = createSlice({
         ) => {
           state.data = action.meta.arg;
           state.isLoading = true;
-          state.status = 'forgottenPassword.pending';
+          state.status = 'forgotPassword.pending';
         },
       )
-      .addCase(action.forgottenPassword.fulfilled, (state: State, action: PayloadAction<boolean>) => {
+      .addCase(action.forgotPassword.fulfilled, (state: State, action) => {
         if (action.payload) {
-          state.data = {};
-          state.status = 'forgottenPassword.fulfilled';
+          state.data = action.payload;
+          state.status = 'forgotPassword.fulfilled';
+        } else state.status = 'idle';
+        state.isLoading = false;
+      })
+      .addCase(
+        action.verifyForgotPassword.pending,
+        (
+          state: State,
+          action: PayloadAction<
+            undefined,
+            string,
+            { arg: verify; requestId: string; requestStatus: 'pending' }
+          >,
+        ) => {
+          state.data = action.meta.arg;
+          state.isLoading = true;
+          state.status = 'verifyForgotPassword.pending';
+        },
+      )
+      .addCase(action.verifyForgotPassword.fulfilled, (state: State, action) => {
+        if (action.payload) {
+          state.data = action.payload;
+          state.status = 'verifyForgotPassword.fulfilled';
         } else state.status = 'idle';
         state.isLoading = false;
       })
 
       .addCase(
-        action.resetPassword.pending,
+        action.setPassword.pending,
         (
           state: State,
-          action: PayloadAction<undefined, string, { arg: resetPassword; requestId: string; requestStatus: 'pending' }>,
+          action: PayloadAction<undefined, string, { arg: setPassword; requestId: string; requestStatus: 'pending' }>,
         ) => {
           state.data = action.meta.arg;
           state.isLoading = true;
-          state.status = 'resetPassword.pending';
+          state.status = 'setPassword.pending';
         },
       )
-      .addCase(action.resetPassword.fulfilled, (state: State, action: PayloadAction<boolean>) => {
+      .addCase(action.setPassword.fulfilled, (state: State, action) => {
         if (action.payload) {
           state.data = {};
           state.status = 'resetPassword.fulfilled';
@@ -232,12 +271,11 @@ export const globalSlice = createSlice({
 interface State {
   [selector: string]: any;
   user?: User;
-  data?: resetPassword | { email?: string } | { password?: string; email?: string };
+  data?: setPassword | verify | { email?: string } | { password?: string; email?: string } ;
   isLoading?: boolean;
   isVisible?: boolean;
   status?: string;
   title?: string;
-  formatDate?: string;
   language?: 'vn' | 'en' | null;
   locale?: typeof viVN | typeof enUS;
 }
@@ -261,9 +299,10 @@ export const GlobalFacade = () => {
     logout: () => dispatch(action.logout()),
     profile: () => dispatch(action.profile()),
     putProfile: (values: User) => dispatch(action.putProfile(values)),
-    login: (values: { password: string; email: string; username: string }) => dispatch(action.login(values)),
-    forgottenPassword: (values: { email: string }) => dispatch(action.forgottenPassword(values)),
-    resetPassword: (values: resetPassword) => dispatch(action.resetPassword(values)),
+    login: (values: { password: string; username: string }) => dispatch(action.login(values)),
+    forgotPassword: (values: { email: string }) => dispatch(action.forgotPassword(values)),
+    verifyForgotPassword: (values: { email: string, otp: string, uuid: string }) => dispatch(action.verifyForgotPassword(values)),
+    setPassword: (values: setPassword) => dispatch(action.setPassword(values)),
     setLanguage: (value: 'vn' | 'en') => dispatch(globalSlice.actions.setLanguage(value)),
   };
 };

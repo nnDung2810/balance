@@ -72,7 +72,7 @@
     "Login": "Đăng nhập",
     "Dashboard": "Tra cứu dữ liệu",
     "User": "Người Dùng",
-    "User/List": "Quản lý nhà người dùng",
+    "User/List": "Quản lý người dùng",
     "User/Add": "Tạo mới",
     "MyProfile": "Thông tin của tôi",
     "Setting": "Thiết lập",
@@ -80,12 +80,15 @@
     "Data": "Dữ liệu",
     "Page": "Trang",
     "Supplier": "Quản lý nhà cung cấp",
-    "Supplier/Add": "Thêm nhà cung cấp"
+    "Supplier/Add": "Thêm nhà cung cấp",
+    "Store": "Quản lý cửa hàng"
   },
   "pages": {
+    "Login": "Đăng Nhập",
     "User/List": "Danh sách Người dùng",
     "User/Add": "Tạo mới người dùng",
-    "User/Edit": "Chỉnh sửa người dùng"
+    "User/Edit": "Chỉnh sửa người dùng",
+    "store-managerment/create":"Thêm cửa hàng"
   },
   "columns": {
     "auth": {
@@ -116,8 +119,8 @@
   "routes": {
     "auth": {
       "login": {
-        "title": "Đăng nhập",
-        "subTitle": "Nhập thông tin chi tiết của bạn để đăng nhập vào tài khoản của bạn",
+        "title": "Đăng Nhập",
+        "subTitle": "Vui lòng đăng nhập bằng tài khoản được cung cấp bởi quản lý hệ thống",
         "Log In": "Đăng nhập",
         "Forgot Password": "Quên mật khẩu?",
         "Confirm Password": "Xác nhận mật khẩu",
@@ -130,9 +133,11 @@
       "reset-password": {
         "Recovery Email": "Email khôi phục",
         "Enter Recovery Email": "Email khôi phục",
-        "title": "Đặt lại mật khẩu",
+        "title": "Quên Mật Khẩu",
         "Submit": "Gửi đi",
-        "Back To Login": "Quay lại đăng nhập"
+        "Back To Login": "Quay trở lại Đăng nhập",
+        "subTitle": "Vui lòng nhập e-mail của bạn. Mã xác minh OTP sẽ được gửi cho bạn",
+        "OTP":"Lấy Mã OTP"
       }
     },
     "admin": {
@@ -153,7 +158,7 @@
         "Change Password": "Đổi mật khẩu",
         "My Profile": "Thông tin cá nhân",
         "No Data": "Trống",
-        "Pagination": "Hiển thị {{from}} - {{to}} /Tổng số {{total}} danh mục",
+        "Pagination": "Hiển thị {{from}} - {{to}} / Tổng số {{total}} danh mục",
         "Day": "Ngày phép"
       }
     }
@@ -196,48 +201,48 @@
     "Image": "Ảnh",
     "Created At": "Ngày tạo"
   },
-  "dashboard":{
-    "Active Profile Report":"Báo cáo hồ sơ đang hoạt động",
+  "dashboard": {
+    "Active Profile Report": "Báo cáo hồ sơ đang hoạt động",
     "Total Profile": "Tổng hồ sơ",
-    "Activated Profile":"Hồ sơ đã kích hoạt",
-    "New Custommers":"Khách hàng mới",
-    "User Purchasing Report":"Báo cáo mua hàng của người dùng",
-    "Free":"Miễn phí",
-    "Silver":"Bạc",
-    "Gold":"Vàng",
-    "Platinum":"Bạch kim",
-    "Seller Profiles":"Hồ sơ người bán",
-    "Buyer Profiles":"Hồ sơ người mua",
-    "Introductions":"Giới thiệu",
-    "Success Deal":"Giao dịch thành công",
-    "Total Payment":"Tổng tiền thanh toán",
-    "Partner Refund":"Hoàn tiền cho đối tác",
-    "Reference User":"Người dùng tham khảo",
-    "Sales Stats":"Thống kê bán hàng",
-    "Sales":"Việc bán hàng",
-    "Share of total":"Chia sẻ trên tổng số",
-    "active profiles":"hồ sơ đang hoạt động",
-    "Total":"Tổng cộng",
-    "active profile in":"hồ sơ hoạt động trong",
-    "Business Profiles Activity":"Hoạt động trên Trang doanh nghiệp",
-    "Franchise Profiles Activity":"Hoạt động hồ sơ nhượng quyền thương mại",
-    "Investor Profiles Activity":"Hoạt động hồ sơ nhà đầu tư",
-    "Monthly Profiles Activity":"Hoạt động hồ sơ hàng tháng",
-    "Profile":"Hồ sơ",
-    "Package":"Gói",
-    "Start Date":"Ngày bắt đầu",
-    "Status":"Trạng thái",
-    "Jan":"Th1",
-    "Feb":"Th2",
-    "Mar":"Th3",
-    "Apr":"Th4",
-    "May":"Th5",
-    "Jun":"Th6",
-    "Jul":"Th7",
-    "Aug":"Th8",
-    "Sep":"Th9",
-    "Oct":"Th10",
-    "Nov":"Th11",
-    "Dev":"Th12"
+    "Activated Profile": "Hồ sơ đã kích hoạt",
+    "New Custommers": "Khách hàng mới",
+    "User Purchasing Report": "Báo cáo mua hàng của người dùng",
+    "Free": "Miễn phí",
+    "Silver": "Bạc",
+    "Gold": "Vàng",
+    "Platinum": "Bạch kim",
+    "Seller Profiles": "Hồ sơ người bán",
+    "Buyer Profiles": "Hồ sơ người mua",
+    "Introductions": "Giới thiệu",
+    "Success Deal": "Giao dịch thành công",
+    "Total Payment": "Tổng tiền thanh toán",
+    "Partner Refund": "Hoàn tiền cho đối tác",
+    "Reference User": "Người dùng tham khảo",
+    "Sales Stats": "Thống kê bán hàng",
+    "Sales": "Việc bán hàng",
+    "Share of total": "Chia sẻ trên tổng số",
+    "active profiles": "hồ sơ đang hoạt động",
+    "Total": "Tổng cộng",
+    "active profile in": "hồ sơ hoạt động trong",
+    "Business Profiles Activity": "Hoạt động trên Trang doanh nghiệp",
+    "Franchise Profiles Activity": "Hoạt động hồ sơ nhượng quyền thương mại",
+    "Investor Profiles Activity": "Hoạt động hồ sơ nhà đầu tư",
+    "Monthly Profiles Activity": "Hoạt động hồ sơ hàng tháng",
+    "Profile": "Hồ sơ",
+    "Package": "Gói",
+    "Start Date": "Ngày bắt đầu",
+    "Status": "Trạng thái",
+    "Jan": "Th1",
+    "Feb": "Th2",
+    "Mar": "Th3",
+    "Apr": "Th4",
+    "May": "Th5",
+    "Jun": "Th6",
+    "Jul": "Th7",
+    "Aug": "Th8",
+    "Sep": "Th9",
+    "Oct": "Th10",
+    "Nov": "Th11",
+    "Dev": "Th12"
   }
 }

@@ -10,6 +10,10 @@ const Layout = () => [
     name: 'Dashboard',
   },
   {
+    icon: <Chart className="icon-menu" />,
+    name: 'Store',
+  },
+  {
     icon: <Cart className="icon-menu" />,
     name: 'Supplier',
   },
@@ -38,11 +42,11 @@ const Layout = () => [
     child: [
       {
         name: 'Code',
-        // permission: keyRole.P_CODE_LISTED,
+      //  permission: keyRole.P_CODE_LISTED,
       },
       {
         name: 'Data',
-        // permission: keyRole.P_DATA_LISTED,
+      //  permission: keyRole.P_DATA_LISTED,
       },
     ],
   },

@@ -83,7 +83,8 @@
   "pages": {
     "User/List": "List User",
     "User/Add": "Add new User",
-    "User/Edit": "Edit User"
+    "User/Edit": "Edit User",
+    "store-managerment/create":"Thêm cửa hàng"
   },
   "columns": {
     "auth": {
@@ -130,7 +131,9 @@
         "Enter Recovery Email": "Enter Recovery Email",
         "title": "Reset Password",
         "Submit": "Submit",
-        "Back To Login": "Submit"
+        "Back To Login": "Submit",
+        "subTitle": "Vui lòng nhập e-mail của bạn. Mã xác minh OTP sẽ được gửi cho bạn",
+        "OTP":"Lấy Mã OTP"
       }
     },
     "admin": {

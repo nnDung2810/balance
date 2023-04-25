@@ -30,6 +30,7 @@ const Page = () => {
         <DataTable
           facade={supplierFacade}
           ref={dataTableRef}
+          xScroll = '1440px'
           onRow={() => ({ onDoubleClick: () => null })}
           pageSizeRender={(sizePage: number) => sizePage}
           pageSizeWidth={'50px'}

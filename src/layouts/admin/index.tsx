@@ -143,13 +143,8 @@ const Layout = ({ children }: PropsWithChildren) => {
                 {
                   key: '2',
                   label: (
-                    <div className='flex'>
-                      <div className='flex items-center'>
-                        <Out className='w-5 h-5 pr-2 text-black'/>
-                      </div>
-                      <div onClick={() => navigate(routerLinks('Login'), { replace: true })}>
-                        {t('routes.admin.Layout.Sign out')}
-                      </div>
+                    <div onClick={() => navigate(routerLinks('Sign-in'), { replace: true })}>
+                      {t('routes.admin.Layout.Sign out')}
                     </div>
                   ),
                 },

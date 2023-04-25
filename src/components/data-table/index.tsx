@@ -378,8 +378,8 @@ const Hook = forwardRef(
     };
     if (!data) data = result?.data;
     return (
-      <div className={classNames(className, 'intro-x')}>
-        <div className="sm:flex justify-between mb-2.5">
+      <div className={classNames(className, 'intro-x rounded-lg bg-white p-5')}>
+        <div className="lg:flex justify-between mb-2.5">
           {showSearch ? (
             <div className="relative">
               <input
@@ -423,7 +423,7 @@ const Hook = forwardRef(
               ) : (
                 !!params[fullTextSearch] && (
                   <Times
-                    className="w-5 h-5 my-1 fill-gray-500 text-lg las absolute top-1.5 right-3 z-10"
+                    className="w-4 h-4 my-1 fill-gray-500 text-lg las absolute top-2 right-3 z-10"
                     onClick={() => {
                       if (params[fullTextSearch]) {
                         (document.getElementById(idTable.current + '_input_search') as HTMLInputElement).value = '';

@@ -73,7 +73,10 @@ export class FormItem {
   showRemove?: any;
   idCheck?: any;
   tabIndex?: number;
+  onlyImage?: boolean;
+  render?: (form: FormInstance, values: any, generateForm: void, index: number, reRender: void) => JSX.Element;
 }
+
 export class FormItemList {
   label?: string | JSX.Element;
   value: any;

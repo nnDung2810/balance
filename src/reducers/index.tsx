@@ -8,6 +8,7 @@ import { codeSlice, CodeFacade } from './code';
 import { codeTypeSlice, CodeTypeFacade } from './code/type';
 import { dataSlice, DataFacade } from './data';
 import { dataTypeSlice, DataTypeFacade } from './data/type';
+import { StoreFacade, storeSlice } from './store-management';
 import { SupplierFacade, supplierSlice } from './supplier';
 import { SupplierRoleFacade, supplierRoleSlice } from './supplier/province';
 import { DistrictRoleFacade, districtRoleSlice } from './supplier/district';
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
   [codeTypeSlice.name]: codeTypeSlice.reducer,
   [dataSlice.name]: dataSlice.reducer,
   [dataTypeSlice.name]: dataTypeSlice.reducer,
+  [storeSlice.name]: storeSlice.reducer,
   [supplierSlice.name]: supplierSlice.reducer,
   [supplierRoleSlice.name]: supplierRoleSlice.reducer,
   [districtRoleSlice.name]: districtRoleSlice.reducer,
@@ -45,6 +47,7 @@ export {
   CodeTypeFacade,
   DataFacade,
   DataTypeFacade,
+  StoreFacade,
   SupplierFacade,
   SupplierRoleFacade,
   DistrictRoleFacade,

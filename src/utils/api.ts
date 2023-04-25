@@ -55,7 +55,7 @@ const API = {
         return (await response.json()) as Responses<T>;
       }
     }
-    if (response.status === 401 && url !== `${routerLinks('Auth', 'api')}/sign-in`) {
+    if (response.status === 401 && url !== `${routerLinks('User-admin', 'api')}/sign-in`) {
       localStorage.removeItem(keyUser);
       window.location.href = routerLinks('Sign-in');
     }

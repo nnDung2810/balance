@@ -9,13 +9,13 @@ import { GlobalFacade } from '@reducers';
 
 const Layout = ({ layout: Layout, isPublic = false }: any) => {
   const { user } = GlobalFacade();
-  // if (isPublic === true || !!user?.email || !!JSON.parse(localStorage.getItem(keyUser) || '{}')?.email)
+ // if (isPublic === true || !!user?.email || !!JSON.parse(localStorage.getItem(keyUser) || '{}')?.email)
     return (
       <Layout>
         <Outlet />
       </Layout>
     );
-  return <Navigate to={routerLinks('Login')} />;
+  return <Navigate to={routerLinks('Sign-in')} />;
 };
 
 const Page = ({ title = '', component: Comp, ...props }: { title: string; component: any }) => {

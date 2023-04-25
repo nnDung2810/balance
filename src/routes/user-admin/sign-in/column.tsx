@@ -3,7 +3,7 @@ import { FormModel } from '@models';
 export const ColumnLogin = ({ t }: any) => {
   const col: FormModel[] = [
     {
-      name: 'email',
+      name: 'username',
       title: t('columns.auth.login.Username'),
       formItem: {
         placeholder: t('columns.auth.login.Enter Username'),
@@ -19,9 +19,6 @@ export const ColumnLogin = ({ t }: any) => {
         rules: [{ type: 'required' }, { type: 'min', value: 6 }],
       },
     },
-    {
-
-    }
   ];
   return col;
 };
