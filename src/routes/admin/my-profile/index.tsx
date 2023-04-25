@@ -14,6 +14,7 @@ const Page = () => {
   const { t } = useTranslation();
   const { user, isLoading, putProfile, profile } = GlobalFacade();
   const listPosition = useRef([]);
+  const navigate = useNavigate();
   useEffect(() => {
     profile();
   }, []);

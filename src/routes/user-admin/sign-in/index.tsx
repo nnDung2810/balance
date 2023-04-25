@@ -1,7 +1,9 @@
 import React, { Fragment, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
-import { ModalForm, Spin, Form } from '@components';
+import { Form } from '@components/form';
+import { ModalForm } from '@components/modal/form';
+import { Spin } from '@components/spin';
 import { routerLinks } from '@utils';
 import { GlobalFacade } from '@reducers';
 import { ColumnLogin } from './column';

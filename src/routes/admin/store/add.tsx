@@ -1,8 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
-
-import { Button, DataTable, Form } from '@components';
+import { Form } from '@components/form';
+import { DataTable } from '@components/data-table';
+import { Button } from '@components/button';
 import { routerLinks } from '@utils';
 import { UserFacade, GlobalFacade, StoreFacade } from '@reducers';
 import { Plus } from '@svgs';
@@ -50,7 +51,7 @@ const Page = () => {
           handSubmit={handleSubmit}
           disableSubmit={isLoading}
           handCancel={handleBack}
-        />   
+        />
     </div>
   );
 };

@@ -20,7 +20,7 @@ const Page = () => {
   const isReload = useRef(false);
   const param = JSON.parse(queryParams || '{}');
   const { id } = useParams();
-
+  const { profile } = GlobalFacade();
   useEffect(() => {
     if (!result?.data) get({});
 
