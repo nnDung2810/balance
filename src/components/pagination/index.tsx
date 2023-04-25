@@ -160,8 +160,8 @@ export const Pagination: any = ({
                   'text-center p-1 mx-2 text-sm font-medium leading-normal relative',
                   {
                     'text-green-700 hover:text-green-700':
-                    item !== item.index && !['next_5', 'prev_5'].includes(item.type),
-                    '!bg-green-900 rounded-3xl text-white hover:!bg-green-900 !px-2.5 mx-1': item === item.index,
+                    pageIndex !== item.index && !['next_5', 'prev_5'].includes(item.type),
+                    '!bg-green-900 rounded-3xl text-white hover:!bg-green-900 !px-2.5 mx-1': pageIndex === item.index,
                     'text-green-500 ': item.disabled,
                     'text-green-600 text-xs': ['next_5', 'prev_5'].includes(item.type),
                   },
