@@ -18,7 +18,6 @@ const Page = () => {
   const { t } = useTranslation();
   const { formatDate, user } = GlobalFacade();
   const navigate = useNavigate();
-
   const userFacade = UserFacade();
   const { data, isLoading, queryParams, status } = userFacade;
   const { result, get } = UserRoleFacade();
@@ -29,7 +28,7 @@ const Page = () => {
         dataTableRef?.current?.onChange!();
         break;
     }
-  }, [userFacade.status]);
+  }, [userFacade.status, data]);
 
   const dataTableRef = useRef<TableRefObject>(null);
   return (
@@ -52,13 +51,13 @@ const Page = () => {
       })}
       rightHeader={
         <div className={'flex gap-2'}>
-          {user?.role?.permissions?.includes(keyRole.P_USER_CREATE) && (
+          {/* {user?.role?.permissions?.includes(keyRole.P_USER_CREATE) && ( */}
             <Button
               icon={<Plus className="icon-cud !h-5 !w-5" />}
               text={t('components.button.New')}
               onClick={() => navigate(routerLinks('User/Add'))}
             />
-          )}
+          {/* )} */}
         </div>
       }
     />

@@ -7,16 +7,16 @@ header {
   }
 }
 main {
-  @apply bg-blue-50;
+  @apply bg-gray-100;
 }
 .hamburger {
   @apply inline-block right-5 absolute transition-all duration-300 ease-in-out z-10 cursor-pointer w-7;
   @media (max-width: 767px) {
-    @apply -right-7;
+    @apply -right-4;
   }
 
   &.is-active {
-    @apply -right-12;
+    // @apply -right-12;
 
     @media (max-width: 767px) {
       @apply -right-4;
@@ -57,6 +57,7 @@ main {
     @apply w-7;
   }
 }
+
 
 .icon-menu {
   @apply  h-8 w-8 ;

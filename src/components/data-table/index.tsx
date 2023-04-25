@@ -48,9 +48,11 @@ export const DataTable = forwardRef(
       defaultRequest = {
         page: 1,
         perPage: 10,
+        // type: 'SUPPLIER',
       },
       pageIndex = 'page',
       pageSize = 'perPage',
+      // type,
       sort = 'sorts',
       filter = 'filter',
       fullTextSearch = 'fullTextSearch',
@@ -385,7 +387,7 @@ export const DataTable = forwardRef(
             <div className="relative">
               <input
                 id={idTable.current + '_input_search'}
-                className="w-full sm:w-80 h-10 rounded-xl text-gray-600 font-semibold bg-white border border-solid border-gray-400 pr-9 pl-8"
+                className="w-full sm:w-80 h-10 rounded-xl text-gray-600 bg-white border border-solid border-black pr-9 pl-9"
                 defaultValue={params[fullTextSearch]}
                 type="text"
                 placeholder={searchPlaceholder || t('components.datatable.pleaseEnterValueToSearch')}
@@ -413,7 +415,7 @@ export const DataTable = forwardRef(
               />
               {!params[fullTextSearch] ? (
                 <Search
-                  className="w-4 h-4 my-1 fill-gray-500 text-lg las absolute top-2 left-2.5 z-10"
+                  className="w-5 h-5 my-1 fill-gray-500 text-lg las absolute top-1.5 left-3 z-10"
                   onClick={() => {
                     if (params[fullTextSearch]) {
                       (document.getElementById(idTable.current + '_input_search') as HTMLInputElement).value = '';
@@ -466,6 +468,7 @@ export const DataTable = forwardRef(
             />
             {showPagination && (
               <Pagination
+                // total={result?.count}
                 total={result?.pagination?.total}
                 page={+params!.page!}
                 perPage={+params!.perPage!}
@@ -495,6 +498,7 @@ type Type = {
   defaultRequest?: any;
   pageIndex?: string;
   pageSize?: string;
+  // type?: string;
   sort?: string;
   filter?: string;
   fullTextSearch?: string;

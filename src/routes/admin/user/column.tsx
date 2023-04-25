@@ -161,37 +161,77 @@ export const ColumnFormUserEdit = ({ t }: any) => {
         rules: [{ type: 'required' }, { type: 'phone', min: 10, max: 15 }],
       },
     },
+    // {
+    //   title: t('user.Date of birth'),
+    //   name: 'dob',
+    //   formItem: {
+    //     col: 6,
+    //     type: 'date',
+    //     rules: [{ type: 'required' }],
+    //   },
+    // },
+    // {
+    //   title: t('user.Position'),
+    //   name: 'positionCode',
+    //   formItem: {
+    //     col: 6,
+    //     type: 'select',
+    //     rules: [{ type: 'required' }],
+    //     convert: (data: any) =>
+    //       data?.map ? data.map((_item: any) => (_item?.id !== undefined ? +_item.id : _item)) : data,
+    //     get: {
+    //       facade: CodeFacade,
+    //       params: (fullTextSearch: string) => ({
+    //         fullTextSearch,
+    //         filter: { type: 'POS' },
+    //         extend: {},
+    //       }),
+    //       format: (item: any) => ({
+    //         label: item.name,
+    //         value: item.code,
+    //       }),
+    //     },
+    //   },
+    // },
+    // {
+    //   title: t('user.Start Date'),
+    //   name: 'startDate',
+    //   formItem: {
+    //     col: 6,
+    //     type: 'date',
+    //     rules: [{ type: 'required' }],
+    //   },
+    // },
+    // {
+    //   title: t('components.button.Role'),
+    //   name: 'roleId',
+    //   formItem: {
+    //     col: 6,
+    //     type: 'select',
+    //     rules: [{ type: 'required' }],
+    //     list: listRole.map((item: any) => ({
+    //       value: item?.id,
+    //       label: item?.name,
+    //     })),
+    //   },
+    // },
     {
-      title: 'Vai trò',
-      name: 'roleCode',
-      formItem: {
-        col: 12,
-        type: 'select',
-        render: (form, values, generateForm, index, reRender) => {
-          const roleCode = values.roleCode;
-          return (
-            <div>
-              <Row>
-                <h2>Vai trò</h2>
-              </Row>
-              <Select value={roleCode} disabled={true} className="py-2" style={{ width: "100%" }}>
-                <Option value="ADMIN">Quản trị viên</Option>
-                <Option value="OWNER_SUPPLIER">Nhà cung cấp</Option>
-                <Option value="OWNER_STORE">Chủ cửa hàng</Option>
-              </Select>
-            </div>
-          );
-        },
-      },
-    },
-    {
-      title: t('Ghi chú'),
-      name: 'note',
+      title: t('user.Description'),
+      name: 'description',
       formItem: {
         col: 12,
         type: 'textarea',
       },
     },
+    // {
+    //   name: 'avatar',
+    //   title: t('user.Upload avatar'),
+    //   formItem: {
+    //     col: 4,
+    //     type: 'upload',
+    //     mode: 'multiple',
+    //   },
+    // },
   ];
   return col;
 };

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { Fragment, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router';
 
@@ -55,7 +55,12 @@ const Page = () => {
     else userFacade.post(values);
   };
   return (
-    <div className={'max-w-4xl mx-auto'}>
+    <div className={'w-full'}>
+      <Fragment>
+        <div className='bg-white'>
+          <div className='text-xl text-green-900 px-6 pt-4 font-mono font-bold'>
+            Thông tin người dùng
+          </div>
       {!!result?.data && (
         <Form
           values={{ ...data }}
@@ -63,9 +68,23 @@ const Page = () => {
           columns={ColumnFormUser({ t})}
           handSubmit={handleSubmit}
           disableSubmit={isLoading}
-          handCancel={handleBack}
+          // handCancel={handleBack}
+          extendButton={() => (
+            <div className='max-w-5xl flex justify-between mt-4'>
+              <button className={'text-teal-900 bg-white border-solid border border-teal-900 rounded-xl p-2 w-auto h-11 px-8'}
+              onClick={handleBack}>
+                {t('Trở về')}
+              </button>
+              <button className={'text-white bg-teal-900 border-solid border rounded-xl p-2 w-auto h-11 px-8'}
+              onClick={() => handleSubmit}>
+                {t('Lưu')}
+              </button>
+            </div>
+          )}
         />
       )}
+      </div>
+      </Fragment>
     </div>
   );
 };
