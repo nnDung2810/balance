@@ -94,6 +94,7 @@ export class User extends CommonEntity {
     super();
   }
 }
+
 const checkLanguage = (language: 'vn' | 'en') => {
   const formatDate = language === 'vn' ? 'DD-MM-YYYY' : 'DD-MM-YYYY';
   const locale = language === 'vn' ? viVN : enUS;

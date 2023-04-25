@@ -2,30 +2,35 @@ import React from 'react';
 
 import { keyRole } from '@utils';
 import './index.less';
-import { Chart, Cog, User } from '@svgs';
+import { Chart, Cog, User, Buffer, Cart } from '@svgs';
 
 const Layout = () => [
   {
-    icon: <Chart className="icon-menu" />,
+    icon: <Buffer className="icon-menu" />,
     name: 'Dashboard',
   },
   {
-    icon: <Chart className="icon-menu" />,
-    name: 'Store',
+    icon: <Cart className="icon-menu" />,
+    name: 'Supplier',
   },
+  // {
+  //   icon: <User className="icon-menu" />,
+  //   name: 'User',  
+  //   child: [
+  //     {
+  //       name: 'User/List',
+  //       permission: keyRole.P_USER_LISTED,
+  //     },
+  //     {
+  //       name: 'User/Add',
+  //       permission: keyRole.P_DATA_LISTED,
+  //     },
+  //   ],
+  // },
   {
     icon: <User className="icon-menu" />,
-    name: 'User',
-    child: [
-      {
-        name: 'User/List',
-      //  permission: keyRole.P_USER_LISTED,
-      },
-      {
-        name: 'User/Add',
-       // permission: keyRole.P_DATA_LISTED,
-      },
-    ],
+    name: 'User/List',
+    
   },
   {
     icon: <Cog className="icon-menu" />,

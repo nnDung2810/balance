@@ -9,10 +9,11 @@ import { useLocation } from 'react-router-dom';
 import { routerLinks } from '@utils';
 import { Avatar } from '@components';
 import { GlobalFacade } from '@reducers';
-import Menu from './menu';
+import Menu1 from './menu';
 // import { firebaseConfig } from 'variable';
 import './index.less';
-import { Logo } from '@svgs';
+import { Chevronleft, LeftArrow, Logo, RightArrow, Menu, ArrowBack, User1, Key, Out } from '@svgs';
+import Logo1 from '../../assets/images/logo.png';
 
 const Layout = ({ children }: PropsWithChildren) => {
   const { t } = useTranslation();
@@ -75,18 +76,18 @@ const Layout = ({ children }: PropsWithChildren) => {
   const Header = ({ isCollapsed, isDesktop }: any) => (
     <header
       className={classNames(
-        'bg-blue-50 w-full header h-20 transition-all duration-300 ease-in-out sticky top-0 block z-10',
+        'bg-gray-100 w-full header h-20 transition-all duration-300 ease-in-out sticky  top-0 block z-10 max-md:bg-white max-md:z-20 max-md:fixed max-md:top-0',
         {
-          'pl-52': !isCollapsed && isDesktop,
+          'pl-64': !isCollapsed && isDesktop,
           'pl-32': isCollapsed && isDesktop,
           'pl-28': !isDesktop,
         },
       )}
     >
       <div className="flex items-center justify-end sm:justify-between px-5 h-20">
-        <h1 className={'text-xl font-bold hidden sm:block'}>{t('pages.' + title)}</h1>
-
-        <div className="flex items-center gap-5">
+        {/* <h1 className={'text-xl font-bold hidden sm:block'}>{t('pages.' + title)}</h1> */}
+        
+        <div className="flex items-center gap-5 absolute right-6">
           <Select value={globalFacade?.language} onChange={(e: 'vn' | 'en') => globalFacade.setLanguage(e)}>
             <Select.Option value="en">
               <img src="/assets/svg/us.svg" alt="US" className="mr-1 w-4 inline-block relative -top-0.5" />{' '}
@@ -98,14 +99,44 @@ const Layout = ({ children }: PropsWithChildren) => {
             </Select.Option>
           </Select>
           <Dropdown
-            trigger={['hover', 'click']}
+            trigger={[ 'click']}
             menu={{
               items: [
                 {
+                  key: '0',
+                  label: (
+                    <div className='flex'>
+                      <Avatar src="/assets/images/avatar.jpeg" size={10} />
+                      <div className="text-right leading-none mr-3 hidden sm:block pl-2">
+                        <div className="font-bold text-black text-lg leading-snug mb-0.5">{user?.name}</div>
+                        <div className="text-gray-500">{user?.email}</div>
+                      </div>
+                    </div>
+                  ),
+                },
+                {
                   key: '1',
                   label: (
-                    <div onClick={() => navigate(routerLinks('MyProfile'), { replace: true })}>
+                    <div className='flex'>
+                      <div className='flex items-center'>
+                        <User1 className='w-5 h-5 pr-2 text-black'/>
+                      </div>
+                      <div onClick={() => navigate(routerLinks('MyProfile'), { replace: true })}>
                       {t('routes.admin.Layout.My Profile')}
+                      </div>
+                    </div>
+                  ),
+                },
+                {
+                  key: '3',
+                  label: (
+                    <div className='flex'>
+                      <div className='flex items-center'>
+                        <Key className='w-5 h-5 pr-2 text-black'/>
+                      </div>
+                      <div onClick={() => navigate(routerLinks('ResetPassword'), { replace: true })}>
+                        {t('routes.admin.Layout.Change Password')}
+                      </div>
                     </div>
                   ),
                 },
@@ -122,10 +153,10 @@ const Layout = ({ children }: PropsWithChildren) => {
             placement="bottomRight"
           >
             <section className="flex items-center" id={'dropdown-profile'}>
-              <div className="text-right leading-none mr-3 hidden sm:block">
+              {/* <div className="text-right leading-none mr-3 hidden sm:block">
                 <div className="font-bold text-black text-lg leading-snug mb-0.5">{user?.name}</div>
                 <div className="text-gray-500">{user?.email}</div>
-              </div>
+              </div> */}
               <Avatar src="/assets/images/avatar.jpeg" size={10} />
             </section>
           </Dropdown>
@@ -136,45 +167,73 @@ const Layout = ({ children }: PropsWithChildren) => {
   return (
     <main>
       <div className="leading-5 leading-10" />
-      <Header isCollapsed={isCollapsed} isDesktop={isDesktop} />
+      <div className='h-24 relative'>
+        <div className='absolute top-0 left-0 right-0'>
+        <Header isCollapsed={isCollapsed} isDesktop={isDesktop} />
+        </div>
+      </div>
       <div
         className={classNames(
-          'flex items-center justify-between text-gray-800 hover:text-gray-500 h-20 fixed top-0 left-0 px-5 font-bold transition-all duration-300 ease-in-out z-10',
+          'flex items-center justify-between text-gray-800 hover:text-gray-500 h-20 fixed top-0 left-0 px-5 font-bold transition-all duration-300 ease-in-out z-10 rounded-tr-3xl max-md:bg-white max-md:z-20',
           {
-            'w-52': !isCollapsed && isDesktop,
-            'w-20': isCollapsed,
-            'bg-blue-100': isDesktop,
-            'bg-blue-50': !isDesktop,
+            'w-64': !isCollapsed && isDesktop,
+            'w-16': isCollapsed && isDesktop,
+            'bg-teal-900': isDesktop,
+            'bg-gray-100': !isDesktop,
           },
         )}
       >
-        <div>
+        
+        <div className='flex'>
+          <div
+              className={classNames('max-md:mr-3', {
+                'is-active': (isCollapsed && isDesktop) || (!isCollapsed && !isDesktop),
+              })}
+              onClick={() => {set_isCollapsed(!isCollapsed),set_isDesktop(isDesktop)}}
+            >
+              { (isCollapsed && !isDesktop) && <Menu className = "w-9 text-black select-none"/> }
+              { (!isCollapsed && !isDesktop) && <ArrowBack className = "w-9 text-black select-none"/> }
+
+              {/* <span className="line" />
+              <span className="line" />
+              <span className="line" /> */}
+            </div>
           <a href="/" className="flex items-center">
-            <Logo className={'w-10 h-10 mr-3'} />
+            {/* <Logo className={classNames('w-10 h-10 mr-3',
+                {
+                  'opacity-100 text-lg': !isCollapsed && isDesktop || isCollapsed && !isDesktop,
+                  'opacity-0 text-[0px] hidden': isCollapsed && isDesktop,
+                },)} /> */}
+            
+            <img src={Logo1} className={classNames('w-12 mr-3 rounded max-md:',
+                {
+                  'opacity-100 text-lg w-12': !isCollapsed && isDesktop || isCollapsed && !isDesktop,
+                  'opacity-0 text-[0px] hidden': isCollapsed && isDesktop,
+                  // 'opacity-100 text-xl': isCollapsed && !isDesktop,
+                },)}></img>
             <div
               id={'name-application'}
               className={classNames(
-                'transition-all duration-300 ease-in-out absolute left-16 overflow-ellipsis overflow-hidden ml-2',
+                'transition-all duration-300 ease-in-out absolute text-white left-16 overflow-ellipsis overflow-hidden ml-5',
                 {
-                  'opacity-100 text-lg': !isCollapsed && isDesktop,
-                  'opacity-0 text-[0px] invisible': isCollapsed || !isDesktop,
+                  'opacity-100 text-2xl': !isCollapsed && isDesktop,
+                  'opacity-0 text-[0px] hidden': isCollapsed || !isDesktop,
                 },
               )}
             >
-              Admin
+              BALANCE
             </div>
           </a>
         </div>
-
         <div
           className={classNames('hamburger', {
             'is-active': (isCollapsed && isDesktop) || (!isCollapsed && !isDesktop),
           })}
-          onClick={() => set_isCollapsed(!isCollapsed)}
+          onClick={() => {set_isCollapsed(!isCollapsed),set_isDesktop(isDesktop)}}
         >
-          <span className="line" />
-          <span className="line" />
-          <span className="line" />
+          { (!isCollapsed && isDesktop) && <LeftArrow className = "w-9 text-white"/> }
+          { (isCollapsed && isDesktop) && <RightArrow className = "w-9 text-white"/> }
+
         </div>
       </div>
       <div
@@ -187,30 +246,30 @@ const Layout = ({ children }: PropsWithChildren) => {
           document.body.style.overflowY = 'auto';
           document.body.style.paddingRight = '';
         }}
-        className={classNames('fixed z-20 top-20 left-0 h-screen bg-blue-100 transition-all duration-300 ease-in-out', {
-          'w-52': !isCollapsed,
-          'w-20': isCollapsed,
+        className={classNames('fixed z-20 top-20 left-0 h-screen bg-teal-900 transition-all duration-300 ease-in-out', {
+          'w-64': !isCollapsed,
+          'w-16': isCollapsed,
           '!-left-20': isCollapsed && !isDesktop,
         })}
       >
-        <Menu isCollapsed={isCollapsed} permission={user?.role?.permissions} />
+        <Menu1 isCollapsed={isCollapsed} permission={user?.role?.permissions} />
       </div>
       {!isCollapsed && !isDesktop && (
-        <div className={'w-full h-full fixed bg-black opacity-50 z-[1]'} onClick={() => set_isCollapsed(true)} />
+        <div className={'w-full h-full fixed bg-gray-100 opacity-50 z-[1]'} onClick={() => set_isCollapsed(true)} />
       )}
       <section
         id={'main'}
-        className={classNames('px-5 transition-all duration-300 ease-in-out z-10 h-[calc(100vh-5rem)] relative', {
-          'ml-52': !isCollapsed && isDesktop,
-          'ml-20': isCollapsed && isDesktop,
+        className={classNames('px-5 transition-all duration-300 ease-in-out z-10  relative', {
+          'ml-64': !isCollapsed && isDesktop,
+          'ml-16': isCollapsed && isDesktop,
         })}
       >
-        <div className={'h-[calc(100vh-9rem)]'}>
-          <h1 className={'text-xl font-bold block sm:hidden pb-5'}>{t('pages.' + title)}</h1>
+        <div className={''}>
+          {/* <h1 className={'text-xl font-bold block sm:hidden pb-5'}>{t('pages.' + title)}</h1> */}
+          <h1 className={'text-xl font-bold block pb-5'}>{t('titles.' + title)}</h1>
           {children}
-        </div>
-
-        <footer className="text-center bg-blue-50 pt-5 w-full">
+        </div>  
+        <footer className="text-left sm:-mx-5 pt-5  mt-10  bg-white p-4 !mr-0">
           {t('layout.footer', { year: new Date().getFullYear() })}
         </footer>
       </section>

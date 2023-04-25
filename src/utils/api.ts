@@ -2,6 +2,7 @@ import { keyRefreshToken, keyToken, keyUser, linkApi, routerLinks } from '@utils
 import { Message } from '@components';
 import { Responses } from '@models';
 
+
 const API = {
   init: () =>
     ({
@@ -21,6 +22,7 @@ const API = {
     params: { [key: string]: string } = {},
     config: RequestInit,
     headers: RequestInit['headers'] = {},
+    name: void,
   ) => {
     config.headers = { ...config.headers, ...headers };
 
@@ -29,8 +31,9 @@ const API = {
         (key) =>
           key + '=' + encodeURIComponent(typeof params[key] === 'object' ? JSON.stringify(params[key]) : params[key]),
       )
-      .join('&type=STORE&');
-    const response = await fetch(linkApi + url + (linkParam && '?' + linkParam ), config);
+      .join('&');
+    const response = await fetch(linkApi + url + (linkParam && '?' + linkParam + '&type=SUPPLIER'), config);
+    
     const res: Responses<T> = await response.json();
     if (response.ok) {
       return res;
@@ -77,4 +80,5 @@ const API = {
     }
   },
 };
+
 export default API;

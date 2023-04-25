@@ -157,8 +157,8 @@ export const Pagination: any = ({
                   {
                     'text-teal-900':
                       pageIndex !== page.index && !['next_5', 'prev_5'].includes(page.type),
-                    'bg-teal-900 rounded-full text-white !px-2.5 ': pageIndex === page.index,
-                    'text-blue-300': page.disabled,
+                    'bg-teal-900 rounded-full text-white !px-2.5 mx-1': pageIndex === page.index,
+                    'text-teal-700': page.disabled,
                     'text-gray-600 text-xs': ['next_5', 'prev_5'].includes(page.type),
                   },
                 )}

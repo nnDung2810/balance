@@ -110,7 +110,7 @@
     }
   },
   "layout": {
-    "footer": "Ari Technology Company Ltd. ©{{year}}"
+    "footer": "Copyright ©2023 ARI Technology Co ., JSC. All rights reserved."
   },
   "routes": {
     "auth": {
@@ -151,6 +151,7 @@
         "Add": "Add new",
         "Edit": "Edit",
         "Delete": "Delete",
+        "Change Password": "Change Password",
         "My Profile": "My Profile",
         "No Data": "No Data",
         "Pagination": "Show {{from}} - {{to}} /Total {{total}} categories",

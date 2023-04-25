@@ -4,40 +4,39 @@ import { useNavigate } from 'react-router';
 
 import { Button, DataTable } from '@components';
 import { keyRole, routerLinks } from '@utils';
-import { UserFacade, GlobalFacade } from '@reducers';
+import { UserFacade, GlobalFacade, SupplierFacade } from '@reducers';
 import { Plus } from '@svgs';
-import { ColumnTableUser } from './column';
+import { ColumnTableSupplier } from './column';
 import { TableRefObject } from '@models';
 
 const Page = () => {
   const { t } = useTranslation();
   const { formatDate, user } = GlobalFacade();
   const navigate = useNavigate();
-  const userFacade = UserFacade();
-  const { data, isLoading, queryParams, status } = userFacade;
 
+  const supplierFacade = SupplierFacade();
   useEffect(() => {
-    switch (userFacade.status) {
+    switch (supplierFacade.status) {
       case 'delete.fulfilled':
         dataTableRef?.current?.onChange!();
         break;
     }
-  }, [userFacade.status, data]);
+  }, [supplierFacade.status]);
 
   const dataTableRef = useRef<TableRefObject>(null);
   return (
-    <div className='bg-gray-50 pr-5 h-full pb-10'>
-      <div className='bg-white rounded-xl p-4 pb-10 relative text-center flex justify-center'>
+    <div className=' pr-5 h-full pb-10'>
+      <div className='bg-white rounded-xl p-4 pb-10 relative text-center '>
         <DataTable
-          facade={userFacade}
+          facade={supplierFacade}
           ref={dataTableRef}
-          onRow={(data: any) => ({ onDoubleClick: () =>  navigate(routerLinks('User/Edit') + '/' + data.id)})}
+          onRow={() => ({ onDoubleClick: () => null })}
           pageSizeRender={(sizePage: number) => sizePage}
           pageSizeWidth={'50px'}
           paginationDescription={(from: number, to: number, total: number) =>
             t('routes.admin.Layout.Pagination', { from, to, total })
           }
-          columns={ColumnTableUser({
+          columns={ColumnTableSupplier({
             t,
             formatDate,
             permissions: user?.role?.permissions,
@@ -48,10 +47,9 @@ const Page = () => {
             <div className={'flex gap-2'}>
               {user && (
                 <Button
-                  className='!bg-green-900 !rounded-xl'
                   icon={<Plus className="icon-cud !h-5 !w-5" />}
-                  text={t('Thêm quản trị viên')}
-                  onClick={() => navigate(routerLinks('User/Add'))}
+                  text={t('titles.Supplier/Add')}
+                  onClick={() => navigate(routerLinks('Supplier/Add'))}
                 />
               )}
             </div>

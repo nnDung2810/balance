@@ -1,12 +1,16 @@
 const Util = (name: string, type?: string) => {
   const array: any = {
+    Login: '/auth/login',
     'Sign-in': '/user-admin/sign-in',
     ResetPassword: '/auth/reset-password',
     MyProfile: '/my-profile',
     Dashboard: '/',
+    Supplier: '/supplier',
+    'Supplier/Add': '/supplier/add',
     User: '/user',
     'User/List': '/user/list',
     'User/Add': '/user/add',
+    'User/Edit': '/user/edit',
     Setting: '/setting',
     Data: '/setting/data',
     Code: '/setting/code',
@@ -26,6 +30,10 @@ const Util = (name: string, type?: string) => {
     DataType: '/data-type',
     Data: '/data',
     'sub-organization': '/sub-organization'
+    Supplier: '/sub-organization',
+    SupplierProvince: '/province',
+    District: '/district',
+
   }; // 💬 generate api to here
 
   switch (type) {
