@@ -166,7 +166,7 @@ const Layout = ({ children }: PropsWithChildren) => {
   );
   return (
     <main>
-      <div className="leading-5 leading-10" />
+      <div className="leading-5 " />
       <div className='h-24 relative'>
         <div className='absolute top-0 left-0 right-0'>
         <Header isCollapsed={isCollapsed} isDesktop={isDesktop} />
