@@ -6,7 +6,7 @@ import { useAppDispatch, useTypedSelector } from '@reducers';
 import { CommonEntity, PaginationQuery, Responses } from '@models';
 import { User } from '../../global';
 
-export const name = 'SupplierProvince';
+export const name = 'District';
 export const action = {
   ...new Action<SupplierRole>(name),
   getPermission: createAsyncThunk(name + '/permission', async () =>
@@ -14,8 +14,8 @@ export const action = {
   ),
 };
 
-export const supplierRoleSlice = createSlice(new Slice<SupplierRole>(action, { keepUnusedDataFor: 9999 }));
-export const SupplierRoleFacade = () => {
+export const districtRoleSlice = createSlice(new Slice<SupplierRole>(action, { keepUnusedDataFor: 9999 }));
+export const DistrictRoleFacade = () => {
   const dispatch = useAppDispatch();
   return {
     ...useTypedSelector((state) => state[action.name] as State<SupplierRole>),

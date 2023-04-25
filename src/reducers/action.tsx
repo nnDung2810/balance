@@ -5,6 +5,8 @@ import { Message } from '@components';
 import { CommonEntity, PaginationQuery, Responses } from '@models';
 import { State } from './slice';
 
+
+
 export default class Action<T extends CommonEntity> {
   public name: string;
   public set: AsyncThunk<State<T>, State<T>, object>;
@@ -19,6 +21,7 @@ export default class Action<T extends CommonEntity> {
   public delete: AsyncThunk<T | undefined, string, object>;
   constructor(name: string) {
     this.name = name;
+    
     this.set = createAsyncThunk(name + '/set', async (values: State<T>) => values);
     this.get = createAsyncThunk(
       name + '/get',

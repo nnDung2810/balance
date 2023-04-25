@@ -3,6 +3,7 @@ import { Message } from '@components';
 import { Responses } from '@models';
 
 
+
 const API = {
   init: () =>
     ({
@@ -22,7 +23,6 @@ const API = {
     params: { [key: string]: string } = {},
     config: RequestInit,
     headers: RequestInit['headers'] = {},
-    name: void,
   ) => {
     config.headers = { ...config.headers, ...headers };
 
@@ -33,6 +33,7 @@ const API = {
       )
       .join('&');
     const response = await fetch(linkApi + url + (linkParam && '?' + linkParam + '&type=SUPPLIER'), config);
+    
     
     const res: Responses<T> = await response.json();
     if (response.ok) {

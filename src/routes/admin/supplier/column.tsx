@@ -5,24 +5,16 @@ import dayjs from 'dayjs';
 import { Avatar } from '@components';
 import { keyRole, routerLinks } from '@utils';
 import { DataTableModel, FormModel } from '@models';
-import { CodeFacade, SupplierFacade, SupplierRoleFacade } from '@reducers';
+import { CodeFacade, DistrictRoleFacade, SupplierFacade, SupplierRoleFacade } from '@reducers';
 import { Edit, Trash } from '@svgs';
 
-export const ColumnTableSupplier = ({ t, permissions, navigate, dataTableRef }: any) => {
+export const ColumnTableSupplier = ({ t, navigate, dataTableRef }: any) => {
   const col: DataTableModel[] = [
     {
       title: t(`supplier.Code`),
       name: 'code',
       tableItem: {
-        // filter: { type: 'search' },
         width: 140,
-        fixed: window.innerWidth > 767,
-        // sorter: true,
-        // onCell: () => ({
-        //   style: { paddingTop: '0.25rem', paddingBottom: 0 },
-        //   onClick: async () => null,
-        // }),
-        // render: (item) => item?.name,
       },
     },
     {
@@ -30,24 +22,6 @@ export const ColumnTableSupplier = ({ t, permissions, navigate, dataTableRef }: 
       name: 'name',
       tableItem: {
         width: 230,
-        // filter: {
-        //   type: 'checkbox',
-        //   name: 'positionCode',
-        //   get: {
-        //     facade: CodeFacade,
-        //     format: (item: any) => ({
-        //       label: item.name,
-        //       value: item.code,
-        //     }),
-        //     params: (fullTextSearch: string, value) => ({
-        //       fullTextSearch,
-        //       filter: { type: 'POS' },
-        //       extend: { code: value },
-        //     }),
-        //   },
-        // },
-        // sorter: true,
-        // render: (item) => item?.name,
       },
     },
     {
@@ -63,8 +37,6 @@ export const ColumnTableSupplier = ({ t, permissions, navigate, dataTableRef }: 
       name: 'contract',
       tableItem: {
         width: 242  ,
-        // filter: { type: 'search' },
-        // sorter: true,
         render: (value: any,item: any) => item?.contract[0].name,
       },
     },
@@ -73,8 +45,6 @@ export const ColumnTableSupplier = ({ t, permissions, navigate, dataTableRef }: 
       name: 'userRole',
       tableItem: {
         width: 115,
-        // filter: { type: 'search' },
-        // sorter: true,
         render: (value: any,item: any) => item?.userRole[0].userAdmin.phoneNumber,
       },
     },
@@ -135,12 +105,17 @@ export const ColumnFormSupplier= ({ t, listRole }: any) => {
         rules: [{ type: 'required' }],
         type: 'select',
         get: {
-          facade: SupplierRoleFacade,
+          facade: DistrictRoleFacade,
           // params: (form: any, fullTextSearch: string) => ({
           //   fullTextSearch,
           //   filter: { id: listRole.code },
           //   extend: {},
           // }),
+          params: (fullTextSearch: string) => ({
+            fullTextSearch,
+            filter: { type: 'SUPPLIER' },
+            extend: {},
+          }),
           format: (item: any) => ({
             label: item.name,
             value: item.id,

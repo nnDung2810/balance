@@ -39,7 +39,6 @@ const Page = () => {
           columns={ColumnTableSupplier({
             t,
             formatDate,
-            permissions: user?.role?.permissions,
             navigate,
             dataTableRef,
           })}
