@@ -64,6 +64,11 @@ export const pages = [
         title: 'Supplier/Add',
       },
       {
+        path: routerLinks('Supplier/Edit') + '/:id',
+        component: React.lazy(() => import('./admin/supplier/edit')),
+        title: 'Supplier/Edit',
+      },
+      {
         path: routerLinks('Code'),
         component: React.lazy(() => import('./admin/code')),
         title: 'Code',
@@ -92,6 +97,11 @@ export const pages = [
         path: routerLinks('Store'),
         component: React.lazy(() => import('./admin/store')),
         title: 'Store',
+      },
+      {
+        path: routerLinks('Store/Edit') + '/:id',
+        component: React.lazy(() => import('./admin/store/edit')),
+        title: 'Store/Edit',
       },
       {
         path: routerLinks('store-managerment/create'),
