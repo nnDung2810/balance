@@ -19,7 +19,7 @@ const Layout = () => [
   },
   // {
   //   icon: <User className="icon-menu" />,
-  //   name: 'User',  
+  //   name: 'User',
   //   child: [
   //     {
   //       name: 'User/List',
@@ -34,7 +34,7 @@ const Layout = () => [
   {
     icon: <User className="icon-menu" />,
     name: 'User/List',
-    
+
   },
   {
     icon: <Cog className="icon-menu" />,

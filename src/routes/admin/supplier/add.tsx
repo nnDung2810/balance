@@ -4,7 +4,8 @@ import { useNavigate, useParams } from 'react-router';
 
 import { SupplierRoleFacade, SupplierFacade, UserRoleFacade } from '@reducers';
 import { routerLinks } from '@utils';
-import { Button, Form } from '@components';
+import { Form } from '@components/form';
+import { Button } from '@components/button';
 import { ColumnFormSupplier, ColumnFormSupplier1, ColumnFormSupplier2, ColumnFormSupplier3 } from './column';
 import { User } from '../../../reducers/global';
 
@@ -21,7 +22,7 @@ const Page = () => {
 
   // console.log("result",result);
   // console.log("supplierFacade",supplierFacade);
-  
+
 
   useEffect(() => {
     if (!result?.data) get({});
@@ -87,11 +88,11 @@ const Page = () => {
                 // handCancel={handleBack}
                 extendButton={() => (
                   <div className='max-w-7xl flex items-center absolute -right-4 -left-4 justify-between mt-4'>
-                    <button className={'text-teal-900 bg-white border-solid border border-teal-900 rounded-xl p-2 w-auto h-11 px-8'} 
+                    <button className={'text-teal-900 bg-white border-solid border border-teal-900 rounded-xl p-2 w-auto h-11 px-8'}
                     onClick={handleBack}>
                       {t('Trở về')}
                     </button>
-                    <button className={'text-white bg-teal-900 border-solid border rounded-xl p-2 w-auto h-11 px-8'} 
+                    <button className={'text-white bg-teal-900 border-solid border rounded-xl p-2 w-auto h-11 px-8'}
                     onClick={() => handleSubmit}>
                       {t('Lưu')}
                     </button>
@@ -129,11 +130,11 @@ const Page = () => {
                 // handCancel={handleBack}
                 extendButton={() => (
                   <div className='w-7xl flex justify-between mt-4'>
-                    <button className={'text-teal-900 bg-white border-solid border border-teal-900 rounded-xl p-2 w-auto h-11 px-8'} 
+                    <button className={'text-teal-900 bg-white border-solid border border-teal-900 rounded-xl p-2 w-auto h-11 px-8'}
                     onClick={handleBack}>
                       {t('Trở về')}
                     </button>
-                    <button className={'text-white bg-teal-900 border-solid border rounded-xl p-2 w-auto h-11 px-8'} 
+                    <button className={'text-white bg-teal-900 border-solid border rounded-xl p-2 w-auto h-11 px-8'}
                     onClick={() => handleSubmit}>
                       {t('Lưu')}
                     </button>

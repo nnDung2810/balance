@@ -107,7 +107,7 @@ const Layout = ({ children }: PropsWithChildren) => {
                   label: (
                     <div className='flex'>
                       <Avatar src="/assets/images/avatar.jpeg" size={10} />
-                      <div className="text-right leading-none mr-3 hidden sm:block pl-2">
+                      <div className="text-left leading-none mr-3 hidden sm:block pl-2">
                         <div className="font-bold text-black text-lg leading-snug mb-0.5">{user?.name}</div>
                         <div className="text-gray-500">{user?.email}</div>
                       </div>
@@ -252,7 +252,8 @@ const Layout = ({ children }: PropsWithChildren) => {
           '!-left-20': isCollapsed && !isDesktop,
         })}
       >
-        <Menu1 isCollapsed={isCollapsed} permission={user?.role?.permissions} />
+        <Menu1 isCollapsed={isCollapsed} />
+        {/* permission={user?.role?.permissions} */}
       </div>
       {!isCollapsed && !isDesktop && (
         <div className={'w-full h-full fixed bg-gray-100 opacity-50 z-[1]'} onClick={() => set_isCollapsed(true)} />
@@ -266,7 +267,7 @@ const Layout = ({ children }: PropsWithChildren) => {
       >
         <div className={''}>
           {/* <h1 className={'text-xl font-bold block sm:hidden pb-5'}>{t('pages.' + title)}</h1> */}
-          <h1 className={'text-xl font-bold block pb-5'}>{t('titles.' + title)}</h1>
+          <h1 className={'text-2xl text-teal-900 font-bold block pb-5'}>{t('titles.' + title)}</h1>
           {children}
         </div>
         <footer className="text-left sm:-mx-5 pt-5  mt-10  bg-white p-4 !mr-0">

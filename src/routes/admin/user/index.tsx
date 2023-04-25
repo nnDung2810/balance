@@ -16,7 +16,7 @@ import { ColumnTableUser } from './column';
 
 const Page = () => {
   const { t } = useTranslation();
-  const { formatDate, user } = GlobalFacade();
+  const { user } = GlobalFacade();
   const navigate = useNavigate();
   const userFacade = UserFacade();
   const { data, isLoading, queryParams, status } = userFacade;
@@ -43,7 +43,7 @@ const Page = () => {
       }
       columns={ColumnTableUser({
         t,
-        formatDate,
+      //  formatDate,
       //  listRole: result?.data || [],
       //  permissions: user?.role?.permissions,
         navigate,

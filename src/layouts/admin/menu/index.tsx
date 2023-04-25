@@ -137,7 +137,7 @@ const Layout = ({ isCollapsed = false, permission = [] }: any) => {
                           {/* <img src={item.icon} className={classNames('h-8 w-8 block !fill-red-700', { 'ml-1': !isCollapsed})}/> */}
                           <div className={classNames({ 'ml-1': !isCollapsed })}>{item.icon}</div>
                           <span
-                            className={classNames('pl-2.5 transition-all duration-300 ease-in-out font-medium text-base', {
+                            className={classNames('pl-2.5 transition-all duration-300 ease-in-out font-medium text-base text-gray-300', {
                               'opacity-100': !isCollapsed,
                               'opacity-0 text-[0]': isCollapsed,
                             })}

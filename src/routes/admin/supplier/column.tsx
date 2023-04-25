@@ -2,7 +2,7 @@ import { Popconfirm, Tooltip } from 'antd';
 import React from 'react';
 import dayjs from 'dayjs';
 
-import { Avatar } from '@components';
+import { Avatar } from '@components/avatar';
 import { keyRole, routerLinks } from '@utils';
 import { DataTableModel, FormModel } from '@models';
 import { CodeFacade, SupplierFacade, SupplierRoleFacade } from '@reducers';
@@ -74,10 +74,10 @@ export const ColumnTableSupplier = ({ t, navigate, dataTableRef }: any) => {
       title: t(`supplier.Status`),
       name: "isActive",
       tableItem: {
-        width: 100,  
+        width: 100,
         align: 'center',
         render: (text: string) => text
-        ? (<div className='bg-green-100 text-center p-1 border border-green-500 text-green-600 rounded'>Đã ký</div>) 
+        ? (<div className='bg-green-100 text-center p-1 border border-green-500 text-green-600 rounded'>Đã ký</div>)
         : (<div className='bg-red-100 text-center p-1 border border-red-500 text-red-600 rounded'>Chờ ký</div>),
       },
     },
@@ -86,7 +86,7 @@ export const ColumnTableSupplier = ({ t, navigate, dataTableRef }: any) => {
 };
 
 export const ColumnFormSupplier= ({ t, listRole }: any) => {
-  
+
   const col: FormModel[] = [
     {
       title: t('Tên nhà cung cấp'),

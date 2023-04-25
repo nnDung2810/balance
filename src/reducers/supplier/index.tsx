@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { API, routerLinks } from '@utils';
-import { Message } from '@components';
+import { Message } from '@components/message';
 import Action from '../action';
 import Slice, { State } from '../slice';
 import { useAppDispatch, useTypedSelector } from '@reducers';
@@ -14,7 +14,7 @@ export const action = {
     const { data, message } = await API.post<Supplier>(routerLinks(name, 'api'), values);
     if (message) await Message.success({ text: message });
     return data;
-    
+
   }),
   put: createAsyncThunk(name + '/put', async ({ id, ...values }: Supplier) => {
     // if (values.avatar) values.avatar = values.avatar[0].url;
