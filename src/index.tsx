@@ -9,7 +9,7 @@ import AuthProvider from '@globalContext';
 import Router from '@routes/index';
 import { reportWebVitals } from '@utils';
 import { setupStore } from '@reducers';
-import { Spin } from '@components';
+import { Spin } from '@components/spin';
 
 const Styling = lazy(() => import('./utils/init/styling'));
 
@@ -31,28 +31,32 @@ i18n
     },
   });
 const store = setupStore();
-let container: any = null;
-document.addEventListener('DOMContentLoaded', function () {
-  if (!container) {
-    container = document.getElementById('root') as HTMLElement;
-    const root = createRoot(container);
-    root.render(
-      <Suspense
-        fallback={
-          <Spin>
-            <div className="w-screen h-screen" />
-          </Spin>
-        }
-      >
-        <Styling>
-          <Provider store={store}>
-            <AuthProvider>
-              <Router />
-            </AuthProvider>
-          </Provider>
-        </Styling>
-      </Suspense>,
-    );
-  }
-});
+let container: HTMLElement;
+document.addEventListener(
+  'DOMContentLoaded',
+  () => {
+    if (!container) {
+      container = document.getElementById('root') as HTMLElement;
+      const root = createRoot(container);
+      root.render(
+        <Suspense
+          fallback={
+            <Spin>
+              <div className="w-screen h-screen" />
+            </Spin>
+          }
+        >
+          <Styling>
+            <Provider store={store}>
+              <AuthProvider>
+                <Router />
+              </AuthProvider>
+            </Provider>
+          </Styling>
+        </Suspense>,
+      );
+    }
+  },
+  { passive: true },
+);
 reportWebVitals();

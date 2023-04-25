@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 import i18n from 'i18next';
 
 import { API, keyRefreshToken, keyToken, keyUser, routerLinks } from '@utils';
-import { Message } from '@components';
+import { Message } from '@components/message';
 import { useAppDispatch, useTypedSelector } from '@reducers';
 import { CommonEntity, Responses } from '@models';
 // import Slice, { State } from '../slice';

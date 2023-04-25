@@ -4,8 +4,9 @@ import { useNavigate, useParams } from 'react-router';
 
 import { UserRoleFacade, UserFacade } from '@reducers';
 import { routerLinks } from '@utils';
-import { Button, Form } from '@components';
-import { ColumnFormUser } from './column';
+import { Button } from '@components/button';
+import { Form } from '@components/form';
+
 import { User } from '../../../reducers/global';
 
 const Page = () => {

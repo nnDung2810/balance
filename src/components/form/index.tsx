@@ -1,17 +1,18 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Form, Checkbox, Radio, Switch, Slider, DatePicker as DateAntDesign, FormInstance } from 'antd';
+import { Form as AntForm, Checkbox, Radio, Switch, Slider, DatePicker as DateAntDesign, FormInstance } from 'antd';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import dayjs from 'dayjs';
 
-import { Upload, Editor, DraggableLayout, Button } from '@components';
+import { Upload } from '@components/upload';
+import { Button } from '@components/button';
 import { convertFormValue } from '@utils';
 import { FormItem, FormModel } from '@models';
 import { GlobalFacade } from '@reducers';
 import { Check, Times } from '@svgs';
 import { Chips, SelectTag, Select, TreeSelect, TableTransfer, Password, Mask, Addable, DatePicker, Tab } from './input';
 
-const Component = ({
+export const Form = ({
   className,
   columns,
   textSubmit = 'components.form.modal.save',
@@ -34,7 +35,7 @@ const Component = ({
   const timeout = useRef<any>();
   const refLoad = useRef(true);
   const [_render, set_render] = useState(false);
-  const [forms] = Form.useForm();
+  const [forms] = AntForm.useForm();
   const form = formAnt || forms;
 
   const reRender = () => {
@@ -101,10 +102,6 @@ const Component = ({
             form={form}
           />
         );
-      case 'editor':
-        return <Editor />;
-      case 'layout':
-        return <DraggableLayout />;
       case 'upload':
         return <Upload multiple={!!formItem.mode} />;
       case 'table_transfer':
@@ -534,7 +531,9 @@ const Component = ({
       }
 
       return item.formItem.type !== 'addable' ? (
-        <Form.Item {...otherProps}>{generateInput(item.formItem, item, values, otherProps.name, index)}</Form.Item>
+        <AntForm.Item {...otherProps}>
+          {generateInput(item.formItem, item, values, otherProps.name, index)}
+        </AntForm.Item>
       ) : (
         generateInput(item.formItem, item, values, otherProps.name, index)
       );
@@ -548,7 +547,7 @@ const Component = ({
   };
 
   return (
-    <Form
+    <AntForm
       className={className}
       form={form}
       layout={!widthLabel ? 'vertical' : 'horizontal'}
@@ -634,7 +633,7 @@ const Component = ({
           />
         )}
       </div>
-    </Form>
+    </AntForm>
   );
 };
 type Type = {
@@ -655,4 +654,3 @@ type Type = {
   idSubmit?: string;
   disableSubmit?: boolean;
 };
-export default Component;

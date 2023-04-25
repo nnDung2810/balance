@@ -7,8 +7,9 @@ import dayjs from 'dayjs';
 import classNames from 'classnames';
 // @ts-ignore
 
-import { Button, Pagination } from '@components';
-import { TableGet, TableRefObject } from '@models';
+import { Button } from '@components/button';
+import { Pagination } from '@components/pagination';
+import { DataTableModel, PaginationQuery, TableGet, TableRefObject } from '@models';
 import { cleanObjectKeyNull } from '@utils';
 import { Calendar, CheckCircle, CheckSquare, Search, Times } from '@svgs';
 
@@ -38,7 +39,7 @@ const getQueryStringParams = (query: any) => {
     : {}; // Trim - from end of text
 };
 
-const Hook = forwardRef(
+export const DataTable = forwardRef(
   (
     {
       columns = [],
@@ -486,7 +487,7 @@ const Hook = forwardRef(
     );
   },
 );
-Hook.displayName = 'HookTable';
+DataTable.displayName = 'HookTable';
 type Type = {
   columns: any[];
   showList?: boolean;
@@ -517,4 +518,3 @@ type Type = {
   facade?: any;
   data?: any[];
 };
-export default Hook;

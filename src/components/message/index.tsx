@@ -1,6 +1,6 @@
 import { t } from 'i18next';
 
-const Component = {
+export const Message = {
   success: ({
     text = '',
     title = t('components.message.Success'),
@@ -119,4 +119,3 @@ type Type = {
   showConfirmButton?: boolean;
   padding?: number;
 };
-export default Component;
