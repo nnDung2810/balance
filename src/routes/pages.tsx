@@ -103,10 +103,15 @@ export const pages = [
       //   component: React.lazy(() => import('./admin/user/add')),
       //   title: 'User/Add',
       // },
-            {
+      {
         path: routerLinks('User/Edit') + '/:id',
         component: React.lazy(() => import('./admin/user/add')),
         title: 'User/Edit',
+      },
+      {
+        path: routerLinks('Supplier/Edit') +  '/:id',
+        component: React.lazy(() => import('./admin/supplier/edit')),
+        title: 'Supplier/Edit',
       },
     ], // 💬 generate link to here
   },

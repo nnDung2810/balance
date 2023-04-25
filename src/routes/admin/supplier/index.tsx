@@ -31,7 +31,7 @@ const Page = () => {
           facade={supplierFacade}
           ref={dataTableRef}
           xScroll = '1440px'
-          onRow={() => ({ onDoubleClick: () => null })}
+          onRow={(data: any) => ({ onDoubleClick: () =>  navigate(routerLinks('Supplier/Edit') + '/' + data.id)})}
           pageSizeRender={(sizePage: number) => sizePage}
           pageSizeWidth={'50px'}
           paginationDescription={(from: number, to: number, total: number) =>
