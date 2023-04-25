@@ -32,6 +32,11 @@ export const pages = [
         component: React.lazy(() => import('./auth/forget-password/otp')),
         title: 'Quên Mật Khẩu',
       },
+      {
+        path: routerLinks('SetPassword'),
+        component: React.lazy(() => import('./auth/forget-password/setPassword')),
+        title: 'Đặt Lại Mật Khẩu',
+      },
     ],
   },
   {
