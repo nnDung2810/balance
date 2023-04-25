@@ -5,7 +5,6 @@ import { ModalForm, Spin, Form } from '@components';
 import { routerLinks } from '@utils';
 import { GlobalFacade } from '@reducers';
 import { ColumnLogin } from './column';
-import { FormModalRefObject } from '@models';
 import '../../../layouts/user-admin/index.less'
 
 const Page = () => {
@@ -19,7 +18,6 @@ const Page = () => {
       navigate(routerLinks('Dashboard'), { replace: true });
     }
   }, [status]);
-  const modalFormRef = useRef<FormModalRefObject>(null);
   return (
     <Fragment>
       <div className="text-center mb-8">
@@ -40,7 +38,7 @@ const Page = () => {
           />
         </Spin>
         <div className="absolute -mt-20 right-0 max-sm:right-6 text-right">
-          <button className={'text-green-900 font-semibold underline text-base hover:no-underline'} onClick={() => navigate(routerLinks('ForgetPassword'))}>
+          <button className={'text-teal-900 font-normal underline text-base hover:no-underline'} onClick={() => navigate(routerLinks('ForgetPassword'))}>
             {' '}
             {t('routes.auth.login.Forgot Password')}
           </button>
