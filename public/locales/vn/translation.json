@@ -73,7 +73,7 @@
     "Dashboard": "Tra cứu dữ liệu",
     "User": "Người Dùng",
     "User/List": "Quản lý người dùng",
-    "User/Add": "Tạo mới",
+    "User/Add": "Thêm quản trị viên",
     "MyProfile": "Thông tin của tôi",
     "Setting": "Thiết lập",
     "Code": "Mã",
@@ -81,7 +81,8 @@
     "Page": "Trang",
     "Supplier": "Quản lý nhà cung cấp",
     "Supplier/Add": "Thêm nhà cung cấp",
-    "Store": "Quản lý cửa hàng"
+    "Store": "Quản lý cửa hàng",
+    "Store/Add": "Thêm cửa hàng"
   },
   "pages": {
     "Login": "Đăng Nhập",

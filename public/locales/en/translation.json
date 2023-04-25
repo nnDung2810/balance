@@ -72,13 +72,17 @@
     "Login": "Login",
     "Dashboard": "Dashboard",
     "User": "User",
-    "User/List": "List",
-    "User/Add": "Add",
+    "User/List": "List User",
+    "User/Add": "Add new User",
     "MyProfile": "My Profile",
     "Setting": "Setting",
-    "Code": "Code",
-    "Data": "Data",
-    "Page": "Page"
+    "Code": "Mã",
+    "Data": "Dữ liệu",
+    "Page": "Trang",
+    "Supplier": "Supplier",
+    "Supplier/Add": "Add new Supplier",
+    "Store": "Store",
+    "Store/Add": "Add new Store"
   },
   "pages": {
     "User/List": "List User",

@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
 import dayjs from 'dayjs';
 import classNames from 'classnames';
-import { SorterResult } from 'antd/lib/table/interface';
 // @ts-ignore
 
 import { Button } from '@components/button';
@@ -467,7 +466,7 @@ export const DataTable = forwardRef(
               size="small"
               {...prop}
             />
-             {showPagination && (
+            {showPagination && (
               <Pagination
                 total={result?.pagination?.total}
                 page={+params!.page!}
@@ -475,8 +474,8 @@ export const DataTable = forwardRef(
                 pageSizeOptions={pageSizeOptions}
                 pageSizeRender={pageSizeRender}
                 pageSizeWidth={pageSizeWidth}
-                queryParams={(pagination: { page?: number; perPage?: number }) =>
-                  handleTableChange(pagination, params.filter, params.sorts as SorterResult<any>, params.fullTextSearch)
+                queryParams={(pagination: any) =>
+                  handleTableChange(pagination, params[filter], params[sort], params[fullTextSearch])
                 }
                 paginationDescription={paginationDescription}
                 idElement={idTable.current}

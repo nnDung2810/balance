@@ -105,7 +105,7 @@ export const pages = [
       // },
             {
         path: routerLinks('User/Edit') + '/:id',
-        component: React.lazy(() => import('./admin/user/add')),
+        component: React.lazy(() => import('./admin/user/edit')),
         title: 'User/Edit',
       },
     ], // 💬 generate link to here

@@ -5,7 +5,7 @@ import { Form } from '@components/form';
 import { Spin } from '@components/spin';
 import { Button } from '@components/button';
 import { GlobalFacade } from '@reducers';
-import { ColumnProfile } from './column';
+ import { ColumnProfile } from './column';
 import { routerLinks } from '@utils';
 import { useNavigate } from 'react-router';
 import classNames from 'classnames';
@@ -90,7 +90,6 @@ const Page = () => {
           values={{ ...user }}
         />
       </Spin>
-
         </div>
       </div>
     </Fragment>

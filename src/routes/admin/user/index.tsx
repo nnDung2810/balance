@@ -35,7 +35,8 @@ const Page = () => {
     <DataTable
       facade={userFacade}
       ref={dataTableRef}
-      onRow={() => ({ onDoubleClick: () => null })}
+      onRow={(data : any) => ({ onDoubleClick: () => navigate(routerLinks('User/Edit') + '/' + data.id )})}
+      xScroll={'1400px'}
       pageSizeRender={(sizePage: number) => sizePage}
       pageSizeWidth={'50px'}
       paginationDescription={(from: number, to: number, total: number) =>
@@ -54,7 +55,7 @@ const Page = () => {
           {/* {user?.role?.permissions?.includes(keyRole.P_USER_CREATE) && ( */}
             <Button
               icon={<Plus className="icon-cud !h-5 !w-5" />}
-              text={t('components.button.New')}
+              text={t('titles.User/Add')}
               onClick={() => navigate(routerLinks('User/Add'))}
             />
           {/* )} */}

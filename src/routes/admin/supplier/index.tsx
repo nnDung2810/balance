@@ -12,7 +12,7 @@ import { TableRefObject } from '@models';
 
 const Page = () => {
   const { t } = useTranslation();
-  const { formatDate, user } = GlobalFacade();
+  const {  user } = GlobalFacade();
   const navigate = useNavigate();
 
   const supplierFacade = SupplierFacade();
@@ -40,7 +40,7 @@ const Page = () => {
           }
           columns={ColumnTableSupplier({
             t,
-            formatDate,
+          //  formatDate,
             navigate,
             dataTableRef,
           })}

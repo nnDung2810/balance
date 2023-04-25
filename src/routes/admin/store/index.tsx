@@ -48,7 +48,7 @@ const Page = () => {
           <Button
             className='!bg-teal-900 !rounded-3xl'
             icon={<Plus className="icon-cud !h-5 !w-5 !fill-slate-200 " />}
-            text='Thêm quản trị viên'
+            text={t('titles.Store/Add')}
             onClick={() => navigate(routerLinks('store-managerment/create'))}
           />
         </div>
