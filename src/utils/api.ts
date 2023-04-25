@@ -2,6 +2,7 @@ import { keyRefreshToken, keyToken, keyUser, linkApi, routerLinks } from '@utils
 import { Message } from '@components';
 import { Responses } from '@models';
 
+
 const API = {
   init: () =>
     ({
@@ -21,6 +22,7 @@ const API = {
     params: { [key: string]: string } = {},
     config: RequestInit,
     headers: RequestInit['headers'] = {},
+    name: void,
   ) => {
     config.headers = { ...config.headers, ...headers };
 
@@ -31,12 +33,6 @@ const API = {
       )
       .join('&');
     const response = await fetch(linkApi + url + (linkParam && '?' + linkParam + '&type=SUPPLIER'), config);
-    console.log("response",response);
-    console.log("linkApi",linkApi);
-    console.log("url",url);
-    console.log("linkParam",linkParam);
-    console.log("params",params);
-    console.log("config",config);
     
     const res: Responses<T> = await response.json();
     if (response.ok) {

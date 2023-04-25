@@ -26,6 +26,9 @@ const Util = (name: string, type?: string) => {
     DataType: '/data-type',
     Data: '/data',
     Supplier: '/sub-organization',
+    SupplierProvince: '/province',
+    District: '/district',
+
   }; // 💬 generate api to here
 
   switch (type) {

@@ -47,9 +47,11 @@ const Hook = forwardRef(
       defaultRequest = {
         page: 1,
         perPage: 10,
+        // type: 'SUPPLIER',
       },
       pageIndex = 'page',
       pageSize = 'perPage',
+      // type,
       sort = 'sorts',
       filter = 'filter',
       fullTextSearch = 'fullTextSearch',
@@ -495,6 +497,7 @@ type Type = {
   defaultRequest?: any;
   pageIndex?: string;
   pageSize?: string;
+  // type?: string;
   sort?: string;
   filter?: string;
   fullTextSearch?: string;

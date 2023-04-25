@@ -2,31 +2,35 @@ import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router';
 
-import { UserRoleFacade, UserFacade } from '@reducers';
+import { SupplierRoleFacade, SupplierFacade, UserRoleFacade } from '@reducers';
 import { routerLinks } from '@utils';
 import { Button, Form } from '@components';
-import { ColumnFormSupplier1, ColumnFormSupplier2, ColumnFormSupplier3 } from './column';
+import { ColumnFormSupplier, ColumnFormSupplier1, ColumnFormSupplier2, ColumnFormSupplier3 } from './column';
 import { User } from '../../../reducers/global';
 
 const Page = () => {
   const { t } = useTranslation();
-  const { result, get } = UserRoleFacade();
-  const userFacade = UserFacade();
-  const { data, isLoading, queryParams, status } = userFacade;
+  const { result, get } = SupplierRoleFacade();
+  const supplierFacade = SupplierFacade();
+  const { data, isLoading, queryParams, status } = supplierFacade;
   const navigate = useNavigate();
   const isBack = useRef(true);
   const isReload = useRef(false);
   const param = JSON.parse(queryParams || '{}');
   const { id } = useParams();
 
+  // console.log("result",result);
+  // console.log("supplierFacade",supplierFacade);
+  
+
   useEffect(() => {
     if (!result?.data) get({});
 
-    if (id) userFacade.getById({ id });
-    else userFacade.set({ data: {} });
+    if (id) supplierFacade.getById({ id });
+    else supplierFacade.set({ data: {} });
 
     return () => {
-      isReload.current && userFacade.get(param);
+      isReload.current && supplierFacade.get(param);
     };
   }, [id]);
 
@@ -49,8 +53,8 @@ const Page = () => {
 
   const handleBack = () => navigate(routerLinks('Supplier') + '?' + new URLSearchParams(param).toString());
   const handleSubmit = (values: User) => {
-    if (id) userFacade.put({ ...values, id });
-    else userFacade.post(values);
+    if (id) supplierFacade.put({ ...values, id });
+    else supplierFacade.post(values);
   };
 
   return (
@@ -63,29 +67,38 @@ const Page = () => {
             </p>
           </div>
           {!!result?.data && (
-            // <div className='flex flex-col justify-center'>
-            //   <div className=''>
-            //     <form className='w-full'>
-            //       <div className='flex items-center justify-center'>
-            //         <div className='grow'>
-            //           <div className='grid gap-x-5 grid-cols-12'>
-
-            //             <div className='col-span-12 sm:col-span-6 lg:col-span-6'>
-            //               <div className='mb-4 flex-col flex '>
-            //                 <div className='overflow-visible pr-4 pb-2 text-left relative max-s-full '>
-            //                   <label className='' title={"Tên nhà cung cấp"}>Tên nhà cung cấp</label>
-            //                 </div>
-            //               </div>
-            //             </div>
-
-            //           </div>
-            //         </div>
-            //       </div>
-            //     </form>
-            //   </div>
-            // </div>
             <div>
               <Form
+                values={{ ...data }}
+                className="intro-x"
+                columns={ColumnFormSupplier({ t, listRole: result?.data || [] })}
+                // extendButton={(form) => (
+                //   <Button
+                //     text={t('components.button.Save and Add new')}
+                //     className={'md:min-w-[12rem] w-full justify-center out-line'}
+                //     onClick={() => {
+                //       form.submit();
+                //       isBack.current = false;
+                //     }}
+                //   />
+                // )}
+                // handSubmit={handleSubmit}
+                disableSubmit={isLoading}
+                // handCancel={handleBack}
+                extendButton={() => (
+                  <div className='max-w-7xl flex items-center absolute -right-4 -left-4 justify-between mt-4'>
+                    <button className={'text-teal-900 bg-white border-solid border border-teal-900 rounded-xl p-2 w-auto h-11 px-8'} 
+                    onClick={handleBack}>
+                      {t('Trở về')}
+                    </button>
+                    <button className={'text-white bg-teal-900 border-solid border rounded-xl p-2 w-auto h-11 px-8'} 
+                    onClick={() => handleSubmit}>
+                      {t('Lưu')}
+                    </button>
+                  </div>
+                 )}
+              />
+              {/* <Form
                 values={{ ...data }}
                 className=""
                 columns={ColumnFormSupplier1({ t, listRole: result?.data || [] })}
@@ -126,7 +139,7 @@ const Page = () => {
                     </button>
                   </div>
                  )}
-              />
+              /> */}
             </div>
           )}
         </div>

@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 import { Avatar } from '@components';
 import { keyRole, routerLinks } from '@utils';
 import { DataTableModel, FormModel } from '@models';
-import { CodeFacade, SupplierFacade } from '@reducers';
+import { CodeFacade, SupplierFacade, SupplierRoleFacade } from '@reducers';
 import { Edit, Trash } from '@svgs';
 
 export const ColumnTableSupplier = ({ t, permissions, navigate, dataTableRef }: any) => {
@@ -92,6 +92,132 @@ export const ColumnTableSupplier = ({ t, permissions, navigate, dataTableRef }: 
   ];
   return col;
 };
+
+export const ColumnFormSupplier= ({ t, listRole }: any) => {
+  
+  const col: FormModel[] = [
+    {
+      title: t('Tên nhà cung cấp'),
+      name: 'name',
+      formItem: {
+        tabIndex: 1,
+        col: 6,
+        rules: [{ type: 'required' }],
+      },
+    },
+    {
+      title: t('Số fax'),
+      name: 'fax',
+      formItem: {
+        tabIndex: 2,
+        col: 6,
+        rules: [{ type: 'required' }, { type: 'min', value: 6 }],
+      },
+    },
+    {
+      title: t('Tỉnh/Thành phố'),
+      name: 'province',
+      formItem: {
+        col: 3,
+        rules: [{ type: 'required' }],
+        type: 'select',
+        list: listRole.map((item: any) => ({
+          value: item?.id,
+          label: item?.name,
+        })),
+      },
+    },
+    {
+      title: t('Quận/Huyện'),
+      name: 'district',
+      formItem: {
+        col: 3,
+        rules: [{ type: 'required' }],
+        type: 'select',
+        get: {
+          facade: SupplierRoleFacade,
+          // params: (form: any, fullTextSearch: string) => ({
+          //   fullTextSearch,
+          //   filter: { id: listRole.code },
+          //   extend: {},
+          // }),
+          format: (item: any) => ({
+            label: item.name,
+            value: item.id,
+          }),
+        },
+      },
+    },
+    {
+      title: t('Phường/Xã'),
+      name: 'email',
+      formItem: {
+        col: 3,
+        rules: [{ type: 'required' }],
+        type: 'select',
+        // get: {
+        //   facade: SupplierFacade,
+        //   params: (form: any, fullTextSearch: string) => ({
+        //     fullTextSearch,
+        //     filter: { roleId: listRole.filter((item: any) => item.name == 'Manager')[0]?.id },
+        //     extend: {},
+        //   }),
+        //   format: (item: any) => ({
+        //     label: item.name,
+        //     value: item.id,
+        //   }),
+        // },
+      },
+    },
+    {
+      title: t('Địa chỉ cụ thể'),
+      name: 'email',
+      formItem: {
+        tabIndex: 1,
+        col: 3,
+        rules: [{ type: 'required' }],
+      },
+    },
+    {
+      title: t('Họ tên đại diện'),
+      name: 'name',
+      formItem: {
+        tabIndex: 1,
+        col: 4,
+        rules: [{ type: 'required' }],
+      },
+    },
+    {
+      title: t('Số điện thoại đại diện'),
+      name: 'password',
+      formItem: {
+        tabIndex: 2,
+        col: 4,
+        rules: [{ type: 'required' }],
+      },
+    },
+    {
+      title: t('Email đại diện'),
+      name: 'email',
+      formItem: {
+        tabIndex: 1,
+        col: 4,
+        rules: [{ type: 'required' }],
+      },
+    },
+    {
+      title: t('Ghi chú'),
+      name: 'email',
+      formItem: {
+        type: 'textarea',
+        tabIndex: 1,
+        col: 12,
+      },
+    },
+  ];
+  return col;
+};
+
 export const ColumnFormSupplier1= ({ t, listRole }: any) => {
   const col: FormModel[] = [
     {
