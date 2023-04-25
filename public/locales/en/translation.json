@@ -72,13 +72,17 @@
     "Login": "Login",
     "Dashboard": "Dashboard",
     "User": "User",
-    "User/List": "List",
-    "User/Add": "Add",
+    "User/List": "List User",
+    "User/Add": "Add new User",
     "MyProfile": "My Profile",
     "Setting": "Setting",
-    "Code": "Code",
-    "Data": "Data",
-    "Page": "Page"
+    "Code": "Mã",
+    "Data": "Dữ liệu",
+    "Page": "Trang",
+    "Supplier": "Supplier",
+    "Supplier/Add": "Add new Supplier",
+    "Store": "Store",
+    "Store/Add": "Add new Store"
   },
   "pages": {
     "User/List": "List User",
@@ -110,7 +114,7 @@
     }
   },
   "layout": {
-    "footer": "Ari Technology Company Ltd. ©{{year}}"
+    "footer": "Copyright ©2023 ARI Technology Co ., JSC. All rights reserved."
   },
   "routes": {
     "auth": {
@@ -151,6 +155,7 @@
         "Add": "Add new",
         "Edit": "Edit",
         "Delete": "Delete",
+        "Change Password": "Change Password",
         "My Profile": "My Profile",
         "No Data": "No Data",
         "Pagination": "Show {{from}} - {{to}} /Total {{total}} categories",

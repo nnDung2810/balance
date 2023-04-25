@@ -7,31 +7,36 @@ import { Button } from '@components/button';
 import { DataTable } from '@components/data-table';
 
 import { keyRole, routerLinks } from '@utils';
-import { UserFacade, GlobalFacade } from '@reducers';
-import { Plus } from '@svgs';
-import { ColumnTableUser } from './column';
+import { UserFacade, GlobalFacade, UserRoleFacade } from '@reducers';
+import { Edit, Plus, Trash } from '@svgs';
 import { TableRefObject } from '@models';
+
+import { Popconfirm, Tooltip } from 'antd';
+import { ColumnTableUser } from './column';
 
 const Page = () => {
   const { t } = useTranslation();
-  const { formatDate, user } = GlobalFacade();
+  const { user } = GlobalFacade();
   const navigate = useNavigate();
-
   const userFacade = UserFacade();
+  const { data, isLoading, queryParams, status } = userFacade;
+  const { result, get } = UserRoleFacade();
+
   useEffect(() => {
     switch (userFacade.status) {
       case 'delete.fulfilled':
         dataTableRef?.current?.onChange!();
         break;
     }
-  }, [userFacade.status]);
+  }, [userFacade.status, data]);
 
   const dataTableRef = useRef<TableRefObject>(null);
   return (
     <DataTable
       facade={userFacade}
       ref={dataTableRef}
-      onRow={() => ({ onDoubleClick: () => null })}
+      onRow={(data : any) => ({ onDoubleClick: () => navigate(routerLinks('User/Edit') + '/' + data.id )})}
+      xScroll={'1400px'}
       pageSizeRender={(sizePage: number) => sizePage}
       pageSizeWidth={'50px'}
       paginationDescription={(from: number, to: number, total: number) =>
@@ -39,20 +44,21 @@ const Page = () => {
       }
       columns={ColumnTableUser({
         t,
-        formatDate,
-        permissions: user?.role?.permissions,
+      //  formatDate,
+      //  listRole: result?.data || [],
+      //  permissions: user?.role?.permissions,
         navigate,
         dataTableRef,
       })}
       rightHeader={
         <div className={'flex gap-2'}>
-          {user?.role?.permissions?.includes(keyRole.P_USER_CREATE) && (
+          {/* {user?.role?.permissions?.includes(keyRole.P_USER_CREATE) && ( */}
             <Button
               icon={<Plus className="icon-cud !h-5 !w-5" />}
-              text={t('components.button.New')}
+              text={t('titles.User/Add')}
               onClick={() => navigate(routerLinks('User/Add'))}
             />
-          )}
+          {/* )} */}
         </div>
       }
     />

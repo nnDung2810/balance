@@ -48,9 +48,11 @@ export const DataTable = forwardRef(
       defaultRequest = {
         page: 1,
         perPage: 10,
+        // type: 'SUPPLIER',
       },
       pageIndex = 'page',
       pageSize = 'perPage',
+      // type,
       sort = 'sorts',
       filter = 'filter',
       fullTextSearch = 'fullTextSearch',
@@ -331,17 +333,17 @@ export const DataTable = forwardRef(
               item = { ...item, ...getColumnSearchDate(item.filter.name || col.name) };
               break;
             default:
-              item = { ...item, ...getColumnSearchInput(item.filter.name || col.name) };
+            //  item = { ...item, ...getColumnSearchInput(item?.filter?.name || col.name) };
           }
           delete item.filter;
         }
-
-        if (item.sorter && params[sort] && params[sort][col.name]) {
+        const sorts = params?.sorts as any;
+        if (item?.sorter && sorts && sorts[col!.name!]) {
           item.defaultSortOrder =
-            params[sort][col.name] === 'ASC' ? 'ascend' : params[sort][col.name] === 'DESC' ? 'descend' : '';
+            sorts[col!.name!] === 'ASC' ? 'ascend' : sorts[col!.name!] === 'DESC' ? 'descend' : '';
         }
-        if (!item.render) {
-          item.render = (text: string) => text && checkTextToShort(text);
+        if (!item?.render) {
+          item!.render = (text: string) => text && checkTextToShort(text);
         }
         // noinspection JSUnusedGlobalSymbols
         return {
@@ -369,11 +371,11 @@ export const DataTable = forwardRef(
       }
       const tempParams = cleanObjectKeyNull({
         ...params,
-        [pageIndex]: tempPageIndex,
-        [pageSize]: tempPageSize,
-        [sort]: JSON.stringify(tempSort),
-        [filter]: JSON.stringify(cleanObjectKeyNull(filters)),
-        [fullTextSearch]: tempFullTextSearch,
+        page: tempPageIndex,
+        perPage: tempPageSize,
+        sorts: JSON.stringify(tempSort),
+        filter: JSON.stringify(cleanObjectKeyNull(filters)),
+        fullTextSearch: tempFullTextSearch,
       });
       onChange && onChange(tempParams);
     };
@@ -385,7 +387,7 @@ export const DataTable = forwardRef(
             <div className="relative">
               <input
                 id={idTable.current + '_input_search'}
-                className="w-full sm:w-80 h-10 rounded-xl text-gray-600 font-semibold bg-white border border-solid border-gray-400 pr-9 pl-8"
+                className="w-full sm:w-80 h-10 rounded-xl text-gray-600 bg-white border border-solid border-black pr-9 pl-9"
                 defaultValue={params[fullTextSearch]}
                 type="text"
                 placeholder={searchPlaceholder || t('components.datatable.pleaseEnterValueToSearch')}
@@ -467,8 +469,8 @@ export const DataTable = forwardRef(
             {showPagination && (
               <Pagination
                 total={result?.pagination?.total}
-                pageIndex={+params[pageIndex]}
-                pageSize={+params[pageSize]}
+                page={+params!.page!}
+                perPage={+params!.perPage!}
                 pageSizeOptions={pageSizeOptions}
                 pageSizeRender={pageSizeRender}
                 pageSizeWidth={pageSizeWidth}
@@ -495,6 +497,7 @@ type Type = {
   defaultRequest?: any;
   pageIndex?: string;
   pageSize?: string;
+  // type?: string;
   sort?: string;
   filter?: string;
   fullTextSearch?: string;

@@ -2,6 +2,7 @@ import { keyRefreshToken, keyToken, keyUser, linkApi, routerLinks } from '@utils
 import { Message } from '@components/message';
 import { Responses } from '@models';
 
+
 const API = {
   init: () =>
     ({
@@ -21,6 +22,7 @@ const API = {
     params: { [key: string]: string } = {},
     config: RequestInit,
     headers: RequestInit['headers'] = {},
+    name: void,
   ) => {
     config.headers = { ...config.headers, ...headers };
 
@@ -79,4 +81,5 @@ const API = {
     }
   },
 };
+
 export default API;

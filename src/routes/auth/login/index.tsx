@@ -39,7 +39,7 @@ const Page = () => {
             textSubmit={'routes.auth.login.Log In'}
             handSubmit={login}
             disableSubmit={isLoading}
-            
+
           />
         </Spin>
         <div className="mt-3 text-right">

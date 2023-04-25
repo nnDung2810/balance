@@ -39,8 +39,26 @@ const Layout = ({ isCollapsed = false, permission = [] }: any) => {
         .map((subItem: any, index: number) => (
           <li
             key={index + v4()}
-            className={classNames('child-item py-2 cursor-pointer', {
-              'bg-white text-blue-600 !fill-blue-600': location.pathname.indexOf(routerLinks(subItem.name)) > -1,
+            className={classNames('child-item py-2 cursor-pointer rounded-2xl text-gray-300 font-medium text-base', {
+              'bg-teal-700 text-white !fill-gray-300': location.pathname.indexOf(routerLinks(subItem.name)) > -1,
+            })}
+            onClick={() => navigate(routerLinks(subItem.name))}
+          >
+            {t(`titles.${subItem.name}`)}
+          </li>
+        ))}
+    </ul>
+  );
+
+  const subMenu1 = (child: any[]) => (
+    <ul className='px-1 mx-2'>
+      {child
+        .filter((subItem: any) => !subItem.permission || permission?.includes(subItem.permission))
+        .map((subItem: any, index: number) => (
+          <li
+            key={index + v4()}
+            className={classNames('child-item py-2 px-3 cursor-pointer rounded-2xl text-black font-medium text-base', {
+              'bg-teal-700 text-white !fill-gray-300 justify-center flex': location.pathname.indexOf(routerLinks(subItem.name)) > -1,
             })}
             onClick={() => navigate(routerLinks(subItem.name))}
           >
@@ -68,18 +86,19 @@ const Layout = ({ isCollapsed = false, permission = [] }: any) => {
             if (!item.child) {
               return (
                 <li
-                  className={classNames('flex items-center h-11 m-3 px-2', {
-                    'bg-white text-blue-600 !fill-blue-600 rounded-2xl': location.pathname === routerLinks(item.name),
-                    'fill-gray-600': location.pathname !== routerLinks(item.name),
+                  className={classNames('flex items-center text-gray-300 h-11 m-3 px-2 relative', {
+                    'bg-teal-700 text-white !fill-gray-300 rounded-2xl opacity-100': location.pathname === routerLinks(item.name),
+                    'fill-gray-300': location.pathname !== routerLinks(item.name),
                     'justify-center': isCollapsed,
                   })}
                   onClick={() => navigate(routerLinks(item.name))}
                   key={index}
                 >
                   {/* <img src={item.icon} className='h-8  w-8 block text-slate-700 fill-red-700'/> */}
-                  {item.icon}
+                  {/* {item.icon} */}
+                  <div className={classNames({'absolute': isCollapsed })}>{item.icon}</div>
                   <span
-                    className={classNames('ml-2.5 transition-all duration-300 ease-in-out font-bold', {
+                    className={classNames('ml-2.5 transition-all duration-300 ease-in-out font-medium text-base ', {
                       'opacity-100': !isCollapsed,
                       'opacity-0 text-[0] ml-0': isCollapsed,
                     })}
@@ -90,8 +109,8 @@ const Layout = ({ isCollapsed = false, permission = [] }: any) => {
               );
             } else {
               return isCollapsed ? (
-                <Popover key={index} placement="rightTop" trigger={'hover'} content={subMenu(item.child)}>
-                  <li className="flex items-center justify-center h-11 m-3 px-2 fill-gray-600 ">
+                <Popover key={index} placement="rightTop" trigger={'hover'} content={subMenu1(item.child)} >
+                  <li className="flex items-center justify-center h-11 m-3 px-2 text-gray-300 fill-gray-300 ">
                     {/* <img src={item.icon} className={classNames('h-8  w-8 block !fill-red-700', { 'ml-1': !isCollapsed})}/> */}
                     <div className={classNames({ 'ml-1': !isCollapsed })}>{item.icon}</div>
                   </li>
@@ -101,7 +120,7 @@ const Layout = ({ isCollapsed = false, permission = [] }: any) => {
                   <Collapse
                     accordion
                     bordered={false}
-                    className={classNames('bg-blue-100', {
+                    className={classNames('bg-teal-900', {
                       'active-menu': location.pathname.indexOf(routerLinks(item.name)) > -1,
                     })}
                     defaultActiveKey={menuActive}
@@ -111,14 +130,14 @@ const Layout = ({ isCollapsed = false, permission = [] }: any) => {
                       showArrow={!isCollapsed}
                       header={
                         <div
-                          className={classNames('flex items-center text-gray-600 fill-gray-600  ', {
+                          className={classNames('flex items-center text-gray-300 fill-gray-300  ', {
                             'justify-center ': isCollapsed,
                           })}
                         >
                           {/* <img src={item.icon} className={classNames('h-8 w-8 block !fill-red-700', { 'ml-1': !isCollapsed})}/> */}
                           <div className={classNames({ 'ml-1': !isCollapsed })}>{item.icon}</div>
                           <span
-                            className={classNames('pl-2.5 transition-all duration-300 ease-in-out font-bold', {
+                            className={classNames('pl-2.5 transition-all duration-300 ease-in-out font-medium text-base text-gray-300', {
                               'opacity-100': !isCollapsed,
                               'opacity-0 text-[0]': isCollapsed,
                             })}

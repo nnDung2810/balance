@@ -34,7 +34,7 @@ export const Pagination: any = ({
     buildIndexes();
   }, [buildIndexes]);
 
-  const getLastIndex = (total: any, pageSize: any) => {
+  const getLastIndex = (total: number, pageSize: number) => {
     return Math.ceil(total / pageSize);
   };
 
@@ -101,9 +101,13 @@ export const Pagination: any = ({
         let listOfRange;
         const prevFiveItem = {
           type: 'prev_5',
+          index: 0,
+          disabled: true,
         };
         const nextFiveItem = {
           type: 'next_5',
+          index: 0,
+          disabled: true,
         };
         const firstPageItem = generatePage(1, 1);
         const lastPageItem = generatePage(lastIndex, lastIndex);
@@ -144,33 +148,33 @@ export const Pagination: any = ({
           </label>
           {showTotal && <span className="ml-3 text-black">{paginationDescription(ranges[0], ranges[1], total)}</span>}
         </div>
-        <div className="mt-3 sm:mt-0 right flex justify-center  p-1 rounded-xl bg-white">
+        <div className="mt-3 sm:mt-0 right flex justify-center p-1 rounded-xl bg-white">
           <div className="flex sm:flex-wrap justify-center duration-300 transition-all">
-            {listOfPageItem.current.map((page: any, index: number) => (
+            {listOfPageItem.current.map((item: any, index: number) => (
               <button
                 type={'button'}
-                disabled={page.disabled}
+                disabled={item.disabled}
                 key={index}
-                id={idElement + '_' + page.type}
+                id={idElement + '_' + item.type}
                 className={classNames(
                   'text-center p-1 mx-2 text-sm font-medium leading-normal relative',
                   {
-                    'text-teal-900':
-                      pageIndex !== page.index && !['next_5', 'prev_5'].includes(page.type),
-                    'bg-teal-900 rounded-full text-white !px-2.5 ': pageIndex === page.index,
-                    'text-blue-300': page.disabled,
-                    'text-gray-600 text-xs': ['next_5', 'prev_5'].includes(page.type),
+                    'text-green-700 hover:text-green-700':
+                    item !== item.index && !['next_5', 'prev_5'].includes(item.type),
+                    '!bg-green-900 rounded-3xl text-white hover:!bg-green-900 !px-2.5 mx-1': item === item.index,
+                    'text-green-500 ': item.disabled,
+                    'text-green-600 text-xs': ['next_5', 'prev_5'].includes(item.type),
                   },
                 )}
-                onClick={() => onPageIndexChange(page)}
-                aria-label={page.type}
+                onClick={() => onPageIndexChange(item)}
+                aria-label={item.type}
               >
-                {page.type === 'prev' && <Arrow className={'w-3 h-3 mx-1.5 rotate-180'} />}
-                {page.type === 'next' && <Arrow className={'w-3 h-3 mx-1.5'} />}
-                {page.type === 'prev_10' && <DoubleArrow className={'w-3 h-3 text-gray-400 rotate-180'} />}
-                {page.type === 'next_10' && <DoubleArrow className={'w-3 h-3'} />}
-                {page.type.indexOf('page') === 0 && page.index}
-                {(page.type === 'prev_5' || page.type === 'next_5') && '...'}
+                {item.type === 'prev' && <Arrow className={'w-4 h-4 rotate-180'} />}
+                {item.type === 'next' && <Arrow className={'w-4 h-4'} />}
+                {item.type === 'prev_10' && <DoubleArrow className={'w-4 h-4 rotate-180'} />}
+                {item.type === 'next_10' && <DoubleArrow className={'w-4 h-4'} />}
+                {item.type.indexOf('page') === 0 && item.index}
+                {(item.type === 'prev_5' || item.type === 'next_5') && '...'}
               </button>
             ))}
           </div>

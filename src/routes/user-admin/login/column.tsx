@@ -19,22 +19,19 @@ export const ColumnLogin = ({ t }: any) => {
         rules: [{ type: 'required' }, { type: 'min', value: 6 }],
       },
     },
-    {
-
-    }
   ];
   return col;
 };
-// export const ColumnForgottenPassword = () => {
-//   const col: FormModel[] = [
-//     {
-//       name: 'email',
-//       title: 'Email',
-//       formItem: {
-//         placeholder: 'Email',
-//         rules: [{ type: 'required' }, { type: 'email' }, { type: 'min', value: 6 }],
-//       },
-//     },
-//   ];
-//   return col;
-// };
+export const ColumnForgottenPassword = () => {
+  const col: FormModel[] = [
+    {
+      name: 'email',
+      title: 'Email',
+      formItem: {
+        placeholder: 'Email',
+        rules: [{ type: 'required' }, { type: 'email' }, { type: 'min', value: 6 }],
+      },
+    },
+  ];
+  return col;
+};

@@ -4,11 +4,11 @@ import { useNavigate, useParams } from 'react-router';
 
 import { UserRoleFacade, UserFacade } from '@reducers';
 import { routerLinks } from '@utils';
-import { Button } from '@components/button';
 import { Form } from '@components/form';
-
-import { GlobalFacade, User } from '../../../reducers/global';
-import { ColumnFormUser } from './column';
+import { Button } from '@components/button';
+import { ColumnFormUser, ColumnFormUserEdit } from './column';
+import { User } from '../../../reducers/global';
+import classNames from 'classnames';
 
 const Page = () => {
   const { t } = useTranslation();
@@ -20,17 +20,17 @@ const Page = () => {
   const isReload = useRef(false);
   const param = JSON.parse(queryParams || '{}');
   const { id } = useParams();
-  const { profile } = GlobalFacade();
+  const { getPermission } = UserRoleFacade();
   useEffect(() => {
     if (!result?.data) get({});
 
     if (id) userFacade.getById({ id });
-    else userFacade.set({ data: undefined });
-    profile();
+    else userFacade.set({ data: {} });
+  //  getPermission();
     return () => {
       isReload.current && userFacade.get(param);
     };
-  }, [id]);
+  }, [id, data]);
 
   useEffect(() => {
     switch (status) {
@@ -48,12 +48,14 @@ const Page = () => {
         break;
     }
   }, [status]);
-  console.log(data)
+
   const handleBack = () => navigate(routerLinks('User/List') + '?' + new URLSearchParams(param).toString());
   const handleSubmit = (values: User) => {
     if (id) userFacade.put({ ...values, id });
     else userFacade.post(values);
   };
+
+  console.log(data)
   return (
     <div className={'w-full'}>
       <Fragment>
@@ -64,23 +66,11 @@ const Page = () => {
       {!!result?.data && (
         <Form
           values={{ ...data }}
-          className="intro-x p-6 pb-4 pt-3 rounded-lg w-full"
-          columns={ColumnFormUser({ t})}
+          className="intro-x p-6 pb-4 pt-3 rounded-lg w-full "
+          columns={ColumnFormUserEdit({ t })}
           handSubmit={handleSubmit}
           disableSubmit={isLoading}
-          // handCancel={handleBack}
-          extendButton={() => (
-            <div className='max-w-5xl flex justify-between mt-4'>
-              <button className={'text-teal-900 bg-white border-solid border border-teal-900 rounded-xl p-2 w-auto h-11 px-8'}
-              onClick={handleBack}>
-                {t('Trở về')}
-              </button>
-              <button className={'text-white bg-teal-900 border-solid border rounded-xl p-2 w-auto h-11 px-8'}
-              onClick={() => handleSubmit}>
-                {t('Lưu')}
-              </button>
-            </div>
-          )}
+          handCancel={handleBack}
         />
       )}
       </div>
