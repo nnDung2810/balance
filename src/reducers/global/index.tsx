@@ -261,7 +261,7 @@ export const globalSlice = createSlice({
       .addCase(action.setPassword.fulfilled, (state: State, action) => {
         if (action.payload) {
           state.data = {};
-          state.status = 'resetPassword.fulfilled';
+          state.status = 'setPassword.fulfilled';
         } else state.status = 'idle';
         state.isLoading = false;
       });

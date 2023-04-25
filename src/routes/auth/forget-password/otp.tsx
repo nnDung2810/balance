@@ -21,6 +21,7 @@ const isReload = useRef(false);
     }
   }, [status]);
 const result = {}
+const email = 'nmmmdunaag@gmail.com'
 console.log(data)
   return (
     <Fragment>
@@ -37,7 +38,7 @@ console.log(data)
             className="intro-x ant-form1"
             columns={ColumnOTP()}
             textSubmit={'Gửi OTP'}
-            handSubmit={(values) => verifyForgotPassword({ ...values})}
+            handSubmit={(values) => verifyForgotPassword({ ...values,email})}
             disableSubmit={isLoading}
           />
         </Spin>

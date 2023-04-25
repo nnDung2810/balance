@@ -488,10 +488,11 @@ const Component = ({
               if (value) {
                 let min = 0;
                 rules.forEach((item: any) => item.min && (min = item.min));
-                if (value?.trim().length > min) {
+                if (value?.trim().length >= min) {
                   if (/^(?!.* )(?=.*\d)(?=.*[A-Z]).*$/.test(value)) return Promise.resolve();
+                  return Promise.reject(t('components.form.rulePassword'));  
                 }
-                return Promise.reject(t('components.form.rulePassword'));
+                // return Promise.reject('Mật khẩu yêu cầu có 8 ký tự trở lên');
               } else return Promise.resolve();
             },
           }));

@@ -13,11 +13,11 @@ const isReload = useRef(false);
   const navigate = useNavigate();
   const globalFacade = GlobalFacade();
   const { isLoading, status, data, setPassword } = globalFacade;
-//   useEffect(() => {
-//     if (status === 'verifyFotgotPassword.fulfilled') {
-//       navigate(routerLinks('setPassword'));
-//     }
-//   }, [status]);
+  useEffect(() => {
+    if (status === 'setPassword.fulfilled') {
+      navigate(routerLinks('Sign-in'));
+    }
+  }, [status]);
 
 console.log(data)
   return (
@@ -34,7 +34,7 @@ console.log(data)
             values={{ ...data }}
             className="intro-x ant-form1"
             columns={ColumnFormSetPassword()}
-            textSubmit={'Gửi OTP'}
+            textSubmit={'Đổi Mật Khẩu'}
             handSubmit={(values) => setPassword({ ...values})}
             disableSubmit={isLoading}
           />
