@@ -1,7 +1,9 @@
 import React, { Fragment, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { DataTable, ModalForm, Button } from '@components';
+import { Button } from '@components/button';
+import { DataTable } from '@components/data-table';
+import { ModalForm } from '@components/modal/form';
 import { ColumnDataForm, ColumnDataTable } from './column';
 import { keyRole } from '@utils';
 import { GlobalFacade, DataTypeFacade, DataFacade } from '@reducers';
@@ -52,17 +54,17 @@ const Page = () => {
           formatDate,
           listType,
           modalFormRef,
-          permissions: user?.role?.permissions,
+        //  permissions: user?.role?.permissions,
         })}
         rightHeader={
           <div className={'flex gap-2'}>
-            {user?.role?.permissions?.includes(keyRole.P_DATA_CREATE) && (
+            {/* {user?.role?.permissions?.includes(keyRole.P_DATA_CREATE) && ( */}
               <Button
                 icon={<Plus className="icon-cud !h-5 !w-5" />}
                 text={t('components.button.New')}
                 onClick={() => modalFormRef?.current?.handleEdit!()}
               />
-            )}
+            {/* )} */}
           </div>
         }
       />

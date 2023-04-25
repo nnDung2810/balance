@@ -2,7 +2,7 @@ import React, { MouseEventHandler } from 'react';
 import { Popover } from 'antd';
 import classNames from 'classnames';
 
-const Component = ({
+export const Avatar = ({
   text,
   src,
   onClick,
@@ -271,7 +271,7 @@ const Component = ({
           >
             <div
               className={classNames(
-                'rounded-xl inline-block text-center border border-blue-500 text-blue-500 bg-blue-200 text-xs -ml-2',
+                'rounded-xl inline-block text-center border border-blue-600 text-blue-600 bg-blue-200 text-xs -ml-2',
                 'w-' + size,
                 'h-' + size,
                 'leading-' + size,
@@ -295,4 +295,3 @@ type Type = {
   keyName?: string;
   maxCount?: number;
 };
-export default Component;

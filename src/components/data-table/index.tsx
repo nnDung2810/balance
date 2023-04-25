@@ -7,8 +7,9 @@ import dayjs from 'dayjs';
 import classNames from 'classnames';
 // @ts-ignore
 
-import { Button, Pagination } from '@components';
-import { TableGet, TableRefObject } from '@models';
+import { Button } from '@components/button';
+import { Pagination } from '@components/pagination';
+import { DataTableModel, PaginationQuery, TableGet, TableRefObject } from '@models';
 import { cleanObjectKeyNull } from '@utils';
 import { Calendar, CheckCircle, CheckSquare, Search, Times } from '@svgs';
 
@@ -38,7 +39,7 @@ const getQueryStringParams = (query: any) => {
     : {}; // Trim - from end of text
 };
 
-const Hook = forwardRef(
+export const DataTable = forwardRef(
   (
     {
       columns = [],
@@ -330,17 +331,17 @@ const Hook = forwardRef(
               item = { ...item, ...getColumnSearchDate(item.filter.name || col.name) };
               break;
             default:
-              item = { ...item, ...getColumnSearchInput(item.filter.name || col.name) };
+            //  item = { ...item, ...getColumnSearchInput(item?.filter?.name || col.name) };
           }
           delete item.filter;
         }
-
-        if (item.sorter && params[sort] && params[sort][col.name]) {
+        const sorts = params?.sorts as any;
+        if (item?.sorter && sorts && sorts[col!.name!]) {
           item.defaultSortOrder =
-            params[sort][col.name] === 'ASC' ? 'ascend' : params[sort][col.name] === 'DESC' ? 'descend' : '';
+            sorts[col!.name!] === 'ASC' ? 'ascend' : sorts[col!.name!] === 'DESC' ? 'descend' : '';
         }
-        if (!item.render) {
-          item.render = (text: string) => text && checkTextToShort(text);
+        if (!item?.render) {
+          item!.render = (text: string) => text && checkTextToShort(text);
         }
         // noinspection JSUnusedGlobalSymbols
         return {
@@ -368,11 +369,11 @@ const Hook = forwardRef(
       }
       const tempParams = cleanObjectKeyNull({
         ...params,
-        [pageIndex]: tempPageIndex,
-        [pageSize]: tempPageSize,
-        [sort]: JSON.stringify(tempSort),
-        [filter]: JSON.stringify(cleanObjectKeyNull(filters)),
-        [fullTextSearch]: tempFullTextSearch,
+        page: tempPageIndex,
+        perPage: tempPageSize,
+        sorts: JSON.stringify(tempSort),
+        filter: JSON.stringify(cleanObjectKeyNull(filters)),
+        fullTextSearch: tempFullTextSearch,
       });
       onChange && onChange(tempParams);
     };
@@ -466,8 +467,8 @@ const Hook = forwardRef(
             {showPagination && (
               <Pagination
                 total={result?.pagination?.total}
-                pageIndex={+params[pageIndex]}
-                pageSize={+params[pageSize]}
+                page={+params!.page!}
+                perPage={+params!.perPage!}
                 pageSizeOptions={pageSizeOptions}
                 pageSizeRender={pageSizeRender}
                 pageSizeWidth={pageSizeWidth}
@@ -486,7 +487,7 @@ const Hook = forwardRef(
     );
   },
 );
-Hook.displayName = 'HookTable';
+DataTable.displayName = 'HookTable';
 type Type = {
   columns: any[];
   showList?: boolean;
@@ -517,4 +518,3 @@ type Type = {
   facade?: any;
   data?: any[];
 };
-export default Hook;

@@ -1,9 +1,3 @@
-import echartBar from './echart/bar';
-import echartBarStack from './echart/barStack';
-import echartLine from './echart/line';
-import echartPie from './echart/pie';
-import linearGradient from './echart/linearGradient';
-
 import withClearCache from './init/clear-cache';
 import reportWebVitals from './init/reportWebVitals';
 import API from './api';
@@ -27,10 +21,5 @@ export {
   convertFormValue,
   cleanObjectKeyNull,
   covertChild,
-  echartBar,
-  echartBarStack,
-  echartLine,
-  echartPie,
-  linearGradient,
   API,
 };

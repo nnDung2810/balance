@@ -2,11 +2,12 @@ import React, { forwardRef, Ref, useImperativeHandle } from 'react';
 import { Form as FormAnt } from 'antd';
 import { v4 } from 'uuid';
 
-import { Modal, Form } from '@components';
+import { Form } from '@components/form';
+import { Modal } from '@components/modal';
 import { convertFormValue } from '@utils';
 import { FormModel, FormModalRefObject } from '@models';
 
-const Hook = forwardRef(
+export const ModalForm = forwardRef(
   (
     {
       title,
@@ -61,7 +62,7 @@ const Hook = forwardRef(
     );
   },
 );
-Hook.displayName = 'HookModalForm';
+ModalForm.displayName = 'HookModalForm';
 type Type = {
   facade?: any;
   keyState?: string;
@@ -75,4 +76,3 @@ type Type = {
   footerCustom?: (handleOk: () => Promise<any>, handleCancel: () => void) => JSX.Element[] | JSX.Element;
   idElement?: string;
 };
-export default Hook;

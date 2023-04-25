@@ -85,7 +85,7 @@ export const DraggableLayout = ({ value, onChange }: { value: any; onChange?: an
     <Fragment>
       <div className="justify-end flex mb-2 gap-2">
         <div
-          className="bg-blue-500 text-white px-2 h-7 rounded-md hover:bg-blue-400 inline-flex items-center gap-1 hover:opacity-80"
+          className="bg-blue-600 text-white px-2 h-7 rounded-md hover:bg-blue-400 inline-flex items-center gap-1 hover:opacity-80"
           onClick={() => {
             indexEdit.current = -1;
             modalFormRef.current.handleEdit({ col: 4 });

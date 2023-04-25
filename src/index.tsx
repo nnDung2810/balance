@@ -9,7 +9,7 @@ import AuthProvider from '@globalContext';
 import Router from '@routes/index';
 import { reportWebVitals } from '@utils';
 import { setupStore } from '@reducers';
-import { Spin } from '@components';
+import { Spin } from '@components/spin';
 
 const Styling = lazy(() => import('./utils/init/styling'));
 

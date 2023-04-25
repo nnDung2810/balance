@@ -5,7 +5,9 @@ import classNames from 'classnames';
 import { v4 } from 'uuid';
 
 import { API, linkApi } from '@utils';
-import { Button, Message, Spin } from '@components';
+import { Button } from '@components/button';
+import { Spin } from '@components/spin';
+import { Message } from '@components/message';
 import { Plus, Copy, Paste, Times } from '@svgs';
 
 export const Upload = ({
@@ -130,7 +132,7 @@ export const Upload = ({
           bodyFormData.append('file', file);
 
           try {
-            const data = await API.responsible(action, {}, { ...API.init(), method, body: bodyFormData });
+            const data = await API.responsible<any>(action, {}, { ...API.init(), method, body: bodyFormData });
             // const { data } = await axios({
             //   method,
             //   url: action,
@@ -218,11 +220,11 @@ export const Upload = ({
               {children ? (
                 children
               ) : !listFiles?.length || !listFiles[0][keyImage] ? (
-                <div className="border-dashed border border-gray-300 rounded-2xl w-40 h-40 flex items-center justify-center">
+                <div className="border-dashed border border-gray-300 rounded-xl w-full h-full flex items-center justify-center ">
                   <Plus className="w-12 h-12" />
                 </div>
               ) : (
-                <img alt={'Align'} className={'rounded-2xl w-40 h-40 flex object-cover'} src={listFiles[0][keyImage]} />
+                <img alt={'Align'} className={'rounded-xl w-full h-[50vh] flex object-cover px-2'} src={listFiles[0][keyImage]} />
               )}
             </Fragment>
           </div>

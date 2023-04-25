@@ -1,10 +1,10 @@
 import { CheckboxOptionType, FormInstance } from 'antd';
 import { TableGet } from '../data-table';
+import { DefaultTFuncReturn } from 'i18next';
+import classNames from 'classnames';
 
 export class FormModel {
-  name?: string;
-  title?: any;
-  formItem?: FormItem;
+  constructor(public name: string, public title?: React.ReactNode | DefaultTFuncReturn, public formItem?: FormItem) {}
 }
 
 export class FormItem {
@@ -43,8 +43,9 @@ export class FormItem {
   max?: number;
   sliderMarks?: Record<number, string>;
   symbol?: string;
-  initialValues?: { start: string; end: string };
+  initialValues?: { start: string; end: string } | string;
   convert?: (data: any) => any;
+  initialValue?: null | number | string;
   onChange?: (value: any, form: FormInstance, reRender: any) => void;
   onBlur?: (e: React.FocusEvent<HTMLInputElement, Element>, form: FormInstance, name: string) => void;
   disabledDate?: (current: any, form: FormInstance) => boolean;
@@ -53,7 +54,7 @@ export class FormItem {
   onCalendarChange?: (current: any, form: FormInstance, reRender: any) => void;
   api?: FormApi;
   get?: TableGet;
-  label?: string;
+  label?: string | number | null;
   maxTagCount?: number;
   tag?: {
     avatar: string;
@@ -74,7 +75,7 @@ export class FormItem {
   idCheck?: any;
   tabIndex?: number;
   onlyImage?: boolean;
-  render?: (form: FormInstance, values: any, generateForm: void, index: number, reRender: void) => JSX.Element;
+  render?:((form: FormInstance, values: any, generateForm: void, index: number, reRender: void) => string | JSX.Element);
 }
 
 export class FormItemList {

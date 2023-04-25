@@ -4,7 +4,7 @@ import { v4 } from 'uuid';
 
 import { editorjsConfig } from './config';
 
-const Editor = forwardRef(({ value, onChange }: { value?: any; onChange?: any }, ref) => {
+export const Editor = forwardRef(({ value, onChange }: { value?: any; onChange?: any }, ref) => {
   useImperativeHandle(ref, () => ({}));
   useEffect(() => {
     setTimeout(() => {
@@ -39,4 +39,3 @@ const Editor = forwardRef(({ value, onChange }: { value?: any; onChange?: any },
   return <div id={'editorjs' + id.current}></div>;
 });
 Editor.displayName = 'Search';
-export default Editor;

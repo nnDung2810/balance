@@ -1,7 +1,10 @@
 import React, { Fragment, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
-import { ModalForm, Spin, Form } from '@components';
+import { Spin } from '@components/spin';
+import { Form } from '@components/form';
+import { ModalForm } from '@components/modal/form';
+
 import { routerLinks } from '@utils';
 import { GlobalFacade } from '@reducers';
 import { ColumnLogin } from './column';
@@ -36,7 +39,7 @@ const Page = () => {
             textSubmit={'routes.auth.login.Log In'}
             handSubmit={login}
             disableSubmit={isLoading}
-            
+
           />
         </Spin>
         <div className="mt-3 text-right">

@@ -2,12 +2,17 @@ import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 
-import { Button, DataTable } from '@components';
+import { Avatar } from '@components/avatar';
+import { Button } from '@components/button';
+import { DataTable } from '@components/data-table';
+
 import { keyRole, routerLinks } from '@utils';
-import { UserFacade, GlobalFacade } from '@reducers';
-import { Plus } from '@svgs';
-import { ColumnTableUser } from './column';
+import { UserFacade, GlobalFacade, UserRoleFacade } from '@reducers';
+import { Edit, Plus, Trash } from '@svgs';
 import { TableRefObject } from '@models';
+
+import { Popconfirm, Tooltip } from 'antd';
+import { ColumnTableUser } from './column';
 
 const Page = () => {
   const { t } = useTranslation();
@@ -15,6 +20,9 @@ const Page = () => {
   const navigate = useNavigate();
 
   const userFacade = UserFacade();
+  const { data, isLoading, queryParams, status } = userFacade;
+  const { result, get } = UserRoleFacade();
+
   useEffect(() => {
     switch (userFacade.status) {
       case 'delete.fulfilled':
@@ -37,7 +45,8 @@ const Page = () => {
       columns={ColumnTableUser({
         t,
         formatDate,
-        permissions: user?.role?.permissions,
+      //  listRole: result?.data || [],
+      //  permissions: user?.role?.permissions,
         navigate,
         dataTableRef,
       })}

@@ -1,7 +1,7 @@
 .ant-input {
 @apply border-gray-300;
   &:focus {
-  @apply border-blue-500 shadow shadow-blue-500/30 outline-0;
+  @apply border-blue-600 shadow shadow-blue-600/30 outline-0;
   }
 }
 
@@ -36,12 +36,12 @@
     &-label {
       @apply overflow-visible pr-2;
       > label {
-      @apply font-medium text-gray-500;
+      @apply font-medium text-gray-600;
         &.ant-form-item-required:not(.ant-form-item-required-mark-optional){
           &::before { content: none; }
           &::after {
             content: ' *'!important;
-          @apply contents text-red-500;
+          @apply contents text-red-600;
           }
         }
       }
