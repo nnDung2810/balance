@@ -51,6 +51,10 @@ export default class Slice<T extends CommonEntity> {
           } else state.status = 'idle';
           state.isLoading = false;
         })
+        .addCase(action.get.rejected, (state: State) => {
+          state.status = 'get.rejected';
+          state.isLoading = false;
+        })
 
         .addCase(action.getById.pending, (state: State<T>) => {
           state.isLoading = true;
@@ -69,6 +73,10 @@ export default class Slice<T extends CommonEntity> {
             state.isLoading = false;
           },
         )
+        .addCase(action.getById.rejected, (state: State) => {
+          state.status = 'getById.rejected';
+          state.isLoading = false;
+        })
 
         .addCase(
           action.post.pending,
@@ -87,6 +95,10 @@ export default class Slice<T extends CommonEntity> {
             state.isVisible = false;
             state.status = 'post.fulfilled';
           } else state.status = 'idle';
+          state.isLoading = false;
+        })
+        .addCase(action.post.rejected, (state: State) => {
+          state.status = 'post.rejected';
           state.isLoading = false;
         })
 
@@ -109,6 +121,10 @@ export default class Slice<T extends CommonEntity> {
           } else state.status = 'idle';
           state.isLoading = false;
         })
+        .addCase(action.put.rejected, (state: State) => {
+          state.status = 'put.rejected';
+          state.isLoading = false;
+        })
 
         .addCase(action.delete.pending, (state: State<T>) => {
           state.isLoading = true;
@@ -117,6 +133,10 @@ export default class Slice<T extends CommonEntity> {
         .addCase(action.delete.fulfilled, (state: State<T>, action: PayloadAction<T>) => {
           if (action.payload) state.status = 'delete.fulfilled';
           else state.status = 'idle';
+          state.isLoading = false;
+        })
+        .addCase(action.delete.rejected, (state: State) => {
+          state.status = 'delete.rejected';
           state.isLoading = false;
         });
       extraReducers(builder);

@@ -145,6 +145,10 @@ export const globalSlice = createSlice({
         } else state.status = 'idle';
         state.isLoading = false;
       })
+      .addCase(action.profile.rejected, (state: State) => {
+        state.status = 'profile.rejected';
+        state.isLoading = false;
+      })
 
       .addCase(action.putProfile.pending, (state: State, action) => {
         state.data = action.meta.arg;
@@ -156,6 +160,10 @@ export const globalSlice = createSlice({
           state.user = action.payload;
           state.status = 'putProfile.fulfilled';
         } else state.status = 'idle';
+        state.isLoading = false;
+      })
+      .addCase(action.putProfile.rejected, (state: State) => {
+        state.status = 'putProfile.rejected';
         state.isLoading = false;
       })
 
@@ -184,6 +192,10 @@ export const globalSlice = createSlice({
         } else state.status = 'idle';
         state.isLoading = false;
       })
+      .addCase(action.login.rejected, (state: State) => {
+        state.status = 'login.rejected';
+        state.isLoading = false;
+      })
 
       .addCase(
         action.forgottenPassword.pending,
@@ -207,6 +219,10 @@ export const globalSlice = createSlice({
         } else state.status = 'idle';
         state.isLoading = false;
       })
+      .addCase(action.forgottenPassword.rejected, (state: State) => {
+        state.status = 'forgottenPassword.rejected';
+        state.isLoading = false;
+      })
 
       .addCase(
         action.resetPassword.pending,
@@ -224,6 +240,10 @@ export const globalSlice = createSlice({
           state.data = {};
           state.status = 'resetPassword.fulfilled';
         } else state.status = 'idle';
+        state.isLoading = false;
+      })
+      .addCase(action.resetPassword.rejected, (state: State) => {
+        state.status = 'resetPassword.rejected';
         state.isLoading = false;
       });
   },
