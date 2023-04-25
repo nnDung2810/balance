@@ -20,7 +20,7 @@ const isReload = useRef(false);
       navigate(routerLinks('SetPassword'));
     }
   }, [status]);
-
+const result = {}
 console.log(data)
   return (
     <Fragment>

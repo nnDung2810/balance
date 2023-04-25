@@ -8,7 +8,6 @@ import { API, keyRefreshToken, keyToken, keyUser, routerLinks } from '@utils';
 import { Message } from '@components';
 import { useAppDispatch, useTypedSelector } from '@reducers';
 import { CommonEntity, Responses } from '@models';
-import { UserRole } from '../user/role';
 // import Slice, { State } from '../slice';
 const name = 'User-admin';
 const action = {
@@ -44,7 +43,7 @@ const action = {
     return data!.userInfor;
   }),
   forgotPassword: createAsyncThunk(name + '/forgot-password', async (values: { email: string }) => {
-    const { data, message } = await API.put<verify>(`${routerLinks(name, 'api')}/forgot-password`, values);
+    const { data, message } = await API.put< verify >(`${routerLinks(name, 'api')}/forgot-password`, values);
     if (message) await Message.success({ text: message });
     return data;
   }),

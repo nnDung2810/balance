@@ -16,7 +16,6 @@ const Page = () => {
     if (status === 'forgotPassword.fulfilled') {
       navigate(routerLinks('VerifyForotPassword'));
     }
-    console.log(status)
   }, [status]);
 
   return (
