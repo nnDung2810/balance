@@ -23,7 +23,7 @@ const Page = () => {
   return (
     <Fragment>
       <div className='grid grid-cols-3 gap-5 w-full'>
-        <div className='col-span-1 bg-white p-5 border rounded-3xl '>
+        <div className='col-span-1 bg-white p-5 border rounded-xl'>
         <Spin className="" spinning={isLoading}>
         <Form
           className="text-center items-center"
@@ -33,6 +33,7 @@ const Page = () => {
               formItem: {
                 type: 'upload',
                 mode: 'multiple',
+                onlyImage: true,
               },
             },
             {
