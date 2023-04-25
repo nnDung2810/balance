@@ -10,6 +10,10 @@ const Layout = () => [
     name: 'Dashboard',
   },
   {
+    icon: <Chart className="icon-menu" />,
+    name: 'Store',
+  },
+  {
     icon: <Cart className="icon-menu" />,
     name: 'Supplier',
   },

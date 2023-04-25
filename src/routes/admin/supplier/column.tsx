@@ -8,21 +8,13 @@ import { DataTableModel, FormModel } from '@models';
 import { CodeFacade, SupplierFacade, SupplierRoleFacade } from '@reducers';
 import { Edit, Trash } from '@svgs';
 
-export const ColumnTableSupplier = ({ t, permissions, navigate, dataTableRef }: any) => {
+export const ColumnTableSupplier = ({ t, navigate, dataTableRef }: any) => {
   const col: DataTableModel[] = [
     {
       title: t(`supplier.Code`),
       name: 'code',
       tableItem: {
-        // filter: { type: 'search' },
         width: 140,
-        fixed: window.innerWidth > 767,
-        // sorter: true,
-        // onCell: () => ({
-        //   style: { paddingTop: '0.25rem', paddingBottom: 0 },
-        //   onClick: async () => null,
-        // }),
-        // render: (item) => item?.name,
       },
     },
     {

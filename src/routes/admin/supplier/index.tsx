@@ -30,6 +30,7 @@ const Page = () => {
         <DataTable
           facade={supplierFacade}
           ref={dataTableRef}
+          xScroll = '1440px'
           onRow={() => ({ onDoubleClick: () => null })}
           pageSizeRender={(sizePage: number) => sizePage}
           pageSizeWidth={'50px'}
@@ -39,7 +40,6 @@ const Page = () => {
           columns={ColumnTableSupplier({
             t,
             formatDate,
-            permissions: user?.role?.permissions,
             navigate,
             dataTableRef,
           })}

@@ -29,7 +29,7 @@ const Util = (name: string, type?: string) => {
     User: '/user-admin',
     DataType: '/data-type',
     Data: '/data',
-    'sub-organization': '/sub-organization'
+    'sub-organization': '/sub-organization',
     Supplier: '/sub-organization',
     SupplierProvince: '/province',
     District: '/district',

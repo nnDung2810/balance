@@ -72,7 +72,7 @@
     "Login": "Đăng nhập",
     "Dashboard": "Tra cứu dữ liệu",
     "User": "Người Dùng",
-    "User/List": "Quản lý nhà người dùng",
+    "User/List": "Quản lý người dùng",
     "User/Add": "Tạo mới",
     "MyProfile": "Thông tin của tôi",
     "Setting": "Thiết lập",
@@ -80,7 +80,8 @@
     "Data": "Dữ liệu",
     "Page": "Trang",
     "Supplier": "Quản lý nhà cung cấp",
-    "Supplier/Add": "Thêm nhà cung cấp"
+    "Supplier/Add": "Thêm nhà cung cấp",
+    "Store": "Quản lý cửa hàng"
   },
   "pages": {
     "Login": "Đăng Nhập",
