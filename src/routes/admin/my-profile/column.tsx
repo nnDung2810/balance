@@ -19,7 +19,7 @@ export const ColumnProfile = ({ t }: any) => {
           { label: 'Thông tin cá nhân', value: '1' },
           { label: 'Đổi mật khẩu', value: '2' },
         ],
-        column:[
+        column : [
             {
               title: t('Họ và tên'),
               name: 'name',
@@ -52,9 +52,9 @@ export const ColumnProfile = ({ t }: any) => {
               },
             },
         ]
-        //  column: (
+        // column: (
         //   <Tabs defaultActiveKey="0">
-        //     <TabPane tab="Thông tin cá nhân" key="0">
+        //     <TabPane tab="Thông tin cá nhân" key="1">
         //       {[
         //         {
         //           title: t('Họ và tên'),
@@ -141,37 +141,37 @@ export const ColumnProfile = ({ t }: any) => {
         //   </Tabs>
         // ),
         // column: [
-          // {
-          //   title: t('Họ và tên'),
-          //   name: 'name',
-          //   formItem: {
-          //     col: 6,
-          //     rules: [{ type: 'required' }],
-          //   },
-          // },
-          // {
-          //   title: t('Email'),
-          //   name: 'email',
-          //   formItem: {
-          //     col: 6,
-          //     rules: [{ type: 'required' }, { type: 'email' }, { type: 'min', value: 6 }],
-          //   },
-          // },
-          // {
-          //   title: t('Số điện thoại'),
-          //   name: 'phoneNumber',
-          //   formItem: {
-          //     col: 6,
-          //     rules: [{ type: 'required' }, { type: 'phone', min: 10, max: 15 }],
-          //   },
-          // },
-          // {
-          //   title: t('Ghi chú'),
-          //   name: 'note',
-          //   formItem: {
-          //     type: 'textarea',
-          //   },
-          // },
+        //   {
+        //     title: t('Họ và tên'),
+        //     name: 'name',
+        //     formItem: {
+        //       col: 6,
+        //       rules: [{ type: 'required' }],
+        //     },
+        //   },
+        //   {
+        //     title: t('Email'),
+        //     name: 'email',
+        //     formItem: {
+        //       col: 6,
+        //       rules: [{ type: 'required' }, { type: 'email' }, { type: 'min', value: 6 }],
+        //     },
+        //   },
+        //   {
+        //     title: t('Số điện thoại'),
+        //     name: 'phoneNumber',
+        //     formItem: {
+        //       col: 6,
+        //       rules: [{ type: 'required' }, { type: 'phone', min: 10, max: 15 }],
+        //     },
+        //   },
+        //   {
+        //     title: t('Ghi chú'),
+        //     name: 'note',
+        //     formItem: {
+        //       type: 'textarea',
+        //     },
+        //   },
         // ]
       },
     },
