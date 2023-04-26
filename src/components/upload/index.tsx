@@ -261,7 +261,7 @@ export const Upload = ({
                               )}
                               <Paste
                                 className={'h-5 w-5 cursor-wait'}
-                                onPaste={async (event) => {
+                                onPaste={async (event: { clipboardData: { getData: (arg0: string) => any; }; }) => {
                                   const text = event.clipboardData.getData('text/plain');
                                   if (text.indexOf('http') === 0) {
                                     if (!multiple) {
@@ -278,26 +278,26 @@ export const Upload = ({
                               />
                             </div>
                             {showBtnDelete(file) && (
-                              <Popconfirm
-                                placement="left"
-                                title={t('components.datatable.areYouSureWant')}
-                                onConfirm={async () => {
-                                  if (deleteFile && file?.id) {
-                                    const data = await deleteFile(file?.id);
-                                    if (!data) {
-                                      return false;
-                                    }
-                                  }
-                                  onChange && onChange(listFiles.filter((_item: any) => _item.id !== file.id));
-                                }}
-                                okText={t('components.datatable.ok')}
-                                cancelText={t('components.datatable.cancel')}
-                              >
+                              // <Popconfirm
+                              //   placement="left"
+                              //   title={t('components.datatable.areYouSureWant')}
+                              //   onConfirm={async () => {
+                              //     if (deleteFile && file?.id) {
+                              //       const data = await deleteFile(file?.id);
+                              //       if (!data) {
+                              //         return false;
+                              //       }
+                              //     }
+                              //     onChange && onChange(listFiles.filter((_item: any) => _item.id !== file.id));
+                              //   }}
+                              //   okText={t('components.datatable.ok')}
+                              //   cancelText={t('components.datatable.cancel')}
+                              // >
                                 <Button
                                   icon={<Eye className={'h-6 w-6'} />}
                                   className={'!bg-gray-400 !rounded-full flex items-center justify-center'}
                                 />
-                              </Popconfirm>
+                              // </Popconfirm>
                             )}
                           </div>
                         </div>

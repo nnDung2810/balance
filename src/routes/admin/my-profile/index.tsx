@@ -88,7 +88,7 @@ const Page = () => {
       </Spin>
 
         </div>
-        <div className='col-span-2 bg-white p-5 border rounded-3xl'>
+        <div className='col-span-2 bg-white p-5 border rounded-3xl mr-4'>
       <Spin className=""  spinning={isLoading}>
         <Form
           className=" "
