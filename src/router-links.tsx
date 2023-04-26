@@ -20,7 +20,8 @@ const Util = (name: string, type?: string) => {
     VerifyForotPassword: '/user-admin/verify-forgot-password',
     SetPassword: '/user-admin/set-password',
     Store: "/store-managerment",
-    'store-managerment/create': '/store-managerment/create'
+    'store-managerment/create': '/store-managerment/create',
+    'store-managerment/edit': '/store-managerment/detail'
   }; // 💬 generate link to here
 
   const apis: {

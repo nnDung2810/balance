@@ -29,6 +29,12 @@ export const ColumnOTP = () => {
         type: 'hidden',
       },
     },
+    {
+      name: 'email',
+      formItem: {
+        type: 'hidden',
+      },
+    },
   ];
   return col;
 };

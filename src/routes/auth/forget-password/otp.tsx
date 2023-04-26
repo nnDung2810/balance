@@ -7,7 +7,7 @@ import { routerLinks } from '@utils';
 import { GlobalFacade } from '@reducers';
 import { ColumnOTP } from './column';
 import { FormModalRefObject } from '@models';
-import '../../../layouts/auth/index.less'
+import '../../../layouts/user-admin/index.less'
 
 const Page = () => {
 const isReload = useRef(false);
@@ -21,9 +21,10 @@ const isReload = useRef(false);
       navigate(routerLinks('SetPassword'));
     }
   }, [status]);
-const result = {}
-const email = 'nmmmdunaag@gmail.com'
-console.log(data)
+
+  console.log(data)
+
+
   return (
     <Fragment>
       <div className="text-center mb-8">
@@ -39,7 +40,7 @@ console.log(data)
             className="intro-x ant-form1"
             columns={ColumnOTP()}
             textSubmit={'Gửi OTP'}
-            handSubmit={(values) => verifyForgotPassword({ ...values,email})}
+            handSubmit={(values) => verifyForgotPassword({ ...values})}
             disableSubmit={isLoading}
           />
         </Spin>

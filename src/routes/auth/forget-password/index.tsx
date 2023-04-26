@@ -6,7 +6,7 @@ import { Form } from '@components/form'
 import { routerLinks } from '@utils';
 import { GlobalFacade } from '@reducers';
 import { ColumnForgetPassword } from './column';
-import '../../../layouts/auth/index.less'
+import '../../../layouts/user-admin/index.less'
 
 const Page = () => {
   const { t } = useTranslation();
@@ -18,6 +18,8 @@ const Page = () => {
       navigate(routerLinks('VerifyForotPassword'));
     }
   }, [status]);
+
+  console.log(status)
 
   return (
     <Fragment>
@@ -31,7 +33,7 @@ const Page = () => {
         <Spin spinning={isLoading} >
           <Form
             values={{ ...data }}
-            className="intro-x ant-form1"
+            className="intro-x ant-form1 space-y-4"
             columns={ColumnForgetPassword({ t })}
             textSubmit={'routes.auth.reset-password.OTP'}
             handSubmit={(values) => forgotPassword({ ...values})}

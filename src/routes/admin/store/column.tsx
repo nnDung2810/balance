@@ -50,7 +50,7 @@ export const ColumnTableStore = ({ t, navigate, dataTableRef }: any) => {
   ];
   return col;
 };
-export const ColumnFormStore = ({ t, listRole }: any) => {
+export const ColumnFormStore = () => {
   const col: FormModel[] = [
     {
       title: 'Tên cửa hàng',

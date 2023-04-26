@@ -387,7 +387,7 @@ export const DataTable = forwardRef(
             <div className="relative">
               <input
                 id={idTable.current + '_input_search'}
-                className="w-full sm:w-80 h-10 rounded-xl text-gray-600 bg-white border border-solid border-black pr-9 pl-9"
+                className="w-full sm:w-80 h-10 rounded-xl text-gray-600 bg-white border border-solid border-gray-200 pr-9 pl-9"
                 defaultValue={params[fullTextSearch]}
                 type="text"
                 placeholder={searchPlaceholder || t('components.datatable.pleaseEnterValueToSearch')}

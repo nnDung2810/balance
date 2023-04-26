@@ -45,7 +45,7 @@ const action = {
   forgotPassword: createAsyncThunk(name + '/forgot-password', async (values: { email: string }) => {
     const { data, message } = await API.put< verify >(`${routerLinks(name, 'api')}/forgot-password`, values);
     if (message) await Message.success({ text: message });
-    return data;
+    return data?.uuid;
   }),
   verifyForgotPassword: createAsyncThunk(name + '/verify-forgot-password', async (values: verify) => {
     const { data, message } = await API.put<{email: string; uuid: string}>(`${routerLinks(name, 'api')}/verify-forgot-password`, values);
@@ -65,15 +65,15 @@ const action = {
 //   status?: string;
 // }
 interface verify {
-  otp: string;
-  uuid: string;
-  email: string
+  otp?: string;
+  uuid?: string;
+  email?: string
 }
 interface setPassword {
-  password: string;
-  retypedPassword: string;
-  email: string;
-  uuid: string;
+  password?: string;
+  retypedPassword?: string;
+  email?: string;
+  uuid?: string;
 }
 
 export class User extends CommonEntity {
@@ -220,7 +220,7 @@ export const globalSlice = createSlice({
       )
       .addCase(action.forgotPassword.fulfilled, (state: State, action) => {
         if (action.payload) {
-          state.data = action.payload;
+          state.data = {...action,uuid: action.payload,email: state.data?.email};
           state.status = 'forgotPassword.fulfilled';
         } else state.status = 'idle';
         state.isLoading = false;

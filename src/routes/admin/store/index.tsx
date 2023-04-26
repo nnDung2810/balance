@@ -6,7 +6,7 @@ import { Button } from '@components/button';
 import { DataTable } from '@components/data-table';
 
 import { routerLinks } from '@utils';
-import { UserFacade, GlobalFacade, StoreFacade } from '@reducers';
+import { StoreFacade } from '@reducers';
 import { Plus } from '@svgs';
 import { ColumnTableStore } from './column';
 import { TableRefObject } from '@models';
@@ -32,7 +32,11 @@ const Page = () => {
       facade={storeFace}
       ref={dataTableRef}
       xScroll = '1440px'
-      onRow={() => ({ onDoubleClick: () => null })}
+      onRow={(data: any) => ({
+        onDoubleClick: () => {
+          navigate(routerLinks('store-managerment/edit') + '/' + data.id);
+        },
+      })}
       pageSizeRender={(sizePage: number) => sizePage}
       pageSizeWidth={'50px'}
       paginationDescription={(from: number, to: number, total: number) =>

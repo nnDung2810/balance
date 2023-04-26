@@ -88,7 +88,7 @@ const Layout = ({ children }: PropsWithChildren) => {
         {/* <h1 className={'text-xl font-bold hidden sm:block'}>{t('pages.' + title)}</h1> */}
 
         <div className="flex items-center gap-5 absolute right-6">
-          <Select value={globalFacade?.language} onChange={(e: 'vn' | 'en') => globalFacade.setLanguage(e)}>
+          {/* <Select value={globalFacade?.language} onChange={(e: 'vn' | 'en') => globalFacade.setLanguage(e)}>
             <Select.Option value="en">
               <img src="/assets/svg/us.svg" alt="US" className="mr-1 w-4 inline-block relative -top-0.5" />{' '}
               {t('routes.admin.Layout.English')}
@@ -97,7 +97,7 @@ const Layout = ({ children }: PropsWithChildren) => {
               <img src="/assets/svg/vn.svg" alt="VN" className="mr-1 w-4 inline-block relative -top-0.5" />{' '}
               {t('routes.admin.Layout.Vietnam')}
             </Select.Option>
-          </Select>
+          </Select> */}
           <Dropdown
             trigger={[ 'click']}
             menu={{
@@ -270,10 +270,13 @@ const Layout = ({ children }: PropsWithChildren) => {
           <h1 className={'text-2xl text-teal-900 font-bold block pb-5'}>{t('titles.' + title)}</h1>
           {children}
         </div>
-        <footer className="text-left sm:-mx-5 pt-5  mt-10  bg-white p-4 !mr-0">
+      </section>
+        <footer className={classNames("text-left pt-5 z-50  mt-10  bg-white p-4 !mr-0", {
+          'ml-64': !isCollapsed && isDesktop,
+          'ml-16': isCollapsed && isDesktop,
+        })}>
           {t('layout.footer', { year: new Date().getFullYear() })}
         </footer>
-      </section>
       <div className="hidden h-7 w-7 leading-7" />
     </main>
   );

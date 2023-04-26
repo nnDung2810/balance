@@ -24,7 +24,7 @@ const Layout = ({ children }: PropsWithChildren) => {
         <div className="w-full h-screen grid items-center max-lg:items-start max-lg:p-10">
           {/* <div className='grid px-10 w-11/12 m-auto'> */}
           <div className='flex justify-center max-lg:block'>
-            <div>
+            <div className='lg:max-w-xl mx-auto lg:p-10'>
               {children}
             </div>
             <div></div>

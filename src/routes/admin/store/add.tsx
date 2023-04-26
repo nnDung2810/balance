@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { Form } from '@components/form';
 import { DataTable } from '@components/data-table';
 import { Button } from '@components/button';
@@ -19,13 +19,16 @@ const Page = () => {
   const storeFace = StoreFacade();
   const { result, isLoading, queryParams, status } = storeFace;
   const param = JSON.parse(queryParams || '{}');
+  const { id } = useParams();
+
   useEffect(() => {
+    if (id) storeFace.getById({ id });
+    else storeFace.set({ data: undefined });
+    console.log(result?.data)
     return () => {
-      isReload.current && storeFace.get(param);
-      console.log(result?.data)
+      isReload.current && storeFace.getById(param);
     };
-  }, [result?.data]);
-  console.log(storeFace)
+  }, [id]);
   const handleBack = () => navigate(routerLinks('Store') + '?' + new URLSearchParams(param).toString());
   const handleSubmit = (values: StoreManagement) => {
     // if (id) userFacade.put({ ...values, id });
@@ -33,11 +36,13 @@ const Page = () => {
   };
   return (
     <div className={'w-full mx-auto bg-white rounded-xl'}>
+      <div className='p-5'>
+
       {/* {!!result?.data &&  */}
         <Form
           values={{ ...result }}
           className="intro-x"
-          columns={ColumnFormStore({ t, listRole: result?.data || [] })}
+          columns={ColumnFormStore()}
           // extendButton={(form) => (
           //   <Button
           //     text={t('components.button.Save and Add new')}
@@ -52,6 +57,7 @@ const Page = () => {
           disableSubmit={isLoading}
           handCancel={handleBack}
         />
+      </div>
     </div>
   );
 };
