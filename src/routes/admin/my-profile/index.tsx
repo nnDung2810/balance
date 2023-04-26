@@ -9,6 +9,7 @@ import { GlobalFacade } from '@reducers';
 import { routerLinks } from '@utils';
 import { useNavigate } from 'react-router';
 import classNames from 'classnames';
+import { UserSolid } from '@svgs';
 
 const Page = () => {
   const { t } = useTranslation();
@@ -62,11 +63,13 @@ const Page = () => {
                 }
               },
             },
+            
           ]}
         //  handSubmit={putProfile}
           disableSubmit={isLoading}
           values={{ ...user }}
         />
+        <UserSolid className='h-7 w-5'/>
       </Spin>
 
         </div>

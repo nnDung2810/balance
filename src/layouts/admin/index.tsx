@@ -12,7 +12,7 @@ import { GlobalFacade } from '@reducers';
 import Menu1 from './menu';
 // import { firebaseConfig } from 'variable';
 import './index.less';
-import { Chevronleft, LeftArrow, Logo, RightArrow, Menu, ArrowBack, User1, Key, Out } from '@svgs';
+import { Chevronleft, LeftArrow, Logo, RightArrow, Menu, ArrowBack, User1, Key, Out, UserSolid } from '@svgs';
 import Logo1 from '../../assets/images/logo.png';
 
 const Layout = ({ children }: PropsWithChildren) => {
@@ -41,7 +41,6 @@ const Layout = ({ children }: PropsWithChildren) => {
       set_isDesktop(window.innerWidth > 767);
     }
     window.addEventListener('resize', handleResize, { passive: true });
-
     // const init = async () => {
     //   if (await isSupported()) {
     //     try {
@@ -166,7 +165,7 @@ const Layout = ({ children }: PropsWithChildren) => {
   );
   return (
     <main>
-      <div className="leading-5 leading-10" />
+      <div className="leading-5 " />
       <div className='h-24 relative'>
         <div className='absolute top-0 left-0 right-0'>
         <Header isCollapsed={isCollapsed} isDesktop={isDesktop} />
