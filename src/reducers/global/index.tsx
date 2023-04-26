@@ -19,8 +19,8 @@ const action = {
     // }
     return true;
   }),
-  profile: createAsyncThunk(name + '/get-my-info', async () => {
-    const { data } = await API.get<User>(`${routerLinks(name, 'api')}/get-my-info`);
+  profile: createAsyncThunk(name + '/profile', async () => {
+    const { data } = await API.get<User>(`${routerLinks(name, 'api')}/profile`);
     return data || {};
   }),
   putProfile: createAsyncThunk(name + '/putProfile', async (values: User) => {

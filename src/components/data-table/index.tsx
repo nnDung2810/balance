@@ -371,8 +371,8 @@ export const DataTable = forwardRef(
       }
       const tempParams = cleanObjectKeyNull({
         ...params,
-        pageIndex: tempPageIndex,
-        pageSize: tempPageSize,
+        page: tempPageIndex,
+        perPage: tempPageSize,
         sorts: JSON.stringify(tempSort),
         filter: JSON.stringify(cleanObjectKeyNull(filters)),
         fullTextSearch: tempFullTextSearch,
@@ -469,8 +469,8 @@ export const DataTable = forwardRef(
             {showPagination && (
               <Pagination
                 total={result?.pagination?.total}
-                pageIndex={+params!.pageIndex!}
-                pageSize={+params!.pageSize!}
+                page={+params!.page!}
+                perPage={+params!.perPage!}
                 pageSizeOptions={pageSizeOptions}
                 pageSizeRender={pageSizeRender}
                 pageSizeWidth={pageSizeWidth}

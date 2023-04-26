@@ -223,14 +223,14 @@ export const Upload = ({
                 <div className="border-dashed border border-gray-300 rounded-xl w-full h-full flex items-center justify-center ">
                   <Plus className="w-12 h-12" />
                 </div>
-              ) : ( 
-                <img alt={'Align'} className={'rounded-xl w-80 h-60 flex object-cover text-center'} src={listFiles[0][keyImage]} />
+              ) : (
+                <img alt={'Align'} className={'rounded-xl w-full h-[50vh] flex object-cover px-2'} src={listFiles[0][keyImage]} />
               )}
             </Fragment>
           </div>
         </div>
       ) : (
-        <div /> 
+        <div />
       )}
       <div
         className={classNames({
