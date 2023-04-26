@@ -12,6 +12,7 @@ import { Pagination } from '@components/pagination';
 import { DataTableModel, PaginationQuery, TableGet, TableRefObject } from '@models';
 import { cleanObjectKeyNull } from '@utils';
 import { Calendar, CheckCircle, CheckSquare, Search, Times } from '@svgs';
+import { SorterResult } from 'antd/es/table/interface';
 
 const RadioGroup = Radio.Group;
 const CheckboxGroup = Checkbox.Group;
@@ -474,8 +475,8 @@ export const DataTable = forwardRef(
                 pageSizeOptions={pageSizeOptions}
                 pageSizeRender={pageSizeRender}
                 pageSizeWidth={pageSizeWidth}
-                queryParams={(pagination: any) =>
-                  handleTableChange(pagination, params[filter], params[sort], params[fullTextSearch])
+                queryParams={(pagination: { page?: number; perPage?: number }) =>
+                  handleTableChange(pagination, params.filter, params.sorts as SorterResult<any>, params.fullTextSearch)
                 }
                 paginationDescription={paginationDescription}
                 idElement={idTable.current}

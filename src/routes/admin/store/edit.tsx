@@ -36,7 +36,7 @@ const Page = () => {
   useEffect(() => {
     switch (status) {
       case 'post.fulfilled':
-        navigate(routerLinks('User') + '/' + data?.id);
+        navigate(routerLinks('Store') + '/' + data?.id);
         break;
       case 'put.fulfilled':
         if (Object.keys(param).length > 0) isReload.current = true;

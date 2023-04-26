@@ -15,24 +15,30 @@ const Page = () => {
   const { t } = useTranslation();
   // const { formatDate, user } = GlobalFacade();
   const navigate = useNavigate();
-  const isReload = useRef(false);
+//  const isReload = useRef(false);
   const storeFace = StoreFacade();
-  const { result, isLoading, queryParams, status } = storeFace;
-  const param = JSON.parse(queryParams || '{}');
+//  const { result, isLoading, queryParams, status } = storeFace;
+ // const param = JSON.parse(queryParams || '{}');
+
+  const storeFacade = StoreFacade();
+
   useEffect(() => {
-    return () => {
-      isReload.current && storeFace.get(param);
-      console.log(result?.data)
-    };
-  }, [result?.data]);
+    switch (storeFace.status) {
+      case 'delete.fulfilled':
+        dataTableRef?.current?.onChange!();
+        break;
+    }
+  }, [storeFace.status]);
+
   console.log(storeFace)
+
   const dataTableRef = useRef<TableRefObject>(null);
   return (
     <DataTable
       facade={storeFace}
       ref={dataTableRef}
       xScroll = '1440px'
-      onRow={() => ({ onDoubleClick: () => null })}
+      onRow={(data : any) => ({ onDoubleClick: () => navigate(routerLinks('Store/Edit') + '/' + data.id )})}
       pageSizeRender={(sizePage: number) => sizePage}
       pageSizeWidth={'50px'}
       paginationDescription={(from: number, to: number, total: number) =>
