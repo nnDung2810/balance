@@ -33,7 +33,8 @@ const API = {
       )
       .join('&');
     const response = await fetch(linkApi + url + (linkParam && '?' + linkParam + '&type=SUPPLIER'), config);
-    
+    // console.log("url",url);
+    // console.log("config",config);
     
     const res: Responses<T> = await response.json();
     if (response.ok) {

@@ -9,6 +9,13 @@ import { User } from '../../global';
 export const name = 'SupplierProvince';
 export const action = {
   ...new Action<SupplierRole>(name),
+  getById: createAsyncThunk(
+      name + '/getById',
+      async ({ id, keyState = 'isVisible' }: { id: string; keyState: keyof State<SupplierRole> }) => {
+        const { data } = await API.get<SupplierRole>(`${routerLinks(name, 'api')}/district/${id}`);
+        return { data, keyState };
+      },
+    ),
   getPermission: createAsyncThunk(name + '/permission', async () =>
     API.get<Responses<string[]>>(`${routerLinks(name, 'api')}/permission`),
   ),

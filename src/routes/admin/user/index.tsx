@@ -11,10 +11,11 @@ import { TableRefObject } from '@models';
 
 const Page = () => {
   const { t } = useTranslation();
-  const { formatDate, user } = GlobalFacade();
+  const { user } = GlobalFacade();
   const navigate = useNavigate();
   const userFacade = UserFacade();
-  const { data, isLoading, queryParams, status } = userFacade;
+  const { data } = userFacade;
+  
 
   useEffect(() => {
     switch (userFacade.status) {
@@ -39,8 +40,6 @@ const Page = () => {
           }
           columns={ColumnTableUser({
             t,
-            formatDate,
-            permissions: user?.role?.permissions,
             navigate,
             dataTableRef,
           })}

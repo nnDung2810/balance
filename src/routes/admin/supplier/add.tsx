@@ -2,10 +2,10 @@ import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router';
 
-import { SupplierRoleFacade, SupplierFacade, UserRoleFacade } from '@reducers';
+import { SupplierRoleFacade, SupplierFacade } from '@reducers';
 import { routerLinks } from '@utils';
 import { Button, Form } from '@components';
-import { ColumnFormSupplier, ColumnFormSupplier1, ColumnFormSupplier2, ColumnFormSupplier3 } from './column';
+import { ColumnFormSupplier } from './column';
 import { User } from '../../../reducers/global';
 
 const Page = () => {
@@ -19,8 +19,7 @@ const Page = () => {
   const param = JSON.parse(queryParams || '{}');
   const { id } = useParams();
 
-  // console.log("result",result);
-  // console.log("supplierFacade",supplierFacade);
+  console.log("data",data);
   
 
   useEffect(() => {
@@ -60,7 +59,7 @@ const Page = () => {
   return (
     <div className={'max-w-7xl mx-auto'}>
       <div className=' pr-5 h-full pb-10'>
-        <div className='bg-white rounded-xl p-4 pb-10 relative text-center '>
+        <div className='bg-white rounded-xl px-4 relative text-center '>
           <div>
             <p className='text-xl text-left font-bold text-teal-900 py-5'>
               Thông tin nhà cung cấp
@@ -98,6 +97,7 @@ const Page = () => {
                   </div>
                  )}
               />
+              
               {/* <Form
                 values={{ ...data }}
                 className=""

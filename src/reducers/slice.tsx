@@ -24,6 +24,7 @@ export default class Slice<T extends CommonEntity> {
     this.name = action.name;
     this.initialState = { ...this.defaultState, ...initialState };
     this.reducers = {};
+
     this.extraReducers = (builder: any) => {
       builder
         .addCase(action.set.fulfilled, (state: State<T>, action: PayloadAction<State<T>>) => {
@@ -61,6 +62,10 @@ export default class Slice<T extends CommonEntity> {
           (state: State<T>, action: PayloadAction<{ data: T; keyState: keyof State<T> }>) => {
             if (action.payload) {
               const { data, keyState } = action.payload;
+              
+              console.log('dataaaaaa',data);
+              console.log('keyState',keyState);
+              
               if (JSON.stringify(state.data) !== JSON.stringify(data)) state.data = data;
               // @ts-ignore
               state[keyState] = true;

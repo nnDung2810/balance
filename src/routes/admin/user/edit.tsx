@@ -5,7 +5,7 @@ import { useNavigate, useParams } from 'react-router';
 import { UserRoleFacade, UserFacade } from '@reducers';
 import { routerLinks } from '@utils';
 import { Button, Form } from '@components';
-import { ColumnFormUser, ColumnFormUserEdit } from './column';
+import { ColumnFormUserEdit } from './column';
 import { User } from '../../../reducers/global';
 import classNames from 'classnames';
 
@@ -19,6 +19,7 @@ const Page = () => {
   const isReload = useRef(false);
   const param = JSON.parse(queryParams || '{}');
   const { id } = useParams();
+  
 
   useEffect(() => {
     if (!result?.data) get({});
@@ -53,8 +54,7 @@ const Page = () => {
     if (id) userFacade.put({ ...values, id });
     else userFacade.post(values);
   };
-
-  console.log(data)
+  
   return (
     <div className={'w-full'}>
       <Fragment>
@@ -62,17 +62,17 @@ const Page = () => {
           <div className='text-xl text-green-900 px-6 pt-4 font-mono font-bold'>
             Thông tin người dùng
           </div>
-      {!!result?.data && (
-        <Form
-          values={{ ...data }}
-          className="intro-x p-6 pb-4 pt-3 rounded-lg w-full "
-          columns={ColumnFormUserEdit({ t, listRole: result?.data || [] })}
-          handSubmit={handleSubmit}
-          disableSubmit={isLoading}
-          handCancel={handleBack}
-        />
-      )}
-      </div>
+          {!!result?.data && (
+            <Form
+              values={{ ...data }}
+              className="intro-x p-6 pb-4 pt-3 rounded-lg w-full "
+              columns={ColumnFormUserEdit({ t, listRole: result?.data || [] })}
+              handSubmit={handleSubmit}
+              disableSubmit={isLoading}
+              handCancel={handleBack}
+            />
+          )}
+        </div>
       </Fragment>
     </div>
   );

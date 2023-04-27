@@ -6,6 +6,7 @@ const Util = (values: any, parentId: string | null = null) => {
       item.children.forEach((item: any) => data.parents.push(item.id));
       data.children = Util(item.children, item.id);
     }
+    
     return data;
   });
 };

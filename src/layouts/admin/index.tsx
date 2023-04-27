@@ -264,7 +264,7 @@ const Layout = ({ children }: PropsWithChildren) => {
           'ml-16': isCollapsed && isDesktop,
         })}
       >
-        <div className={''}>
+        <div className={'min-h-[90vh]'}>
           {/* <h1 className={'text-xl font-bold block sm:hidden pb-5'}>{t('pages.' + title)}</h1> */}
           <h1 className={'text-xl font-bold block pb-5'}>{t('titles.' + title)}</h1>
           {children}

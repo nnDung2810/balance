@@ -158,6 +158,8 @@ export const globalSlice = createSlice({
       .addCase(action.profile.fulfilled, (state: State, action: PayloadAction<User>) => {
         if (action.payload) {
           state.user = action.payload;
+          console.log('state.user',state.user);
+          
           localStorage.setItem(keyUser, JSON.stringify(action.payload));
           state.status = 'profile.fulfilled';
         } else state.status = 'idle';

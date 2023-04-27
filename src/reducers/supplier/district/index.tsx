@@ -14,6 +14,7 @@ export const action = {
   ),
 };
 
+
 export const districtRoleSlice = createSlice(new Slice<SupplierRole>(action, { keepUnusedDataFor: 9999 }));
 export const DistrictRoleFacade = () => {
   const dispatch = useAppDispatch();

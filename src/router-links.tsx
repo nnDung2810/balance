@@ -34,7 +34,7 @@ const Util = (name: string, type?: string) => {
     'sub-organization': '/sub-organization',
     Supplier: '/sub-organization',
     SupplierProvince: '/province',
-    District: '/district/01',
+    District: '/district/02',
 
   }; // 💬 generate api to here
 

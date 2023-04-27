@@ -379,12 +379,12 @@ const Hook = forwardRef(
     if (!data) data = result?.data;
     return (
       <div className={classNames(className, 'intro-x rounded-lg bg-white p-5')}>
-        <div className="lg:flex justify-between mb-2.5">
+        <div className="lg:flex justify-between items-center flex-wrap mb-2.5">
           {showSearch ? (
             <div className="relative">
               <input
                 id={idTable.current + '_input_search'}
-                className="w-full sm:w-80 h-10 rounded-xl text-gray-600 bg-white border border-solid border-black pr-9 pl-9"
+                className="sm:w-80 w-full inline-block h-10 rounded-xl text-gray-600 bg-white border border-solid border-gray-100 pr-9 pl-8 "
                 defaultValue={params[fullTextSearch]}
                 type="text"
                 placeholder={searchPlaceholder || t('components.datatable.pleaseEnterValueToSearch')}
@@ -435,7 +435,63 @@ const Hook = forwardRef(
               )}
             </div>
           ) : (
-            <div />
+            <div className='grid-cols-1 grid sm:grid-cols-3 lg:grid-cols-4 sm:gap-4'>
+              <div className='mb-4'>
+                <div className="relative px-4 py-3">
+                  <input
+                    id={idTable.current + '_input_search'}
+                    className="grid grid-cols-1 h-10 rounded-xl text-gray-600 bg-white border border-solid border-gray-100"
+                    defaultValue={params[fullTextSearch]}
+                    type="text"
+                    placeholder={searchPlaceholder || t('Danh mục chính')}
+                    onChange={() => {
+                      clearTimeout(timeoutSearch.current);
+                      timeoutSearch.current = setTimeout(() => {
+                        handleTableChange(
+                          null,
+                          params[filter],
+                          params[sort],
+                          (document.getElementById(idTable.current + '_input_search') as HTMLInputElement).value,
+                        );
+                      }, 500);
+                    }}
+                    onKeyUp={(e) => {
+                      if (e.key === 'Enter') {
+                        handleTableChange(
+                          null,
+                          params[filter],
+                          params[sort],
+                          (document.getElementById(idTable.current + '_input_search') as HTMLInputElement).value,
+                        );
+                      }
+                    }}
+                  />
+                  {!params[fullTextSearch] ? (
+                    <Search
+                      className="w-5 h-5 my-1 fill-gray-500 text-lg las absolute top-1.5 left-3 z-10"
+                      onClick={() => {
+                        if (params[fullTextSearch]) {
+                          (document.getElementById(idTable.current + '_input_search') as HTMLInputElement).value = '';
+                          handleTableChange(null, params[filter], params[sort], '');
+                        }
+                      }}
+                    />
+                  ) : (
+                    !!params[fullTextSearch] && (
+                      <Times
+                        className="w-4 h-4 my-1 fill-gray-500 text-lg las absolute top-2 right-3 z-10"
+                        onClick={() => {
+                          if (params[fullTextSearch]) {
+                            (document.getElementById(idTable.current + '_input_search') as HTMLInputElement).value = '';
+                            handleTableChange(null, params[filter], params[sort], '');
+                          }
+                        }}
+                      />
+                    )
+                  )}
+                </div>
+              </div>
+            </div>
           )}
           {!!leftHeader && <div className={'mt-2 sm:mt-0'}>{leftHeader}</div>}
           {!!rightHeader && <div className={'mt-2 sm:mt-0'}>{rightHeader}</div>}

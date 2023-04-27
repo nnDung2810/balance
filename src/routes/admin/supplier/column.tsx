@@ -1,13 +1,6 @@
-import { Popconfirm, Tooltip } from 'antd';
-import React from 'react';
-import dayjs from 'dayjs';
 
-import { Avatar } from '@components';
-import { keyRole, routerLinks } from '@utils';
 import { DataTableModel, FormModel } from '@models';
-import { CodeFacade, DistrictRoleFacade, SupplierFacade, SupplierRoleFacade } from '@reducers';
-import { Edit, Trash } from '@svgs';
-import { LockOutlined } from '@ant-design/icons';
+import { DistrictRoleFacade } from '@reducers';
 
 export const ColumnTableSupplier = ({ t, navigate, dataTableRef }: any) => {
   const col: DataTableModel[] = [
@@ -470,138 +463,47 @@ export const ColumnFormSupplierOrder = ({ t, listRole }: any) => {
   return col;
 };
 
-export const ColumnFormSupplierProduct = ({ t, listRole }: any) => {
-  const col: FormModel[] = [
-  {
-      title: t('Mã nhà cung cấp'),
+export const ColumnTableSupplierProduct = ({ t, listRole }: any) => {
+  const col: DataTableModel[] = [
+    {
+      title: t(`Mã sẩn phẩm`),
       name: 'code',
-      formItem: {
-        tabIndex: 1,
-        col: 4,
-        rules: [{ type: 'required' }],
+      tableItem: {
+        width: 170,
       },
     },
     {
-      title: t('Tên nhà cung cấp'),
+      title: t(`Tên sản phẩm`),
       name: 'name',
-      formItem: {
-        tabIndex: 1,
-        col: 4,
-        rules: [{ type: 'required' }],
+      tableItem: {
+        width: 255,
       },
     },
     {
-      title: t('Số fax'),
-      name: 'fax',
-      formItem: {
-        tabIndex: 2,
-        col: 4,
-        rules: [{ type: 'required' }],
+      title: t(`Danh mục`),
+      name: ('address'),
+      tableItem: {
+        width: 145,
+        render: (value: any,item: any) => item?.address?.street + ', ' + item?.address?.ward?.name + ', ' + item?.address?.district?.name + ', ' + item?.address?.province?.name,
+      }
+    },
+    {
+      title: t(`Giá bán`),
+      name: 'contract',
+      tableItem: {
+        width: 225  ,
+        render: (value: any,item: any) => item?.contract[0].name,
       },
     },
     {
-      title: t('Tỉnh/Thành phố'),
-      name: 'province',
-      formItem: {
-        col: 3,
-        rules: [{ type: 'required' }],
-        type: 'select',
-        list: listRole.map((item: any) => ({
-          value: item?.id,
-          label: item?.name,
-        })),
-      },
-    },
-    {
-      title: t('Quận/Huyện'),
-      name: 'district',
-      formItem: {
-        col: 3,
-        rules: [{ type: 'required' }],
-        type: 'select',
-        get: {
-          facade: DistrictRoleFacade,
-          // params: (form: any, fullTextSearch: string) => ({
-          //   fullTextSearch,
-          //   filter: { id: listRole.code },
-          //   extend: {},
-          // }),
-          params: (fullTextSearch: string) => ({
-            fullTextSearch,
-            filter: { type: 'SUPPLIER' },
-            extend: {},
-          }),
-          format: (item: any) => ({
-            label: item.name,
-            value: item.id,
-          }),
-        },
-      },
-    },
-    {
-      title: t('Phường/Xã'),
-      name: 'email',
-      formItem: {
-        col: 3,
-        rules: [{ type: 'required' }],
-        type: 'select',
-        // get: {
-        //   facade: SupplierFacade,
-        //   params: (form: any, fullTextSearch: string) => ({
-        //     fullTextSearch,
-        //     filter: { roleId: listRole.filter((item: any) => item.name == 'Manager')[0]?.id },
-        //     extend: {},
-        //   }),
-        //   format: (item: any) => ({
-        //     label: item.name,
-        //     value: item.id,
-        //   }),
-        // },
-      },
-    },
-    {
-      title: t('Địa chỉ cụ thể'),
-      name: 'email',
-      formItem: {
-        tabIndex: 1,
-        col: 3,
-        rules: [{ type: 'required' }],
-      },
-    },
-    {
-      title: t('Họ tên đại diện'),
-      name: 'name',
-      formItem: {
-        tabIndex: 1,
-        col: 4,
-        rules: [{ type: 'required' }],
-      },
-    },
-    {
-      title: t('Số điện thoại đại diện'),
-      name: 'password',
-      formItem: {
-        tabIndex: 2,
-        col: 4,
-        rules: [{ type: 'required' }],
-      },
-    },
-    {
-      title: t('Email đại diện'),
-      name: 'email',
-      formItem: {
-        tabIndex: 1,
-        col: 4,
-        rules: [{ type: 'required' }],
-      },
-    },
-    {
-      title: t('Ghi chú'),
-      name: 'email',
-      formItem: {
-        type: 'textarea',
-        tabIndex: 1,
-        col: 12,
+      title: t(`Tình trạng`),
+      name: "isActive",
+      tableItem: {
+        width: 160,  
+        align: 'center',
+        render: (text: string) => text
+        ? (<div className='bg-green-100 text-center p-1 border border-green-500 text-green-600 rounded'>Đang bán</div>) 
+        : (<div className='bg-red-100 text-center p-1 border border-red-500 text-red-600 rounded'>Hết</div>),
       },
     },
   ];

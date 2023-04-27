@@ -20,11 +20,15 @@ const Page = () => {
   const param = JSON.parse(queryParams || '{}');
   const { id } = useParams();
 
+  
+  console.log("userFacade111",UserFacade());
+  
+
   useEffect(() => {
     if (!result?.data) get({});
 
     if (id) userFacade.getById({ id });
-    else userFacade.set({ data: {} });
+    else userFacade.set({ data: {} });  
 
     return () => {
       isReload.current && userFacade.get(param);

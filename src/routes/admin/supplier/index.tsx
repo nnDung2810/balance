@@ -11,10 +11,12 @@ import { TableRefObject } from '@models';
 
 const Page = () => {
   const { t } = useTranslation();
-  const { formatDate, user } = GlobalFacade();
+  const { user } = GlobalFacade();
   const navigate = useNavigate();
 
   const supplierFacade = SupplierFacade();
+  
+  
   useEffect(() => {
     switch (supplierFacade.status) {
       case 'delete.fulfilled':
@@ -25,7 +27,7 @@ const Page = () => {
 
   const dataTableRef = useRef<TableRefObject>(null);
   return (
-    <div className=' pr-5 h-full pb-10'>
+    <div className=' h-full pb-10'>
       <div className='bg-white rounded-xl p-4 pb-10 relative text-center '>
         <DataTable
           facade={supplierFacade}
@@ -39,7 +41,6 @@ const Page = () => {
           }
           columns={ColumnTableSupplier({
             t,
-            formatDate,
             navigate,
             dataTableRef,
           })}
