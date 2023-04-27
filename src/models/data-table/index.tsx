@@ -29,10 +29,10 @@ export class TableGet {
   format?: (item: any) => CheckboxOptionType;
   params?: (fullTextSearch: string, value?: any) => any;
 }
-
+ 
 export class TableItemFilterList {
   label?: string;
-  value?: string | number;
+  value?: number | string ;
 }
 export class TableRefObject {
   onChange?: (request?: any) => void;

@@ -66,7 +66,7 @@ const Page = () => {
           values={{ ...data }}
           className="intro-x p-6 pb-4 pt-3 rounded-lg w-full"
           columns={ColumnFormUser({ t})}
-          handSubmit={handleSubmit}
+          // handSubmit={handleSubmit}
           disableSubmit={isLoading}
           // handCancel={handleBack}
           extendButton={() => (

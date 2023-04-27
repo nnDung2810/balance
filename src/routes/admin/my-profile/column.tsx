@@ -82,6 +82,69 @@ export const ColumnProfile = ({ t }: any) => {
       name: 'account',
       title: '',
       formItem: {
+<<<<<<< HEAD
+        type: 'tab',
+        tab: {
+          label: 'myProfile',
+          value: 'myProfile',
+        },
+        list: [
+          { label: 'Thông tin cá nhân', value: '1' },
+          { label: 'Đổi mật khẩu', value: '2' },
+        ],
+        column:[
+            {
+              title: t('Họ và tên'),
+              name: 'name',
+              formItem: {
+                col: 6,
+                rules: [{ type: 'required' }],
+              },
+            },
+            {
+              title: t('Email'),
+              name: 'email',
+              formItem: {
+                col: 6,
+                rules: [{ type: 'required' }, { type: 'email' }, { type: 'min', value: 6 }],
+              },
+            },
+            {
+              title: t('Số điện thoại'),
+              name: 'phoneNumber',
+              formItem: {
+                col: 6,
+                rules: [{ type: 'required' }, { type: 'phone', min: 10, max: 15 }],
+              },
+            },
+            {
+              title: t('Ghi chú'),
+              name: 'note',
+              formItem: {
+                type: 'textarea',
+              },
+            },
+        ]
+      },
+    },
+    
+  ];
+  return col;
+};
+export const ColumnProfileAvatar = ({ t }: any) => {
+  const col: FormModel[] = [
+    {
+      name: 'profileImage',
+      formItem: {
+        type: 'upload',
+        mode: 'multiple',
+      },
+    },
+    {
+      name: 'name',
+      formItem: {
+=======
+>>>>>>> 357aa657f0714dde97a545a4a3b36db03e13a379
         render: (form, values) => {
           return (
             <div>
@@ -214,6 +277,10 @@ export const ColumnProfile = ({ t }: any) => {
           );
         },
       },
+<<<<<<< HEAD
+      // title: t('Avatar'),
+=======
+>>>>>>> 357aa657f0714dde97a545a4a3b36db03e13a379
     },
   ];
   return col;

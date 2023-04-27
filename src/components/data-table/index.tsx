@@ -207,7 +207,7 @@ export const DataTable = forwardRef(
           </div>
         );
       },
-      filterIcon: () => <CheckCircle className="h-4 w-4 fill-gray-600" />,
+      filterIcon: () => <CheckCircle className="h-4 w-4 fill-orange-400" />,
     });
     // noinspection JSUnusedGlobalSymbols
     const getColumnSearchCheckbox = (filters: any, key: any, get: TableGet = {}) => ({
@@ -375,7 +375,7 @@ export const DataTable = forwardRef(
         page: tempPageIndex,
         perPage: tempPageSize,
         sorts: JSON.stringify(tempSort),
-        filter: JSON.stringify(cleanObjectKeyNull(filters)),
+        //filter: JSON.stringify(cleanObjectKeyNull(filters)),
         fullTextSearch: tempFullTextSearch,
       });
       onChange && onChange(tempParams);
@@ -416,7 +416,7 @@ export const DataTable = forwardRef(
               />
               {!params[fullTextSearch] ? (
                 <Search
-                  className="w-5 h-5 my-1 fill-gray-500 text-lg las absolute top-1.5 left-3 z-10"
+                  className="w-5 h-5 my-1 fill-gray-500 text-lg bg-blue-50 las absolute top-1.5 left-3 z-10"
                   onClick={() => {
                     if (params[fullTextSearch]) {
                       (document.getElementById(idTable.current + '_input_search') as HTMLInputElement).value = '';
@@ -470,8 +470,8 @@ export const DataTable = forwardRef(
             {showPagination && (
               <Pagination
                 total={result?.pagination?.total}
-                page={+params!.page!}
-                perPage={+params!.perPage!}
+                page={+params.page}
+                perPage={+params.perPage}
                 pageSizeOptions={pageSizeOptions}
                 pageSizeRender={pageSizeRender}
                 pageSizeWidth={pageSizeWidth}
@@ -498,7 +498,7 @@ type Type = {
   defaultRequest?: any;
   pageIndex?: string;
   pageSize?: string;
-  // type?: string;
+  type?: string;
   sort?: string;
   filter?: string;
   fullTextSearch?: string;
