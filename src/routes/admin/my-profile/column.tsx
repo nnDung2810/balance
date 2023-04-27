@@ -82,7 +82,6 @@ export const ColumnProfile = ({ t }: any) => {
       name: 'account',
       title: '',
       formItem: {
-<<<<<<< HEAD
         type: 'tab',
         tab: {
           label: 'myProfile',
@@ -127,7 +126,7 @@ export const ColumnProfile = ({ t }: any) => {
         ]
       },
     },
-    
+
   ];
   return col;
 };
@@ -143,8 +142,6 @@ export const ColumnProfileAvatar = ({ t }: any) => {
     {
       name: 'name',
       formItem: {
-=======
->>>>>>> 357aa657f0714dde97a545a4a3b36db03e13a379
         render: (form, values) => {
           return (
             <div>
@@ -277,10 +274,6 @@ export const ColumnProfileAvatar = ({ t }: any) => {
           );
         },
       },
-<<<<<<< HEAD
-      // title: t('Avatar'),
-=======
->>>>>>> 357aa657f0714dde97a545a4a3b36db03e13a379
     },
   ];
   return col;
