@@ -92,38 +92,6 @@ const Page = () => {
       <Spin className=""  spinning={isLoading}>
         <Form
           className=" "
-          // columns={[
-          //   {
-          //     title: t('Họ và tên'),
-          //     name: 'name',
-          //     formItem: {
-          //       rules: [{ type: 'required' }],
-          //     },
-          //   },
-          //   {
-          //     title: t('Email'),
-          //     name: 'email',
-          //     formItem: {
-          //       col: 6,
-          //       rules: [{ type: 'required' }, { type: 'email' }, { type: 'min', value: 6 }],
-          //     },
-          //   },
-          //   {
-          //     title: t('Số điện thoại'),
-          //     name: 'phoneNumber',
-          //     formItem: {
-          //       col: 6,
-          //       rules: [{ type: 'required' }, { type: 'phone', min: 10, max: 15 }],
-          //     },
-          //   },
-          //   {
-          //     title: t('Ghi chú'),
-          //     name: 'note',
-          //     formItem: {
-          //       type: 'textarea',
-          //     },
-          //   },
-          // ]}
           columns={ColumnProfile({t})}
           handSubmit={putProfile}
           disableSubmit={isLoading}
