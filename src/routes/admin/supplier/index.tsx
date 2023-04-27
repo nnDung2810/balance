@@ -24,8 +24,6 @@ const Page = () => {
     }
   }, [supplierFacade.status]);
 
-  console.log(supplierFacade)
-
   const dataTableRef = useRef<TableRefObject>(null);
   return (
     <div className=' pr-5 h-full pb-10'>
@@ -34,7 +32,7 @@ const Page = () => {
           facade={supplierFacade}
           ref={dataTableRef}
           xScroll = '1440px'
-          onRow={(data : any) => ({ onDoubleClick: () => navigate(routerLinks('Supplier/Edit') + '/' + data.id )})}
+          onRow={() => ({ onDoubleClick: () => null })}
           pageSizeRender={(sizePage: number) => sizePage}
           pageSizeWidth={'50px'}
           paginationDescription={(from: number, to: number, total: number) =>

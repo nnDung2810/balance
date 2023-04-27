@@ -10,8 +10,6 @@ import { CommonEntity, PaginationQuery } from '@models';
 const name = 'sub-organization';
 export const action = {
   ...new Action<StoreManagement>(name),
-
-
   // post: createAsyncThunk(name + '/post', async (values: StoreManagement) => {
   //   // if (values.avatar) values.avatar = values.avatar[0].url;
   //   const { data, message } = await API.post<StoreManagement>(routerLinks(name, 'api'), values);
@@ -25,8 +23,6 @@ export const action = {
   //   return data;
   // }),
 };
-
-console.log("actionstore",action);
 export const storeSlice = createSlice(new Slice<StoreManagement>(action));
 
 export const StoreFacade = () => {

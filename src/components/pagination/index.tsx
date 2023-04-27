@@ -4,31 +4,31 @@ import classNames from 'classnames';
 import { Arrow, DoubleArrow } from '@svgs';
 
 export const Pagination: any = ({
-  total =4,
+  total = 4,
   pageSizeOptions = [],
-  perPage = 10,
-  page = 1,
+  pageSize = 10,
+  pageIndex = 1,
   queryParams = () => null,
   pageSizeRender = (sizePage: number) => sizePage + ' / page',
   pageSizeWidth = '115px',
   paginationDescription = (from: number, to: number, total: number) => from + '-' + to + ' of ' + total + ' items',
   idElement = 'pagination',
   className = 'pagination',
-  firstPageDisabled = ({ page }: { page: number }) => page - 10 < 0,
-  lastPageDisabled = ({ page, lastIndex }: { page: number; lastIndex: number }) => page + 10 > lastIndex,
-  firstPage = ({ page }: { page: number }) => page - 10,
-  lastPage = ({ page }: { page: number }) => page + 10,
+  firstPageDisabled = ({ pageIndex }: { pageIndex: number }) => pageIndex - 10 < 0,
+  lastPageDisabled = ({ pageIndex, lastIndex }: { pageIndex: number; lastIndex: number }) => pageIndex + 10 > lastIndex,
+  firstPage = ({ pageIndex }: { pageIndex: number }) => pageIndex - 10,
+  lastPage = ({ pageIndex }: { pageIndex: number }) => pageIndex + 10,
   showSizeChanger = true,
   showTotal = true,
 }: Type) => {
-  const listOfPageItem = useRef<{ disabled: boolean; type: string; index: number }[]>([]);
-  const [ranges, setRanges] = useState<[number, number]>([(page - 1) * perPage + 1, Math.min(page * perPage, total)]);
+  const listOfPageItem = useRef<any>([]);
+  const [ranges, setRanges] = useState<any>([]);
   const [lastNumber, set_lastNumber] = useState(0);
   const buildIndexes = useCallback(() => {
-    const lastIndex = getLastIndex(total, perPage);
-    listOfPageItem.current = getListOfPageItem(page, lastIndex);
-    setRanges([(page - 1) * perPage + 1, Math.min(page * perPage, total)]);
-  }, [page, perPage, total]);
+    const lastIndex = getLastIndex(total, pageSize);
+    listOfPageItem.current = getListOfPageItem(pageIndex, lastIndex);
+    setRanges([(pageIndex - 1) * pageSize + 1, Math.min(pageIndex * pageSize, total)]);
+  }, [pageIndex, pageSize, total]);
 
   useEffect(() => {
     buildIndexes();
@@ -38,62 +38,57 @@ export const Pagination: any = ({
     return Math.ceil(total / pageSize);
   };
 
-  const onPageSizeChange = (size: number) => {
-    queryParams({ perPage: size, page });
+  const onPageSizeChange = (size: any) => {
+    queryParams({ pageSize: size, current: pageIndex });
     buildIndexes();
   };
 
-  const onPageIndexChange = ({ type, index }: { type: string; index: number }) => {
+  const onPageIndexChange = ({ type, index }: any) => {
     switch (type) {
       case 'prev':
-        index = page - 1;
+        index = pageIndex - 1;
         break;
       case 'prev_10':
-        index = firstPage({ page, lastIndex: lastNumber });
+        index = firstPage({ pageIndex, lastIndex: lastNumber });
         break;
       case 'next':
-        index = page + 1;
+        index = pageIndex + 1;
         break;
       case 'next_10':
-        index = lastPage({ page, lastIndex: lastNumber });
+        index = lastPage({ pageIndex, lastIndex: lastNumber });
         break;
       default:
     }
-    queryParams({ perPage, page: index });
+    queryParams({ pageSize, current: index });
   };
 
   const getListOfPageItem = (pageIndex: number, lastIndex: number) => {
-    const concatWithPrevNext = (listOfPage: { index: number; type: string; disabled: boolean }[]) => {
+    const concatWithPrevNext = (listOfPage: any) => {
       const prev10Item = {
         type: 'prev_10',
-        index: -1,
-        disabled: firstPageDisabled({ page, lastIndex }),
+        disabled: firstPageDisabled({ pageIndex, lastIndex }),
       };
       const prevItem = {
         type: 'prev',
-        index: -1,
         disabled: pageIndex === 1,
       };
       const nextItem = {
         type: 'next',
-        index: -1,
         disabled: pageIndex === lastIndex,
       };
       const next10Item = {
         type: 'next_10',
-        index: -1,
-        disabled: lastPageDisabled({ page, lastIndex }),
+        disabled: lastPageDisabled({ pageIndex, lastIndex }),
       };
       set_lastNumber(listOfPage.length);
       return [prev10Item, prevItem, ...listOfPage, nextItem, next10Item];
     };
     const generatePage = (start: number, end: number) => {
-      const list: { index: number; type: string; disabled: boolean }[] = [];
+      const list = [];
       for (let i = start; i <= end; i++) {
         list.push({
           index: i,
           type: 'page_' + i,
-          disabled: false,
         });
       }
       return list;
@@ -103,7 +98,7 @@ export const Pagination: any = ({
       return concatWithPrevNext(generatePage(1, lastIndex));
     } else {
       const generateRangeItem = (selected: number, last: number) => {
-        let listOfRange: { index: number; type: string; disabled: boolean }[];
+        let listOfRange;
         const prevFiveItem = {
           type: 'prev_5',
           index: 0,
@@ -132,14 +127,14 @@ export const Pagination: any = ({
   return (
     total > 0 && (
       <div
-        className={classNames(className, 'flex flex-col md:flex-row md:items-center justify-between pt-4 pb-7 select-none ')}
+        className={classNames(className, 'flex flex-col md:flex-row md:items-center justify-between mt-3 select-none')}
       >
         <div className={'left'}>
           <label htmlFor={idElement + '_page_size'}>
             {showSizeChanger && (
               <Select
                 id={idElement + '_page_size'}
-                defaultValue={perPage}
+                defaultValue={pageSize}
                 style={{ minWidth: pageSizeWidth }}
                 onChange={(value) => onPageSizeChange(value)}
               >
@@ -151,11 +146,10 @@ export const Pagination: any = ({
               </Select>
             )}
           </label>
-          {showTotal && <span className="ml-3 text-black">{paginationDescription(ranges[0],ranges[1],total)}</span>}
+          {showTotal && <span className="ml-3 text-black">{paginationDescription(ranges[0], ranges[1], total)}</span>}
         </div>
-        <div className="mt-3 sm:mt-0 right flex justify-center border border-gray-100 p-1 rounded-xl bg-white">
+        <div className="mt-3 sm:mt-0 right flex justify-center p-1 rounded-xl bg-white">
           <div className="flex sm:flex-wrap justify-center duration-300 transition-all">
-            {/* { disabled: boolean; type: string; index: number;   } */}
             {listOfPageItem.current.map((item: any, index: number) => (
               <button
                 type={'button'}
@@ -163,7 +157,7 @@ export const Pagination: any = ({
                 key={index}
                 id={idElement + '_' + item.type}
                 className={classNames(
-                  'text-center duration-300 transition-all p-1 text-sm font-medium leading-normal relative',
+                  'text-center p-1 mx-2 text-sm font-medium leading-normal relative',
                   {
                     'text-green-700 hover:text-green-700':
                     pageIndex !== item.index && !['next_5', 'prev_5'].includes(item.type),
@@ -193,18 +187,18 @@ export const Pagination: any = ({
 type Type = {
   total: number;
   pageSizeOptions: number[];
-  perPage: number;
-  page: number;
-  queryParams: ({ perPage, page }: { perPage: number; page: number }) => void;
+  pageSize: number;
+  pageIndex: number;
+  queryParams: ({ pageSize, current }: { pageSize: number; current: number }) => void;
   pageSizeRender: (sizePage: number) => string;
   pageSizeWidth: string;
   paginationDescription: (from: number, to: number, total: number) => string;
   idElement: string;
   className: string;
-  firstPageDisabled: ({ page, lastIndex }: { page: number; lastIndex: number }) => boolean;
-  lastPageDisabled: ({ page, lastIndex }: { page: number; lastIndex: number }) => boolean;
-  firstPage: ({ page, lastIndex }: { page: number; lastIndex: number }) => number;
-  lastPage: ({ page, lastIndex }: { page: number; lastIndex: number }) => number;
+  firstPageDisabled: ({ pageIndex, lastIndex }: { pageIndex: number; lastIndex: number }) => boolean;
+  lastPageDisabled: ({ pageIndex, lastIndex }: { pageIndex: number; lastIndex: number }) => boolean;
+  firstPage: ({ pageIndex, lastIndex }: { pageIndex: number; lastIndex: number }) => number;
+  lastPage: ({ pageIndex, lastIndex }: { pageIndex: number; lastIndex: number }) => number;
   showSizeChanger: boolean;
   showTotal: boolean;
 };

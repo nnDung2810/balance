@@ -23,11 +23,11 @@ const action = {
     const { data } = await API.get<User>(`${routerLinks(name, 'api')}/get-my-info`);
     return data || {};
   }),
-  putProfile: createAsyncThunk(name + '/', async (values: User) => {
+  putProfile: createAsyncThunk(name + '/putProfile', async (values: User) => {
     // if (values.avatar && typeof values.avatar === 'object') {
     //   values.avatar = values.avatar[0].url;
     // }
-    const { data } = await API.put<User>(`${routerLinks(name, 'api')}/`, values);
+    const { data } = await API.put<User>(`${routerLinks(name, 'api')}/profile`, values);
     return data || {};
   }),
   login: createAsyncThunk(name + '/sign-in', async (values: { password: string; username: string }) => {

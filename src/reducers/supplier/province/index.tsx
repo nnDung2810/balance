@@ -13,7 +13,7 @@ export const action = {
     API.get<Responses<string[]>>(`${routerLinks(name, 'api')}/permission`),
   ),
 };
- console.log("actionsupplier",action);
+console.log("action",action);
 
 export const supplierRoleSlice = createSlice(new Slice<SupplierRole>(action, { keepUnusedDataFor: 9999 }));
 export const SupplierRoleFacade = () => {
