@@ -1,6 +1,7 @@
 import { FormModel } from '@models';
 import { Eye, User } from '@svgs';
 import { Col, Input, Row, Tabs, Collapse } from 'antd';
+import { Rule } from 'antd/es/form';
 import FormItem from 'antd/es/form/FormItem';
 import TextArea from 'antd/es/input/TextArea';
 import Column from 'antd/es/table/Column';
@@ -79,67 +80,6 @@ const personalInfoColumn1: FormModel[] = [
 export const ColumnProfile = ({ t }: any) => {
   const col: FormModel[] = [
     {
-      name: 'account',
-      title: '',
-      formItem: {
-        type: 'tab',
-        tab: {
-          label: 'myProfile',
-          value: 'myProfile',
-        },
-        list: [
-          { label: 'Thông tin cá nhân', value: '1' },
-          { label: 'Đổi mật khẩu', value: '2' },
-        ],
-        column:[
-            {
-              title: t('Họ và tên'),
-              name: 'name',
-              formItem: {
-                col: 6,
-                rules: [{ type: 'required' }],
-              },
-            },
-            {
-              title: t('Email'),
-              name: 'email',
-              formItem: {
-                col: 6,
-                rules: [{ type: 'required' }, { type: 'email' }, { type: 'min', value: 6 }],
-              },
-            },
-            {
-              title: t('Số điện thoại'),
-              name: 'phoneNumber',
-              formItem: {
-                col: 6,
-                rules: [{ type: 'required' }, { type: 'phone', min: 10, max: 15 }],
-              },
-            },
-            {
-              title: t('Ghi chú'),
-              name: 'note',
-              formItem: {
-                type: 'textarea',
-              },
-            },
-        ]
-      },
-    },
-
-  ];
-  return col;
-};
-export const ColumnProfileAvatar = ({ t }: any) => {
-  const col: FormModel[] = [
-    {
-      name: 'profileImage',
-      formItem: {
-        type: 'upload',
-        mode: 'multiple',
-      },
-    },
-    {
       name: 'name',
       formItem: {
         render: (form, values) => {
@@ -165,31 +105,31 @@ export const ColumnProfileAvatar = ({ t }: any) => {
                         ) : null}
                         <div className='grid gap-5 grid-cols-12'>
                           <React.Fragment>
-                          {item.name === 'email' || item.name === 'phoneNumber'  ? (
-                            <>
-                            <div className='col-span-6'>
-                              <FormItem
-                                {...item.formItem}
-                                label={item.title}
-                                name={item.name}
-                                rules={item.formItem?.rules ? item.formItem.rules.map(rule => ({ ...rule, type: 'string', validator: undefined })) : undefined}
-                                initialValue={values[item.name]}
-                              >
-                                <Input tabIndex={1} className='border-gray-400 rounded-lg' placeholder={'Nhập ' + item.title?.toString().toLocaleLowerCase()} />
-                              </FormItem>
-                            </div>
-                            <div className='col-span-6'>
-                              <FormItem
-                                {...item.formItem}
-                                label={item.title}
-                                name={item.name}
-                                rules={item.formItem?.rules ? item.formItem.rules.map(rule => ({ ...rule, type: 'string', validator: undefined })) : undefined}
-                                initialValue={values[item.name]}
-                              >
-                                <Input tabIndex={1} className='border-gray-400 rounded-lg' placeholder={'Nhập ' + item.title?.toString().toLocaleLowerCase()} />
-                              </FormItem>
-                            </div>
-                            </>
+                            {item.name === 'email' || item.name === 'phoneNumber' ? (
+                              <>
+                                <div className='col-span-6'>
+                                  <FormItem
+                                    {...item.formItem}
+                                    label={item.title}
+                                    name={item.name}
+                                    rules={item.formItem?.rules ? item.formItem.rules.map(rule => ({ ...rule, type: 'string', validator: undefined })) : undefined}
+                                    initialValue={values[item.name]}
+                                  >
+                                    <Input tabIndex={1} className='border-gray-400 rounded-lg' placeholder={'Nhập ' + item.title?.toString().toLocaleLowerCase()} />
+                                  </FormItem>
+                                </div>
+                                <div className='col-span-6'>
+                                  <FormItem
+                                    {...item.formItem}
+                                    label={item.title}
+                                    name={item.name}
+                                    rules={item.formItem?.rules ? item.formItem.rules.map(rule => ({ ...rule, type: 'string', validator: undefined })) : undefined}
+                                    initialValue={values[item.name]}
+                                  >
+                                    <Input tabIndex={1} className='border-gray-400 rounded-lg' placeholder={'Nhập ' + item.title?.toString().toLocaleLowerCase()} />
+                                  </FormItem>
+                                </div>
+                              </>
                             ) : null}
                           </React.Fragment>
                         </div>
@@ -255,26 +195,38 @@ export const ColumnProfileAvatar = ({ t }: any) => {
                 </TabPane>
                 <TabPane tab="Đổi mật khẩu" key="2">
                   {personalInfoColumn1.map((item) => {
+                    const mappedRules = item.formItem?.rules?.map((rule) => {
+                      if (rule.type === 'password') {
+                        return { ...rule, type: 'string', validator: undefined };
+                      }
+                      return rule;
+                    });
                     return (
                       <FormItem
-                        className=''
+                        className=""
                         {...item.formItem}
                         label={item.title}
                         name={item.name}
-                        rules={item.formItem?.rules ? item.formItem.rules.map(rule => ({ ...rule, type: 'string', validator: undefined })) : undefined}
+                        rules={mappedRules as Rule[]}
                         initialValue={values[item.name]}
                       >
-                        <Input  className='rounded-lg' type={item.formItem?.type === 'password' ? 'password' : 'password'} placeholder={item.formItem?.placeholder} />
+                        <Input
+                          className="rounded-lg"
+                          type={item.formItem?.type === 'password' ? 'password' : 'text'}
+                          placeholder={item.formItem?.placeholder}
+                        />
                       </FormItem>
                     );
                   })}
                 </TabPane>
+                Note that the validat
               </Tabs>
             </div>
           );
         },
       },
     },
+
   ];
   return col;
 };
