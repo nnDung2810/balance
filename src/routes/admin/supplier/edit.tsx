@@ -138,11 +138,11 @@ const Page = () => {
                 dataTableRef,
               })}
               rightHeader={
-                <div className={'flex gap-2'}>
+                <div className={'flex h-10 w-36'}>
                   {user && (
                     <Button
-                      className='!bg-white !border !border-gray-600 !text-gray-600 hover:!bg-teal-900 hover:!text-white group'
-                      icon={<Download className="icon-cud !h-5 !w-5 !fill-gray-600 group-hover:!fill-white" />}
+                      className='!bg-white flex justify-between w-full !px-3 !border !border-gray-600 !text-gray-600 hover:!bg-teal-900 hover:!text-white group'
+                      icon={<Download className="icon-cud !h-6 !w-6 !fill-gray-600 group-hover:!fill-white" />}
                       text={t('Xuất file excel')}
                       onClick={() => navigate(routerLinks('Supplier/Excel'))}
                     />

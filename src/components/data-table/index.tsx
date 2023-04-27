@@ -379,7 +379,7 @@ const Hook = forwardRef(
     if (!data) data = result?.data;
     return (
       <div className={classNames(className, 'intro-x rounded-lg bg-white p-5')}>
-        <div className="lg:flex justify-between items-center flex-wrap mb-2.5">
+        <div className="lg:flex justify-between items-center min-h-10  mb-2.5">
           {showSearch ? (
             <div className="relative">
               <input
@@ -435,12 +435,12 @@ const Hook = forwardRef(
               )}
             </div>
           ) : (
-            <div className='grid-cols-1 grid sm:grid-cols-3 lg:grid-cols-4 sm:gap-4'>
+            <div className='min-w-min grid-cols-1 grid sm:grid-cols-3 lg:grid-cols-4 sm:gap-4'>
               <div className='mb-4'>
-                <div className="relative px-4 py-3">
+                <div className="relative w-40 h-10">
                   <input
                     id={idTable.current + '_input_search'}
-                    className="grid grid-cols-1 h-10 rounded-xl text-gray-600 bg-white border border-solid border-gray-100"
+                    className="grid w-full h-full grid-cols-1 py-1.5 px-4 rounded-xl text-gray-600 bg-white border border-solid border-gray-100"
                     defaultValue={params[fullTextSearch]}
                     type="text"
                     placeholder={searchPlaceholder || t('Danh mục chính')}
@@ -468,7 +468,7 @@ const Hook = forwardRef(
                   />
                   {!params[fullTextSearch] ? (
                     <Search
-                      className="w-5 h-5 my-1 fill-gray-500 text-lg las absolute top-1.5 left-3 z-10"
+                      className="w-5 h-5 my-1 fill-gray-500 text-lg las absolute top-1.5 right-3 z-10"
                       onClick={() => {
                         if (params[fullTextSearch]) {
                           (document.getElementById(idTable.current + '_input_search') as HTMLInputElement).value = '';
