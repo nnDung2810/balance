@@ -50,7 +50,7 @@ const personalInfoColumn1: FormModel[] = [
     formItem: {
       col: 6,
       type: 'password',
-      rules: [{ type: 'required' }],
+      rules: [{ type: 'required' }, { type: 'password' }],
       placeholder: 'Nhập mật khẩu'
     },
   },
@@ -60,7 +60,7 @@ const personalInfoColumn1: FormModel[] = [
     formItem: {
       col: 6,
       type: 'password',
-      rules: [{ type: 'required' }, { type: 'min', value: 6 }],
+      rules: [{ type: 'required' }, { type: 'password' }, { type: 'min', value: 6 }],
       placeholder: 'Nhập mật khẩu mới'
     },
   },
@@ -70,7 +70,7 @@ const personalInfoColumn1: FormModel[] = [
     formItem: {
       col: 6,
       type: 'password',
-      rules: [{ type: 'required' }, { type: 'min', value: 6 }],
+      rules: [{ type: 'required' }, { type: 'password' }, { type: 'min', value: 6 }],
       placeholder: 'Xác nhận mật khẩu'
     },
   },
@@ -105,7 +105,7 @@ export const ColumnProfile = ({ t }: any) => {
                         ) : null}
                         <div className='grid gap-5 grid-cols-12'>
                           <React.Fragment>
-                          {item.name === 'email'  ? (
+                          {item.name === 'email' || item.name === 'phoneNumber'  ? (
                             <>
                             <div className='col-span-6'>
                               <FormItem
@@ -204,7 +204,7 @@ export const ColumnProfile = ({ t }: any) => {
                         rules={item.formItem?.rules ? item.formItem.rules.map(rule => ({ ...rule, type: 'string', validator: undefined })) : undefined}
                         initialValue={values[item.name]}
                       >
-                        <Input className='rounded-lg' type={item.name.includes('password') ? 'password' : 'text'} placeholder={item.formItem?.placeholder} />
+                        <Input  className='rounded-lg' type={item.formItem?.type === 'password' ? 'password' : 'password'} placeholder={item.formItem?.placeholder} />
                       </FormItem>
                     );
                   })}
