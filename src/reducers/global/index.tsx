@@ -52,8 +52,8 @@ const action = {
     if (message) await Message.success({ text: message })
     return data;
   }),
-  setPassword: createAsyncThunk(name + '/reset-password', async (values : setPassword) => {
-    const { data, message } = await API.put(`${routerLinks(name, 'api')}/set-password`, values,);
+  setPassword: createAsyncThunk(name + '/update-password-my-acc', async (values : setPassword) => {
+    const { data, message } = await API.put(`${routerLinks(name, 'api')}/update-password-my-acc`, values,);
     if (message) await Message.success({ text: message });
     return data;
   }),
@@ -71,7 +71,8 @@ interface verify {
 }
 interface setPassword {
   password: string;
-  retypedPassword: string;
+  passwordNew: string;
+  passwordComfirm: string;
   email: string;
   uuid: string;
 }

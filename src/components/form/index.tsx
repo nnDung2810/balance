@@ -24,6 +24,7 @@ export const Form = ({
   checkHidden = false,
   extendForm,
   extendButton,
+  extendButtonChangePassword,
   idSubmit = 'idSubmit',
   disableSubmit = false,
   formAnt,
@@ -577,33 +578,35 @@ export const Form = ({
           'lg:col-span-1 lg:col-span-2 lg:col-span-3 lg:col-span-4 lg:col-span-5 lg:col-span-6 lg:col-span-7 lg:col-span-8 lg:col-span-9 lg:col-span-10 lg:col-span-11 lg:col-span-12 hidden'
         }
       />
-      <div className={'group-input'}>
-        <div className={'grid gap-x-5 grid-cols-12'}>
-          {_columns.map(
-            (column: any, index: number) =>
-              (!column?.formItem?.condition ||
-                !!column?.formItem?.condition(values[column.name], form, index, values)) && (
-                <div
-                  className={classNames(
-                    column?.formItem?.classItem,
-                    'col-span-12' +
-                    (' sm:col-span-' +
-                      (column?.formItem?.colTablet
-                        ? column?.formItem?.colTablet
-                        : column?.formItem?.col
-                          ? column?.formItem?.col
-                          : 12)) +
-                    (' lg:col-span-' + (column?.formItem?.col ? column?.formItem?.col : 12)),
-                  )}
-                  key={index}
-                >
-                  {generateForm(column, index)}
-                </div>
-              ),
-          )}
-        </div>
+      <div className={'flex items-center justify-center'}>
+        <div className={'grow'}>
+          <div className={'grid gap-x-5 grid-cols-12'}>
+            {_columns.map(
+              (column: any, index: number) =>
+                (!column?.formItem?.condition ||
+                  !!column?.formItem?.condition(values[column.name], form, index, values)) && (
+                  <div
+                    className={classNames(
+                      column?.formItem?.classItem,
+                      'col-span-12' +
+                      (' sm:col-span-' +
+                        (column?.formItem?.colTablet
+                          ? column?.formItem?.colTablet
+                          : column?.formItem?.col
+                            ? column?.formItem?.col
+                            : 12)) +
+                      (' lg:col-span-' + (column?.formItem?.col ? column?.formItem?.col : 12)),
+                    )}
+                    key={index}
+                  >
+                    {generateForm(column, index)}
+                  </div>
+                ),
+            )}
+          </div>
 
-        {extendForm && extendForm(values)}
+          {extendForm && extendForm(values)}
+        </div>
       </div>
 
       <div
@@ -631,6 +634,16 @@ export const Form = ({
             type={'submit'}
           />
         )}
+        {extendButtonChangePassword && (
+          <Button
+            text={t('Đổi mật khẩu')}
+            id={idSubmit}
+            onClick={() => form && form.submit()}
+            disabled={disableSubmit}
+            className={'w-32 justify-center !bg-teal-800 hover:!bg-teal-700 !border !border-teal-900 max-sm:w-3/5'}
+            type={'submit'}
+          />
+        )}
       </div>
     </AntForm>
   );
@@ -650,6 +663,7 @@ type Type = {
   checkHidden?: boolean;
   extendForm?: (values: any) => JSX.Element;
   extendButton?: (values: any) => JSX.Element;
+  extendButtonChangePassword?: (values: any) => void;
   idSubmit?: string;
   disableSubmit?: boolean;
 };
