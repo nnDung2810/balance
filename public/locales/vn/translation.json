@@ -115,7 +115,7 @@
     }
   },
   "layout": {
-    "footer": "Công ty cổ phần Cồng nghệ Ari. ©{{year}}"
+    "footer": "Copyright ©{{year} ARI Technology Co ., JSC. All rights reserved.}"
   },
   "routes": {
     "auth": {
