@@ -82,7 +82,8 @@
     "Supplier": "Supplier",
     "Supplier/Add": "Add new Supplier",
     "Store": "Store",
-    "Store/Add": "Add new Store"
+    "Store/Add": "Add new Store",
+    "Userinformation":"User information"
   },
   "pages": {
     "User/List": "List User",
@@ -114,7 +115,7 @@
     }
   },
   "layout": {
-    "footer": "Copyright ©2023 ARI Technology Co ., JSC. All rights reserved."
+    "footer": "Copyright ©{{year}} ARI Technology Co ., JSC. All rights reserved."
   },
   "routes": {
     "auth": {
@@ -170,6 +171,8 @@
     "Remaining Leave Day": "Remaining Leave Day",
     "Date of birth": "Date of birth",
     "Name": "Name",
+    "Usercode":"UserCode",
+    "Role":"Role",
     "Is System Admin": "Is System Admin",
     "Permissions": "Permissions",
     "Description": "Description",

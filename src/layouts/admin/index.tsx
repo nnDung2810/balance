@@ -4,15 +4,11 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 import classNames from 'classnames';
 import { useLocation } from 'react-router-dom';
-// import { initializeApp } from 'firebase/app';
-// import { getMessaging, isSupported, getToken, onMessage } from 'firebase/messaging';
 import { routerLinks } from '@utils';
 import { Avatar } from '@components/avatar';
 import { GlobalFacade } from '@reducers';
 import Menu1 from './menu';
-// import { firebaseConfig } from 'variable';
-import './index.less';
-import { Chevronleft, LeftArrow, Logo, RightArrow, Menu, ArrowBack, User1, Key, Out } from '@svgs';
+import { LeftArrow, RightArrow, Menu, ArrowBack, User1, Key } from '@svgs';
 import Logo1 from '../../assets/images/logo.png';
 
 const Layout = ({ children }: PropsWithChildren) => {
@@ -41,29 +37,6 @@ const Layout = ({ children }: PropsWithChildren) => {
       set_isDesktop(window.innerWidth > 767);
     }
     window.addEventListener('resize', handleResize, { passive: true });
-
-    // const init = async () => {
-    //   if (await isSupported()) {
-    //     try {
-    //       const defaultApp = initializeApp(firebaseConfig);
-    //       const messaging = getMessaging(defaultApp);
-    //       const firebaseToken = await getToken(messaging);
-    //       console.log(firebaseToken);
-    //       onMessage(messaging, async (payload) => {
-    //         antNoti.open({
-    //           message: <strong>{payload.notification.title}</strong>,
-    //           description: payload.notification.body,
-    //           icon: <i className="las la-info-circle text-4xl text-blue-600" />,
-    //           // onClick: () => {},
-    //         });
-    //       });
-    //     } catch (e) {
-    //       console.log(e);
-    //     }
-    //   }
-    // };
-    // init();
-
     return () => window.removeEventListener('resize', handleResize, true);
   }, []);
 
@@ -85,7 +58,6 @@ const Layout = ({ children }: PropsWithChildren) => {
       )}
     >
       <div className="flex items-center justify-end sm:justify-between px-5 h-20">
-        {/* <h1 className={'text-xl font-bold hidden sm:block'}>{t('pages.' + title)}</h1> */}
 
         <div className="flex items-center gap-5 absolute right-6">
           <Select value={globalFacade?.language} onChange={(e: 'vn' | 'en') => globalFacade.setLanguage(e)}>
@@ -99,7 +71,7 @@ const Layout = ({ children }: PropsWithChildren) => {
             </Select.Option>
           </Select>
           <Dropdown
-            trigger={[ 'click']}
+            trigger={['click']}
             menu={{
               items: [
                 {
@@ -119,10 +91,10 @@ const Layout = ({ children }: PropsWithChildren) => {
                   label: (
                     <div className='flex'>
                       <div className='flex items-center'>
-                        <User1 className='w-5 h-5 pr-2 text-black'/>
+                        <User1 className='w-5 h-5 pr-2 text-black' />
                       </div>
                       <div onClick={() => navigate(routerLinks('MyProfile'), { replace: true })}>
-                      {t('routes.admin.Layout.My Profile')}
+                        {t('routes.admin.Layout.My Profile')}
                       </div>
                     </div>
                   ),
@@ -132,7 +104,7 @@ const Layout = ({ children }: PropsWithChildren) => {
                   label: (
                     <div className='flex'>
                       <div className='flex items-center'>
-                        <Key className='w-5 h-5 pr-2 text-black'/>
+                        <Key className='w-5 h-5 pr-2 text-black' />
                       </div>
                       <div onClick={() => navigate(routerLinks('ResetPassword'), { replace: true })}>
                         {t('routes.admin.Layout.Change Password')}
@@ -153,10 +125,6 @@ const Layout = ({ children }: PropsWithChildren) => {
             placement="bottomRight"
           >
             <section className="flex items-center" id={'dropdown-profile'}>
-              {/* <div className="text-right leading-none mr-3 hidden sm:block">
-                <div className="font-bold text-black text-lg leading-snug mb-0.5">{user?.name}</div>
-                <div className="text-gray-500">{user?.email}</div>
-              </div> */}
               <Avatar src="/assets/images/avatar.jpeg" size={10} />
             </section>
           </Dropdown>
@@ -169,7 +137,7 @@ const Layout = ({ children }: PropsWithChildren) => {
       <div className="leading-5 leading-10" />
       <div className='h-24 relative'>
         <div className='absolute top-0 left-0 right-0'>
-        <Header isCollapsed={isCollapsed} isDesktop={isDesktop} />
+          <Header isCollapsed={isCollapsed} isDesktop={isDesktop} />
         </div>
       </div>
       <div
@@ -186,31 +154,20 @@ const Layout = ({ children }: PropsWithChildren) => {
 
         <div className='flex'>
           <div
-              className={classNames('max-md:mr-3', {
-                'is-active': (isCollapsed && isDesktop) || (!isCollapsed && !isDesktop),
-              })}
-              onClick={() => {set_isCollapsed(!isCollapsed),set_isDesktop(isDesktop)}}
-            >
-              { (isCollapsed && !isDesktop) && <Menu className = "w-9 text-black select-none"/> }
-              { (!isCollapsed && !isDesktop) && <ArrowBack className = "w-9 text-black select-none"/> }
-
-              {/* <span className="line" />
-              <span className="line" />
-              <span className="line" /> */}
-            </div>
+            className={classNames('max-md:mr-3', {
+              'is-active': (isCollapsed && isDesktop) || (!isCollapsed && !isDesktop),
+            })}
+            onClick={() => { set_isCollapsed(!isCollapsed), set_isDesktop(isDesktop) }}
+          >
+            {(isCollapsed && !isDesktop) && <Menu className="w-9 text-black select-none" />}
+            {(!isCollapsed && !isDesktop) && <ArrowBack className="w-9 text-black select-none" />}
+          </div>
           <a href="/" className="flex items-center">
-            {/* <Logo className={classNames('w-10 h-10 mr-3',
-                {
-                  'opacity-100 text-lg': !isCollapsed && isDesktop || isCollapsed && !isDesktop,
-                  'opacity-0 text-[0px] hidden': isCollapsed && isDesktop,
-                },)} /> */}
-
             <img src={Logo1} className={classNames('w-12 mr-3 rounded max-md:',
-                {
-                  'opacity-100 text-lg w-12': !isCollapsed && isDesktop || isCollapsed && !isDesktop,
-                  'opacity-0 text-[0px] hidden': isCollapsed && isDesktop,
-                  // 'opacity-100 text-xl': isCollapsed && !isDesktop,
-                },)}></img>
+              {
+                'opacity-100 text-lg w-12': !isCollapsed && isDesktop || isCollapsed && !isDesktop,
+                'opacity-0 text-[0px] hidden': isCollapsed && isDesktop,
+              },)}></img>
             <div
               id={'name-application'}
               className={classNames(
@@ -229,10 +186,10 @@ const Layout = ({ children }: PropsWithChildren) => {
           className={classNames('hamburger', {
             'is-active': (isCollapsed && isDesktop) || (!isCollapsed && !isDesktop),
           })}
-          onClick={() => {set_isCollapsed(!isCollapsed),set_isDesktop(isDesktop)}}
+          onClick={() => { set_isCollapsed(!isCollapsed), set_isDesktop(isDesktop) }}
         >
-          { (!isCollapsed && isDesktop) && <LeftArrow className = "w-9 text-white"/> }
-          { (isCollapsed && isDesktop) && <RightArrow className = "w-9 text-white"/> }
+          {(!isCollapsed && isDesktop) && <LeftArrow className="w-9 text-white" />}
+          {(isCollapsed && isDesktop) && <RightArrow className="w-9 text-white" />}
 
         </div>
       </div>
@@ -253,7 +210,6 @@ const Layout = ({ children }: PropsWithChildren) => {
         })}
       >
         <Menu1 isCollapsed={isCollapsed} />
-        {/* permission={user?.role?.permissions} */}
       </div>
       {!isCollapsed && !isDesktop && (
         <div className={'w-full h-full fixed bg-gray-100 opacity-50 z-[1]'} onClick={() => set_isCollapsed(true)} />
@@ -265,8 +221,7 @@ const Layout = ({ children }: PropsWithChildren) => {
           'ml-16': isCollapsed && isDesktop,
         })}
       >
-        <div className={''}>
-          {/* <h1 className={'text-xl font-bold block sm:hidden pb-5'}>{t('pages.' + title)}</h1> */}
+        <div className={'h-[calc(100vh-9rem)]'}>
           <h1 className={'text-2xl text-teal-900 font-bold block pb-5'}>{t('titles.' + title)}</h1>
           {children}
         </div>

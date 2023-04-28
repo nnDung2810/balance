@@ -33,8 +33,8 @@
       "Enter": "Nhập",
       "Upload": "Tải lên",
       "modal": {
-        "save": "Lưu lại",
-        "cancel": "Huỷ bỏ"
+        "save": "Lưu",
+        "cancel": "Trở Về"
       },
       "Select Date": "Chọn ngày"
     },
@@ -82,7 +82,8 @@
     "Supplier": "Quản lý nhà cung cấp",
     "Supplier/Add": "Thêm nhà cung cấp",
     "Store": "Quản lý cửa hàng",
-    "Store/Add": "Thêm cửa hàng"
+    "Store/Add": "Thêm cửa hàng",
+    "Userinformation":"Thông tin người dùng"
   },
   "pages": {
     "Login": "Đăng Nhập",
@@ -115,7 +116,7 @@
     }
   },
   "layout": {
-    "footer": "Copyright ©{{year} ARI Technology Co ., JSC. All rights reserved.}"
+    "footer": "Copyright ©{{year}} ARI Technology Co., JSC. Đã đăng ký Bản quyền."
   },
   "routes": {
     "auth": {
@@ -171,6 +172,8 @@
     "Remaining Leave Day": "Ngày phép còn lại",
     "Date of birth": "Ngày sinh",
     "Name": "Tên",
+    "Usercode":"Mã Người Dùng",
+    "Role":"Vai trò",
     "Is System Admin": "Là quản trị viên hệ thống",
     "Permissions": "Cho phép",
     "Description": "Mô tả",

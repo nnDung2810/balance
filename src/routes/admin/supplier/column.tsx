@@ -47,17 +47,17 @@ export const ColumnTableSupplier = ({ t, navigate, dataTableRef }: any) => {
       name: ('address'),
       tableItem: {
         width: 555,
-        render: (value: any,item: any) => item?.address?.street + ', ' + item?.address?.ward?.name + ', ' + item?.address?.district?.name + ', ' + item?.address?.province?.name,
+        render: (value: any, item: any) => item?.address?.street + ', ' + item?.address?.ward?.name + ', ' + item?.address?.district?.name + ', ' + item?.address?.province?.name,
       }
     },
     {
       title: t(`supplier.Representative`),
       name: 'contract',
       tableItem: {
-        width: 242  ,
+        width: 242,
         // filter: { type: 'search' },
         // sorter: true,
-        render: (value: any,item: any) => item?.contract[0].name,
+        render: (value: any, item: any) => item?.contract[0].name,
       },
     },
     {
@@ -67,7 +67,7 @@ export const ColumnTableSupplier = ({ t, navigate, dataTableRef }: any) => {
         width: 115,
         // filter: { type: 'search' },
         // sorter: true,
-        render: (value: any,item: any) => item?.userRole[0].userAdmin.phoneNumber,
+        render: (value: any, item: any) => item?.userRole[0].userAdmin.phoneNumber,
       },
     },
     {
@@ -77,15 +77,15 @@ export const ColumnTableSupplier = ({ t, navigate, dataTableRef }: any) => {
         width: 100,
         align: 'center',
         render: (text: string) => text
-        ? (<div className='bg-green-100 text-center p-1 border border-green-500 text-green-600 rounded'>Đã ký</div>)
-        : (<div className='bg-red-100 text-center p-1 border border-red-500 text-red-600 rounded'>Chờ ký</div>),
+          ? (<div className='bg-green-100 text-center p-1 border border-green-500 text-green-600 rounded'>Đã ký</div>)
+          : (<div className='bg-red-100 text-center p-1 border border-red-500 text-red-600 rounded'>Chờ ký</div>),
       },
     },
   ];
   return col;
 };
 
-export const ColumnFormSupplier= ({ t, listRole }: any) => {
+export const ColumnFormSupplier = ({ t, listRole }: any) => {
 
   const col: FormModel[] = [
     {

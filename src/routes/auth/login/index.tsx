@@ -7,9 +7,7 @@ import { ModalForm } from '@components/modal/form';
 
 import { routerLinks } from '@utils';
 import { GlobalFacade } from '@reducers';
-import { ColumnLogin } from './column';
 import { FormModalRefObject } from '@models';
-import '../../../layouts/auth/index.less'
 
 const Page = () => {
   const { t } = useTranslation();
@@ -24,31 +22,64 @@ const Page = () => {
   const modalFormRef = useRef<FormModalRefObject>(null);
   return (
     <Fragment>
-      <div className="text-center mb-8">
-        <h1 className="intro-x text-5xl mb-10 font-bold text-teal-900 leading-10 max-md:text-3xl max-lg:leading-8" id={'title-login'}>
+      <div className="mb-8">
+        <h1 className="intro-x text-4xl mb-3 font-bold" id={'title-login'}>
           {t('routes.auth.login.title')}
         </h1>
-        <h5 className="intro-x font-semibold tracking-wide text-teal-900 ">{t('routes.auth.login.subTitle')}</h5>
+        <h5 className="intro-x font-medium text-gray-300">{t('routes.auth.login.subTitle')}</h5>
       </div>
-      <div className='mx-auto w-3/4'>
-        <Spin spinning={isLoading} >
-          <Form
-            values={{ ...data }}
-            className="intro-x ant-form1"
-            columns={ColumnLogin({ t })}
-            textSubmit={'routes.auth.login.Log In'}
-            handSubmit={login}
-            disableSubmit={isLoading}
-
-          />
-        </Spin>
-        <div className="mt-3 text-right">
-          <button className={'text-green-900 font-semibold underline text-base hover:no-underline'} onClick={() => navigate(routerLinks('ForgetPassword'))}>
-            {' '}
-            {t('routes.auth.login.Forgot Password')}
-          </button>
-        </div>
+      <Spin spinning={isLoading}>
+        <Form
+          values={{ ...data }}
+          className="intro-x"
+          columns={[
+            {
+              name: 'email',
+              title: t('columns.auth.login.Username'),
+              formItem: {
+                placeholder: t('columns.auth.login.Enter Username'),
+                rules: [{ type: 'required' }, { type: 'email' }, { type: 'min', value: 6 }],
+              },
+            },
+            {
+              name: 'password',
+              title: t('columns.auth.login.password'),
+              formItem: {
+                placeholder: t('columns.auth.login.Enter Password'),
+                type: 'password',
+                rules: [{ type: 'required' }, { type: 'min', value: 6 }],
+              },
+            },
+          ]}
+          textSubmit={'routes.auth.login.Log In'}
+          handSubmit={login}
+          disableSubmit={isLoading}
+        />
+      </Spin>
+      <div className="mt-3 intro-x">
+        {t('routes.auth.login.Account')}
+        <button className={'text-blue-600'} onClick={() => modalFormRef?.current?.handleEdit!()}>
+          {' '}
+          {t('routes.auth.login.Forgot Password')}
+        </button>
       </div>
+      <ModalForm
+        facade={globalFacade}
+        ref={modalFormRef}
+        title={() => 'Quên mật khẩu'}
+        columns={[
+          {
+            name: 'email',
+            title: 'Email',
+            formItem: {
+              placeholder: 'Email',
+              rules: [{ type: 'required' }, { type: 'email' }, { type: 'min', value: 6 }],
+            },
+          },
+        ]}
+        widthModal={400}
+        idElement={'user'}
+      />
     </Fragment>
   );
 };
