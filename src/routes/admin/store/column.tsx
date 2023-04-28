@@ -1,7 +1,7 @@
 import { Popconfirm, Tooltip } from 'antd';
-import React from 'react';
-import { keyRole, routerLinks } from '@utils';
+
 import { DataTableModel, FormModel } from '@models';
+import { ProvinceFacade } from 'src/reducers/address/province';
 
 export const ColumnTableStore = ({ t, navigate, dataTableRef }: any) => {
   const col: DataTableModel[] = [
@@ -50,11 +50,11 @@ export const ColumnTableStore = ({ t, navigate, dataTableRef }: any) => {
   ];
   return col;
 };
-export const ColumnFormStore = () => {
+export const ColumnFormStore = (listProvince: any) => {
   const col: FormModel[] = [
     {
       title: 'Tên cửa hàng',
-      name: 'code',
+      name: 'name',
       formItem: {
         tabIndex: 1,
         col: 6,
@@ -63,77 +63,89 @@ export const ColumnFormStore = () => {
     },
     {
       title: 'Số fax',
-      name: 'code',
+      name: 'fax',
       formItem: {
-        tabIndex: 1,
+        tabIndex: 2,
         col: 6,
         rules: [{ type: 'required' }],
       },
     },
     {
-      name: 'type',
       title: 'Tỉnh/Thành phố',
+      name: 'province',
       formItem: {
-        type: 'select',
+        tabIndex: 3,
         col: 3,
-      },
-    },
-    {
-      name: 'type',
-      title: 'Quận/Huyện',
-      formItem: {
         type: 'select',
-        col: 3,
+        // list: listProvince.map((item: any) => ({
+        //   value: item?.id,
+        //   label: item?.name,
+        // })),
       },
     },
-    {
-      name: 'type',
-      title: 'Phường/Xã',
-      formItem: {
-        type: 'select',
-        col: 3,
-      },
-    },
-    {
-      name: 'type',
-      title: 'Địa chỉ cụ thể',
-      formItem: {
-        type: 'select',
-        col: 3,
-      },
-    },
-    {
-      name: 'type',
-      title: 'Họ tên đại diện',
-      formItem: {
-        col: 4,
-        rules: [{ type: 'required' }],
-      },
-    },
-    {
-      name: 'type',
-      title: 'Số điện thoại đại diện',
-      formItem: {
-        col: 4,
-        rules: [{ type: 'required' }],
-      },
-    },
-    {
-      name: 'type',
-      title: 'Email đại diện',
-      formItem: {
-        col: 4,
-        rules: [{ type: 'required' }],
-      },
-    },
-    {
-      name: 'type',
-      title: 'Ghi chú',
-      formItem: {
-        type: 'textarea',
+    // {
+    //   name: 'address.province.name',
+    //   title: 'Tỉnh/Thành phố',
+    //   formItem: {
+    //     type: 'select',
+    //     col: 3,
+    //   },
+    // },
+    // {
+    //   name: 'address.district.name ',
+    //   title: 'Quận/Huyện',
+    //   formItem: {
+    //     type: 'select',
+    //     col: 3,
+    //   },
+    // },
+    // {
+    //   name: 'address.ward.name ',
+    //   title: 'Phường/Xã',
+    //   formItem: {
+    //     type: 'select',
+    //     col: 3,
+    //   },
+    // },
+    // {
+    //   name: 'address.street',
+    //   title: 'Địa chỉ cụ thể',
+    //   formItem: {
+    //     col: 3,
+    //   },
+    // },
+    // {
+    //   name: 'userRole[0].userAdmin.name',
+    //   title: 'Họ tên đại diện',
+    //   formItem: {
+    //     col: 4,
+    //     rules: [{ type: 'required' }],
+    //   },
+    // },
+    // {
+    //   name: 'userRole[0].userAdmin.phoneNumber',
+    //   title: 'Số điện thoại đại diện',
+    //   formItem: {
+    //     col: 4,
+    //     rules: [{ type: 'required' }],
+    //   },
+    // },
+    // {
+    //   name: 'userRole[0].userAdmin.email',
+    //   title: 'Email đại diện',
+    //   formItem: {
+    //     col: 4,
+    //     rules: [{ type: 'required' }],
+    //   },
+    // },
+    // {
+    //   name: 'note',
+    //   title: 'Ghi chú',
+    //   formItem: {
+    //     type: 'textarea',
         
-      },
-    },
+    //   },
+    // },
   ];
   return col;
 };

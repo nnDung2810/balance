@@ -6,10 +6,11 @@ import { Button } from '@components/button';
 import { DataTable } from '@components/data-table';
 
 import { routerLinks } from '@utils';
-import { StoreFacade } from '@reducers';
+import { DistrictFacade, ProvinceFacade, StoreFacade } from '@reducers';
 import { Plus } from '@svgs';
 import { ColumnTableStore } from './column';
 import { TableRefObject } from '@models';
+
 
 const Page = () => {
   const { t } = useTranslation();
@@ -19,13 +20,22 @@ const Page = () => {
   const storeFace = StoreFacade();
   const { result, isLoading, queryParams, status } = storeFace;
   const param = JSON.parse(queryParams || '{}');
+  /////
+  const provinceFacade = ProvinceFacade()
+  const districtFacade = DistrictFacade();
+  const { data } = districtFacade;
+  /////
   useEffect(() => {
+    console.log(provinceFacade.get({}))
+    if(!result?.data) storeFace.get({})
+
+    if(!data) districtFacade.get('01')
+
     return () => {
       isReload.current && storeFace.get(param);
-      console.log(result?.data)
     };
   }, [result?.data]);
-  console.log(storeFace)
+
   const dataTableRef = useRef<TableRefObject>(null);
   return (
     <DataTable

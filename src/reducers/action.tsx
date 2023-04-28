@@ -27,7 +27,7 @@ export default class Action<T extends CommonEntity> {
     this.getById = createAsyncThunk(
       name + '/getById',
       async ({ id, keyState = 'isVisible' }: { id: string; keyState: keyof State<T> }) => {
-        const { data } = await API.get<T>(`${routerLinks(name, 'api')}/detail/${id}`);
+        const { data } = await API.get<T>(`${routerLinks(name, 'api')}/${id}`);
         return { data, keyState };
       },
     );

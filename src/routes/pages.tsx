@@ -100,7 +100,7 @@ export const pages = [
       },
       {
         path: routerLinks('store-managerment/edit') + '/:id',
-        component: React.lazy(() => import('./admin/store/add')),
+        component: React.lazy(() => import('./admin/store/edit')),
         title: 'store-managerment/edit',
       },
       // {
@@ -108,7 +108,7 @@ export const pages = [
       //   component: React.lazy(() => import('./admin/user/add')),
       //   title: 'User/Add',
       // },
-            {
+      {
         path: routerLinks('User/Edit') + '/:id',
         component: React.lazy(() => import('./admin/user/edit')),
         title: 'User/Edit',

@@ -33,7 +33,7 @@ const API = {
       )
       .join('&');
       
-    const response = (url !=='/sub-organization' ? await fetch(linkApi + url + (linkParam && '?' + linkParam ), config) : await fetch(linkApi + url + (linkParam && '?' + linkParam + '&type=STORE' ), config));
+    const response = await fetch(linkApi + url + (linkParam && '?' + linkParam + '&type=STORE' ), config);
 
     const res: Responses<T> = await response.json();
     if (response.ok) {
