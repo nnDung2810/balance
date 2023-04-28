@@ -6,11 +6,12 @@ import dayjs from 'dayjs';
 
 import { Upload } from '@components/upload';
 import { Button } from '@components/button';
-import { convertFormValue } from '@utils';
+import { convertFormValue, routerLinks } from '@utils';
 import { FormItem, FormModel } from '@models';
 import { GlobalFacade } from '@reducers';
 import { Check, Times } from '@svgs';
 import { Chips, SelectTag, Select, TreeSelect, TableTransfer, Password, Mask, Addable, DatePicker, Tab } from './input';
+import { useNavigate } from 'react-router';
 
 export const Form = ({
   className,
@@ -38,6 +39,7 @@ export const Form = ({
   const [_render, set_render] = useState(false);
   const [forms] = AntForm.useForm();
   const form = formAnt || forms;
+  const navigate = useNavigate();
 
   const reRender = () => {
     set_render(!_render);
@@ -634,11 +636,15 @@ export const Form = ({
             type={'submit'}
           />
         )}
-        {extendButtonChangePassword && (
+       {extendButtonChangePassword && (
           <Button
             text={t('Đổi mật khẩu')}
             id={idSubmit}
-            onClick={() => form && form.submit()}
+            onClick={() => {
+              if (form) {
+                form.submit();
+              }
+            }}
             disabled={disableSubmit}
             className={'w-32 justify-center !bg-teal-800 hover:!bg-teal-700 !border !border-teal-900 max-sm:w-3/5'}
             type={'submit'}
