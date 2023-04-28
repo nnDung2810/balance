@@ -69,16 +69,6 @@ export const pages = [
         title: 'Supplier/Edit',
       },
       {
-        path: routerLinks('Code'),
-        component: React.lazy(() => import('./admin/code')),
-        title: 'Code',
-      },
-      {
-        path: routerLinks('Data'),
-        component: React.lazy(() => import('./admin/data')),
-        title: 'Data',
-      },
-      {
         path: routerLinks('User/List'),
         component: React.lazy(() => import('./admin/user')),
         title: 'User/List',
@@ -90,8 +80,8 @@ export const pages = [
       },
       {
         path: routerLinks('User') + '/:id',
-        component: React.lazy(() => import('./admin/user/add')),
-        title: 'User/Edit',
+        component: React.lazy(() => import('./admin/user/edit')),
+        title: 'User',
       },
       {
         path: routerLinks('Store'),
@@ -108,15 +98,10 @@ export const pages = [
         component: React.lazy(() => import('./admin/store/add')),
         title: 'store-managerment/create',
       },
-      // {
-      //   path: routerLinks('User/Add'),
-      //   component: React.lazy(() => import('./admin/user/add')),
-      //   title: 'User/Add',
-      // },
-            {
-        path: routerLinks('User/Edit') + '/:id',
-        component: React.lazy(() => import('./admin/user/edit')),
-        title: 'User/Edit',
+      {
+        path: routerLinks('merchandise-managerment/product'),
+        component: React.lazy(() => import('./admin/merchandise-managerment/product')),
+        title: 'merchandise-managerment/product',
       },
     ], // 💬 generate link to here
   },

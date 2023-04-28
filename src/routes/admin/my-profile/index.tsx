@@ -1,33 +1,31 @@
 import React, { Fragment, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router';
+import { Tabs } from 'antd';
 
 import { Form } from '@components/form';
 import { Spin } from '@components/spin';
 import { Button } from '@components/button';
 import { GlobalFacade } from '@reducers';
-// import { ColumnProfile } from './column';
-import { t } from 'i18next';
 import { routerLinks } from '@utils';
-import { useNavigate } from 'react-router';
-import classNames from 'classnames';
 import { UserSolid } from '@svgs';
-//import { ColumnProfile } from './column';
-import { Tabs } from 'antd';
-import TabPane from 'antd/es/tabs/TabPane';
+
 
 const Page = () => {
   const { t } = useTranslation();
-  const { user, isLoading, putProfile,setPassword, profile } = GlobalFacade();
-  const listPosition = useRef([]);
+  const { user, isLoading, putProfile, setPassword, profile } = GlobalFacade();
   const navigate = useNavigate();
+  const {TabPane} = Tabs;
+
   useEffect(() => {
     profile();
   }, []);
+
   return (
     <Fragment>
       <div className='grid grid-cols-3 gap-5 w-full'>
         <div className='col-span-1 bg-white p-5 border rounded-xl'>
-          <Spin className="" spinning={isLoading}>
+          <Spin spinning={isLoading}>
             <Form
               className="text-center items-centers text-2xl text-black font-semibold"
               columns={[
@@ -45,7 +43,7 @@ const Page = () => {
                   formItem: {
                     render: (form, values) => {
                       return (
-                        <div className=''>
+                        <div>
                           {values.name}
                         </div>
                       )
@@ -90,7 +88,7 @@ const Page = () => {
         </div>
 
         <div className='col-span-2 bg-white p-5 border rounded-xl mr-4 fill-black'>
-          <Spin className="" spinning={isLoading}>
+          <Spin spinning={isLoading}>
             <React.Fragment>
               <Tabs defaultActiveKey="1" size="large">
                 <TabPane tab="Thông tin cá nhân" key="1">
@@ -163,7 +161,7 @@ const Page = () => {
                         formItem: {
                           col: 12,
                           type: 'password',
-                          rules: [{ type: 'required' }, { type: 'min', value: 6 }],
+                          rules: [{ type: 'custom' }, { type: 'min', value: 6 }],
                           placeholder: 'Nhập mật khẩu mới'
                         },
                       },
@@ -173,7 +171,21 @@ const Page = () => {
                         formItem: {
                           col: 12,
                           type: 'password',
-                          rules: [{ type: 'required' }, { type: 'min', value: 6 }],
+                          condition: (value: string, form: any, index: number, values: any) => !values?.id,
+                          rules: [
+                            { type: 'required' },
+                            {
+                              type: 'custom',
+                              validator: ({ getFieldValue }: any) => ({
+                                validator(rule: any, value: string) {
+                                  if (!value || getFieldValue('passwordNew') === value) {
+                                    return Promise.resolve();
+                                  }
+                                  return Promise.reject(new Error('Hai mật khẩu không giống nhau!'));
+                                },
+                              }),
+                            },
+                          ],
                           placeholder: 'Xác nhận mật khẩu'
                         },
                       },

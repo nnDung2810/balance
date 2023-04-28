@@ -82,7 +82,11 @@
     "Supplier": "Quản lý nhà cung cấp",
     "Supplier/Add": "Thêm nhà cung cấp",
     "Store": "Quản lý cửa hàng",
-    "Store/Add": "Thêm cửa hàng"
+    "Store/Add": "Thêm cửa hàng",
+    "merchandise-managerment": "Quản lý hàng hóa",
+    "merchandise-managerment/product": "Sản phẩm",
+    "merchandise-managerment/category": "Danh mục",
+    "merchandise-managerment/tax": "Thuế"
   },
   "pages": {
     "Login": "Đăng Nhập",

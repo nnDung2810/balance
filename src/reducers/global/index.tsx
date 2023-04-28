@@ -7,16 +7,14 @@ import i18n from 'i18next';
 import { API, keyRefreshToken, keyToken, keyUser, routerLinks } from '@utils';
 import { Message } from '@components/message';
 import { useAppDispatch, useTypedSelector } from '@reducers';
-import { CommonEntity, Responses } from '@models';
-// import Slice, { State } from '../slice';
+import { CommonEntity } from '@models';
+import { UserRole } from '@reducers/user/role';
+
 const name = 'User-admin';
 const action = {
   name,
   set: createAsyncThunk(name + '/set', async (values: State) => values),
   logout: createAsyncThunk(name + '/logout', async () => {
-    // if (localStorage.getItem(keyRefreshToken)) {
-    //   return await API.get(`${routerLinks(name, 'api')}/logout`);
-    // }
     return true;
   }),
   profile: createAsyncThunk(name + '/get-my-info', async () => {
@@ -24,9 +22,6 @@ const action = {
     return data || {};
   }),
   putProfile: createAsyncThunk(name + '/', async (values: User) => {
-    // if (values.avatar && typeof values.avatar === 'object') {
-    //   values.avatar = values.avatar[0].url;
-    // }
     const { data } = await API.put<User>(`${routerLinks(name, 'api')}/`, values);
     return data || {};
   }),
@@ -58,12 +53,6 @@ const action = {
     return data;
   }),
 };
-// interface StatePassword<T = object> {
-//   [selector: string]: any;
-//   data?: T;
-//   isLoading?: boolean;
-//   status?: string;
-// }
 interface verify {
   otp: string;
   uuid: string;
@@ -79,21 +68,19 @@ interface setPassword {
 
 export class User extends CommonEntity {
   constructor(
-    // public userName?: string,
+    public name?: string,
     public code?: string,
     public email?: string,
-    public isMain?: boolean,
-    public name?: string,
+    public id?: string,
     public note?: string,
     public phoneNumber?: string,
-    public roleCode?: string,
-    public roleId?: number,
     public status?: string,
+    public createdOn?: Date,
+    public updatedAt?: Date,
+    public roleId?: number,
+    public orgId?: number,
     public subOrgId?: number,
-    public userRoleId?: number,
-    // public profileImage?: string,
-    // public subOrgName?: string,
-    // public roleName?: string,
+    public mtRole? : UserRole[],
   ) {
     super();
   }

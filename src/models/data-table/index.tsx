@@ -2,7 +2,7 @@ import { CheckboxOptionType } from 'antd';
 
 export class DataTableModel {
   name?: string;
-  title?: string;
+  title?: string | null;
   tableItem?: TableItem;
 }
 
@@ -29,7 +29,7 @@ export class TableGet {
   format?: (item: any) => CheckboxOptionType;
   params?: (fullTextSearch: string, value?: any) => any;
 }
- 
+
 export class TableItemFilterList {
   label?: string;
   value?: number | string ;

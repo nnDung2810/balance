@@ -82,7 +82,12 @@
     "Supplier": "Supplier",
     "Supplier/Add": "Add new Supplier",
     "Store": "Store",
-    "Store/Add": "Add new Store"
+    "Store/Add": "Add new Store",
+    "merchandise-managerment": "Inventory management",
+    "merchandise-managerment/product": "Product",
+    "merchandise-managerment/category": "Category",
+    "merchandise-managerment/tax": "Tax"
+
   },
   "pages": {
     "User/List": "List User",

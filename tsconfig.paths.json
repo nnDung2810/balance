@@ -28,6 +28,9 @@
       ],
       "@reducers": [
         "src/reducers"
+      ],
+      "@reducers/*": [
+        "src/reducers/*"
       ]
     }
   }
