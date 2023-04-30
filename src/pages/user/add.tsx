@@ -163,7 +163,7 @@ const Page = () => {
               },
             },
             {
-              title: t('components.button.Role'),
+              title: t('user.Role'),
               name: 'roleId',
               formItem: {
                 col: 6,

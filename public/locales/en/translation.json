@@ -65,7 +65,8 @@
     },
     "button": {
       "New": "New",
-      "Role": "Role"
+      "Save and Add new": "Save and Add new",
+      "Back": "Back"
     }
   },
   "titles": {
@@ -156,6 +157,7 @@
     }
   },
   "user": {
+    "Role": "Role",
     "Position": "Position",
     "Team": "Team",
     "Start Date": "Start Date",

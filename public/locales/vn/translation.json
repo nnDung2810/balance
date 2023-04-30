@@ -65,7 +65,8 @@
     },
     "button": {
       "New": "Tạo mới",
-      "Role": "Vai trò"
+      "Save and Add new": "Lưu và tạo mới",
+      "Back": "Quay lại"
     }
   },
   "titles": {
@@ -156,6 +157,7 @@
     }
   },
   "user": {
+    "Role": "Vai trò",
     "Position": "Vị trí",
     "Team": "Nhóm",
     "Start Date": "Ngày đầu đi làm",
