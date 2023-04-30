@@ -28,6 +28,10 @@ const pages = [
     isPublic: false,
     child: [
       {
+        path: '/',
+        component: routerLinks('Dashboard'),
+      },
+      {
         path: routerLinks('MyProfile'),
         component: React.lazy(() => import('@pages/my-profile')),
         title: 'MyProfile',
@@ -89,7 +93,7 @@ const Page = ({
   ...props
 }: {
   title: string;
-  component: React.LazyExoticComponent<() => JSX.Element>;
+  component: React.LazyExoticComponent<() => JSX.Element> | string;
 }) => {
   const { t } = useTranslation();
   const globalFacade = GlobalFacade();
@@ -98,7 +102,9 @@ const Page = ({
     document.title = t('pages.' + title || '');
     globalFacade.set({ title, formatDate: globalFacade.formatDate });
   }, [title]);
-
+  if (typeof Comp === 'string') {
+    return <Navigate to={Comp} />;
+  }
   return <Comp {...props} />;
 };
 const Pages = () => (
