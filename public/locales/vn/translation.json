@@ -75,16 +75,24 @@
     "User": "Người Dùng",
     "User/List": "Danh sách",
     "User/Add": "Tạo mới",
-    "MyProfile": "Thông tin của tôi",
+    "MyProfile": "Thông tin cá nhân",
     "Setting": "Thiết lập",
     "Code": "Mã",
     "Data": "Dữ liệu",
     "Page": "Trang"
   },
   "pages": {
+    "Login": "Đăng nhập",
+    "Dashboard": "Tra cứu dữ liệu",
+    "User": "Người Dùng",
     "User/List": "Danh sách Người dùng",
     "User/Add": "Tạo mới người dùng",
-    "User/Edit": "Chỉnh sửa người dùng"
+    "User/Edit": "Chỉnh sửa người dùng",
+    "MyProfile": "Thông tin cá nhân",
+    "Setting": "Thiết lập",
+    "Code": "Mã",
+    "Data": "Dữ liệu",
+    "Page": "Trang"
   },
   "columns": {
     "auth": {
@@ -110,7 +118,7 @@
     }
   },
   "layout": {
-    "footer": "Công ty cổ phần Cồng nghệ Ari. ©{{year}}"
+    "footer": "Công ty cổ phần Công nghệ Ari. ©{{year}}"
   },
   "routes": {
     "auth": {
@@ -123,7 +131,7 @@
         "Reset Password": "Xác nhận",
         "New password": "Mật khẩu mới",
         "Enter new password": "Nhập mật khẩu mới",
-        "Account": "Chưa có tài khoản?",
+        "Account": "Chưa có tài khoản? ",
         "Welcome": "Chào mừng bạn đến với Web Member Ari"
       },
       "reset-password": {
@@ -152,6 +160,8 @@
         "My Profile": "Thông tin cá nhân",
         "No Data": "Trống",
         "Pagination": "Hiển thị {{from}} - {{to}} /Tổng số {{total}} danh mục",
+        "DayOff": "Hiển thị {{from}} - {{to}} /Tổng số {{total}} yêu cầu",
+        "User": "Hiển thị {{from}} - {{to}} /Tổng số {{total}} người dùng",
         "Day": "Ngày phép"
       }
     }
