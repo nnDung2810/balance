@@ -5,6 +5,9 @@ import Action from '../action';
 import Slice, { State } from '../slice';
 import { useAppDispatch, useTypedSelector } from '@reducers';
 import { CommonEntity, PaginationQuery } from '@models';
+import { Ward } from './ward';
+import { Province } from './province';
+import { District } from './district';
 
 const name = 'Supplier';
 export const action = {
@@ -12,7 +15,7 @@ export const action = {
   getById: createAsyncThunk(
       name + '/getById',
       async ({ id, keyState = 'isVisible' }: { id: string; keyState: keyof State<Supplier> }) => {
-        const { data } = await API.get<Supplier>(`${routerLinks(name, 'api')}/detail/${id}`);
+        const  data  = await API.get<Supplier>(`${routerLinks(name, 'api')}/detail/${id}`);
         return { data, keyState };
       },
     ),
@@ -31,22 +34,6 @@ export const action = {
   // }),
 };
 export const supplierSlice = createSlice(new Slice<Supplier>(action));
-// createSlice(
-//   new Slice<Supplier>(action, (builder: any) => {
-//     builder
-//       .addCase(action.getById.pending, (state: State<Supplier>) => {
-//         state.isLoading = true;
-//         state.status = 'getById.pending';
-//       })
-//       .addCase(action.getById.fulfilled, (state: State<Supplier>, action: PayloadAction<State<Supplier>>) => {
-//         state.data = action.payload.data;
-//         state.isLoading = false;
-//         state.isVisibleReject = false;
-//         state.isVisibleDetail = false;
-//         state.status = 'getById.fulfilled';
-//       })
-//   }),
-// );
 
 export const SupplierFacade = () => {
   const dispatch = useAppDispatch();
@@ -75,11 +62,29 @@ export class Supplier extends CommonEntity {
     public storeId?: number,
     public supplierType?: string,
     public type?: string,
-    // public address?: {
-    //   id?: number;
-    //   street?: string;
-    // },
-    // public userRole?: {},
+    public address?: {
+      id?: number;
+      street?: string;
+      district?: District
+      province?: Province
+      ward?: Ward;
+    },
+    public userRole?: {
+      0: {
+        createdAt: string;
+        isDeleted: boolean;
+        roleId: number;
+        subOrgId: string;
+        id: string;
+        userAdminId: string;
+        userAdmin: {
+          id: string;
+          email: string;
+          name: string;
+          phoneNumber: string;
+        }
+      }
+    },
   ) {
     super();
   }

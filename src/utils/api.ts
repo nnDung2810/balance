@@ -32,9 +32,7 @@ const API = {
           key + '=' + encodeURIComponent(typeof params[key] === 'object' ? JSON.stringify(params[key]) : params[key]),
       )
       .join('&');
-    const response = await fetch(linkApi + url + (linkParam && '?' + linkParam + '&type=SUPPLIER'), config);
-    // console.log("url",url);
-    // console.log("config",config);
+    const response = await fetch(linkApi + url + (linkParam && '?' + linkParam), config);
     
     const res: Responses<T> = await response.json();
     if (response.ok) {

@@ -3,11 +3,12 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 
 import { Button, DataTable } from '@components';
-import { keyRole, routerLinks } from '@utils';
-import { UserFacade, GlobalFacade, SupplierFacade } from '@reducers';
+import { routerLinks } from '@utils';
+import { GlobalFacade, SupplierFacade } from '@reducers';
 import { Plus } from '@svgs';
 import { ColumnTableSupplier } from './column';
 import { TableRefObject } from '@models';
+import { Pagination } from 'antd';
 
 const Page = () => {
   const { t } = useTranslation();
@@ -32,6 +33,7 @@ const Page = () => {
         <DataTable
           facade={supplierFacade}
           ref={dataTableRef}
+          defaultRequest={{page: 1, perPage: 10,type: "SUPPLIER"}}
           xScroll = '1440px'
           onRow={(data: any) => ({ onDoubleClick: () =>  navigate(routerLinks('Supplier/Edit') + '/' + data.id)})}
           pageSizeRender={(sizePage: number) => sizePage}

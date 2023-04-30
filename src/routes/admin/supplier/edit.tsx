@@ -2,18 +2,18 @@ import React, { Fragment, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router';
 
-import { SupplierRoleFacade, SupplierFacade, UserFacade } from '@reducers';
+import { ProvinceFacade, SupplierFacade } from '@reducers';
 import { routerLinks } from '@utils';
 import { Button, DataTable, Form } from '@components';
-import { ColumnFormSupplierDetail, ColumnTableSupplierProduct } from './column';
+import { ColumnFormSupplierDetail, ColumnTableSupplierDiscount, ColumnTableSupplierProduct } from './column';
 import { GlobalFacade, User } from '../../../reducers/global';
 import classNames from 'classnames';
 import { TableRefObject } from '@models';
-import { Download, Plus } from '@svgs';
+import { Download } from '@svgs';
 
 const Page = () => {
   const { t } = useTranslation();
-  const { result, get } = SupplierRoleFacade();
+  const { result, get } = ProvinceFacade();
   const supplierFacade = SupplierFacade();
   const { data, isLoading, queryParams, status } = supplierFacade;
   const navigate = useNavigate();
@@ -21,12 +21,6 @@ const Page = () => {
   const isReload = useRef(false);
   const param = JSON.parse(queryParams || '{}');
   const { id } = useParams();
-
-  
-  console.log("SupplierFacade",SupplierFacade());
-
-  // console.log("data user",supplierFacade);
-  // console.log("supplierFacade1",supplierFacade1);
 
   useEffect(() => {
     if (!result?.data) get({});
@@ -48,10 +42,6 @@ const Page = () => {
         if (Object.keys(param).length > 0) isReload.current = true;
 
         if (isBack.current) handleBack();
-        else {
-          isBack.current = true;
-          if (status === 'put.fulfilled') navigate(routerLinks('Supplier/Add'));
-        }
         break;
     }
   }, [status]);
@@ -112,7 +102,8 @@ const Page = () => {
         {tab === 'tab1' && (
           !!result?.data && (
             <Form
-              values={{ ...data }}
+              values={{ ...data, street: data?.address?.street, province: data?.address?.province?.name, district: data?.address?.district?.name, ward: data?.address?.ward?.name,
+              username: data?.userRole?.[0].userAdmin.name, email: data?.userRole?.[0].userAdmin.email, phoneNumber: data?.userRole?.[0].userAdmin.phoneNumber  }}
               className="intro-x p-6 pb-4 pt-6 rounded-lg w-full "
               columns={ColumnFormSupplierDetail({ t, listRole: result?.data || [] })}
               handSubmit={handleSubmit}
@@ -155,13 +146,20 @@ const Page = () => {
         }
         {tab === 'tab3' && (
           !!result?.data && (
-            <Form
-              values={{ ...data }}
-              className="intro-x p-6 pb-4 pt-6 rounded-lg w-full "
-              columns={ColumnFormSupplierDetail({ t, listRole: result?.data || [] })}
-              handSubmit={handleSubmit}
-              disableSubmit={isLoading}
-              handCancel={handleBack}
+            <DataTable
+              // facade={supplierFacade}
+              ref={dataTableRef}
+              xScroll = '1440px'
+              pageSizeRender={(sizePage: number) => sizePage}
+              pageSizeWidth={'50px'}
+              paginationDescription={(from: number, to: number, total: number) =>
+                t('routes.admin.Layout.Pagination', { from, to, total })
+              }
+              columns={ColumnTableSupplierProduct({
+                t,
+                navigate,
+                dataTableRef,
+              })}
             />
           ) )
         }
@@ -174,6 +172,38 @@ const Page = () => {
               handSubmit={handleSubmit}
               disableSubmit={isLoading}
               handCancel={handleBack}
+            />
+          ) )
+        }
+        {tab === 'tab5' && (
+          !!result?.data && (
+            <DataTable
+              // facade={supplierFacade}
+              ref={dataTableRef}
+              xScroll = '1440px'
+              pageSizeRender={(sizePage: number) => sizePage}
+              pageSizeWidth={'50px'}
+              paginationDescription={(from: number, to: number, total: number) =>
+                t('routes.admin.Layout.Pagination', { from, to, total })
+              }
+              columns={ColumnTableSupplierDiscount({
+                t,
+                navigate,
+                dataTableRef,
+              })}
+              showSearch={false}
+              rightHeader={
+                <div className={'flex h-10 w-36'}>
+                  {user && (
+                    <Button
+                      className='!bg-white flex justify-between w-full !px-3 !border !border-gray-600 !text-gray-600 hover:!bg-teal-900 hover:!text-white group'
+                      icon={<Download className="icon-cud !h-6 !w-6 !fill-gray-600 group-hover:!fill-white" />}
+                      text={t('Xuất file excel')}
+                      onClick={() => navigate(routerLinks('Supplier/Excel'))}
+                    />
+                  )}
+                </div>
+              }
             />
           ) )
         }

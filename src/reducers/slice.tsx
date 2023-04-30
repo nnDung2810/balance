@@ -63,9 +63,6 @@ export default class Slice<T extends CommonEntity> {
             if (action.payload) {
               const { data, keyState } = action.payload;
               
-              console.log('dataaaaaa',data);
-              console.log('keyState',keyState);
-              
               if (JSON.stringify(state.data) !== JSON.stringify(data)) state.data = data;
               // @ts-ignore
               state[keyState] = true;

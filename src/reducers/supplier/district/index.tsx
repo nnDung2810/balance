@@ -8,34 +8,39 @@ import { User } from '../../global';
 
 export const name = 'District';
 export const action = {
-  ...new Action<SupplierRole>(name),
-  getPermission: createAsyncThunk(name + '/permission', async () =>
-    API.get<Responses<string[]>>(`${routerLinks(name, 'api')}/permission`),
-  ),
+  ...new Action<District>(name),
+  getById: createAsyncThunk(
+      name + '/get',
+      async ({ id, keyState = 'isVisible' }: { id: string; keyState: keyof State<District> }) => {
+        const { data } = await API.get<District>(`${routerLinks(name, 'api')}/ward/${id}`);
+        return { data, keyState };
+      },
+    ),
 };
 
 
-export const districtRoleSlice = createSlice(new Slice<SupplierRole>(action, { keepUnusedDataFor: 9999 }));
-export const DistrictRoleFacade = () => {
+// export const districtSlice = createSlice(new Slice<District>(action, { keepUnusedDataFor: 9999 }));
+export const districtSlice = createSlice(new Slice<District>(action));
+export const DistrictFacade = () => {
   const dispatch = useAppDispatch();
   return {
-    ...useTypedSelector((state) => state[action.name] as State<SupplierRole>),
-    set: (values: State<SupplierRole>) => dispatch(action.set(values)),
-    get: (params: PaginationQuery<SupplierRole>) => dispatch(action.get(params)),
-    getById: ({ id, keyState = 'isVisible' }: { id: string; keyState: keyof State<SupplierRole> }) =>
+    ...useTypedSelector((state) => state[action.name] as State<District>),
+    set: (values: State<District>) => dispatch(action.set(values)),
+    get: (params: PaginationQuery<District>) => dispatch(action.get(params)),
+    getById: ({ id, keyState = 'isVisible' }: { id: string; keyState: keyof State<District> }) =>
       dispatch(action.getById({ id, keyState })),
-    post: (values: SupplierRole) => dispatch(action.post(values)),
-    put: (values: SupplierRole) => dispatch(action.put(values)),
+    post: (values: District) => dispatch(action.post(values)),
+    put: (values: District) => dispatch(action.put(values)),
     delete: (id: string) => dispatch(action.delete(id)),
-    getPermission: () => dispatch(action.getPermission()),
   };
 };
-export class SupplierRole extends CommonEntity {
+
+export class District extends CommonEntity {
   constructor(
-    public name?: string,
-    public isSystemAdmin?: boolean,
-    public permissions?: string[],
-    public users?: User[],
+    public  code?: string,
+    public  id?: string,
+    public  name?: string,
+    public  provinceCode?: string,
   ) {
     super();
   }

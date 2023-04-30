@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router';
 
-import { SupplierRoleFacade, SupplierFacade } from '@reducers';
+import { ProvinceFacade, SupplierFacade } from '@reducers';
 import { routerLinks } from '@utils';
 import { Button, Form } from '@components';
 import { ColumnFormSupplier } from './column';
@@ -10,7 +10,7 @@ import { User } from '../../../reducers/global';
 
 const Page = () => {
   const { t } = useTranslation();
-  const { result, get } = SupplierRoleFacade();
+  const { result, get } = ProvinceFacade();
   const supplierFacade = SupplierFacade();
   const { data, isLoading, queryParams, status } = supplierFacade;
   const navigate = useNavigate();
@@ -18,8 +18,6 @@ const Page = () => {
   const isReload = useRef(false);
   const param = JSON.parse(queryParams || '{}');
   const { id } = useParams();
-
-  console.log("data",data);
   
 
   useEffect(() => {
@@ -42,10 +40,6 @@ const Page = () => {
         if (Object.keys(param).length > 0) isReload.current = true;
 
         if (isBack.current) handleBack();
-        else {
-          isBack.current = true;
-          if (status === 'put.fulfilled') navigate(routerLinks('Supplier/Add'));
-        }
         break;
     }
   }, [status]);
@@ -71,19 +65,7 @@ const Page = () => {
                 values={{ ...data }}
                 className="intro-x"
                 columns={ColumnFormSupplier({ t, listRole: result?.data || [] })}
-                // extendButton={(form) => (
-                //   <Button
-                //     text={t('components.button.Save and Add new')}
-                //     className={'md:min-w-[12rem] w-full justify-center out-line'}
-                //     onClick={() => {
-                //       form.submit();
-                //       isBack.current = false;
-                //     }}
-                //   />
-                // )}
-                // handSubmit={handleSubmit}
                 disableSubmit={isLoading}
-                // handCancel={handleBack}
                 extendButton={() => (
                   <div className='max-w-7xl flex items-center absolute -right-4 -left-4 justify-between mt-4'>
                     <button className={'text-teal-900 bg-white border-solid border border-teal-900 rounded-xl p-2 w-auto h-11 px-8'} 

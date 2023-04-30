@@ -1,6 +1,6 @@
 import React, { forwardRef, Fragment, Ref, useEffect, useImperativeHandle, useRef } from 'react';
 import { v4 } from 'uuid';
-import { Checkbox, CheckboxOptionType, DatePicker, Popover, Radio, Table } from 'antd';
+import { Checkbox, CheckboxOptionType, DatePicker, Popover, Radio, Select, Table } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
 import dayjs from 'dayjs';
@@ -10,7 +10,7 @@ import classNames from 'classnames';
 import { Button, Pagination } from '@components';
 import { TableGet, TableRefObject } from '@models';
 import { cleanObjectKeyNull } from '@utils';
-import { Calendar, CheckCircle, CheckSquare, Search, Times } from '@svgs';
+import { Calendar, CheckCircle, CheckSquare, Down, Search, Times } from '@svgs';
 
 const RadioGroup = Radio.Group;
 const CheckboxGroup = Checkbox.Group;
@@ -350,6 +350,7 @@ const Hook = forwardRef(
         };
       });
 
+
     const handleTableChange = (pagination: any, filters = {}, sorts: any, tempFullTextSearch: string) => {
       let tempPageIndex = pagination?.current || params[pageIndex];
       const tempPageSize = pagination?.pageSize || params[pageSize];
@@ -376,6 +377,8 @@ const Hook = forwardRef(
       });
       onChange && onChange(tempParams);
     };
+
+    const tab = true;
     if (!data) data = result?.data;
     return (
       <div className={classNames(className, 'intro-x rounded-lg bg-white p-5')}>
@@ -434,7 +437,7 @@ const Hook = forwardRef(
                 )
               )}
             </div>
-          ) : (
+          ) : tab ? (
             <div className='min-w-min grid-cols-1 grid sm:grid-cols-3 lg:grid-cols-4 sm:gap-4'>
               <div className='mb-4'>
                 <div className="relative w-40 h-10">
@@ -467,7 +470,67 @@ const Hook = forwardRef(
                     }}
                   />
                   {!params[fullTextSearch] ? (
-                    <Search
+                    <Down
+                      className="w-5 h-5 my-1 fill-gray-500 text-lg las absolute top-1.5 right-3 z-10"
+                      onClick={() => {
+                        if (params[fullTextSearch]) {
+                          (document.getElementById(idTable.current + '_input_search') as HTMLInputElement).value = '';
+                          handleTableChange(null, params[filter], params[sort], '');
+                        }
+                      }}
+                    />
+                  ) : (
+                    !!params[fullTextSearch] && (
+                      <Times
+                        className="w-4 h-4 my-1 fill-gray-500 text-lg las absolute top-2 right-3 z-10"
+                        onClick={() => {
+                          if (params[fullTextSearch]) {
+                            (document.getElementById(idTable.current + '_input_search') as HTMLInputElement).value = '';
+                            handleTableChange(null, params[filter], params[sort], '');
+                          }
+                        }}
+                      />
+                    )
+                  )}
+                </div>
+              </div>
+              <div className='mb-4 hover:cursor-not-allowed'>
+                <div className="relative w-40 h-10">
+                  <div className="grid w-full h-full grid-cols-1 items-center py-1.5 px-4 rounded-xl text-gray-400 bg-gray-200 select-none border border-solid border-gray-100">
+                    <p>Danh mục cấp 1</p>
+                  </div>
+                  {!params[fullTextSearch] ? (
+                    <Down
+                      className="w-5 h-5 my-1 fill-gray-500 text-lg las absolute top-1.5 right-3 z-10"
+                      onClick={() => {
+                        if (params[fullTextSearch]) {
+                          (document.getElementById(idTable.current + '_input_search') as HTMLInputElement).value = '';
+                          handleTableChange(null, params[filter], params[sort], '');
+                        }
+                      }}
+                    />
+                  ) : (
+                    !!params[fullTextSearch] && (
+                      <Times
+                        className="w-4 h-4 my-1 fill-gray-500 text-lg las absolute top-2 right-3 z-10"
+                        onClick={() => {
+                          if (params[fullTextSearch]) {
+                            (document.getElementById(idTable.current + '_input_search') as HTMLInputElement).value = '';
+                            handleTableChange(null, params[filter], params[sort], '');
+                          }
+                        }}
+                      />
+                    )
+                  )}
+                </div>
+              </div>
+              <div className='mb-4 hover:cursor-not-allowed'>
+                <div className="relative w-40 h-10">
+                  <div className="grid w-full h-full grid-cols-1 items-center py-1.5 px-4 rounded-xl text-gray-400 bg-gray-200 select-none border border-solid border-gray-100">
+                    <p>Danh mục cấp 2</p>
+                  </div>
+                  {!params[fullTextSearch] ? (
+                    <Down
                       className="w-5 h-5 my-1 fill-gray-500 text-lg las absolute top-1.5 right-3 z-10"
                       onClick={() => {
                         if (params[fullTextSearch]) {
@@ -492,7 +555,27 @@ const Hook = forwardRef(
                 </div>
               </div>
             </div>
-          )}
+          ) : (
+          <div className='sm:relative lg:my-2 mt-4'>
+            <div className='sm:flex gap-3 items-end justify-end flex-col md:flex-row'>
+              <div className='ant-space ant-space-vertical flex items-center gap-2 lg:w-60 sm:justify-between justify-start'>
+                <p className='text-[12px] text-left lg:w-[68px] w-auto'>Kỳ hạn từ</p>
+                <div className='rounded-xl items-center flex h-10 border border-gray-200 px-4'>
+                  <div className='inline-flex relative'>
+                    <input className='bg-gray-100' type='date' placeholder='04/2023'></input>
+                  </div>
+                </div>
+              </div>
+              <div className='ant-space ant-space-vertical flex items-center gap-2 lg:w-52 sm:justify-between justify-start'>
+                <p className='text-[12px] text-left lg:w-[68px] w-auto'>Đến</p>
+                <div className='rounded-xl items-center flex h-10 border border-gray-200 px-4'>
+                  <div className='inline-flex relative'>
+                    <input className='bg-gray-100' type='date' placeholder='04/2024'></input>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>)}
           {!!leftHeader && <div className={'mt-2 sm:mt-0'}>{leftHeader}</div>}
           {!!rightHeader && <div className={'mt-2 sm:mt-0'}>{rightHeader}</div>}
         </div>
@@ -551,7 +634,6 @@ type Type = {
   defaultRequest?: any;
   pageIndex?: string;
   pageSize?: string;
-  // type?: string;
   sort?: string;
   filter?: string;
   fullTextSearch?: string;

@@ -10,8 +10,9 @@ import { dataSlice, DataFacade } from './data';
 import { dataTypeSlice, DataTypeFacade } from './data/type';
 import { StoreFacade, storeSlice } from './store-management';
 import { SupplierFacade, supplierSlice } from './supplier';
-import { SupplierRoleFacade, supplierRoleSlice } from './supplier/province';
-import { DistrictRoleFacade, districtRoleSlice } from './supplier/district';
+import { ProvinceFacade, provinceSlice } from './supplier/province';
+import { DistrictFacade, districtSlice } from './supplier/district';
+import { WardFacade, wardSlice } from './supplier/ward';
 
 const rootReducer = combineReducers({
   [globalSlice.name]: globalSlice.reducer,
@@ -23,8 +24,9 @@ const rootReducer = combineReducers({
   [dataTypeSlice.name]: dataTypeSlice.reducer,
   [storeSlice.name]: storeSlice.reducer,
   [supplierSlice.name]: supplierSlice.reducer,
-  [supplierRoleSlice.name]: supplierRoleSlice.reducer,
-  [districtRoleSlice.name]: districtRoleSlice.reducer,
+  [provinceSlice.name]: provinceSlice.reducer,
+  [districtSlice.name]: districtSlice.reducer,
+  [wardSlice.name]: wardSlice.reducer,
 });
 
 const setupStore = () => {
@@ -49,6 +51,7 @@ export {
   DataTypeFacade,
   StoreFacade,
   SupplierFacade,
-  SupplierRoleFacade,
-  DistrictRoleFacade,
+  ProvinceFacade,
+  DistrictFacade,
+  WardFacade,
 };
