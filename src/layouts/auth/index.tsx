@@ -2,7 +2,7 @@ import React, { PropsWithChildren, useEffect } from 'react';
 import { Select } from 'antd';
 import { useTranslation } from 'react-i18next';
 
-import { GlobalFacade } from '@reducers';
+import { GlobalFacade } from '@store';
 import { Facebook, Twitter, Linkedin, Logo } from '@svgs';
 
 import './index.less';

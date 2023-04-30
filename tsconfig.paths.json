@@ -2,32 +2,26 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@svgs": [
-        "src/assets/svgs"
+      "@core/*": [
+        "src/core/*"
       ],
-      "@columns": [
-        "src/columns"
+      "@layouts/*": [
+        "src/layouts/*"
       ],
-      "@components/*": [
-        "src/components/*"
-      ],
-      "@services": [
-        "src/services"
+      "@pages/*": [
+        "src/pages/*"
       ],
       "@models": [
         "src/models"
       ],
+      "@store": [
+        "src/store"
+      ],
       "@utils": [
         "src/utils"
       ],
-      "@globalContext": [
-        "src/globalContext"
-      ],
-      "@routes/*": [
-        "src/routes/*"
-      ],
-      "@reducers": [
-        "src/reducers"
+      "@svgs": [
+        "src/assets/svgs"
       ]
     }
   }

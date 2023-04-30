@@ -1,5 +1,5 @@
 import { keyRefreshToken, keyToken, keyUser, linkApi, routerLinks } from '@utils';
-import { Message } from '@components/message';
+import { Message } from '@core/message';
 import { Responses } from '@models';
 
 const API = {
