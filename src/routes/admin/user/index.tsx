@@ -5,14 +5,13 @@ import { useNavigate } from 'react-router';
 import { Button } from '@components/button';
 import { DataTable } from '@components/data-table';
 import { routerLinks } from '@utils';
-import { UserFacade, GlobalFacade } from '@reducers';
+import { UserFacade } from '@reducers';
 import { Plus } from '@svgs';
 import { TableRefObject } from '@models';
 import { ColumnFormUser } from '@routes/admin/user/column';
 
 const Page = () => {
   const { t } = useTranslation();
-  const { user } = GlobalFacade();
   const navigate = useNavigate();
   const userFacade = UserFacade();
 

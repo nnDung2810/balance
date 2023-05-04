@@ -108,16 +108,6 @@ export const pages = [
         component: React.lazy(() => import('./admin/store/add')),
         title: 'store-managerment/create',
       },
-      // {
-      //   path: routerLinks('User/Add'),
-      //   component: React.lazy(() => import('./admin/user/add')),
-      //   title: 'User/Add',
-      // },
-      //       {
-      //   path: routerLinks('User/Edit') + '/:id',
-      //   component: React.lazy(() => import('./admin/user/edit')),
-      //   title: 'User/Edit',
-      // }
     ], // 💬 generate link to here
   },
 ];

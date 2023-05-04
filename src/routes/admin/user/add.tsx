@@ -22,8 +22,6 @@ const Page = () => {
 
   useEffect(() => {
     if (!result?.data) get({});
-
-    if (id) userFacade.getById({ id });
     else userFacade.set({ data: undefined });
 
     return () => {
@@ -35,14 +33,6 @@ const Page = () => {
     switch (status) {
       case 'post.fulfilled':
         navigate(routerLinks('User') + '/' + data?.id);
-        break;
-      case 'put.fulfilled':
-        if (Object.keys(param).length > 0) isReload.current = true;
-
-        if (isBack.current) handleBack();
-        else {
-          isBack.current = true;
-        }
         break;
     }
   }, [status]);

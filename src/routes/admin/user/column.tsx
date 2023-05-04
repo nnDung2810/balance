@@ -67,7 +67,7 @@ export const ColumnFormAdd = ({ t }: any) => {
       formItem: {
         tabIndex: 2,
         col: 6,
-        rules: [{ type: 'required' }],
+        rules: [{ type: 'required' }, { type: 'email' }, { type: 'min', value: 6 }],
       }
     },
     {
@@ -76,7 +76,7 @@ export const ColumnFormAdd = ({ t }: any) => {
       formItem: {
         tabIndex: 1,
         col: 6,
-        rules: [{ type: 'required' }],
+        rules: [{ type: 'required' }, { type: 'phone', min: 10, max: 15 }],
       }
     },
     {
@@ -87,9 +87,34 @@ export const ColumnFormAdd = ({ t }: any) => {
         type: 'textarea'
       }
     },
+    {
+      title: 'a',
+      name: 'orgId',
+      formItem: {
+        tabIndex: 1,
+        type: 'hidden'
+      }
+    },
+    {
+      title: 'fdfdf',
+      name: 'roleId',
+      formItem: {
+        tabIndex: 1,
+        type: 'hidden'
+      }
+    },
+    {
+      title: 'a',
+      name: 'subOrgId',
+      formItem: {
+        tabIndex: 1,
+        type: 'hidden'
+      }
+    },
+
   ]
   return col;
-}
+};
 export const ColumnFormEdit = ({ t }: any) => {
   const col: FormModel[] = [
     {
@@ -164,4 +189,4 @@ export const ColumnFormEdit = ({ t }: any) => {
     },
   ]
   return col;
-}
+};

@@ -7,16 +7,12 @@ import i18n from 'i18next';
 import { API, keyRefreshToken, keyToken, keyUser, routerLinks } from '@utils';
 import { Message } from '@components/message';
 import { useAppDispatch, useTypedSelector } from '@reducers';
-import { CommonEntity, Responses } from '@models';
-// import Slice, { State } from '../slice';
+import { CommonEntity } from '@models';
 const name = 'User-admin';
 const action = {
   name,
   set: createAsyncThunk(name + '/set', async (values: State) => values),
   logout: createAsyncThunk(name + '/logout', async () => {
-    // if (localStorage.getItem(keyRefreshToken)) {
-    //   return await API.get(`${routerLinks(name, 'api')}/logout`);
-    // }
     return true;
   }),
   profile: createAsyncThunk(name + '/get-my-info', async () => {
@@ -24,9 +20,6 @@ const action = {
     return data || {};
   }),
   putProfile: createAsyncThunk(name + '/', async (values: User) => {
-    // if (values.avatar && typeof values.avatar === 'object') {
-    //   values.avatar = values.avatar[0].url;
-    // }
     const { data } = await API.put<User>(`${routerLinks(name, 'api')}/`, values);
     return data || {};
   }),
@@ -132,10 +125,6 @@ export const globalSlice = createSlice({
           state[key] = action.payload[key];
         }
       })
-      // .addCase(action.logout.pending, (state: State) => {
-      //   state.isLoading = true;
-      //   state.status = 'logout.pending';
-      // })
       .addCase(action.logout.fulfilled, (state) => {
         state.user = {};
         localStorage.removeItem(keyUser);

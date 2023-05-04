@@ -1,7 +1,6 @@
 import { CheckboxOptionType, FormInstance } from 'antd';
 import { TableGet } from '../data-table';
 import { DefaultTFuncReturn } from 'i18next';
-import classNames from 'classnames';
 
 export class FormModel {
   constructor(public name: string, public title?: React.ReactNode | DefaultTFuncReturn, public formItem?: FormItem) { }
