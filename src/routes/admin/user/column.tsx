@@ -1,6 +1,5 @@
 import { DataTableModel, FormModel } from "@models";
 import { Select } from "antd";
-import { LockOutlined } from '@ant-design/icons';
 
 const { Option } = Select
 
@@ -132,21 +131,20 @@ export const ColumnFormEdit = ({ t }: any) => {
       }
     },
     {
-      //title: t(`user.Role`),
+      title: t(`user.Role`),
       name: 'roleCode',
       formItem: {
         tabIndex: 1,
-        col: 6,
         type: 'select',
         rules: [{ type: 'required' }],
         render: (form, values, generateForm, index, reRender) => {
-          const roleCode = values.roleCole;
+          const rolecode = values.roleCode;
           return (
             <div>
               <div>
                 <h2>{t(`user.Role`)}</h2>
               </div>
-              <Select value={roleCode} className="py-2" style={{ width: "100%" }}>
+              <Select value={rolecode} className="py-2" style={{ width: "100%" }} disabled={true}>
                 <Option value={"ADMIN"}>Quản trị viên</Option>
                 <Option value={"OWNER_SUPPLIER"}>Nhà cung cấp</Option>
                 <Option value={"OWNER_STORE"}>Chủ cửa hàng</Option>
