@@ -4,14 +4,18 @@ import i18n from 'i18next';
 import XHR from 'i18next-xhr-backend';
 import { initReactI18next } from 'react-i18next';
 import { Provider } from 'react-redux';
+import { ConfigProvider } from 'antd';
 
-import AuthProvider from '@globalContext';
-import Router from '@routes/index';
+// import AuthProvider from '@globalContext';
+// import Router from '@routes/index';
+import { Spin } from '@core/spin';
+import { GlobalFacade, setupStore } from '@store';
 import { reportWebVitals } from '@utils';
-import { setupStore } from '@reducers';
-import { Spin } from '@components/spin';
+// import { setupStore } from '@reducers';
+// import { Spin } from '@components/spin';
 
-const Styling = lazy(() => import('./utils/init/styling'));
+// const Styling = lazy(() => import('./utils/init/styling'));
+import Router from './router';
 
 const fallbackLng = localStorage.getItem('i18nextLng');
 if (!fallbackLng) {
@@ -32,6 +36,28 @@ i18n
   });
 const store = setupStore();
 let container: HTMLElement;
+const Styling = lazy(() => import('./utils/init/styling'));
+
+const Context = () => {
+  const { locale } = GlobalFacade();
+
+  return (
+    <Styling>
+      <ConfigProvider
+        locale={locale}
+        theme={{
+          token: {
+            fontFamily:
+              "'Manrope', -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Noto Sans,Ubuntu,Droid Sans,Helvetica Neue,sans-serif",
+          },
+        }}
+      >
+        <Router />
+      </ConfigProvider>
+    </Styling>
+  );
+};
+
 document.addEventListener(
   'DOMContentLoaded',
   () => {
@@ -46,13 +72,9 @@ document.addEventListener(
             </Spin>
           }
         >
-          <Styling>
-            <Provider store={store}>
-              <AuthProvider>
-                <Router />
-              </AuthProvider>
-            </Provider>
-          </Styling>
+          <Provider store={store}>
+            <Context />
+          </Provider>
         </Suspense>,
       );
     }

@@ -7,8 +7,10 @@ import { useLocation } from 'react-router-dom';
 // import { initializeApp } from 'firebase/app';
 // import { getMessaging, isSupported, getToken, onMessage } from 'firebase/messaging';
 import { routerLinks } from '@utils';
-import { Avatar } from '@components/avatar';
-import { GlobalFacade } from '@reducers';
+// import { Avatar } from '@components/avatar';
+// import { GlobalFacade } from '@reducers';
+import { Avatar } from '@core/avatar';
+import { GlobalFacade } from '@store';
 import Menu1 from './menu';
 // import { firebaseConfig } from 'variable';
 import './index.less';
@@ -143,7 +145,7 @@ const Layout = ({ children }: PropsWithChildren) => {
                 {
                   key: '2',
                   label: (
-                    <div onClick={() => navigate(routerLinks('Sign-in'), { replace: true })}>
+                    <div onClick={() => navigate(routerLinks('Login'), { replace: true })}>
                       {t('routes.admin.Layout.Sign out')}
                     </div>
                   ),

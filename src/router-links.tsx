@@ -2,11 +2,12 @@ const Util = (name: string, type?: string) => {
   const array: {
     [selector: string]: string;
   } = {
-    'Sign-in': '/user-admin/sign-in',
     Login: '/auth/login',
-    ResetPassword: '/auth/reset-password',
+    ForgetPassword: '/auth/forgot-password',
+    VerifyForotPassword: '/auth/verify-forgot-password',
+    SetPassword: '/auth/set-password',
     MyProfile: '/my-profile',
-    Dashboard: '/',
+    Dashboard: '/dashboard',
     Supplier: '/supplier',
     'Supplier/Add': '/supplier/add',
     User: '/user',
@@ -16,10 +17,7 @@ const Util = (name: string, type?: string) => {
     Setting: '/setting',
     Data: '/setting/data',
     Code: '/setting/code',
-    ForgetPassword: '/user-admin/forgot-password',
-    VerifyForotPassword: '/user-admin/verify-forgot-password',
-    SetPassword: '/user-admin/set-password',
-    Store: "/store-managerment",
+    Store: '/store-managerment',
     'store-managerment/create': '/store-managerment/create',
     'store-managerment/edit': '/store-managerment/detail'
   }; // 💬 generate link to here
@@ -40,7 +38,6 @@ const Util = (name: string, type?: string) => {
     Province: '/province',
     District: '/district',
     Ward: '/ward',
-
   }; // 💬 generate api to here
 
   switch (type) {
