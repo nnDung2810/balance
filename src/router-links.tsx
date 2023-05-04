@@ -2,15 +2,16 @@ const Util = (name: string, type?: string) => {
   const array: {
     [selector: string]: string;
   } = {
-    'Sign-in': '/user-admin/sign-in',
     Login: '/auth/login',
+    'Sign-in': '/user-admin/sign-in',
     ResetPassword: '/auth/reset-password',
     MyProfile: '/my-profile',
     Dashboard: '/',
     Supplier: '/supplier',
     'Supplier/Add': '/supplier/add',
     'Supplier/Edit': '/supplier/edit',
-  //  Store: '/store',
+    Store: "/store-managerment",
+    'store-managerment/create': '/store-managerment/create',
     'Store/Add': '/store/add',
     'Store/Edit': '/store/edit',
     User: '/user',
@@ -23,15 +24,13 @@ const Util = (name: string, type?: string) => {
     ForgetPassword: '/user-admin/forgot-password',
     VerifyForotPassword: '/user-admin/verify-forgot-password',
     SetPassword: '/user-admin/set-password',
-    Store: "/store-managerment",
-    'store-managerment/create': '/store-managerment/create'
   }; // 💬 generate link to here
 
   const apis: {
     [selector: string]: string;
   } = {
-    'User-admin': '/user-admin',
     Auth: '/auth',
+    'User-admin': '/user-admin',
     CodeType: '/code-type',
     Code: '/code',
     UserRole: '/mt-role',

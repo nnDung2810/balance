@@ -343,7 +343,7 @@ export const DataTable = forwardRef(
           <Fragment>
             <Table
               className='p-3 border rounded-2xl'
-              onRow={() => ({ onDoubleClick: () => navigate(routerLinks('User/Edit')) })}
+              onRow={onRow}
               locale={{
                 emptyText: (
                   <div className="bg-gray-100 text-gray-400 py-4">

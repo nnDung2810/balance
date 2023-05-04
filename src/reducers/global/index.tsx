@@ -43,27 +43,21 @@ const action = {
     return data!.userInfor;
   }),
   forgotPassword: createAsyncThunk(name + '/forgot-password', async (values: { email: string }) => {
-    const { data, message } = await API.put< verify >(`${routerLinks(name, 'api')}/forgot-password`, values);
+    const { data, message } = await API.put<verify>(`${routerLinks(name, 'api')}/forgot-password`, values);
     if (message) await Message.success({ text: message });
     return data;
   }),
   verifyForgotPassword: createAsyncThunk(name + '/verify-forgot-password', async (values: verify) => {
-    const { data, message } = await API.put<{email: string; uuid: string}>(`${routerLinks(name, 'api')}/verify-forgot-password`, values);
+    const { data, message } = await API.put<{ email: string; uuid: string }>(`${routerLinks(name, 'api')}/verify-forgot-password`, values);
     if (message) await Message.success({ text: message })
     return data;
   }),
-  setPassword: createAsyncThunk(name + '/update-password-my-acc', async (values : setPassword) => {
+  setPassword: createAsyncThunk(name + '/update-password-my-acc', async (values: setPassword) => {
     const { data, message } = await API.put(`${routerLinks(name, 'api')}/update-password-my-acc`, values,);
     if (message) await Message.success({ text: message });
     return data;
   }),
 };
-// interface StatePassword<T = object> {
-//   [selector: string]: any;
-//   data?: T;
-//   isLoading?: boolean;
-//   status?: string;
-// }
 interface verify {
   otp: string;
   uuid: string;
@@ -272,7 +266,7 @@ export const globalSlice = createSlice({
 interface State {
   [selector: string]: any;
   user?: User;
-  data?: setPassword | verify | { email?: string } | { password?: string; email?: string } ;
+  data?: setPassword | verify | { email?: string } | { password?: string; email?: string };
   isLoading?: boolean;
   isVisible?: boolean;
   status?: string;

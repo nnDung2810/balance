@@ -7,7 +7,7 @@ import { routerLinks } from '@utils';
 import { Form } from '@components/form';
 import { User } from '@reducers/global';
 
-import { ColumnFormAdd } from '@routes/admin/user/Column';
+import { ColumnFormAdd } from '@routes/admin/user/column';
 
 const Page = () => {
   const { t } = useTranslation();

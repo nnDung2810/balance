@@ -89,8 +89,8 @@ export const pages = [
         title: 'User/Add',
       },
       {
-        path: routerLinks('User') + '/:id',
-        component: React.lazy(() => import('./admin/user/add')),
+        path: routerLinks('User/Edit') + '/:id',
+        component: React.lazy(() => import('./admin/user/edit')),
         title: 'User/Edit',
       },
       {

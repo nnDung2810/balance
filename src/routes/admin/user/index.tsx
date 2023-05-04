@@ -8,15 +8,14 @@ import { routerLinks } from '@utils';
 import { UserFacade, GlobalFacade } from '@reducers';
 import { Plus } from '@svgs';
 import { TableRefObject } from '@models';
-import { ColumnFormUser } from '@routes/admin/user/Column';
+import { ColumnFormUser } from '@routes/admin/user/column';
 
 const Page = () => {
-
   const { t } = useTranslation();
   const { user } = GlobalFacade();
   const navigate = useNavigate();
-
   const userFacade = UserFacade();
+
   useEffect(() => {
     switch (userFacade.status) {
       case 'delete.fulfilled':
@@ -32,6 +31,7 @@ const Page = () => {
       ref={dataTableRef}
       xScroll={"1400px"}
       pageSizeRender={(sizePage: number) => sizePage}
+      onRow={(data: any) => ({ onDoubleClick: () => navigate(routerLinks('User/Edit') + '/' + data?.id) })}
       pageSizeWidth={'50px'}
       paginationDescription={(from: number, to: number, total: number) =>
         t('routes.admin.Layout.Pagination', { from, to, total })
