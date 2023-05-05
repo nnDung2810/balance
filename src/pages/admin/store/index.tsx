@@ -6,7 +6,7 @@ import { Button } from '@core/button';
 import { DataTable } from '@core/data-table';
 
 import { routerLinks } from '@utils';
-import { DistrictFacade, ProvinceFacade, StoreFacade } from '@store';
+import { StoreFacade } from '@store';
 import { Plus } from '@svgs';
 import { ColumnTableStore } from './column';
 import { TableRefObject } from '@models';
@@ -20,16 +20,9 @@ const Page = () => {
   const storeFace = StoreFacade();
   const { result, isLoading, queryParams, status } = storeFace;
   const param = JSON.parse(queryParams || '{}');
-  /////
-  const provinceFacade = ProvinceFacade()
-  const districtFacade = DistrictFacade();
-  const { data } = districtFacade;
-  /////
-  useEffect(() => {
-    console.log(provinceFacade.get({}))
-    if(!result?.data) storeFace.get({})
 
-    if(!data) districtFacade.get('01')
+  useEffect(() => {
+    if (!result?.data) storeFace.get({})
 
     return () => {
       isReload.current && storeFace.get(param);
@@ -41,8 +34,8 @@ const Page = () => {
     <DataTable
       facade={storeFace}
       ref={dataTableRef}
-      defaultRequest={{ page : 1, perPage: 10, type : 'STORE'}}
-      xScroll = '1440px'
+      defaultRequest={{ page: 1, perPage: 10, type: 'STORE' }}
+      xScroll='1440px'
       onRow={(data: any) => ({
         onDoubleClick: () => {
           navigate(routerLinks('store-managerment/edit') + '/' + data.id);

@@ -1,11 +1,10 @@
-import { Popconfirm, Tooltip } from 'antd';
+import { Input, Popconfirm, Tooltip } from 'antd';
 
 import { DataTableModel, FormModel } from '@models';
-import { ProvinceFacade } from 'src/reducers/address/province';
-import { DistrictFacade } from '@reducers';
 import { routerLinks } from '@utils';
+import { DistrictFacade, UserFacade } from '@store';
 
-export const ColumnTableStore = ({ t, navigate, dataTableRef }: any) => {
+export const ColumnTableStore = () => {
   const col: DataTableModel[] = [
     {
       title: 'Mã cửa hàng',
@@ -52,7 +51,125 @@ export const ColumnTableStore = ({ t, navigate, dataTableRef }: any) => {
   ];
   return col;
 };
-export const ColumnFormStore = ({ listProvince }: any) => {
+export const ColumnFormStoreAdd = ({ listProvince }: any) => {
+  const col: FormModel[] = [
+    {
+      title: 'Tên cửa hàng',
+      name: 'name',
+      formItem: {
+        tabIndex: 1,
+        col: 6,
+        rules: [{ type: 'required' }],
+      },
+    },
+    {
+      title: 'Số fax',
+      name: 'fax',
+      formItem: {
+        tabIndex: 2,
+        col: 6,
+      },
+    },
+    {
+      title: '',
+      name: 'address',
+      formItem: {
+        type: 'tab',
+        rules: [{ type: 'required' }],
+        tab: {
+          label: 'Địa chỉ',
+          value: 'address'
+        },
+        list: [
+          { label: 'Địa chỉ cửa hàng', value: '' },
+        ],
+        column: [
+          {
+            title: 'Tỉnh/Thành phố',
+            name: 'provinceId',
+            formItem: {
+              tabIndex: 3,
+              col: 3,
+              type: 'select',
+              rules: [{ type: 'required' }],
+              list: listProvince.map((item: any) => ({
+                value: item?.id,
+                label: item?.name,
+              })),
+              onChange(value, form) {
+                form.resetFields(['district'])
+              },
+            },
+          },
+          {
+            name: 'districtId',
+            title: 'Quận/Huyện',
+            formItem: {
+              type: 'select',
+              col: 3,
+              get: {
+                facade: DistrictFacade,
+                format: (item: any) => ({
+                  label: item.name,
+                  value: item.code,
+                }),
+              }
+            },
+          },
+          {
+            name: 'wardId',
+            title: 'Phường/Xã',
+            formItem: {
+              type: 'select',
+              col: 3,
+            },
+          },
+          {
+            name: 'street',
+            title: 'Địa chỉ cụ thể',
+            formItem: {
+              col: 3,
+            },
+          },
+        ]
+      }
+    },
+    {
+      name: 'nameContact',
+      title: 'Họ tên đại diện',
+      formItem: {
+        col: 4,
+        rules: [{ type: 'required' }],
+      },
+    },
+    {
+      name: 'phoneNumber',
+      title: 'Số điện thoại đại diện',
+      formItem: {
+        col: 4,
+        rules: [{ type: 'required' }],
+      },
+    },
+    {
+      name: 'emailContact',
+      title: 'Email đại diện',
+      formItem: {
+        col: 4,
+        rules: [{ type: 'required' }],
+      },
+    },
+    // {
+    //   name: 'note',
+    //   title: 'Ghi chú',
+    //   formItem: {
+    //     type: 'textarea',
+
+    //   },
+    // },
+  ];
+  return col;
+};
+export const ColumnFormStoreEdit = ({ listProvince }: any) => {
   const col: FormModel[] = [
     {
       title: 'Tên cửa hàng',
@@ -86,6 +203,7 @@ export const ColumnFormStore = ({ listProvince }: any) => {
         })),
         onChange(value, form) {
           form.resetFields(['district'])
+          console.log(form.getFieldsValue(['province']))
         },
       },
     },
@@ -95,6 +213,13 @@ export const ColumnFormStore = ({ listProvince }: any) => {
       formItem: {
         type: 'select',
         col: 3,
+        get: {
+          facade: DistrictFacade,
+          format: (item: any) => ({
+            label: item.name,
+            value: item.code,
+          }),
+        }
       },
     },
     {
@@ -106,22 +231,25 @@ export const ColumnFormStore = ({ listProvince }: any) => {
       },
     },
     {
-      name: 'address.street',
+      name: 'street',
       title: 'Địa chỉ cụ thể',
       formItem: {
         col: 3,
       },
     },
+    {
+      name: 'userRole',
+      title: 'Họ tên đại diện',
+      formItem: {
+        col: 4,
+        rules: [{ type: 'required' }],
+        convert(data) {
+          return data[0]?.userAdmin
+        },
+      },
+    },
     // {
-    //   name: '',
-    //   title: 'Họ tên đại diện',
-    //   formItem: {
-    //     col: 4,
-    //     rules: [{ type: 'required' }],
-    //   },
-    // },
-    // {
-    //   name: '',
+    //   name: 'userRole',
     //   title: 'Số điện thoại đại diện',
     //   formItem: {
     //     col: 4,
@@ -129,7 +257,7 @@ export const ColumnFormStore = ({ listProvince }: any) => {
     //   },
     // },
     // {
-    //   name: '',
+    //   name: 'userRole',
     //   title: 'Email đại diện',
     //   formItem: {
     //     col: 4,

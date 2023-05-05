@@ -5,8 +5,8 @@ import { Form } from '@core/form';
 import { Button } from '@core/button';
 import { routerLinks } from '@utils';
 import { ProvinceFacade, StoreFacade } from '@store';
-import { ColumnFormStore } from './column';
-import { StoreManagement } from 'src/store/store-management';
+import { ColumnFormStoreAdd } from './column';
+import { StoreManagement } from '@store/store-management';
 
 const Page = () => {
   const { t } = useTranslation();
@@ -23,11 +23,10 @@ const Page = () => {
 
   useEffect(() => {
     if (!result?.data) provinceFacade.get({})
-    console.log(result?.data)
   }, []);
 
   const handleBack = () => navigate(routerLinks('Store') + '?' + new URLSearchParams(param).toString());
-  const handleSubmit = (values: StoreManagement) => {
+  const handleSubmit = (values: any) => {
     storeFace.post(values);
   };
   return (
@@ -40,7 +39,7 @@ const Page = () => {
           <Form
             values={{ ...result }}
             className="intro-x "
-            columns={ColumnFormStore({ listProvince: result.data || [] })}
+            columns={ColumnFormStoreAdd({ listProvince: result.data || [] })}
             // extendButton={(form) => (
             //   <Button
             //     text={t('components.button.Save and Add new')}

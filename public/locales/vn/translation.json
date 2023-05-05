@@ -83,17 +83,20 @@
     "Supplier/Add": "Thêm nhà cung cấp",
     "Store": "Quản lý cửa hàng",
     "Store/Add": "Thêm cửa hàng",
-    "store-managerment/create" : "Thêm cửa hàng"
+    "store-managerment/create": "Thêm cửa hàng",
+    "store-managerment/edit": "Thông tin cửa hàng"
   },
   "pages": {
     "Login": "Đăng Nhập",
     "User/List": "Danh sách Người dùng",
     "User/Add": "Tạo mới người dùng",
     "User/Edit": "Chỉnh sửa người dùng",
-    "store-managerment/create":"Thêm cửa hàng",
+    "store-managerment/create": "Thêm cửa hàng",
     "Đặt Lại Mật Khẩu": "Đặt Lại Mật Khẩu",
     "Sign-in": "Đăng Nhập",
-    "Quên Mật Khẩu": "Quên Mật Khẩu"
+    "Quên Mật Khẩu": "Quên Mật Khẩu",
+    "Store": "Quản lý cửa hàng",
+    "store-managerment/edit": "Quản lý cửa hàng"
   },
   "columns": {
     "auth": {
@@ -142,7 +145,7 @@
         "Submit": "Gửi đi",
         "Back To Login": "Quay trở lại Đăng nhập",
         "subTitle": "Vui lòng nhập e-mail của bạn. Mã xác minh OTP sẽ được gửi cho bạn",
-        "OTP":"Lấy Mã OTP"
+        "OTP": "Lấy Mã OTP"
       }
     },
     "admin": {

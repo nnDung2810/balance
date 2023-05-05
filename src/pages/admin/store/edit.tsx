@@ -7,7 +7,7 @@ import { routerLinks } from '@utils';
 import { Form } from '@core/form';
 import { Button } from '@core/button';
 import classNames from 'classnames';
-import { ColumnFormStore } from './column';
+import { ColumnFormStoreEdit } from './column';
 import { StoreManagement } from '@store/store-management';
 import { ProvinceFacade } from 'src/store/address/province';
 
@@ -24,11 +24,11 @@ const Page = () => {
   const isReload = useRef(false);
   const param = JSON.parse(queryParams || '{}');
   const { id } = useParams();
-  
-  useEffect(() => {
-    if(!result?.data) provinceFacade.get({})
 
-    if (id) storeFacade.getById1({ id });
+  useEffect(() => {
+    if (!result?.data) provinceFacade.get({})
+
+    if (id) storeFacade.getById({ id });
 
     return () => {
       isReload.current && storeFacade.get(param);
@@ -52,7 +52,7 @@ const Page = () => {
     }
   }, [status]);
 
-  const handleBack = () => navigate(routerLinks('User/List') + '?' + new URLSearchParams(param).toString());
+  const handleBack = () => navigate(routerLinks('Store') + '?' + new URLSearchParams(param).toString());
   const handleSubmit = (values: StoreManagement) => {
     if (id) storeFacade.put({ ...values, id });
     else storeFacade.post(values);
@@ -65,17 +65,19 @@ const Page = () => {
           <div className='text-2xl text-teal-900 p-3.5 pt-4 font-bold bg-white w-max rounded-t-2xl'>
             Thông tin cửa hàng
           </div>
-      {!!result?.data && (
-        <Form
-          values={{ ...data }}
-          className="intro-x p-6 pb-4 pt-3 rounded-lg w-full "
-          columns={ColumnFormStore({listProvince: result?.data || []})}
-          handSubmit={handleSubmit}
-          disableSubmit={isLoading}
-          handCancel={handleBack}
-        />
-      )}
-      </div>
+          <div className='bg-white rounded-2xl'>
+            {!!result?.data && (
+              <Form
+                values={{ ...data }}
+                className="intro-x p-6 pb-4 pt-3 rounded-lg w-full "
+                columns={ColumnFormStoreEdit({ listProvince: result?.data || [] })}
+                handSubmit={handleSubmit}
+                disableSubmit={isLoading}
+                handCancel={handleBack}
+              />
+            )}
+          </div>
+        </div>
       </Fragment>
     </div>
   );

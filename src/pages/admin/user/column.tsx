@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { DataTableModel, FormModel } from '@models';
 import { GlobalFacade, UserFacade, UserRoleFacade } from '@store';
 import { LockOutlined } from '@ant-design/icons';
-import { Input , Col, FormInstance, Row } from 'antd';
+import { Input, Col, FormInstance, Row } from 'antd';
 import { Select } from 'antd';
 const { Option } = Select;
 
@@ -97,16 +97,16 @@ export const ColumnFormUser = ({ t }: any) => {
       title: t('RoleId'),
       name: 'roleId',
       formItem: {
-        type:'hidden',
+        type: 'hidden',
         initialValues: '1',
-        label : 1
+        label: 1
       },
     },
     {
       title: t('addressDto'),
       name: 'addressDto.street',
       formItem: {
-        type:'hidden',
+        type: 'hidden',
       },
     },
     {
@@ -147,7 +147,7 @@ export const ColumnFormUserEdit = ({ t }: any) => {
       name: 'email',
       formItem: {
         disabled: () => true,
-      //  type: 'select',
+        //  type: 'select',
         addonAfter: () => <LockOutlined />,
         tabIndex: 1,
         col: 6,
