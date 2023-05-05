@@ -34,7 +34,9 @@
       "Upload": "Upload",
       "modal": {
         "save": "Save",
-        "cancel": "Cancel"
+        "cancel": "Cancel",
+        "cancel the operation":"Cancel the operation",
+        "change password":"Change Password"
       },
       "Select Date": "Select Date"
     },
@@ -74,6 +76,7 @@
     "User": "User",
     "User/List": "List User",
     "User/Add": "Add new User",
+    "User/Button": "Add Admin",
     "User/Edit": "Edit User",
     "MyProfile": "My Profile",
     "Setting": "Setting",
@@ -181,7 +184,10 @@
     "Upload avatar": "Upload avatar",
     "Fullname": "Full Name",
     "Phone Number": "Phone Number",
-    "Action": "Action"
+    "Action": "Action",
+    "Current password":"Current Password",
+    "New password":"New Password",
+    "Confirm password":"Confirm Password"
   },
   "Code": {
     "Type": "Type",

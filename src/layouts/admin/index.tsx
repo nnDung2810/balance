@@ -222,7 +222,7 @@ const Layout = ({ children }: PropsWithChildren) => {
         })}
       >
         <div className={'h-[calc(100vh-9rem)]'}>
-          <h1 className={'text-2xl text-teal-900 font-bold block pb-5'}>{t('titles.' + title)}</h1>
+          <h1 className={'text-3xl text-teal-900 font-bold block pb-5'}>{t('titles.' + title)}</h1>
           {children}
         </div>
         <footer className="text-left sm:-mx-5 pt-5  mt-10  bg-white p-4 !mr-0">

@@ -15,14 +15,17 @@ const Page = () => {
   const userFacade = UserFacade();
   const { data, isLoading, queryParams, status } = userFacade;
   const navigate = useNavigate();
-  const isBack = useRef(true);
   const isReload = useRef(false);
   const param = JSON.parse(queryParams || '{}');
   const { id } = useParams();
+  const roleId = 1
+  const subOrgId = null
+  const orgId = null
 
   useEffect(() => {
     if (!result?.data) get({});
-    else userFacade.set({ data: undefined });
+
+    userFacade.set({ data: undefined });
 
     return () => {
       isReload.current && userFacade.get(param);
@@ -40,7 +43,9 @@ const Page = () => {
   const handleBack = () => navigate(routerLinks('User/List') + '?' + new URLSearchParams(param).toString());
   const handleSubmit = (values: User) => {
     if (id) userFacade.put({ ...values, id });
-    else userFacade.post(values);
+    const status = "ACTIVE"
+    userFacade.post({ ...values, orgId, subOrgId, roleId, status });
+    //console.log({ ...values, orgId, subOrgId, roleId, status })
   };
 
   return (

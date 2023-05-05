@@ -3,7 +3,11 @@ import { TableGet } from '../data-table';
 import { DefaultTFuncReturn } from 'i18next';
 
 export class FormModel {
-  constructor(public name: string, public title?: React.ReactNode | DefaultTFuncReturn, public formItem?: FormItem) { }
+  constructor(
+    public name: string,
+    public title?: React.ReactNode | DefaultTFuncReturn,
+    public formItem?: FormItem
+  ) { }
 }
 
 export class FormItem {

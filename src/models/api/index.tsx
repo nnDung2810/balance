@@ -6,16 +6,17 @@ export class Responses<T> {
     public count?: number,
   ) { }
 }
-
 export class CommonEntity {
-  constructor(public id?: string, public created_at?: string, public updated_at?: string, public isDeleted?: string) { }
+  constructor(
+    public id?: string,
+    public created_at?: string,
+    public updated_at?: string,
+    public isDeleted?: string) { }
 }
-
 export class PaginationQuery<T = object> {
   constructor(
     public perPage?: number,
     public page?: number,
-    // public type?: string,
     public filter?: string | T,
     public sorts?: string | T,
     public extend?: string | T,

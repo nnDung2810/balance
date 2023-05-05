@@ -60,7 +60,7 @@ export const ColumnProfile = ({ t }: any) => {
 export const ColumnProfileUser = ({ t }: any) => {
   const col: FormModel[] = [
     {
-      title: ('Họ và tên'),
+      title: t(`user.Fullname`),
       name: 'name',
       formItem: {
         col: 12,
@@ -68,7 +68,7 @@ export const ColumnProfileUser = ({ t }: any) => {
       },
     },
     {
-      title: ('Email'),
+      title: t('Email'),
       name: 'email',
       formItem: {
         tabIndex: 1,
@@ -77,7 +77,7 @@ export const ColumnProfileUser = ({ t }: any) => {
       },
     },
     {
-      title: ('Số điện thoại'),
+      title: t(`user.Phone Number`),
       name: 'phoneNumber',
       formItem: {
         tabIndex: 1,
@@ -86,7 +86,7 @@ export const ColumnProfileUser = ({ t }: any) => {
       },
     },
     {
-      title: ('Ghi chú'),
+      title: t(`user.Note`),
       name: 'note',
       formItem: {
         type: 'textarea',
@@ -98,7 +98,7 @@ export const ColumnProfileUser = ({ t }: any) => {
 export const ColumnProfilePassword = ({ t }: any) => {
   const col: FormModel[] = [
     {
-      title: ('Mật khẩu hiện tại'),
+      title: t(`user.Current password`),
       name: 'password',
       formItem: {
         col: 12,
@@ -108,7 +108,7 @@ export const ColumnProfilePassword = ({ t }: any) => {
       },
     },
     {
-      title: ('Mật khẩu mới'),
+      title: t(`user.New password`),
       name: 'passwordNew',
       formItem: {
         col: 12,
@@ -118,7 +118,7 @@ export const ColumnProfilePassword = ({ t }: any) => {
       },
     },
     {
-      title: ('Xác nhận mật khẩu'),
+      title: t(`user.Confirm password`),
       name: 'passwordComfirm',
       formItem: {
         col: 12,

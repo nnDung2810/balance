@@ -43,7 +43,7 @@ const Page = () => {
                     handSubmit={putProfile}
                     extendButton={(form) => (
                       <Button
-                        text={t('Huỷ Thao Tác')}
+                        text={t('components.form.modal.cancel the operation')}
                         className={'md:min-w-[8rem] justify-center out-line'}
                         onClick={() => {
                           navigate(routerLinks('User/List'))
@@ -59,7 +59,7 @@ const Page = () => {
                     disableSubmit={isLoading}
                     extendButton={(form) => (
                       <Button
-                        text={t('Huỷ Thao Tác')}
+                        text={t('components.form.modal.cancel the operation')}
                         className={'md:min-w-[8rem] justify-center out-line'}
                         onClick={() => {
                           navigate(routerLinks('User/List'))

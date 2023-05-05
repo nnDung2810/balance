@@ -7,7 +7,9 @@ import { Data } from '../index';
 
 const name = 'DataType';
 const action = new Action<DataType>(name);
+
 export const dataTypeSlice = createSlice(new Slice<DataType>(action, { keepUnusedDataFor: 9999 }));
+
 export const DataTypeFacade = () => {
   const dispatch = useAppDispatch();
   return {
@@ -21,9 +23,11 @@ export const DataTypeFacade = () => {
     delete: (id: string) => dispatch(action.delete(id)),
   };
 };
-
 export class DataType extends CommonEntity {
-  constructor(public name?: string, public code?: string, public isPrimary?: boolean, public items?: Data[]) {
-    super();
-  }
+  constructor(
+    public name?: string,
+    public code?: string,
+    public isPrimary?: boolean,
+    public items?: Data[]
+  ) { super(); }
 }

@@ -34,7 +34,9 @@
       "Upload": "Tải lên",
       "modal": {
         "save": "Lưu",
-        "cancel": "Trở Về"
+        "cancel": "Trở về",
+        "cancel the operation":"Huỷ thao tác",
+        "change password":"Đổi mật khẩu"
       },
       "Select Date": "Chọn ngày"
     },
@@ -73,7 +75,8 @@
     "Dashboard": "Tra cứu dữ liệu",
     "User": "Người Dùng",
     "User/List": "Quản lý người dùng",
-    "User/Add": "Thêm quản trị viên",
+    "User/Add": "Thêm người dùng",
+    "User/Button": "Thêm quản trị viên",
     "User/Edit": "Chỉnh sửa người dùng",
     "MyProfile": "Thông tin của tôi",
     "Setting": "Thiết lập",
@@ -182,7 +185,10 @@
     "Upload avatar": "Tải ảnh lên",
     "Fullname": "Họ và tên",
     "Phone Number": "Số điện thoại",
-    "Action": "Hoạt động"
+    "Action": "Hoạt động",
+    "Current password":"Mật khẩu hiện tại",
+    "New password":"Mật khẩu mới",
+    "Confirm password":"Xác nhận mật khẩu"
   },
   "supplier": {
     "Code": "Mã NCC",

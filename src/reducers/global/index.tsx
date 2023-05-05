@@ -8,6 +8,7 @@ import { API, keyRefreshToken, keyToken, keyUser, routerLinks } from '@utils';
 import { Message } from '@components/message';
 import { useAppDispatch, useTypedSelector } from '@reducers';
 import { CommonEntity } from '@models';
+import { UserRole } from '@reducers/user/role';
 const name = 'User-admin';
 const action = {
   name,
@@ -73,14 +74,16 @@ export class User extends CommonEntity {
     public name?: string,
     public note?: string,
     public phoneNumber?: string,
-    public roleCode?: string,
-    public roleId?: number,
+    public created_at?: string,
+    public addressDto?: string,
+    public updated_at?: string,
     public status?: string,
-    public subOrgId?: number,
-    public userRoleId?: number,
-    // public profileImage?: string,
-    // public subOrgName?: string,
-    // public roleName?: string,
+    public roleCode?: string,
+    public orgId?: number | null,
+    public roleId?: number,
+    public subOrgId?: number | null,
+    //public userRoleId?: number,
+    public mtRole?: UserRole[],
   ) {
     super();
   }

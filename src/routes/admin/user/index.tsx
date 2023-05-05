@@ -40,7 +40,7 @@ const Page = () => {
         <div className={'flex gap-2'}>
           <Button
             icon={<Plus className="icon-cud !h-5 !w-5" />}
-            text={t(`titles.User/Add`)}
+            text={t(`titles.User/Button`)}
             onClick={() => navigate(routerLinks('User/Add'))}
           />
         </div>

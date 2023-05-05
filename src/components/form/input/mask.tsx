@@ -32,13 +32,13 @@ const Component = ({
       <input
         ref={input}
         tabIndex={tabIndex}
-        className={classNames('w-full h-10 text-gray-600 bg-white px-4', {
+        className={classNames('w-full h-10 bg-white px-4', {
           'ant-input': !addonBefore && !addonAfter,
           'border rounded-xl': !addonBefore && !addonAfter,
           'rounded-l-xl border-r': !addonBefore && !!addonAfter,
           'rounded-r-xl border-l': !!addonBefore && !addonAfter,
           'border-r border-l': !!addonBefore && !!addonAfter,
-          'bg-gray-100 text-gray-400': disabled,
+          'bg-gray-200 text-gray-400': disabled,
         })}
         readOnly={disabled}
         value={value || ''}

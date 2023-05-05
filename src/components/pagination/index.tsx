@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { Arrow, DoubleArrow } from '@svgs';
 
 export const Pagination: any = ({
-  total =4,
+  total = 4,
   pageSizeOptions = [],
   perPage = 10,
   page = 1,
@@ -151,11 +151,10 @@ export const Pagination: any = ({
               </Select>
             )}
           </label>
-          {showTotal && <span className="ml-3 text-black">{paginationDescription(ranges[0],ranges[1],total)}</span>}
+          {showTotal && <span className="ml-3 text-black">{paginationDescription(ranges[0], ranges[1], total)}</span>}
         </div>
         <div className="mt-3 sm:mt-0 right flex justify-center border border-gray-100 p-1 rounded-xl bg-white">
           <div className="flex sm:flex-wrap justify-center duration-300 transition-all">
-            {/* { disabled: boolean; type: string; index: number;   } */}
             {listOfPageItem.current.map((item: any, index: number) => (
               <button
                 type={'button'}

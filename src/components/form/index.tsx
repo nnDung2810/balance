@@ -17,6 +17,7 @@ export const Form = ({
   columns,
   textSubmit = 'components.form.modal.save',
   textCancel = 'components.form.modal.cancel',
+  textCancelChangePassword = 'components.form.modal.change password',
   handSubmit,
   handCancel,
   values = {},
@@ -637,7 +638,7 @@ export const Form = ({
         )}
         {extendButtonChangePassword && (
           <Button
-            text={t('Đổi mật khẩu')}
+            text={t(textCancelChangePassword)}
             id={idSubmit}
             onClick={() => form && form.submit()}
             disabled={disableSubmit}
@@ -654,6 +655,7 @@ type Type = {
   columns: FormModel[];
   textSubmit?: string;
   textCancel?: string;
+  textCancelChangePassword?: string;
   handSubmit?: (values: any) => void;
   handCancel?: () => void;
   handleForgetPassword?: () => void;

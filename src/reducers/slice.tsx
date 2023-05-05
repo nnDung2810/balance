@@ -62,7 +62,6 @@ export default class Slice<T extends CommonEntity> {
             if (action.payload) {
               const { data, keyState } = action.payload;
               if (JSON.stringify(state.data) !== JSON.stringify(data)) state.data = data;
-              // @ts-ignore
               state[keyState] = true;
               state.status = 'getById.fulfilled';
             } else state.status = 'idle';
