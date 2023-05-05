@@ -1,15 +1,11 @@
-import React, { useEffect, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLocation } from 'react-router-dom';
 
 import { Spin } from '@core/spin';
 import { DataTable } from '@core/data-table';
 
 const Page = () => {
   const { t } = useTranslation();
-  const { pathname } = useLocation();
-
-  useEffect(() => {}, [pathname]);
 
   return (
     <Fragment>
@@ -60,10 +56,10 @@ const Page = () => {
               },
             ]}
             columns={[
-              { title: t('dashboard.Profile'), name: 'name', tableItem: {} },
-              { title: t('dashboard.Package'), name: 'package', tableItem: {} },
-              { title: t('dashboard.Start Date'), name: 'date', tableItem: {} },
-              { title: t('dashboard.Status'), name: 'status', tableItem: {} },
+              { title: 'dashboard.Profile', name: 'name', tableItem: {} },
+              { title: 'dashboard.Package', name: 'package', tableItem: {} },
+              { title: 'dashboard.Start Date', name: 'date', tableItem: {} },
+              { title: 'dashboard.Status', name: 'status', tableItem: {} },
             ]}
           />
         </div>
@@ -113,10 +109,10 @@ const Page = () => {
               },
             ]}
             columns={[
-              { title: t('dashboard.Profile'), name: 'name', tableItem: {} },
-              { title: t('dashboard.Package'), name: 'package', tableItem: {} },
-              { title: t('dashboard.Start Date'), name: 'date', tableItem: {} },
-              { title: t('dashboard.Status'), name: 'status', tableItem: {} },
+              { title: 'dashboard.Profile', name: 'name', tableItem: {} },
+              { title: 'dashboard.Package', name: 'package', tableItem: {} },
+              { title: 'dashboard.Start Date', name: 'date', tableItem: {} },
+              { title: 'dashboard.Status', name: 'status', tableItem: {} },
             ]}
           />
         </div>
@@ -166,10 +162,10 @@ const Page = () => {
               },
             ]}
             columns={[
-              { title: t('dashboard.Profile'), name: 'name', tableItem: {} },
-              { title: t('dashboard.Package'), name: 'package', tableItem: {} },
-              { title: t('dashboard.Start Date'), name: 'date', tableItem: {} },
-              { title: t('dashboard.Status'), name: 'status', tableItem: {} },
+              { title: 'dashboard.Profile', name: 'name', tableItem: {} },
+              { title: 'dashboard.Package', name: 'package', tableItem: {} },
+              { title: 'dashboard.Start Date', name: 'date', tableItem: {} },
+              { title: 'dashboard.Status', name: 'status', tableItem: {} },
             ]}
           />
         </div>
@@ -219,10 +215,10 @@ const Page = () => {
               },
             ]}
             columns={[
-              { title: t('dashboard.Profile'), name: 'name', tableItem: {} },
-              { title: t('dashboard.Package'), name: 'package', tableItem: {} },
-              { title: t('dashboard.Start Date'), name: 'date', tableItem: {} },
-              { title: t('dashboard.Status'), name: 'status', tableItem: {} },
+              { title: 'dashboard.Profile', name: 'name', tableItem: {} },
+              { title: 'dashboard.Package', name: 'package', tableItem: {} },
+              { title: 'dashboard.Start Date', name: 'date', tableItem: {} },
+              { title: 'dashboard.Status', name: 'status', tableItem: {} },
             ]}
           />
         </div>

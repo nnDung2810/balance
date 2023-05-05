@@ -60,7 +60,7 @@ const Page = () => {
           className="intro-x"
           columns={[
             {
-              title: t('user.Fullname'),
+              title: 'user.Fullname',
               name: 'name',
               formItem: {
                 tabIndex: 1,
@@ -69,7 +69,7 @@ const Page = () => {
               },
             },
             {
-              title: t('columns.auth.login.password'),
+              title: 'columns.auth.login.password',
               name: 'password',
               formItem: {
                 tabIndex: 2,
@@ -80,7 +80,7 @@ const Page = () => {
               },
             },
             {
-              title: t('Email'),
+              title: 'Email',
               name: 'email',
               formItem: {
                 tabIndex: 1,
@@ -89,10 +89,10 @@ const Page = () => {
               },
             },
             {
-              title: t('columns.auth.register.retypedPassword'),
+              title: 'columns.auth.register.retypedPassword',
               name: 'retypedPassword',
               formItem: {
-                placeholder: t('columns.auth.register.retypedPassword'),
+                placeholder: 'columns.auth.register.retypedPassword',
                 tabIndex: 2,
                 col: 6,
                 type: 'password',
@@ -114,7 +114,7 @@ const Page = () => {
               },
             },
             {
-              title: t('Số điện thoại'),
+              title: 'Số điện thoại',
               name: 'phoneNumber',
               formItem: {
                 col: 6,
@@ -122,7 +122,7 @@ const Page = () => {
               },
             },
             {
-              title: t('user.Date of birth'),
+              title: 'user.Date of birth',
               name: 'dob',
               formItem: {
                 col: 6,
@@ -131,7 +131,7 @@ const Page = () => {
               },
             },
             {
-              title: t('user.Position'),
+              title: 'user.Position',
               name: 'positionCode',
               formItem: {
                 col: 6,
@@ -154,7 +154,7 @@ const Page = () => {
               },
             },
             {
-              title: t('user.Start Date'),
+              title: 'user.Start Date',
               name: 'startDate',
               formItem: {
                 col: 6,
@@ -163,7 +163,7 @@ const Page = () => {
               },
             },
             {
-              title: t('user.Role'),
+              title: 'user.Role',
               name: 'roleId',
               formItem: {
                 col: 6,
@@ -176,7 +176,7 @@ const Page = () => {
               },
             },
             {
-              title: t('user.Description'),
+              title: 'user.Description',
               name: 'description',
               formItem: {
                 col: 8,
@@ -185,7 +185,7 @@ const Page = () => {
             },
             {
               name: 'avatar',
-              title: t('user.Upload avatar'),
+              title: 'user.Upload avatar',
               formItem: {
                 col: 4,
                 type: 'upload',
