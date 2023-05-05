@@ -60,7 +60,7 @@ const Page = () => {
           className="intro-x"
           columns={[
             {
-              title: t('dayoff.Fullname'),
+              title: t('user.Fullname'),
               name: 'name',
               formItem: {
                 tabIndex: 1,
