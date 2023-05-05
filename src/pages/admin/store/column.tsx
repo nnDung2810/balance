@@ -4,53 +4,6 @@ import { DataTableModel, FormModel } from '@models';
 import { routerLinks } from '@utils';
 import { DistrictFacade, UserFacade } from '@store';
 
-export const ColumnTableStore = () => {
-  const col: DataTableModel[] = [
-    {
-      title: 'Mã cửa hàng',
-      name: 'code',
-      tableItem: {
-        width: 150,
-        // fixed: window.innerWidth > 767,
-      },
-    },
-    {
-      title: 'Tên cửa hàng',
-      name: 'name',
-      tableItem: {
-      },
-    },
-    {
-      title: 'Địa chỉ',
-      name: 'address',
-      tableItem: {
-        render: (value, item) => item.address?.street + ', ' + item.address?.ward.name + ', ' + item.address?.district.name + ', ' + item.address?.province.name,
-      },
-    },
-    {
-      title: 'Loại cửa hàng',
-      name: 'isMain',
-      tableItem: {
-        render: (text: string) => text ? 'Cửa hàng chính' : 'Cửa hàng chi nhánh'
-      },
-    },
-    {
-      title: 'Người đại diện',
-      name: 'userRole',
-      tableItem: {
-        render: (value, item) => item.userRole[0]?.userAdmin.name,
-      },
-    },
-    {
-      title: 'Số điện thoại',
-      name: 'userRole',
-      tableItem: {
-        render: (value, item) => item.userRole[0]?.userAdmin.phoneNumber,
-      },
-    },
-  ];
-  return col;
-};
 export const ColumnFormStoreAdd = ({ listProvince }: any) => {
   const col: FormModel[] = [
     {
