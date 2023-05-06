@@ -7,7 +7,7 @@ import { Button } from '@core/button';
 import { DataTable } from '@core/data-table';
 
 import { keyRole, routerLinks } from '@utils';
-import { UserFacade, GlobalFacade, CodeFacade } from '@store';
+import { UserFacade, GlobalFacade, CodeFacade, UserRoleFacade } from '@store';
 import { Edit, Plus, Trash } from '@svgs';
 import { TableRefObject } from '@models';
 import dayjs from 'dayjs';
@@ -70,6 +70,29 @@ const Page = () => {
                 params: (fullTextSearch: string, value) => ({
                   fullTextSearch,
                   filter: { type: 'POS' },
+                  extend: { code: value },
+                }),
+              },
+            },
+            sorter: true,
+            render: (item) => item?.name,
+          },
+        },
+        {
+          title: 'user.Role',
+          name: 'role',
+          tableItem: {
+            filter: {
+              type: 'checkbox',
+              name: 'roleCode',
+              get: {
+                facade: UserRoleFacade,
+                format: (item: any) => ({
+                  label: item.name,
+                  value: item.code,
+                }),
+                params: (fullTextSearch: string, value) => ({
+                  fullTextSearch,
                   extend: { code: value },
                 }),
               },
