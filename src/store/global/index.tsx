@@ -126,7 +126,6 @@ export const globalSlice = createSlice({
         localStorage.removeItem(keyUser);
         localStorage.removeItem(keyToken);
         localStorage.removeItem(keyRefreshToken);
-        clearTempLocalStorage();
         state.isLoading = false;
         state.status = 'logout.fulfilled';
       })
@@ -183,7 +182,6 @@ export const globalSlice = createSlice({
       .addCase(action.login.fulfilled, (state: State, action: PayloadAction<User>) => {
         if (action.payload) {
           localStorage.setItem(keyUser, JSON.stringify(action.payload));
-          clearTempLocalStorage();
           state.user = action.payload;
           state.data = {};
           state.status = 'login.fulfilled';
@@ -258,18 +256,6 @@ interface State {
   language?: 'vn' | 'en' | null;
   locale?: typeof viVN | typeof enUS;
 }
-
-const clearTempLocalStorage = () => {
-  const arr = [];
-  for (let i = 0; i < localStorage.length; i++) {
-    if (localStorage.key(i)?.indexOf('temp-') === 0) {
-      arr.push(localStorage.key(i));
-    }
-  }
-  for (let i = 0; i < arr.length; i++) {
-    localStorage.removeItem(arr[i] || '');
-  }
-};
 export const GlobalFacade = () => {
   const dispatch = useAppDispatch();
   return {
