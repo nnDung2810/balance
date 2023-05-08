@@ -14,7 +14,6 @@ import { Switch } from 'antd';
 
 const Page = () => {
   const { t } = useTranslation();
-  const provinceFacade = ProvinceFacade()
   const districtFacade = DistrictFacade()
   const wardFacade = WardFacade()
   const { result, get } = ProvinceFacade();
@@ -25,9 +24,6 @@ const Page = () => {
   const isReload = useRef(false);
   const param = JSON.parse(queryParams || '{}');
   const { id } = useParams();
-
-  // console.log("result",result);
-  // console.log("supplierFacade",supplierFacade);
 
 
   useEffect(() => {
@@ -75,24 +71,7 @@ const Page = () => {
           </div>
           {!!result?.data && (
             <div>
-              {/* <Form
-                values={{ ...data }}
-                className="intro-x"
-                columns={ColumnFormSupplier({ t, listRole: result?.data || [] })}
-                disableSubmit={isLoading}
-                extendButton={() => (
-                  <div className='max-w-7xl flex items-center absolute -right-4 -left-4 justify-between mt-4'>
-                    <button className={'text-teal-900 bg-white border-solid border border-teal-900 rounded-xl p-2 w-auto h-11 px-8'}
-                    onClick={handleBack}>
-                      {t('Trở về')}
-                    </button>
-                    <button className={'text-white bg-teal-900 border-solid border rounded-xl p-2 w-auto h-11 px-8'}
-                    onClick={() => handleSubmit}>
-                      {t('Lưu')}
-                    </button>
-                  </div>
-                 )}/> */}
-                 <Form
+              <Form
                 values={{ ...data }}
                 className="intro-x p-6 pb-4 pt-3 rounded-lg w-full "
                 columns={[

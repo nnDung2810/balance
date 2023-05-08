@@ -21,8 +21,6 @@ const Page = () => {
   const provinceFacade = ProvinceFacade()
   const { result } = provinceFacade
   const supplierFacade = SupplierFacade();
-  const districtFace = DistrictFacade();
-  const wardFace = WardFacade();
   const { data, isLoading, queryParams, status } = supplierFacade;
   const navigate = useNavigate();
   const isBack = useRef(true);
@@ -31,25 +29,16 @@ const Page = () => {
   const { id } = useParams();
   
 
-  const districtId =  data?.address?.province?.code;
-  const wardId =  data?.address?.district?.code;
 
   useEffect(() => {
     if (!result?.data) provinceFacade.get({})
-    
+
     if (id) supplierFacade.getById({ id });
-    else supplierFacade.set({ data: {} });
-
-    // if (districtId) districtFace.getById({ districtId });
-
-    // if (wardId) wardFace.getById({wardId});
 
     return () => {
       isReload.current && supplierFacade.get(param);
-      // isReload.current && wardFace.get(param);
-      // isReload.current && districtFace.get(param);
     };
-  }, [id, districtId]);
+  }, [id, data]);
 
   useEffect(() => {
     switch (status) {
@@ -124,7 +113,7 @@ const Page = () => {
               values={{ ...data, street: data?.address?.street, province: data?.address?.province?.name, district: data?.address?.district?.name, ward: data?.address?.ward?.name,
               username: data?.userRole?.[0].userAdmin.name, email: data?.userRole?.[0].userAdmin.email, phoneNumber: data?.userRole?.[0].userAdmin.phoneNumber  }}
               className="intro-x p-6 pb-4 pt-6 rounded-lg w-full "
-              columns={ColumnFormSupplierDetail({ t, listRole: result?.data || [], wardId: data?.address?.ward?.id, districtId: data?.address?.district?.id })}
+              columns={ColumnFormSupplierDetail({ t, listRole: result?.data || []})}
               handSubmit={handleSubmit}
               disableSubmit={isLoading}
               handCancel={handleBack}
