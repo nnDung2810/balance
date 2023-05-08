@@ -92,7 +92,7 @@ export const ColumnFormSupplier= ({ t, listRole }: any) => {
           if(value) {
             const districtId = value;
             // const districtFaca = DistrictFacade();
-            form.resetFields(['code'])
+            form.resetFields(['district'])
             form.setFieldValue(value);
             districtFaca.getById({districtId})
           }
