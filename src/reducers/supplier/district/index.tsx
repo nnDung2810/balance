@@ -11,8 +11,8 @@ export const action = {
   ...new Action<District>(name),
   getById: createAsyncThunk(
       name + '/getById',
-      async ({ id, keyState = 'isVisible' }: { id: string; keyState: keyof State<District> }) => {
-        const { data } = await API.get<District>(`${routerLinks(name, 'api')}/ward/${id}`);
+      async ({ districtId, keyState = 'isVisible' }: { districtId: string; keyState?: keyof State<District> }) => {
+        const { data } = await API.get<District>(`${routerLinks(name, 'api')}/${districtId}`);
         return { data, keyState };
       },
     ),
@@ -26,12 +26,12 @@ export const DistrictFacade = () => {
   return {
     ...useTypedSelector((state) => state[action.name] as State<District>),
     set: (values: State<District>) => dispatch(action.set(values)),
-    get: (params: PaginationQuery<District>) => dispatch(action.get(params)),
-    getById: ({ id, keyState = 'isVisible' }: { id: string; keyState: keyof State<District> }) =>
-      dispatch(action.getById({ id, keyState })),
+    // get: (params: PaginationQuery<District>) => dispatch(action.get(params)),
+    getById: ({ districtId, keyState = 'isVisible' }: { districtId: string; keyState?: keyof State<District> }) =>
+      dispatch(action.getById({ districtId, keyState })),
     post: (values: District) => dispatch(action.post(values)),
     put: (values: District) => dispatch(action.put(values)),
-    delete: (id: string) => dispatch(action.delete(id)),
+    delete: (districtId: string) => dispatch(action.delete(districtId)),
   };
 };
 

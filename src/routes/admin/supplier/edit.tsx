@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router';
 
-import { ProvinceFacade, SupplierFacade } from '@reducers';
+import { DistrictFacade, ProvinceFacade, SupplierFacade, WardFacade } from '@reducers';
 import { routerLinks } from '@utils';
 import { Button, DataTable, Form } from '@components';
 import { ColumnFormSupplierDetail, ColumnTableSupplierDiscount, ColumnTableSupplierProduct } from './column';
@@ -15,6 +15,8 @@ const Page = () => {
   const { t } = useTranslation();
   const { result, get } = ProvinceFacade();
   const supplierFacade = SupplierFacade();
+  const districtFace = DistrictFacade();
+  const wardFace = WardFacade();
   const { data, isLoading, queryParams, status } = supplierFacade;
   const navigate = useNavigate();
   const isBack = useRef(true);
@@ -22,16 +24,30 @@ const Page = () => {
   const param = JSON.parse(queryParams || '{}');
   const { id } = useParams();
 
+  console.log(data?.address?.province?.code);
+  
+
+  const districtId =  data?.address?.province?.code;
+  const wardId =  data?.address?.district?.code;
+
   useEffect(() => {
     if (!result?.data) get({});
-
+    
     if (id) supplierFacade.getById({ id });
     else supplierFacade.set({ data: {} });
 
+    if (districtId) districtFace.getById({ districtId });
+    else districtFace.set({ data: {} });
+
+    if (wardId) wardFace.getById({wardId});
+    else wardFace.set({ data: {} });
+
     return () => {
       isReload.current && supplierFacade.get(param);
+      // isReload.current && wardFace.get(param);
+      // isReload.current && districtFace.get(param);
     };
-  }, [id]);
+  }, [id, districtId]);
 
   useEffect(() => {
     switch (status) {
@@ -56,6 +72,7 @@ const Page = () => {
     if (id) supplierFacade.put({ ...values, id });
     else supplierFacade.post(values);
   };
+
   return (
     <div className={'w-full'}>
       <Fragment>
@@ -105,7 +122,7 @@ const Page = () => {
               values={{ ...data, street: data?.address?.street, province: data?.address?.province?.name, district: data?.address?.district?.name, ward: data?.address?.ward?.name,
               username: data?.userRole?.[0].userAdmin.name, email: data?.userRole?.[0].userAdmin.email, phoneNumber: data?.userRole?.[0].userAdmin.phoneNumber  }}
               className="intro-x p-6 pb-4 pt-6 rounded-lg w-full "
-              columns={ColumnFormSupplierDetail({ t, listRole: result?.data || [] })}
+              columns={ColumnFormSupplierDetail({ t, listRole: result?.data || [], wardId: data?.address?.ward?.id, districtId: data?.address?.district?.id })}
               handSubmit={handleSubmit}
               disableSubmit={isLoading}
               handCancel={handleBack}

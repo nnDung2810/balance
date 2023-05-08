@@ -12,7 +12,7 @@ export const action = {
   getById: createAsyncThunk(
       name + '/getById',
       async ({ id, keyState = 'isVisible' }: { id: string; keyState: keyof State<Province> }) => {
-        const { data } = await API.get<Province>(`${routerLinks(name, 'api')}/district/${id}`);
+        const { data } = await API.get<Province>(`${routerLinks(name, 'api')}/${id}`);
         return { data, keyState };
       },
     ),

@@ -1,6 +1,6 @@
 
 import { DataTableModel, FormModel } from '@models';
-import { DistrictFacade, WardFacade } from '@reducers';
+import { DistrictFacade, ProvinceFacade, SupplierFacade, WardFacade } from '@reducers';
 
 export const ColumnTableSupplier = ({ t, navigate, dataTableRef }: any) => {
   const col: DataTableModel[] = [
@@ -56,9 +56,8 @@ export const ColumnTableSupplier = ({ t, navigate, dataTableRef }: any) => {
   ];
   return col;
 };
-
 export const ColumnFormSupplier= ({ t, listRole }: any) => {
-  
+  const districtFaca = DistrictFacade();
   const col: FormModel[] = [
     {
       title: t('Tên nhà cung cấp'),
@@ -86,12 +85,16 @@ export const ColumnFormSupplier= ({ t, listRole }: any) => {
         rules: [{ type: 'required' }],
         type: 'select',
         list: listRole.map((item: any) => ({
-          value: item?.id,
+          value: item?.code,
           label: item?.name,
         })),
-        onChange: (value: any, form: any) => {
+        onChange: (value: any, form: any, reRender: any) => {
           if(value) {
-            console.log("form.DistrictFacade(value)",value);
+            const districtId = value;
+            // const districtFaca = DistrictFacade();
+            form.resetFields(['code'])
+            form.setFieldValue(value);
+            districtFaca.getById({districtId})
           }
         }
       },
@@ -187,8 +190,8 @@ export const ColumnFormSupplier= ({ t, listRole }: any) => {
   return col;
 };
 
-export const ColumnFormSupplierDetail = ({ t, listRole }: any) => {
-  
+export const ColumnFormSupplierDetail = ({ t, listRole, districtId, wardId }: any) => {
+
  const col: FormModel[] = [
     {
       title: t('Mã nhà cung cấp'),
@@ -263,6 +266,18 @@ export const ColumnFormSupplierDetail = ({ t, listRole }: any) => {
         col: 3,
         rules: [{ type: 'required' }],
         type: 'select',
+        get: {
+          facade: WardFacade,
+          params: (fullTextSearch: string) => ({
+            fullTextSearch,
+            filter: { type: 'SUPPLIER' },
+            extend: {},
+          }),
+          format: (item: any) => ({
+            label: item.name,
+            value: item.id,
+          }),
+        },
       },
     },
     {
