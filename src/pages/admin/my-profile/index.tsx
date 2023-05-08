@@ -91,7 +91,7 @@ const Page = () => {
         <div className='col-span-2 bg-white p-5 border rounded-xl mr-4 fill-black'>
           <Spin spinning={isLoading}>
               <Tabs defaultActiveKey="1" size="large">
-                <Tabs.TabPane tab="Thông tin cá nhân" key="1">
+                <Tabs.TabPane tab={t('routes.admin.Layout.My Profile')} key="1">
                   <Form
                     columns={[
                       {
@@ -112,7 +112,7 @@ const Page = () => {
                         },
                       },
                       {
-                        title: 'user.PhoneNumber',
+                        title: 'user.Phone Number',
                         name: 'phoneNumber',
                         formItem: {
                           tabIndex: 1,
@@ -132,7 +132,7 @@ const Page = () => {
                     handSubmit={putProfile}
                     extendButton={(form) => (
                       <Button
-                        text={t('Huỷ Thao Tác')}
+                        text={t('components.button.Cancel')}
                         className={'md:min-w-[8rem] justify-center out-line'}
                         onClick={() => {
                           navigate(routerLinks('User/List'))
@@ -143,7 +143,7 @@ const Page = () => {
                   />
                 </Tabs.TabPane>
 
-                <Tabs.TabPane tab="Đổi mật khẩu" key="2">
+                <Tabs.TabPane tab={t('routes.admin.Layout.Change Password')} key="2">
                   <Form
                     columns={[
                       {
@@ -153,7 +153,7 @@ const Page = () => {
                           col: 12,
                           type: 'password',
                           rules: [{ type: 'required' }, { type: 'min', value: 6 }],
-                          placeholder: 'Nhập mật khẩu'
+                          placeholder: 'Nhập mật khẩu',
                         },
                       },
                       {
@@ -194,7 +194,7 @@ const Page = () => {
                     disableSubmit={isLoading}
                     extendButton={(form) => (
                       <Button
-                        text={t('Huỷ Thao Tác')}
+                        text={t('components.button.Cancel')}
                         className={'md:min-w-[8rem] justify-center out-line'}
                         onClick={() => {
                           navigate(routerLinks('User/List'))

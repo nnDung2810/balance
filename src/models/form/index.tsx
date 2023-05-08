@@ -38,7 +38,7 @@ export class FormItem {
   tab?: FormItemTab;
   column?: FormModel[];
   disabled?: (values: any, form?: FormInstance) => boolean;
-  placeholder?: string | null;
+  placeholder?: string;
   min?: number;
   max?: number;
   sliderMarks?: Record<number, string>;

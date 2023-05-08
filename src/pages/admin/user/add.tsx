@@ -9,7 +9,6 @@ import { Form } from '@core/form';
 import { User } from '../../../store/global';
 
 const Page = () => {
-  const { t } = useTranslation();
   const { result, get } = UserRoleFacade();
   const userFacade = UserFacade();
   const { data, isLoading, queryParams, status } = userFacade;

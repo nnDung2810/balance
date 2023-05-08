@@ -65,7 +65,8 @@
     },
     "button": {
       "New": "Tạo mới",
-      "Role": "Vai trò"
+      "Role": "Vai trò",
+      "Cancel": "Hủy thao tác"
     }
   },
   "titles": {

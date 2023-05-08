@@ -616,10 +616,11 @@ export const Form = ({
       </div>
 
       <div
-        className={classNames('gap-2 flex', {
+        className={classNames('mt-9 gap-2 flex absolute pb-14', {
           'justify-center': !extendButton && !handCancel,
-          'md:inline-flex md:float-right': extendButton || handCancel,
-          'w-full flex max-sm:flex-col max-sm:items-center max-sm:mb-10 justify-between mt-8': handSubmit && handCancel,
+          'md:inline-flex w-full justify-between md:float-right': handCancel,
+          'md:inline-flex md:float-right right-0': handSubmit || extendButton,
+          'md:inline-flex md:float-right top-[300px]': extendButtonChangePassword,
         })}
       >
         {handCancel && (
@@ -642,7 +643,7 @@ export const Form = ({
         )}
        {extendButtonChangePassword && (
           <Button
-            text={t('Đổi mật khẩu')}
+            text={t('routes.admin.Layout.Change Password')}
             id={idSubmit}
             onClick={() => {
               if (form) {

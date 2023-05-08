@@ -65,8 +65,8 @@
     },
     "button": {
       "New": "New",
-      "Save and Add new": "Save and Add new",
-      "Back": "Back"
+      "Back": "Back",
+      "Cancel": "Cancel operation"
     }
   },
   "titles": {
