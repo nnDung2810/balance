@@ -12,7 +12,6 @@ import { convertFormValue } from '@utils';
 import { FormItem, FormModel } from '@models';
 import { GlobalFacade } from '@store';
 // import { GlobalFacade } from '@store';
-import { Check, Times } from '@svgs';
 import { Chips, SelectTag, Select, TreeSelect, TableTransfer, Password, Mask, Addable, DatePicker, Tab } from './input';
 
 export const Form = ({
@@ -256,8 +255,9 @@ export const Form = ({
       case 'switch':
         return (
           <Switch
-            checkedChildren={<Check className="h-5 w-5 fill-white" />}
-            unCheckedChildren={<Times className="h-5 w-5 fill-white" />}
+            className={classNames('bg-gray-500')}
+            // checkedChildren={<Check className="h-5 w-5 fill-white" />}
+            // unCheckedChildren={<Times className="h-5 w-5 fill-white" />}
             defaultChecked={!!values && values[item.name || ''] === 1}
           />
         );
@@ -490,7 +490,7 @@ export const Form = ({
                 rules.forEach((item: any) => item.min && (min = item.min));
                 if (value?.trim().length >= min) {
                   if (/^(?!.* )(?=.*\d)(?=.*[A-Z]).*$/.test(value)) return Promise.resolve();
-                  return Promise.reject(t('components.form.rulePassword'));  
+                  return Promise.reject(t('components.form.rulePassword'));
                 }
                 // return Promise.reject('Mật khẩu yêu cầu có 8 ký tự trở lên');
               } else return Promise.resolve();

@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
+
 import { Spin } from '@core/spin';
 import { Form } from '@core/form'
 import { routerLinks } from '@utils';
@@ -20,7 +21,7 @@ const Page = () => {
       navigate('/', { replace: true });
     }
   }, [status]);
-  
+
   return (
     <Fragment>
       <div className="text-center mb-8">

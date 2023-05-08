@@ -48,7 +48,7 @@ const Context = () => {
         theme={{
           token: {
             fontFamily:
-              "'Manrope', -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Noto Sans,Ubuntu,Droid Sans,Helvetica Neue,sans-serif",
+              "'Lexend Deca', -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Noto Sans,Ubuntu,Droid Sans,Helvetica Neue,sans-serif",
           },
         }}
       >

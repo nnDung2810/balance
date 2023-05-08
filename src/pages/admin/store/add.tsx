@@ -3,9 +3,9 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router';
 
 import { Form } from '@core/form';
-import { Button } from '@core/button';
 import { routerLinks } from '@utils';
 import { DistrictFacade, ProvinceFacade, StoreFacade, WardFacade } from '@store';
+import { Switch } from 'antd';
 
 const Page = () => {
   const { t } = useTranslation();
@@ -35,7 +35,7 @@ const Page = () => {
 
   return (
     <div className={'w-full mx-auto bg-white rounded-xl'}>
-      <div className='text-2xl text-teal-900 p-3.5 pt-4 font-bold bg-white w-max rounded-t-2xl'>
+      <div className='text-xl text-teal-900 px-5 pt-3.5 font-bold bg-white w-max rounded-t-2xl'>
         Thông tin cửa hàng
       </div>
       <div className='p-5 bg-white'>
@@ -68,7 +68,7 @@ const Page = () => {
                   rules: [{ type: 'required' }],
                   render() {
                     return (
-                      <div className='mb-2.5 text-base text-black'>Địa chỉ cửa hàng</div>
+                      <h3 className='mb-2.5 text-base text-black font-medium'>Địa chỉ cửa hàng</h3>
                     )
                   },
                 }
@@ -96,6 +96,7 @@ const Page = () => {
                 title: 'Quận/Huyện',
                 formItem: {
                   type: 'select',
+                  rules: [{ type: 'required' }],
                   col: 3,
                   get: {
                     facade: DistrictFacade,
@@ -115,6 +116,7 @@ const Page = () => {
                 title: 'Phường/Xã',
                 formItem: {
                   type: 'select',
+                  rules: [{ type: 'required' }],
                   col: 3,
                   get: {
                     facade: WardFacade,
@@ -129,8 +131,20 @@ const Page = () => {
                 name: 'street',
                 title: 'Địa chỉ cụ thể',
                 formItem: {
+                  rules: [{ type: 'required' }],
                   col: 3,
                 },
+              },
+              {
+                title: '',
+                name: '',
+                formItem: {
+                  render() {
+                    return (
+                      <div className='text-xl text-teal-900 font-bold mb-2.5'>Thông tin người đại diện</div>
+                    )
+                  }
+                }
               },
               {
                 name: 'nameContact',
@@ -163,17 +177,22 @@ const Page = () => {
                   type: 'textarea',
                 },
               },
+              {
+                title: '',
+                name: '',
+                formItem: {
+                  render() {
+                    return (
+                      <div className='flex items-center mb-2.5'>
+                        <div className='text-xl text-teal-900 font-bold mr-6'>Kết nối KiotViet</div>
+                        <Switch className='bg-gray-500' />
+                      </div>
+                    )
+                  }
+                }
+              },
+
             ]}
-            // extendButton={(form) => (
-            //   <Button
-            //     text={t('components.button.Save and Add new')}
-            //     className={'md:min-w-[12rem] w-full justify-center out-line'}
-            //     onClick={() => {
-            //       form.submit();
-            //       isBack.current = false;
-            //     }}
-            //   />
-            // )}
             handSubmit={handleSubmit}
             disableSubmit={isLoading}
             handCancel={handleBack}
