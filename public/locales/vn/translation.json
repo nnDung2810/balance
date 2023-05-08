@@ -33,8 +33,10 @@
       "Enter": "Nhập",
       "Upload": "Tải lên",
       "modal": {
-        "save": "Lưu lại",
-        "cancel": "Huỷ bỏ"
+        "save": "Lưu",
+        "cancel": "Trở về",
+        "Canceloperation":"Huỷ thao tác",
+        "Changepassword":"Đổi mật khẩu"
       },
       "Select Date": "Chọn ngày"
     },
@@ -73,8 +75,13 @@
     "Dashboard": "Tra cứu dữ liệu",
     "User": "Người Dùng",
     "User/List": "Quản lý người dùng",
-    "User/Add": "Thêm quản trị viên",
-    "MyProfile": "Thông tin của tôi",
+    "User/Add": "Thêm người dùng",
+    "User/Edit": "Chỉnh sửa người dùng",
+    "User/Button": "Thêm quản trị viên",
+    "MyProfile": "Thông tin cá nhân",
+    "Userinformation":"Thông tin người dùng",
+    "Personalinformation":"Thông tin cá nhân",
+    "Changepassword":"Đổi mật khẩu",
     "Setting": "Thiết lập",
     "Code": "Mã",
     "Data": "Dữ liệu",
@@ -92,9 +99,10 @@
   },
   "pages": {
     "Login": "Đăng Nhập",
-    "User/List": "Danh sách Người dùng",
-    "User/Add": "Tạo mới người dùng",
-    "User/Edit": "Chỉnh sửa người dùng",
+    "User/List": "Danh Sách Người Dùng",
+    "User/Add": "Tạo Mới Người Dùng",
+    "User/Edit": "Chỉnh Sửa Người Dùng",
+    "MyProfile": "Thông Tin Cá Nhân",
     "store-managerment/create": "Thêm cửa hàng",
     "Đặt Lại Mật Khẩu": "Đặt Lại Mật Khẩu",
     "Sign-in": "Đăng Nhập",
@@ -126,7 +134,7 @@
     }
   },
   "layout": {
-    "footer": "Copyright ©{{year} ARI Technology Co ., JSC. All rights reserved.}"
+    "footer": "Copyright ©{{year}} ARI Technology Co ., JSC. All rights reserved."
   },
   "routes": {
     "auth": {
@@ -180,7 +188,15 @@
     "Fullname": "Họ và tên",
     "Phone Number": "Số điện thoại",
     "Role": "Vai trò",
-    "Note": "Ghi chú"
+    "Note": "Ghi chú",
+    "Password":"Mật khẩu hiện tại",
+    "New password":"Mật khẩu mới",
+    "Confirm password":"Xác nhận mật khẩu",
+     "Roles":{
+      "ADMIN":"Quản trị viên",
+      "OWNER_SUPPLIER":"Đại diện NCC",
+      "OWNER_STORE":"Đại diện cửa hàng"
+    }
   },
   "supplier": {
     "Code": "Mã NCC",

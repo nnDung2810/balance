@@ -14,7 +14,7 @@ const Page = () => {
   const { t } = useTranslation();
   const { user, isLoading, putProfile, setPassword, profile } = GlobalFacade();
   const navigate = useNavigate();
-  const {TabPane} = Tabs;
+  const { TabPane } = Tabs;
 
   useEffect(() => {
     profile();
@@ -32,12 +32,12 @@ const Page = () => {
                   name: 'profileImage',
                   formItem: {
                     type: 'upload',
-                    mode: 'multiple',
+                    //mode: 'multiple',
                     onlyImage: true,
                   },
                 },
                 {
-                  title: t('Họ và tên'),
+                  title: 'user.Fullname',
                   name: 'name',
                   formItem: {
                     render: (form, values) => {
@@ -50,7 +50,7 @@ const Page = () => {
                   },
                 },
                 {
-                  title: t('Vai trò'),
+                  title: 'user.Role',
                   name: 'userRole',
                   formItem: {
                     render: (text: any, item: any) => {
@@ -58,21 +58,21 @@ const Page = () => {
                         return (
                           <div className='flex w-full flex-row justify-center pt-2'>
                             <div><UserSolid className='w-7 h-7 mr-2 fill-slate-500' /></div>
-                            <div className='text-xl text-gray-500'>Quản trị viên</div>
+                            <div className='text-xl text-gray-500'>{t('user.Roles.ADMIN')}</div>
                           </div>
                         )
                       } else if (text = item.userRole[0].mtRole.code === "OWNER_SUPPLIER") {
                         return (
                           <div className='flex w-full flex-row justify-center'>
                             <div><UserSolid className='w-7 h-7 mr-2' /></div>
-                            <div>Đại diện NCC</div>
+                            <div>{t('user.Roles.OWNER_SUPPLIER')}</div>
                           </div>
                         )
                       } else {
                         return (
                           <div className='flex w-full flex-row justify-center'>
                             <div><UserSolid className='w-7 h-7 mr-2' /></div>
-                            <div>Đại diện cửa hàng</div>
+                            <div>{t('user.Roles.OWNER_STORE')}</div>
                           </div>
                         )
                       }
@@ -88,122 +88,119 @@ const Page = () => {
 
         <div className='col-span-2 bg-white p-5 border rounded-xl mr-4 fill-black'>
           <Spin spinning={isLoading}>
-              <Tabs defaultActiveKey="1" size="large">
-                <TabPane tab="Thông tin cá nhân" key="1">
-                  <Form
-                    columns={[
-                      {
-                        title: ('Họ và tên'),
-                        name: 'name',
-                        formItem: {
-                          col: 12,
-                          rules: [{ type: 'required' }],
-                        },
+            <Tabs defaultActiveKey="1" size="large">
+              <TabPane tab={t('titles.Personalinformation')} key="1">
+                <Form
+                  columns={[
+                    {
+                      title: 'user.Fullname',
+                      name: 'name',
+                      formItem: {
+                        col: 12,
+                        rules: [{ type: 'required' }],
                       },
-                      {
-                        title: ('Email'),
-                        name: 'email',
-                        formItem: {
-                          tabIndex: 1,
-                          col: 6,
-                          rules: [{ type: 'required' }, { type: 'email' }, { type: 'min', value: 6 }],
-                        },
+                    },
+                    {
+                      title: 'Email',
+                      name: 'email',
+                      formItem: {
+                        tabIndex: 1,
+                        col: 6,
+                        rules: [{ type: 'required' }, { type: 'email' }, { type: 'min', value: 6 }],
                       },
-                      {
-                        title: ('Số điện thoại'),
-                        name: 'phoneNumber',
-                        formItem: {
-                          tabIndex: 1,
-                          col: 6,
-                          rules: [{ type: 'required' }, { type: 'phone', min: 10, max: 15 }],
-                        },
+                    },
+                    {
+                      title: 'user.Phone Number',
+                      name: 'phoneNumber',
+                      formItem: {
+                        tabIndex: 1,
+                        col: 6,
+                        rules: [{ type: 'required' }, { type: 'phone', min: 10, max: 15 }],
                       },
-                      {
-                        title: ('Ghi chú'),
-                        name: 'note',
-                        formItem: {
-                          type: 'textarea',
-                        },
+                    },
+                    {
+                      title: 'user.Note',
+                      name: 'note',
+                      formItem: {
+                        type: 'textarea',
                       },
-                    ]}
-                    disableSubmit={isLoading}
-                    handSubmit={putProfile}
-                    extendButton={(form) => (
-                      <Button
-                        text={t('Huỷ Thao Tác')}
-                        className={'md:min-w-[8rem] justify-center out-line'}
-                        onClick={() => {
-                          navigate(routerLinks('User/List'))
-                        }}
-                      />
-                    )}
-                    values={{ ...user }}
-                  />
-                </TabPane>
+                    },
+                  ]}
+                  disableSubmit={isLoading}
+                  handSubmit={putProfile}
+                  extendButton={(form) => (
+                    <Button
+                      text={t('components.form.modal.Canceloperation')}
+                      className={'md:min-w-[8rem] justify-center out-line'}
+                      onClick={() => {
+                        navigate(routerLinks('User/List'))
+                      }}
+                    />
+                  )}
+                  values={{ ...user }}
+                />
+              </TabPane>
 
-                <TabPane tab="Đổi mật khẩu" key="2">
-                  <Form
-                    columns={[
-                      {
-                        title: ('Mật khẩu hiện tại'),
-                        name: 'password',
-                        formItem: {
-                          col: 12,
-                          type: 'password',
-                          rules: [{ type: 'required' }, { type: 'min', value: 6 }],
-                          placeholder: 'Nhập mật khẩu'
-                        },
+              <TabPane tab={t('titles.Changepassword')} key="2">
+                <Form
+                  columns={[
+                    {
+                      title: 'user.Password',
+                      name: 'password',
+                      formItem: {
+                        col: 12,
+                        type: 'password',
+                        rules: [{ type: 'required' }, { type: 'min', value: 6 }],
                       },
-                      {
-                        title: ('Mật khẩu mới'),
-                        name: 'passwordNew',
-                        formItem: {
-                          col: 12,
-                          type: 'password',
-                          rules: [{ type: 'custom' }, { type: 'min', value: 6 }],
-                          placeholder: 'Nhập mật khẩu mới'
-                        },
+                    },
+                    {
+                      title: 'user.New password',
+                      name: 'passwordNew',
+                      formItem: {
+                        col: 12,
+                        type: 'password',
+                        rules: [{ type: 'custom' }, { type: 'min', value: 6 }],
                       },
-                      {
-                        title: ('Xác nhận mật khẩu'),
-                        name: 'passwordComfirm',
-                        formItem: {
-                          col: 12,
-                          type: 'password',
-                          condition: (value: string, form: any, index: number, values: any) => !values?.id,
-                          rules: [
-                            { type: 'required' },
-                            {
-                              type: 'custom',
-                              validator: ({ getFieldValue }: any) => ({
-                                validator(rule: any, value: string) {
-                                  if (!value || getFieldValue('passwordNew') === value) {
-                                    return Promise.resolve();
-                                  }
-                                  return Promise.reject(new Error('Hai mật khẩu không giống nhau!'));
-                                },
-                              }),
-                            },
-                          ],
-                          placeholder: 'Xác nhận mật khẩu'
-                        },
+                    },
+                    {
+                      title: 'user.Confirm password',
+                      name: 'passwordComfirm',
+                      formItem: {
+                        col: 12,
+                        type: 'password',
+                        condition: (value: string, form: any, index: number, values: any) => !values?.id,
+                        rules: [
+                          { type: 'required' },
+                          {
+                            type: 'custom',
+                            validator: ({ getFieldValue }: any) => ({
+                              validator(rule: any, value: string) {
+                                if (!value || getFieldValue('passwordNew') === value) {
+                                  return Promise.resolve();
+                                }
+                                return Promise.reject(new Error('Hai mật khẩu không giống nhau!'));
+                              },
+                            }),
+                          },
+                        ],
                       },
-                    ]}
-                    disableSubmit={isLoading}
-                    extendButton={(form) => (
-                      <Button
-                        text={t('Huỷ Thao Tác')}
-                        className={'md:min-w-[8rem] justify-center out-line'}
-                        onClick={() => {
-                          navigate(routerLinks('User/List'))
-                        }}
-                      />
-                    )}
-                    extendButtonChangePassword={setPassword}
-                    values={{ ...user }}
-                  />
-                </TabPane>
-              </Tabs>
+                    },
+                  ]}
+                  disableSubmit={isLoading}
+                  extendButton={(form) => (
+                    <Button
+                      text={t('components.form.modal.Canceloperation')}
+                      className={'md:min-w-[8rem] justify-center out-line'}
+                      onClick={() => {
+                        navigate(routerLinks('User/List'))
+                      }}
+                    />
+                  )}
+                  extendButtonChangePassword={setPassword}
+                  values={{ ...user }}
+                />
+              </TabPane>
+            </Tabs>
           </Spin>
         </div>
         <div>

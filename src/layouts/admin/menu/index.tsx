@@ -96,9 +96,7 @@ const Layout = ({ isCollapsed = false, permission = [] }: any) => {
                   onClick={() => navigate(routerLinks(item.name))}
                   key={index}
                 >
-                  {/* <img src={item.icon} className='h-8  w-8 block text-slate-700 fill-red-700'/> */}
-                  {/* {item.icon} */}
-                  <div className={classNames({'absolute': isCollapsed })}>{item.icon}</div>
+                  <div className={classNames({ 'absolute': isCollapsed })}>{item.icon}</div>
                   <span
                     className={classNames('ml-2.5 transition-all duration-300 ease-in-out font-medium text-base ', {
                       'opacity-100': !isCollapsed,

@@ -34,7 +34,9 @@
       "Upload": "Upload",
       "modal": {
         "save": "Save",
-        "cancel": "Cancel"
+        "cancel": "Cancel",
+        "Canceloperation":"Cancel Operation",
+        "Changepassword":"Change Password"
       },
       "Select Date": "Select Date"
     },
@@ -75,7 +77,12 @@
     "User": "User",
     "User/List": "List User",
     "User/Add": "Add new User",
+    "User/Edit": "Edit User",
     "MyProfile": "My Profile",
+    "User/Button": "Add Admin",
+    "Userinformation":"User Information",
+    "Personalinformation":"Personal Information",
+    "Changepassword":"Change Password",
     "Setting": "Setting",
     "Code": "Mã",
     "Data": "Dữ liệu",
@@ -94,6 +101,7 @@
     "User/List": "List User",
     "User/Add": "Add new User",
     "User/Edit": "Edit User",
+    "MyProfile": "MyProfile",
     "store-managerment/create":"Thêm cửa hàng"
   },
   "columns": {
@@ -120,7 +128,7 @@
     }
   },
   "layout": {
-    "footer": "Copyright ©2023 ARI Technology Co ., JSC. All rights reserved."
+    "footer": "Copyright @{{year}} ARI Technology Co ., JSC. All rights reserved."
   },
   "routes": {
     "auth": {
@@ -175,7 +183,15 @@
     "Fullname": "Fullname",
     "Phone Number": "Phone Number",
     "Role": "Role",
-    "Note": "Note"
+    "Note": "Note",
+    "Password":"Password",
+    "New password":"New Password",
+    "Confirm password":"Confirm Password",
+    "Roles":{
+      "ADMIN":"ADMIN",
+      "OWNER_SUPPLIER":"OWNER_SUPPLIER",
+      "OWNER_STORE":"OWNER_STORE"
+    }
   },
   "Code": {
     "Type": "Type",

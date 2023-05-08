@@ -6,8 +6,6 @@ import { useLocation, useNavigate } from 'react-router';
 import dayjs from 'dayjs';
 import classNames from 'classnames';
 
-// import { Button } from '@components/button';
-// import { Pagination } from '@components/pagination';
 import { Button } from '../button';
 import { Pagination } from '../pagination';
 import { DataTableModel, PaginationQuery, TableGet, TableRefObject } from '@models';
@@ -352,7 +350,7 @@ export const DataTable = forwardRef(
         }
         // noinspection JSUnusedGlobalSymbols
         return {
-          title: col.title,
+          title: t(col.title || ''),
           dataIndex: col.name,
           ...item,
         };
@@ -384,7 +382,6 @@ export const DataTable = forwardRef(
         page: tempPageIndex,
         perPage: tempPageSize,
         sorts: JSON.stringify(tempSort),
-        //filter: JSON.stringify(cleanObjectKeyNull(filters)),
         fullTextSearch: tempFullTextSearch,
       });
       onChange && onChange(tempParams);
@@ -488,8 +485,8 @@ export const DataTable = forwardRef(
                 pageSizeOptions={pageSizeOptions}
                 pageSizeRender={pageSizeRender}
                 pageSizeWidth={pageSizeWidth}
-                queryParams={(pagination: any) =>
-                  handleTableChange(pagination, params[filter], params[sort], params[fullTextSearch])
+                queryParams={(pagination: { page?: number; perPage?: number }) =>
+                  handleTableChange(pagination, params.filter, params.sorts as SorterResult<any>, params.fullTextSearch)
                 }
                 paginationDescription={paginationDescription}
                 idElement={idTable.current}

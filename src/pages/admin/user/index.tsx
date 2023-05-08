@@ -2,20 +2,14 @@ import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 
-// import { Avatar } from '@components/avatar';
-// import { Button } from '@components/button';
-// import { DataTable } from '@components/data-table';
 import { Button } from '@core/button';
 import { DataTable } from '@core/data-table';
-import { Avatar } from '@core//avatar';
 
-import { keyRole, routerLinks } from '@utils';
-import { UserFacade, GlobalFacade, UserRoleFacade } from '@store';
-import { Edit, Plus, Trash } from '@svgs';
+import { routerLinks } from '@utils';
+import { UserFacade } from '@store';
+import { Plus } from '@svgs';
 import { DataTableModel, TableRefObject } from '@models';
 
-import { Popconfirm, Tooltip } from 'antd';
-//import { ColumnTableUser } from './column';
 
 const Page = () => {
   const { t } = useTranslation();
@@ -35,14 +29,14 @@ const Page = () => {
 
   const columns: DataTableModel[] = [
     {
-      title: t(`Mã người dùng`),
+      title: 'user.UserId',
       name: 'code',
       tableItem: {
         width: 140,
       },
     },
     {
-      title: t('Họ và tên'),
+      title: 'user.Fullname',
       name: 'name',
       tableItem: {
         width: 400,
@@ -55,7 +49,7 @@ const Page = () => {
       },
     },
     {
-      title: t('Email'),
+      title: 'Email',
       name: 'email',
       tableItem: {
         width: 130,
@@ -63,25 +57,25 @@ const Page = () => {
       },
     },
     {
-      title: t('Số điện thoại'),
+      title: 'user.Phone Number',
       name: 'phoneNumber',
       tableItem: {
         width: 100,
       },
     },
     {
-      title: t('Vai trò'),
+      title: 'user.Role',
       name: 'userRole',
       tableItem: {
         width: 200,
         filter: { type: 'search' },
         render: (text: any, item: any) => {
           if (text = item.userRole[0].mtRole.code === "ADMIN") {
-            return "Quản trị viên";
+            return <div>{t('user.Roles.ADMIN')}</div>;
           } else if (text = item.userRole[0].mtRole.code === "OWNER_SUPPLIER") {
-            return "Đại diện NCC";
+            return <div>{t('user.Roles.OWNER_SUPPLIER')}</div>;
           } else {
-            return "Đại diện cửa hàng";
+            return <div>{t('user.Roles.OWNER_STORE')}</div>;
           }
         }
       },
@@ -104,7 +98,7 @@ const Page = () => {
         <div className={'flex gap-2'}>
           <Button
             icon={<Plus className="icon-cud !h-5 !w-5" />}
-            text={t('titles.User/Add')}
+            text={t('titles.User/Button')}
             onClick={() => navigate(routerLinks('User/Add'))}
           />
         </div>
