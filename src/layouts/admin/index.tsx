@@ -169,7 +169,7 @@ const Layout = ({ children }: PropsWithChildren) => {
   return (
     <main>
       <div className="leading-5 leading-10" />
-      <div className='h-24 relative'>
+      <div className='h-20 relative'>
         <div className='absolute top-0 left-0 right-0'>
         <Header isCollapsed={isCollapsed} isDesktop={isDesktop} />
         </div>
@@ -269,7 +269,8 @@ const Layout = ({ children }: PropsWithChildren) => {
       >
         <div className={''}>
           {/* <h1 className={'text-xl font-bold block sm:hidden pb-5'}>{t('pages.' + title)}</h1> */}
-          <h1 className={'text-2xl text-teal-900 font-bold block pb-5'}>{t('titles.' + title)}</h1>
+          {title !== 'Dashboard' && (
+          <h1 className={'text-2xl text-teal-900 font-bold block pb-5'}>{t('titles.' + title)}</h1>)}
           {children}
         </div>
       </section>

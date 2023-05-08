@@ -11,6 +11,7 @@ import { User } from '@store';
 import { DistrictFacade } from '@store/address/district';
 import { WardFacade } from '@store/address/ward';
 import { Switch } from 'antd';
+import { format } from 'prettier';
 
 const Page = () => {
   const { t } = useTranslation();
@@ -63,9 +64,9 @@ const Page = () => {
   return (
     <div className={'max-w-7xl mx-auto'}>
       <div className=' pr-5 h-full pb-10'>
-        <div className='bg-white rounded-xl p-4 pb-10 relative text-center '>
+        <div className='bg-white rounded-xl p-4 pb-10 relative text-left'>
           <div>
-            <p className='text-xl text-left font-bold text-teal-900 py-5'>
+            <p className='text-xl font-bold text-teal-900 py-5'>
               Thông tin nhà cung cấp
             </p>
           </div>
@@ -73,36 +74,15 @@ const Page = () => {
             <div>
               <Form
                 values={{ ...data }}
-                className="intro-x p-6 pb-4 pt-3 rounded-lg w-full "
+                className=" pb-4 pt-3 rounded-lg w-full "
                 columns={[
                   {
-                    title: '',
-                    name: 'address',
-                    formItem: {
-                      rules: [{ type: 'required' }],
-                      render() {
-                        return (
-                          <h3 className='mb-2.5 text-left text-base text-black font-medium'>Tên nhà cung cấp </h3>
-                        )
-                      },
-                    }
-                  },
-                  {
-                    title: 'Mã cửa hàng',
-                    name: 'code',
-                    formItem: {
-                      tabIndex: 1,
-                      col: 4,
-                      disabled: () => true
-                    },
-                  },
-                  {
-                    title: 'Tên cửa hàng',
+                    title: 'Tên nhà cung cấp',
                     name: 'name',
                     formItem: {
                       tabIndex: 2,
-                      col: 4,
-                      rules: [{ type: 'required' }],
+                      col: 6,
+                      rules: [{ type: 'required', message: 'Xin vui lòng nhập tên nhà cung cấp' }],
                     },
                   },
                   {
@@ -110,7 +90,7 @@ const Page = () => {
                     name: 'fax',
                     formItem: {
                       tabIndex: 3,
-                      col: 4,
+                      col: 6,
                     },
                   },
                   {
@@ -120,7 +100,7 @@ const Page = () => {
                       rules: [{ type: 'required' }],
                       render() {
                         return (
-                          <h3 className='mb-2.5 text-left text-base text-black font-medium'>Địa chỉ nhà cung cấp </h3>
+                          <h3 className='mb-2.5 text-base '>Địa chỉ nhà cung cấp </h3>
                         )
                       },
                     }
@@ -132,14 +112,15 @@ const Page = () => {
                       tabIndex: 3,
                       col: 3,
                       type: 'select',
-                      rules: [{ type: 'required' }],
+                      rules: [{ type: 'required',message: 'Xin vui lòng chọn tỉnh/thành phố' }],
                       list: result.data.map((item: any) => ({
                         label: item?.name,
                         value: item?.code,
                       })),
-                      onChange(value, form) {
+                      onChange(value, form, reRender) {
                         form.resetFields(['district'])
-                        districtFacade.get(`${value}`)
+                        districtFacade.get(value)
+                        reRender(value)
                       },
                     },
                   },
@@ -148,7 +129,7 @@ const Page = () => {
                     title: 'Quận/Huyện',
                     formItem: {
                       type: 'select',
-                      rules: [{ type: 'required' }],
+                      rules: [{ type: 'required', message: 'Xin vui lòng chọn quận/huyện' }],
                       col: 3,
                       get: {
                         facade: DistrictFacade,
@@ -157,9 +138,12 @@ const Page = () => {
                           value: item.code,
                         }),
                       },
-                      onChange(value, form) {
+                      onChange(value, form, reRender) {
                         form.resetFields(['wardId'])
-                        wardFacade.get(`${value}`)
+                        wardFacade.get(value)
+                        reRender({format: (item:any) => ({
+                          label: item.name,
+                          value: item.code,})})
                       },
                     },
                   },
@@ -168,7 +152,7 @@ const Page = () => {
                     title: 'Phường/Xã',
                     formItem: {
                       type: 'select',
-                      rules: [{ type: 'required' }],
+                      rules: [{ type: 'required', message: 'Xin vui lòng chọn phường/xã' }],
                       col: 3,
                       get: {
                         facade: WardFacade,
@@ -183,7 +167,7 @@ const Page = () => {
                     name: 'street',
                     title: 'Địa chỉ cụ thể',
                     formItem: {
-                      rules: [{ type: 'required' }],
+                      rules: [{ type: 'required', message: 'Xin vui lòng nhập địa chỉ cụ thể' }],
                       col: 3,
                     },
                   },
@@ -193,7 +177,7 @@ const Page = () => {
                     formItem: {
                       render() {
                         return (
-                          <div className='text-xl text-left text-teal-900 font-bold mb-2.5'>Thông tin người đại diện</div>
+                          <div className='text-xl text-teal-900 font-bold mb-2.5'>Thông tin người đại diện</div>
                         )
                       }
                     }
@@ -203,7 +187,7 @@ const Page = () => {
                     title: 'Họ tên đại diện',
                     formItem: {
                       col: 4,
-                      rules: [{ type: 'required' }],
+                      rules: [{ type: 'required', message: 'Xin vui lòng nhập họ và tên đại diện' }],
                     },
                   },
                   {
@@ -211,7 +195,7 @@ const Page = () => {
                     title: 'Số điện thoại đại diện',
                     formItem: {
                       col: 4,
-                      rules: [{ type: 'required' }],
+                      rules: [{ type: 'required', message: 'Xin vui lòng nhập số điện thoại đại diện' }],
                     },
                   },
                   {
@@ -219,7 +203,7 @@ const Page = () => {
                     title: 'Email đại diện',
                     formItem: {
                       col: 4,
-                      rules: [{ type: 'required' }],
+                      rules: [{ type: 'required', message: 'Xin vui lòng nhập email đại diện' }],
                     },
                   },
                   {

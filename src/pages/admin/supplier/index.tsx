@@ -4,15 +4,14 @@ import { useNavigate } from 'react-router';
 
 import { Button } from '@core/button';
 import { DataTable } from '@core/data-table';
-import { keyRole, routerLinks } from '@utils';
-import { UserFacade, GlobalFacade, SupplierFacade } from '@store';
+import { routerLinks } from '@utils';
+import { GlobalFacade, SupplierFacade } from '@store';
 import { Plus } from '@svgs';
 import { ColumnTableSupplier } from './column';
 import { TableRefObject } from '@models';
 
 const Page = () => {
   const { t } = useTranslation();
-  const { user } = GlobalFacade();
   const navigate = useNavigate();
 
   const supplierFacade = SupplierFacade();
@@ -48,13 +47,11 @@ const Page = () => {
           })}
           rightHeader={
             <div className={'flex gap-2'}>
-              {user && (
                 <Button
                   icon={<Plus className="icon-cud !h-5 !w-5" />}
                   text={t('titles.Supplier/Add')}
                   onClick={() => navigate(routerLinks('Supplier/Add'))}
                 />
-              )}
             </div>
           }
         />

@@ -6,7 +6,7 @@ const Page = () => {
 
   return (
     <Fragment>
-    <div className='bg-gray-50 pr-5 h-full pb-10'>
+    <div className='h-full pb-10'>
       <div className='bg-white rounded-xl p-4 pb-10 relative text-center flex justify-center items-end h-[78vh]'>
         <div className='w-full '>
           <h1 className='text-3xl text-teal-900 font-bold text-center mb-14 '>

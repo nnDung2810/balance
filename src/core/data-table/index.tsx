@@ -50,11 +50,9 @@ export const DataTable = forwardRef(
       defaultRequest = {
         page: 1,
         perPage: 10,
-        type: '',
       },
       pageIndex = 'page',
       pageSize = 'perPage',
-      // type,
       sort = 'sorts',
       filter = 'filter',
       fullTextSearch = 'fullTextSearch',
