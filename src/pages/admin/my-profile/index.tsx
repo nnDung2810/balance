@@ -153,7 +153,7 @@ const Page = () => {
                           col: 12,
                           type: 'password',
                           rules: [{ type: 'required' }, { type: 'min', value: 6 }],
-                          placeholder: 'Nhập mật khẩu',
+                          placeholder: t('columns.auth.placeholder.Password').toString(),
                         },
                       },
                       {
@@ -163,7 +163,7 @@ const Page = () => {
                           col: 12,
                           type: 'password',
                           rules: [{ type: 'custom' }, { type: 'min', value: 6 }],
-                          placeholder: 'Nhập mật khẩu mới'
+                          placeholder: t('columns.auth.placeholder.newPassword').toString(),
                         },
                       },
                       {
@@ -187,7 +187,7 @@ const Page = () => {
                               }),
                             },
                           ],
-                          placeholder: 'Xác nhận mật khẩu'
+                          placeholder: t('columns.auth.placeholder.Confirm Password').toString(),
                         },
                       },
                     ]}

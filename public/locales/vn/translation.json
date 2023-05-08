@@ -127,6 +127,11 @@
       "reset-password": {
         "Recovery Email": "Email khôi phục",
         "Enter Recovery Email": "Nhập Email khôi phục"
+      },
+      "placeholder": {
+        "Confirm Password": "Xác nhận mật khẩu",
+        "Password": "Nhập mật khẩu",
+        "newPassword": "Nhập mật khẩu mới"
       }
     }
   },
