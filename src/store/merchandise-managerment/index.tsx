@@ -1,11 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { API, routerLinks } from '@utils';
-import { Message } from '@components/message';
-import Action from '../action';
-import Slice, { State } from '../slice';
-import { useAppDispatch, useTypedSelector } from '@reducers';
-// import { User } from '../global';
+
 import { CommonEntity, PaginationQuery } from '@models';
+import { Action, Slice, State, useAppDispatch, useTypedSelector } from '@store';
 
 const name = 'merchandise-managerment';
 export const action = {

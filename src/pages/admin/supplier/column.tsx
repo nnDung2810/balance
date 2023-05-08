@@ -2,11 +2,12 @@ import { Popconfirm, Tooltip } from 'antd';
 import React from 'react';
 import dayjs from 'dayjs';
 
-import { Avatar } from '@components/avatar';
-import { keyRole, routerLinks } from '@utils';
-import { DataTableModel, FormModel } from '@models';
-import { CodeFacade, SupplierFacade, SupplierRoleFacade } from '@reducers';
+// import { Avatar } from '@components/avatar';
+// import { keyRole, routerLinks } from '@utils';
+// import { DataTableModel, FormModel } from '@models';
+// import { CodeFacade, SupplierFacade, SupplierRoleFacade } from '@reducers';
 import { Edit, Trash } from '@svgs';
+import { DataTableModel, FormModel } from '@models';
 
 export const ColumnTableSupplier = ({ t, navigate, dataTableRef }: any) => {
   const col: DataTableModel[] = [
@@ -127,7 +128,7 @@ export const ColumnFormSupplier= ({ t, listRole }: any) => {
         rules: [{ type: 'required' }],
         type: 'select',
         get: {
-          facade: SupplierRoleFacade,
+        //  facade: SupplierRoleFacade,
           // params: (form: any, fullTextSearch: string) => ({
           //   fullTextSearch,
           //   filter: { id: listRole.code },

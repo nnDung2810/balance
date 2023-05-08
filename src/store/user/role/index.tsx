@@ -1,11 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { API, routerLinks } from '@utils';
-// import Action from '../../action';
-// import Slice, { State } from '../../slice';
-// import { useAppDispatch, useTypedSelector } from '@store';
 import { useAppDispatch, useTypedSelector, Action, Slice, State } from '@store';
 import { CommonEntity, PaginationQuery, Responses } from '@models';
-import { User } from '@reducers/global';
 
 const name = 'UserRole';
 export const action = {

@@ -8,7 +8,7 @@ import { Button } from '@core/button';
 import { Form } from '@core/form';
 
 import { GlobalFacade, User } from '../../../store/global';
-import { ColumnFormUser } from './column';
+//import { ColumnFormUser } from './column';
 
 const Page = () => {
   const { t } = useTranslation();
@@ -56,7 +56,7 @@ const Page = () => {
               className="intro-x p-6 pb-4 pt-3 rounded-lg w-full"
               columns={[
                 {
-                  title: t('Họ và tên'),
+                  title: 'user.Fullname',
                   name: 'name',
                   formItem: {
                     tabIndex: 1,
@@ -65,7 +65,7 @@ const Page = () => {
                   },
                 },
                 {
-                  title: t('Email'),
+                  title: 'Email',
                   name: 'email',
                   formItem: {
                     tabIndex: 1,

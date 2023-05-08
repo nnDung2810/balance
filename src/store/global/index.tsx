@@ -6,9 +6,9 @@ import i18n from 'i18next';
 
 import { API, keyRefreshToken, keyToken, keyUser, routerLinks } from '@utils';
 import { Message } from '@core/message';
-import { useAppDispatch, useTypedSelector } from '@store';
+import { useAppDispatch, UserRole, useTypedSelector } from '@store';
 import { CommonEntity, Responses } from '@models';
-// import Slice, { State } from '../slice';
+
 const name = 'User-admin';
 const action = {
   name,
@@ -16,8 +16,8 @@ const action = {
   logout: createAsyncThunk(name + '/logout', async () => {
     return true;
   }),
-  profile: createAsyncThunk(name + '/profile', async () => {
-    const { data } = await API.get<User>(`${routerLinks(name, 'api')}/profile`);
+  profile: createAsyncThunk(name + '/get-my-info', async () => {
+    const { data } = await API.get<User>(`${routerLinks(name, 'api')}/get-my-info`);
     return data || {};
   }),
   putProfile: createAsyncThunk(name + '/putProfile', async (values: User) => {
@@ -77,8 +77,8 @@ export class User extends CommonEntity {
     public note?: string,
     public phoneNumber?: string,
     public status?: string,
-    public createdOn?: Date,
-    public updatedAt?: Date,
+  //  public createdOn?: Date,
+  //  public updatedAt?: Date,
     public roleId?: number,
     public orgId?: number,
     public subOrgId?: number,

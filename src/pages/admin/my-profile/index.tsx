@@ -7,10 +7,8 @@ import { Form } from '@core/form';
 import { Spin } from '@core/spin';
 import { Button } from '@core/button';
 import { GlobalFacade } from '@store';
- import { ColumnProfile } from './column';
 import { routerLinks } from '@utils';
-import { useNavigate } from 'react-router';
-import classNames from 'classnames';
+import { UserSolid } from '@svgs';
 
 const Page = () => {
   const { t } = useTranslation();
@@ -90,7 +88,6 @@ const Page = () => {
 
         <div className='col-span-2 bg-white p-5 border rounded-xl mr-4 fill-black'>
           <Spin spinning={isLoading}>
-            <React.Fragment>
               <Tabs defaultActiveKey="1" size="large">
                 <TabPane tab="Thông tin cá nhân" key="1">
                   <Form
@@ -143,6 +140,7 @@ const Page = () => {
                     values={{ ...user }}
                   />
                 </TabPane>
+
                 <TabPane tab="Đổi mật khẩu" key="2">
                   <Form
                     columns={[
@@ -206,7 +204,6 @@ const Page = () => {
                   />
                 </TabPane>
               </Tabs>
-            </React.Fragment>
           </Spin>
         </div>
         <div>

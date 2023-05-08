@@ -12,10 +12,10 @@ import { Avatar } from '@core//avatar';
 import { keyRole, routerLinks } from '@utils';
 import { UserFacade, GlobalFacade, UserRoleFacade } from '@store';
 import { Edit, Plus, Trash } from '@svgs';
-import { TableRefObject } from '@models';
+import { DataTableModel, TableRefObject } from '@models';
 
 import { Popconfirm, Tooltip } from 'antd';
-import { ColumnTableUser } from './column';
+//import { ColumnTableUser } from './column';
 
 const Page = () => {
   const { t } = useTranslation();
@@ -92,7 +92,7 @@ const Page = () => {
     <DataTable
       facade={userFacade}
       ref={dataTableRef}
-      onRow={(data: any) => ({ onDoubleClick: () => navigate(routerLinks('User') + '/' + data.id) })}
+      onRow={(data: any) => ({ onDoubleClick: () => navigate(routerLinks('User/Edit') + '/' + data.id) })}
       xScroll={'1400px'}
       pageSizeRender={(sizePage: number) => sizePage}
       pageSizeWidth={'50px'}

@@ -2,7 +2,7 @@ import React from 'react';
 
 import { keyRole } from '@utils';
 import './index.less';
-import { Cog, Buffer, Cart, Store, User } from '@svgs';
+import { Cog, Buffer, Cart, Store, User, Chart } from '@svgs';
 
 const Layout = () => [
   {

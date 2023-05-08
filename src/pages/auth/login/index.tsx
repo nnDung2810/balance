@@ -16,11 +16,10 @@ const Page = () => {
 
   useEffect(() => {
     if (status === 'login.fulfilled' && user && Object.keys(user).length > 0) {
-      // navigate(routerLinks('Dashboard'));
-      navigate('/', { replace: true });
+      navigate('Dashboard', { replace: true });
     }
   }, [status]);
-  
+
   return (
     <Fragment>
       <div className="text-center mb-8">

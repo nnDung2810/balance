@@ -176,19 +176,11 @@
     }
   },
   "user": {
-    "Position": "Vị trí",
-    "Team": "Nhóm",
-    "Start Date": "Ngày đầu đi làm",
-    "Remaining Leave Day": "Ngày phép còn lại",
-    "Date of birth": "Ngày sinh",
-    "Name": "Tên",
-    "Is System Admin": "Là quản trị viên hệ thống",
-    "Permissions": "Cho phép",
-    "Description": "Mô tả",
-    "Upload avatar": "Tải ảnh lên",
+    "UserId": "Mã người dùng",
     "Fullname": "Họ và tên",
     "Phone Number": "Số điện thoại",
-    "Action": "Hoạt động"
+    "Role": "Vai trò",
+    "Note": "Ghi chú"
   },
   "supplier": {
     "Code": "Mã NCC",

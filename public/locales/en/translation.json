@@ -65,7 +65,8 @@
     },
     "button": {
       "New": "New",
-      "Role": "Role"
+      "Save and Add new": "Save and Add new",
+      "Back": "Back"
     }
   },
   "titles": {
@@ -164,24 +165,17 @@
         "My Profile": "My Profile",
         "No Data": "No Data",
         "Pagination": "Show {{from}} - {{to}} /Total {{total}} categories",
+        "User": "Show {{from}} - {{to}} /Total {{total}} user",
         "Day": "day"
       }
     }
   },
   "user": {
-    "Position": "Position",
-    "Team": "Team",
-    "Start Date": "Start Date",
-    "Remaining Leave Day": "Remaining Leave Day",
-    "Date of birth": "Date of birth",
-    "Name": "Name",
-    "Is System Admin": "Is System Admin",
-    "Permissions": "Permissions",
-    "Description": "Description",
-    "Upload avatar": "Upload avatar",
-    "Fullname": "Full Name",
+    "UserId": "User Id",
+    "Fullname": "Fullname",
     "Phone Number": "Phone Number",
-    "Action": "Action"
+    "Role": "Role",
+    "Note": "Note"
   },
   "Code": {
     "Type": "Type",
