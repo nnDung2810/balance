@@ -98,7 +98,8 @@
     "Sign-in": "Đăng Nhập",
     "Quên Mật Khẩu": "Quên Mật Khẩu",
     "Store": "Quản lý cửa hàng",
-    "store-managerment/edit": "Quản lý cửa hàng"
+    "store-managerment/edit": "Quản lý cửa hàng",
+    "MyProfile": "Thông tin cá nhân"
   },
   "columns": {
     "auth": {
@@ -110,7 +111,9 @@
         "remember": "Ghi nhớ",
         "New password": "Mật khẩu mới",
         "Enter new password": "Nhập mật khẩu mới",
-        "Confirm Password": "Xác nhận mật khẩu"
+        "Confirm Password": "Xác nhận mật khẩu",
+        "Password": "Mật khẩu hiện tại",
+        "newPassword": "Mật khẩu mới"
       },
       "register": {
         "firstName": "Tên",

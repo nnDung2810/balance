@@ -90,7 +90,8 @@
     "User/List": "List User",
     "User/Add": "Add new User",
     "User/Edit": "Edit User",
-    "store-managerment/create":"Thêm cửa hàng"
+    "store-managerment/create":"Thêm cửa hàng",
+    "MyProfile": "My Profile"
   },
   "columns": {
     "auth": {
@@ -102,7 +103,9 @@
         "remember": "Remember Me",
         "New password": "New password",
         "Enter new password": "Enter new password",
-        "Confirm Password": "Confirm Password"
+        "Confirm Password": "Confirm Password",
+        "Password": "Password",
+        "newPassword": "New Password"
       },
       "register": {
         "firstName": "First Name",
