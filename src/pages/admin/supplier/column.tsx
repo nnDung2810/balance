@@ -77,78 +77,83 @@ export const ColumnFormSupplier= ({ t, listRole }: any) => {
         rules: [{ type: 'required' }, { type: 'min', value: 6 }],
       },
     },
+    
     {
-      title: t('Tỉnh/Thành phố'),
-      name: 'province',
-      formItem: {
-        col: 3,
-        rules: [{ type: 'required' }],
-        type: 'select',
-        list: listRole.map((item: any) => ({
-          value: item?.code,
-          label: item?.name,
-        })),
-        onChange: (value: any, form: any, reRender: any) => {
-          if(value) {
-            // const districtId = value;
-            // const districtFaca = DistrictFacade();
-            form.resetFields(['district'])
-            // districtFaca.getById({districtId})
-          }
-        }
-      },
-    },
-    {
-      title: t('Quận/Huyện'),
-      name: 'district',
-      formItem: {
-        col: 3,
-        rules: [{ type: 'required' }],
-        type: 'select',
-        get: {
-          facade: DistrictFacade,
-          params: (fullTextSearch: string) => ({
-            fullTextSearch,
-            filter: { type: 'SUPPLIER' },
-            extend: {},
-          }),
-          format: (item: any) => ({
-            label: item.name,
-            value: item.id,
-          }),
-        },
-      },
-    },
-    {
-      title: t('Phường/Xã'),
-      name: 'email',
-      formItem: {
-        col: 3,
-        rules: [{ type: 'required' }],
-        type: 'select',
-        get: {
-          facade: WardFacade,
-          params: (form: any, fullTextSearch: string) => ({
-            fullTextSearch,
-            filter: { type: 'SUPPLIER' },
-            extend: {},
-          }),
-          format: (item: any) => ({
-            label: item.name,
-            value: item.id,
-          }),
-        },
-      },
-    },
-    {
-      title: t('Địa chỉ cụ thể'),
-      name: 'email',
-      formItem: {
-        tabIndex: 1,
-        col: 3,
-        rules: [{ type: 'required' }],
-      },
-    },
+                    title: '',
+                    name: 'address',
+                    formItem: {
+                      rules: [{ type: 'required' }],
+                      render() {
+                        return (
+                          <h3 className='mb-2.5 text-left text-base text-black font-medium'>Địa chỉ cửa hàng</h3>
+                        )
+                      },
+                    }
+                  },
+                  {
+                    title: 'Tỉnh/Thành phố',
+                    name: 'provinceId',
+                    formItem: {
+                      tabIndex: 3,
+                      col: 3,
+                      type: 'select',
+                      rules: [{ type: 'required' }],
+                      list: listRole.map((item: any) => ({
+                        label: item?.name,
+                        value: item?.code,
+                      })),
+                      onChange(value, form) {
+                        const districtFacade = DistrictFacade()
+                        form.resetFields(['district'])
+                        districtFacade.get(`${value}`)
+                      },
+                    },
+                  },
+                  {
+                    name: 'districtId',
+                    title: 'Quận/Huyện',
+                    formItem: {
+                      type: 'select',
+                      rules: [{ type: 'required' }],
+                      col: 3,
+                      get: {
+                        facade: DistrictFacade,
+                        format: (item: any) => ({
+                          label: item.name,
+                          value: item.code,
+                        }),
+                      },
+                      onChange(value, form) {
+                        const wardFacade = WardFacade()
+                        form.resetFields(['wardId'])
+                        wardFacade.get(`${value}`)
+                      },
+                    },
+                  },
+                  {
+                    name: 'wardId',
+                    title: 'Phường/Xã',
+                    formItem: {
+                      type: 'select',
+                      rules: [{ type: 'required' }],
+                      col: 3,
+                      get: {
+                        facade: WardFacade,
+                        format: (item: any) => ({
+                          label: item.name,
+                          value: item.code,
+                        }),
+                      }
+                    },
+                  },
+                  {
+                    name: 'street',
+                    title: 'Địa chỉ cụ thể',
+                    formItem: {
+                      rules: [{ type: 'required' }],
+                      col: 3,
+                    },
+                  },
     {
       title: t('Họ tên đại diện'),
       name: 'name',

@@ -8,9 +8,15 @@ import { routerLinks } from '@utils';
 import { ColumnFormSupplier } from './column';
 import { ProvinceFacade } from '@store/address/province';
 import { User } from '@store';
+import { DistrictFacade } from '@store/address/district';
+import { WardFacade } from '@store/address/ward';
+import { Switch } from 'antd';
 
 const Page = () => {
   const { t } = useTranslation();
+  const provinceFacade = ProvinceFacade()
+  const districtFacade = DistrictFacade()
+  const wardFacade = WardFacade()
   const { result, get } = ProvinceFacade();
   const supplierFacade = SupplierFacade();
   const { data, isLoading, queryParams, status } = supplierFacade;
@@ -69,7 +75,7 @@ const Page = () => {
           </div>
           {!!result?.data && (
             <div>
-              <Form
+              {/* <Form
                 values={{ ...data }}
                 className="intro-x"
                 columns={ColumnFormSupplier({ t, listRole: result?.data || [] })}
@@ -85,7 +91,171 @@ const Page = () => {
                       {t('Lưu')}
                     </button>
                   </div>
-                 )}/>
+                 )}/> */}
+                 <Form
+                values={{ ...data }}
+                className="intro-x p-6 pb-4 pt-3 rounded-lg w-full "
+                columns={[
+                  {
+                    title: '',
+                    name: 'address',
+                    formItem: {
+                      rules: [{ type: 'required' }],
+                      render() {
+                        return (
+                          <h3 className='mb-2.5 text-left text-base text-black font-medium'>Tên nhà cung cấp </h3>
+                        )
+                      },
+                    }
+                  },
+                  {
+                    title: 'Mã cửa hàng',
+                    name: 'code',
+                    formItem: {
+                      tabIndex: 1,
+                      col: 4,
+                      disabled: () => true
+                    },
+                  },
+                  {
+                    title: 'Tên cửa hàng',
+                    name: 'name',
+                    formItem: {
+                      tabIndex: 2,
+                      col: 4,
+                      rules: [{ type: 'required' }],
+                    },
+                  },
+                  {
+                    title: 'Số fax',
+                    name: 'fax',
+                    formItem: {
+                      tabIndex: 3,
+                      col: 4,
+                    },
+                  },
+                  {
+                    title: '',
+                    name: 'address',
+                    formItem: {
+                      rules: [{ type: 'required' }],
+                      render() {
+                        return (
+                          <h3 className='mb-2.5 text-left text-base text-black font-medium'>Địa chỉ nhà cung cấp </h3>
+                        )
+                      },
+                    }
+                  },
+                  {
+                    title: 'Tỉnh/Thành phố',
+                    name: 'provinceId',
+                    formItem: {
+                      tabIndex: 3,
+                      col: 3,
+                      type: 'select',
+                      rules: [{ type: 'required' }],
+                      list: result.data.map((item: any) => ({
+                        label: item?.name,
+                        value: item?.code,
+                      })),
+                      onChange(value, form) {
+                        form.resetFields(['district'])
+                        districtFacade.get(`${value}`)
+                      },
+                    },
+                  },
+                  {
+                    name: 'districtId',
+                    title: 'Quận/Huyện',
+                    formItem: {
+                      type: 'select',
+                      rules: [{ type: 'required' }],
+                      col: 3,
+                      get: {
+                        facade: DistrictFacade,
+                        format: (item: any) => ({
+                          label: item.name,
+                          value: item.code,
+                        }),
+                      },
+                      onChange(value, form) {
+                        form.resetFields(['wardId'])
+                        wardFacade.get(`${value}`)
+                      },
+                    },
+                  },
+                  {
+                    name: 'wardId',
+                    title: 'Phường/Xã',
+                    formItem: {
+                      type: 'select',
+                      rules: [{ type: 'required' }],
+                      col: 3,
+                      get: {
+                        facade: WardFacade,
+                        format: (item: any) => ({
+                          label: item.name,
+                          value: item.code,
+                        }),
+                      }
+                    },
+                  },
+                  {
+                    name: 'street',
+                    title: 'Địa chỉ cụ thể',
+                    formItem: {
+                      rules: [{ type: 'required' }],
+                      col: 3,
+                    },
+                  },
+                  {
+                    title: '',
+                    name: '',
+                    formItem: {
+                      render() {
+                        return (
+                          <div className='text-xl text-left text-teal-900 font-bold mb-2.5'>Thông tin người đại diện</div>
+                        )
+                      }
+                    }
+                  },
+                  {
+                    name: 'nameContact',
+                    title: 'Họ tên đại diện',
+                    formItem: {
+                      col: 4,
+                      rules: [{ type: 'required' }],
+                    },
+                  },
+                  {
+                    name: 'phoneNumber',
+                    title: 'Số điện thoại đại diện',
+                    formItem: {
+                      col: 4,
+                      rules: [{ type: 'required' }],
+                    },
+                  },
+                  {
+                    name: 'emailContact',
+                    title: 'Email đại diện',
+                    formItem: {
+                      col: 4,
+                      rules: [{ type: 'required' }],
+                    },
+                  },
+                  {
+                    name: 'note',
+                    title: 'Ghi chú',
+                    formItem: {
+                      type: 'textarea',
+                    },
+                  },
+
+                ]}
+                handSubmit={handleSubmit}
+                disableSubmit={isLoading}
+                handCancel={handleBack}
+              />
             </div>
           )}
         </div>
