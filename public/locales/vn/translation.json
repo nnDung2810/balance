@@ -84,18 +84,14 @@
     "Store": "Quản lý cửa hàng",
     "Store/Add": "Thêm cửa hàng",
     "store-managerment/create": "Thêm cửa hàng",
-    "store-managerment/edit": "Thông tin cửa hàng",
-    "merchandise-managerment": "Quản lý hàng hóa",
-    "merchandise-managerment/product": "Sản phẩm",
-    "merchandise-managerment/category": "Danh mục",
-    "merchandise-managerment/tax": "Thuế"
+    "store-managerment/edit": "Thông tin cửa hàng"
   },
   "pages": {
     "Login": "Đăng Nhập",
     "User/List": "Danh sách Người dùng",
     "User/Add": "Tạo mới người dùng",
     "User/Edit": "Chỉnh sửa người dùng",
-    "store-managerment/create": "Thêm cửa hàng",
+    "store-managerment/create": "Quản lý cửa hàng",
     "Đặt Lại Mật Khẩu": "Đặt Lại Mật Khẩu",
     "Sign-in": "Đăng Nhập",
     "Quên Mật Khẩu": "Quên Mật Khẩu",
@@ -126,7 +122,7 @@
     }
   },
   "layout": {
-    "footer": "Copyright ©{{year} ARI Technology Co ., JSC. All rights reserved.}"
+    "footer": "Công ty cổ phần Cồng nghệ Ari. ©{{year}}"
   },
   "routes": {
     "auth": {
@@ -176,7 +172,16 @@
     }
   },
   "user": {
-    "UserId": "Mã người dùng",
+    "Position": "Vị trí",
+    "Team": "Nhóm",
+    "Start Date": "Ngày đầu đi làm",
+    "Remaining Leave Day": "Ngày phép còn lại",
+    "Date of birth": "Ngày sinh",
+    "Name": "Tên",
+    "Is System Admin": "Là quản trị viên hệ thống",
+    "Permissions": "Cho phép",
+    "Description": "Mô tả",
+    "Upload avatar": "Tải ảnh lên",
     "Fullname": "Họ và tên",
     "Phone Number": "Số điện thoại",
     "Role": "Vai trò",

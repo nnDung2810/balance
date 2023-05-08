@@ -2,12 +2,10 @@ import { Popconfirm, Tooltip } from 'antd';
 import React from 'react';
 import dayjs from 'dayjs';
 
-// import { Avatar } from '@components/avatar';
-// import { keyRole, routerLinks } from '@utils';
-// import { DataTableModel, FormModel } from '@models';
-// import { CodeFacade, SupplierFacade, SupplierRoleFacade } from '@reducers';
-import { Edit, Trash } from '@svgs';
+import { keyRole, routerLinks } from '@utils';
 import { DataTableModel, FormModel } from '@models';
+// import { SupplierFacade, SupplierRoleFacade } from '@store';
+import { Edit, Trash } from '@svgs';
 
 export const ColumnTableSupplier = ({ t, navigate, dataTableRef }: any) => {
   const col: DataTableModel[] = [
@@ -48,17 +46,17 @@ export const ColumnTableSupplier = ({ t, navigate, dataTableRef }: any) => {
       name: ('address'),
       tableItem: {
         width: 555,
-        render: (value: any,item: any) => item?.address?.street + ', ' + item?.address?.ward?.name + ', ' + item?.address?.district?.name + ', ' + item?.address?.province?.name,
+        render: (value: any, item: any) => item?.address?.street + ', ' + item?.address?.ward?.name + ', ' + item?.address?.district?.name + ', ' + item?.address?.province?.name,
       }
     },
     {
       title: t(`supplier.Representative`),
       name: 'contract',
       tableItem: {
-        width: 242  ,
+        width: 242,
         // filter: { type: 'search' },
         // sorter: true,
-        render: (value: any,item: any) => item?.contract[0].name,
+        render: (value: any, item: any) => item?.contract[0].name,
       },
     },
     {
@@ -68,7 +66,7 @@ export const ColumnTableSupplier = ({ t, navigate, dataTableRef }: any) => {
         width: 115,
         // filter: { type: 'search' },
         // sorter: true,
-        render: (value: any,item: any) => item?.userRole[0].userAdmin.phoneNumber,
+        render: (value: any, item: any) => item?.userRole[0].userAdmin.phoneNumber,
       },
     },
     {
@@ -78,15 +76,15 @@ export const ColumnTableSupplier = ({ t, navigate, dataTableRef }: any) => {
         width: 100,
         align: 'center',
         render: (text: string) => text
-        ? (<div className='bg-green-100 text-center p-1 border border-green-500 text-green-600 rounded'>Đã ký</div>)
-        : (<div className='bg-red-100 text-center p-1 border border-red-500 text-red-600 rounded'>Chờ ký</div>),
+          ? (<div className='bg-green-100 text-center p-1 border border-green-500 text-green-600 rounded'>Đã ký</div>)
+          : (<div className='bg-red-100 text-center p-1 border border-red-500 text-red-600 rounded'>Chờ ký</div>),
       },
     },
   ];
   return col;
 };
 
-export const ColumnFormSupplier= ({ t, listRole }: any) => {
+export const ColumnFormSupplier = ({ t, listRole }: any) => {
 
   const col: FormModel[] = [
     {
@@ -127,18 +125,18 @@ export const ColumnFormSupplier= ({ t, listRole }: any) => {
         col: 3,
         rules: [{ type: 'required' }],
         type: 'select',
-        get: {
-        //  facade: SupplierRoleFacade,
-          // params: (form: any, fullTextSearch: string) => ({
-          //   fullTextSearch,
-          //   filter: { id: listRole.code },
-          //   extend: {},
-          // }),
-          format: (item: any) => ({
-            label: item.name,
-            value: item.id,
-          }),
-        },
+        // get: {
+        //   facade: SupplierRoleFacade,
+        //   // params: (form: any, fullTextSearch: string) => ({
+        //   //   fullTextSearch,
+        //   //   filter: { id: listRole.code },
+        //   //   extend: {},
+        //   // }),
+        //   format: (item: any) => ({
+        //     label: item.name,
+        //     value: item.id,
+        //   }),
+        // },
       },
     },
     {

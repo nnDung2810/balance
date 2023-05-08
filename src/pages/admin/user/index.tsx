@@ -2,26 +2,17 @@ import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 
-// import { Avatar } from '@components/avatar';
-// import { Button } from '@components/button';
-// import { DataTable } from '@components/data-table';
 import { Button } from '@core/button';
 import { DataTable } from '@core/data-table';
-import { Avatar } from '@core//avatar';
-
-import { keyRole, routerLinks } from '@utils';
-import { UserFacade, GlobalFacade, UserRoleFacade } from '@store';
-import { Edit, Plus, Trash } from '@svgs';
+import { routerLinks } from '@utils';
+import { UserFacade} from '@store';
+import { Plus } from '@svgs';
 import { DataTableModel, TableRefObject } from '@models';
-
-import { Popconfirm, Tooltip } from 'antd';
-//import { ColumnTableUser } from './column';
 
 const Page = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const userFacade = UserFacade();
-  const { data } = userFacade;
 
   useEffect(() => {
     switch (userFacade.status) {

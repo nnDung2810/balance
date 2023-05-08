@@ -1,8 +1,9 @@
 import { CheckboxOptionType } from 'antd';
+import { DefaultTFuncReturn } from 'i18next';
 
 export class DataTableModel {
   name?: string;
-  title?: string | null;
+  title?: string | DefaultTFuncReturn;
   tableItem?: TableItem;
 }
 
@@ -32,7 +33,7 @@ export class TableGet {
 
 export class TableItemFilterList {
   label?: string;
-  value?: number | string ;
+  value?: string | number;
 }
 export class TableRefObject {
   onChange?: (request?: any) => void;

@@ -12,9 +12,7 @@ import { convertFormValue } from '@utils';
 import { FormItem, FormModel } from '@models';
 import { GlobalFacade } from '@store';
 // import { GlobalFacade } from '@store';
-import { Check, Times } from '@svgs';
 import { Chips, SelectTag, Select, TreeSelect, TableTransfer, Password, Mask, Addable, DatePicker, Tab } from './input';
-import { useNavigate } from 'react-router';
 
 export const Form = ({
   className,
@@ -42,7 +40,6 @@ export const Form = ({
   const [_render, set_render] = useState(false);
   const [forms] = AntForm.useForm();
   const form = formAnt || forms;
-  const navigate = useNavigate();
 
   const reRender = () => {
     set_render(!_render);
@@ -259,8 +256,9 @@ export const Form = ({
       case 'switch':
         return (
           <Switch
-            checkedChildren={<Check className="h-5 w-5 fill-white" />}
-            unCheckedChildren={<Times className="h-5 w-5 fill-white" />}
+            className={classNames('bg-gray-500')}
+            // checkedChildren={<Check className="h-5 w-5 fill-white" />}
+            // unCheckedChildren={<Times className="h-5 w-5 fill-white" />}
             defaultChecked={!!values && values[item.name || ''] === 1}
           />
         );
@@ -584,35 +582,33 @@ export const Form = ({
           'lg:col-span-1 lg:col-span-2 lg:col-span-3 lg:col-span-4 lg:col-span-5 lg:col-span-6 lg:col-span-7 lg:col-span-8 lg:col-span-9 lg:col-span-10 lg:col-span-11 lg:col-span-12 hidden'
         }
       />
-      <div className={'flex items-center justify-center'}>
-        <div className={'grow'}>
-          <div className={'grid gap-x-5 grid-cols-12'}>
-            {_columns.map(
-              (column: any, index: number) =>
-                (!column?.formItem?.condition ||
-                  !!column?.formItem?.condition(values[column.name], form, index, values)) && (
-                  <div
-                    className={classNames(
-                      column?.formItem?.classItem,
-                      'col-span-12' +
-                      (' sm:col-span-' +
-                        (column?.formItem?.colTablet
-                          ? column?.formItem?.colTablet
-                          : column?.formItem?.col
-                            ? column?.formItem?.col
-                            : 12)) +
-                      (' lg:col-span-' + (column?.formItem?.col ? column?.formItem?.col : 12)),
-                    )}
-                    key={index}
-                  >
-                    {generateForm(column, index)}
-                  </div>
-                ),
-            )}
-          </div>
-
-          {extendForm && extendForm(values)}
+      <div className={'group-input'}>
+        <div className={'grid gap-x-5 grid-cols-12'}>
+          {_columns.map(
+            (column: any, index: number) =>
+              (!column?.formItem?.condition ||
+                !!column?.formItem?.condition(values[column.name], form, index, values)) && (
+                <div
+                  className={classNames(
+                    column?.formItem?.classItem,
+                    'col-span-12' +
+                    (' sm:col-span-' +
+                      (column?.formItem?.colTablet
+                        ? column?.formItem?.colTablet
+                        : column?.formItem?.col
+                          ? column?.formItem?.col
+                          : 12)) +
+                    (' lg:col-span-' + (column?.formItem?.col ? column?.formItem?.col : 12)),
+                  )}
+                  key={index}
+                >
+                  {generateForm(column, index)}
+                </div>
+              ),
+          )}
         </div>
+
+        {extendForm && extendForm(values)}
       </div>
 
       <div
@@ -641,7 +637,7 @@ export const Form = ({
             type={'submit'}
           />
         )}
-       {extendButtonChangePassword && (
+         {extendButtonChangePassword && (
           <Button
             text={t('Đổi mật khẩu')}
             id={idSubmit}

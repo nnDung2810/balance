@@ -1,4 +1,5 @@
-import { AsyncThunk, PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+
 import { API, routerLinks } from '@utils';
 import { Message } from '@core/message';
 import { useAppDispatch, useTypedSelector, Action, Slice, State } from '@store';

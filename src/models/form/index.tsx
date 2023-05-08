@@ -43,7 +43,7 @@ export class FormItem {
   max?: number;
   sliderMarks?: Record<number, string>;
   symbol?: string;
-  initialValues?: { start: string; end: string } | string | number;
+  initialValues?: { start: string; end: string } | string;
   convert?: (data: any) => any;
   initialValue?: null | number | string;
   onChange?: (value: any, form: FormInstance, reRender: any) => void;
@@ -75,8 +75,7 @@ export class FormItem {
   idCheck?: any;
   tabIndex?: number;
   onlyImage?: boolean;
-  render?:((form: FormInstance, values: any, generateForm: void, index: number, reRender: void) => string | JSX.Element | null);
-  defaultValue?: number | string;
+  render?: ((form: FormInstance, values: any, generateForm: void, index: number, reRender: void) => string | JSX.Element);
 }
 
 export class FormItemList {

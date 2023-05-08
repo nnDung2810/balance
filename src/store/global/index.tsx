@@ -6,14 +6,17 @@ import i18n from 'i18next';
 
 import { API, keyRefreshToken, keyToken, keyUser, routerLinks } from '@utils';
 import { Message } from '@core/message';
-import { useAppDispatch, UserRole, useTypedSelector } from '@store';
+import { useAppDispatch, useTypedSelector } from '@store';
 import { CommonEntity, Responses } from '@models';
-
+// import Slice, { State } from '../slice';
 const name = 'User-admin';
 const action = {
   name,
   set: createAsyncThunk(name + '/set', async (values: State) => values),
   logout: createAsyncThunk(name + '/logout', async () => {
+    // if (localStorage.getItem(keyRefreshToken)) {
+    //   return await API.get(`${routerLinks(name, 'api')}/logout`);
+    // }
     return true;
   }),
   profile: createAsyncThunk(name + '/get-my-info', async () => {
@@ -49,40 +52,47 @@ const action = {
     if (message) await Message.success({ text: message })
     return data;
   }),
-  setPassword: createAsyncThunk(name + '/update-password-my-acc', async (values : setPassword) => {
-    const { data, message } = await API.put(`${routerLinks(name, 'api')}/update-password-my-acc`, values,);
+  setPassword: createAsyncThunk(name + '/reset-password', async (values : setPassword) => {
+    const { data, message } = await API.put(`${routerLinks(name, 'api')}/set-password`, values,);
     if (message) await Message.success({ text: message });
     return data;
   }),
 };
+// interface StatePassword<T = object> {
+//   [selector: string]: any;
+//   data?: T;
+//   isLoading?: boolean;
+//   status?: string;
+// }
 interface verify {
   otp?: string;
   uuid?: string;
   email?: string
 }
 interface setPassword {
-  password: string;
-  passwordNew: string;
-  passwordComfirm: string;
-  email: string;
-  uuid: string;
+  password?: string;
+  retypedPassword?: string;
+  email?: string;
+  uuid?: string;
 }
 
 export class User extends CommonEntity {
   constructor(
-    public name?: string,
+    // public userName?: string,
     public code?: string,
     public email?: string,
-    public id?: string,
+    public isMain?: boolean,
+    public name?: string,
     public note?: string,
     public phoneNumber?: string,
-    public status?: string,
-  //  public createdOn?: Date,
-  //  public updatedAt?: Date,
+    public roleCode?: string,
     public roleId?: number,
-    public orgId?: number,
+    public status?: string,
     public subOrgId?: number,
-    public mtRole? : UserRole[],
+    public userRoleId?: number,
+    // public profileImage?: string,
+    // public subOrgName?: string,
+    // public roleName?: string,
   ) {
     super();
   }

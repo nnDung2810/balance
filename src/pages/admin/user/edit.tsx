@@ -4,11 +4,9 @@ import { useNavigate, useParams } from 'react-router';
 
 import { UserRoleFacade, UserFacade } from '@store';
 import { routerLinks } from '@utils';
-import { Button } from '@core/button';
 import { Form } from '@core/form';
-//import { ColumnFormUser, ColumnFormUserEdit } from './column';
 import { User } from '../../../store/global';
-import classNames from 'classnames';
+
 import { Select } from 'antd';
 
 const Page = () => {
@@ -67,7 +65,6 @@ const Page = () => {
                 name: 'code',
                 formItem: {
                   disabled: () => true,
-                //  addonAfter: () => <LockOutlined />,
                   tabIndex: 1,
                   col: 6,
                 },
@@ -86,7 +83,6 @@ const Page = () => {
                 name: 'email',
                 formItem: {
                   disabled: () => true,
-                //  addonAfter: () => <LockOutlined />,
                   tabIndex: 1,
                   col: 6,
                 },

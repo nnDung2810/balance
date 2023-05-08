@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
+
 import { Spin } from '@core/spin';
 import { Form } from '@core/form'
 import { routerLinks } from '@utils';
@@ -16,7 +17,8 @@ const Page = () => {
 
   useEffect(() => {
     if (status === 'login.fulfilled' && user && Object.keys(user).length > 0) {
-      navigate('Dashboard', { replace: true });
+      // navigate(routerLinks('Dashboard'));
+      navigate('/', { replace: true });
     }
   }, [status]);
 

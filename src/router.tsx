@@ -2,6 +2,7 @@ import React, { Suspense, useEffect } from 'react';
 import { BrowserRouter, Navigate, Outlet, Route, Routes } from 'react-router-dom';
 
 import { Spin } from '@core/spin';
+// import { pages } from './pages';
 import { keyUser, routerLinks } from '@utils';
 import { useTranslation } from 'react-i18next';
 import { GlobalFacade } from '@store';
@@ -11,10 +12,10 @@ const pages = [
     layout: React.lazy(() => import('@layouts/auth')),
     isPublic: true,
     child: [
-      // {
-      //   path: '/',
-      //   component: routerLinks('Dashboard'),
-      // },
+      {
+        path: '/',
+        component: routerLinks('Dashboard'),
+      },
       {
         path: routerLinks('Login'),
         component: React.lazy(() => import('@pages/auth/login')),
@@ -91,6 +92,11 @@ const pages = [
         component: React.lazy(() => import('@pages/admin/store/edit')),
         title: 'store-managerment/edit',
       },
+      // {
+      //   path: routerLinks('User/Add'),
+      //   component: React.lazy(() => import('./admin/user/add')),
+      //   title: 'User/Add',
+      // },
       {
         path: routerLinks('User/Edit') + '/:id',
         component: React.lazy(() => import('@pages/admin/user/edit')),
