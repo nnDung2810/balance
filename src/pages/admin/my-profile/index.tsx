@@ -32,12 +32,11 @@ const Page = () => {
                   name: 'profileImage',
                   formItem: {
                     type: 'upload',
-                    mode: 'multiple',
                     onlyImage: true,
                   },
                 },
                 {
-                  title: t('Họ và tên'),
+                  title: 'user.Fullname',
                   name: 'name',
                   formItem: {
                     render: (form, values) => {
@@ -50,7 +49,7 @@ const Page = () => {
                   },
                 },
                 {
-                  title: t('Vai trò'),
+                  title: 'user.Role',
                   name: 'userRole',
                   formItem: {
                     render: (text: any, item: any) => {
@@ -93,7 +92,7 @@ const Page = () => {
                   <Form
                     columns={[
                       {
-                        title: ('Họ và tên'),
+                        title: 'user.Fullname'  ,
                         name: 'name',
                         formItem: {
                           col: 12,
@@ -101,7 +100,7 @@ const Page = () => {
                         },
                       },
                       {
-                        title: ('Email'),
+                        title: 'Email',
                         name: 'email',
                         formItem: {
                           tabIndex: 1,
@@ -110,7 +109,7 @@ const Page = () => {
                         },
                       },
                       {
-                        title: ('Số điện thoại'),
+                        title: 'user.Phone Number',
                         name: 'phoneNumber',
                         formItem: {
                           tabIndex: 1,
@@ -119,7 +118,7 @@ const Page = () => {
                         },
                       },
                       {
-                        title: ('Ghi chú'),
+                        title: 'user.Note',
                         name: 'note',
                         formItem: {
                           type: 'textarea',
@@ -130,7 +129,7 @@ const Page = () => {
                     handSubmit={putProfile}
                     extendButton={(form) => (
                       <Button
-                        text={t('Huỷ Thao Tác')}
+                        text={t('user.Cancel')}
                         className={'md:min-w-[8rem] justify-center out-line'}
                         onClick={() => {
                           navigate(routerLinks('User/List'))
@@ -145,7 +144,7 @@ const Page = () => {
                   <Form
                     columns={[
                       {
-                        title: ('Mật khẩu hiện tại'),
+                        title: 'user.Password',
                         name: 'password',
                         formItem: {
                           col: 12,
@@ -155,7 +154,7 @@ const Page = () => {
                         },
                       },
                       {
-                        title: ('Mật khẩu mới'),
+                        title: 'user.New password',
                         name: 'passwordNew',
                         formItem: {
                           col: 12,
@@ -165,7 +164,7 @@ const Page = () => {
                         },
                       },
                       {
-                        title: ('Xác nhận mật khẩu'),
+                        title: 'user.PasswordComfirm',
                         name: 'passwordComfirm',
                         formItem: {
                           col: 12,

@@ -90,7 +90,7 @@ const Layout = ({ children }: PropsWithChildren) => {
         {/* <h1 className={'text-xl font-bold hidden sm:block'}>{t('pages.' + title)}</h1> */}
 
         <div className="flex items-center gap-5 absolute right-6">
-          {/* <Select value={globalFacade?.language} onChange={(e: 'vn' | 'en') => globalFacade.setLanguage(e)}>
+          <Select value={globalFacade?.language} onChange={(e: 'vn' | 'en') => globalFacade.setLanguage(e)}>
             <Select.Option value="en">
               <img src="/assets/svg/us.svg" alt="US" className="mr-1 w-4 inline-block relative -top-0.5" />{' '}
               {t('routes.admin.Layout.English')}
@@ -99,7 +99,7 @@ const Layout = ({ children }: PropsWithChildren) => {
               <img src="/assets/svg/vn.svg" alt="VN" className="mr-1 w-4 inline-block relative -top-0.5" />{' '}
               {t('routes.admin.Layout.Vietnam')}
             </Select.Option>
-          </Select> */}
+          </Select>
           <Dropdown
             trigger={[ 'click']}
             menu={{

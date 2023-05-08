@@ -56,7 +56,7 @@ const Page = () => {
               className="intro-x p-6 pb-4 pt-3 rounded-lg w-full"
               columns={[
                 {
-                  title: 'user.Fullname',
+                  title: t('user.Fullname'),
                   name: 'name',
                   formItem: {
                     tabIndex: 1,

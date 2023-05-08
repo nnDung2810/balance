@@ -180,7 +180,15 @@
     "Fullname": "Họ và tên",
     "Phone Number": "Số điện thoại",
     "Role": "Vai trò",
-    "Note": "Ghi chú"
+    "Note": "Ghi chú",
+    "Email": "Email",
+    "PhoneNumber":"số điện thoại",
+    "ProfileImage":"Ảnh",
+    "PasswordComfirm":"xác nhận mật khẩu",
+    "New password": "Mật khẩu mới",
+    "Password": "Mật khẩu",
+    "Cancel":"hủy thao tác"
+
   },
   "supplier": {
     "Code": "Mã NCC",
