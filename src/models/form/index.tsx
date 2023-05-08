@@ -4,7 +4,7 @@ import { DefaultTFuncReturn } from 'i18next';
 import classNames from 'classnames';
 
 export class FormModel {
-  constructor(public name: string, public title?: React.ReactNode | DefaultTFuncReturn, public formItem?: FormItem) { }
+  constructor(public name: string, public title: string = '', public formItem?: FormItem) { }
 }
 
 export class FormItem {

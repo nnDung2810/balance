@@ -4,15 +4,10 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 import classNames from 'classnames';
 import { useLocation } from 'react-router-dom';
-// import { initializeApp } from 'firebase/app';
-// import { getMessaging, isSupported, getToken, onMessage } from 'firebase/messaging';
 import { routerLinks } from '@utils';
-// import { Avatar } from '@components/avatar';
-// import { GlobalFacade } from '@reducers';
 import { Avatar } from '@core/avatar';
 import { GlobalFacade } from '@store';
 import Menu1 from './menu';
-// import { firebaseConfig } from 'variable';
 import './index.less';
 import { Chevronleft, LeftArrow, Logo, RightArrow, Menu, ArrowBack, User1, Key, Out } from '@svgs';
 import Logo1 from '../../assets/images/logo.png';
@@ -90,7 +85,7 @@ const Layout = ({ children }: PropsWithChildren) => {
         {/* <h1 className={'text-xl font-bold hidden sm:block'}>{t('pages.' + title)}</h1> */}
 
         <div className="flex items-center gap-5 absolute right-6">
-          {/* <Select value={globalFacade?.language} onChange={(e: 'vn' | 'en') => globalFacade.setLanguage(e)}>
+          <Select value={globalFacade?.language} onChange={(e: 'vn' | 'en') => globalFacade.setLanguage(e)}>
             <Select.Option value="en">
               <img src="/assets/svg/us.svg" alt="US" className="mr-1 w-4 inline-block relative -top-0.5" />{' '}
               {t('routes.admin.Layout.English')}
@@ -99,7 +94,7 @@ const Layout = ({ children }: PropsWithChildren) => {
               <img src="/assets/svg/vn.svg" alt="VN" className="mr-1 w-4 inline-block relative -top-0.5" />{' '}
               {t('routes.admin.Layout.Vietnam')}
             </Select.Option>
-          </Select> */}
+          </Select>
           <Dropdown
             trigger={[ 'click']}
             menu={{
