@@ -2,11 +2,17 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@core/*": [
-        "src/core/*"
+      "@columns": [
+        "src/columns"
       ],
       "@layouts/*": [
         "src/layouts/*"
+      ],
+      "@core/*": [
+        "src/core/*"
+      ],
+      "@services": [
+        "src/services"
       ],
       "@pages/*": [
         "src/pages/*"
@@ -14,11 +20,14 @@
       "@models": [
         "src/models"
       ],
+      "@utils": [
+        "src/utils"
+      ],
       "@store": [
         "src/store"
       ],
-      "@utils": [
-        "src/utils"
+      "@store/*": [
+        "src/store/*"
       ],
       "@svgs": [
         "src/assets/svgs"

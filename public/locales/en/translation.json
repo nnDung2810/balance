@@ -65,8 +65,7 @@
     },
     "button": {
       "New": "New",
-      "Back": "Back",
-      "Cancel": "Cancel"
+      "Role": "Role"
     }
   },
   "titles": {
@@ -75,7 +74,6 @@
     "User": "User",
     "User/List": "List User",
     "User/Add": "Add new User",
-    "User/Edit": "Edit User",
     "MyProfile": "My Profile",
     "Setting": "Setting",
     "Code": "Mã",
@@ -84,19 +82,13 @@
     "Supplier": "Supplier",
     "Supplier/Add": "Add new Supplier",
     "Store": "Store",
-    "Store/Add": "Add new Store",
-    "merchandise-managerment": "Inventory management",
-    "merchandise-managerment/product": "Product",
-    "merchandise-managerment/category": "Category",
-    "merchandise-managerment/tax": "Tax"
-
+    "Store/Add": "Add new Store"
   },
   "pages": {
     "User/List": "List User",
     "User/Add": "Add new User",
     "User/Edit": "Edit User",
-    "store-managerment/create":"Thêm cửa hàng",
-    "MyProfile": "My Profile"
+    "store-managerment/create":"Thêm cửa hàng"
   },
   "columns": {
     "auth": {
@@ -108,9 +100,7 @@
         "remember": "Remember Me",
         "New password": "New password",
         "Enter new password": "Enter new password",
-        "Confirm Password": "Confirm Password",
-        "Password": "Password",
-        "newPassword": "New Password"
+        "Confirm Password": "Confirm Password"
       },
       "register": {
         "firstName": "First Name",
@@ -120,16 +110,11 @@
       "reset-password": {
         "Recovery Email": "Recovery Email",
         "Enter Recovery Email": "Enter Recovery Email"
-      },
-      "placeholder": {
-        "Confirm Password": "Confirm Password",
-        "Password": "Enter Password",
-        "newPassword": "Enter New Password"
       }
     }
   },
   "layout": {
-    "footer": "Copyright ©{{year}} ARI Technology Co ., JSC. All rights reserved."
+    "footer": "Copyright ©2023 ARI Technology Co ., JSC. All rights reserved."
   },
   "routes": {
     "auth": {
@@ -143,7 +128,7 @@
         "New password": "New password",
         "Enter new password": "Enter new password",
         "Account": "Don't have an account?",
-        "Welcome": "Welcome to BALANCE!"
+        "Welcome": "Welcome to Web Member Ari"
       },
       "reset-password": {
         "Recovery Email": "Recovery Email",
@@ -173,25 +158,25 @@
         "Change Password": "Change Password",
         "My Profile": "My Profile",
         "No Data": "No Data",
-        "Pagination": "Show {{from}} - {{to}} / Total {{total}} categories",
-        "User": "Show {{from}} - {{to}} / Total {{total}} user",
+        "Pagination": "Show {{from}} - {{to}} /Total {{total}} categories",
         "Day": "day"
       }
     }
   },
   "user": {
-    "UserId": "User Id",
-    "Fullname": "Fullname",
+    "Position": "Position",
+    "Team": "Team",
+    "Start Date": "Start Date",
+    "Remaining Leave Day": "Remaining Leave Day",
+    "Date of birth": "Date of birth",
+    "Name": "Name",
+    "Is System Admin": "Is System Admin",
+    "Permissions": "Permissions",
+    "Description": "Description",
+    "Upload avatar": "Upload avatar",
+    "Fullname": "Full Name",
     "Phone Number": "Phone Number",
-    "Role": "Role",
-    "Note": "Note",
-    "RoleUser": {
-      "ADMIN": "ADMIN",
-      "OWNER_SUPPLIER": "SUPPLIER",
-      "OWNER_STORE": "STORE",
-      "STORE": "Store representative",
-      "SUPPLIER": "Supplier representative"
-    }
+    "Action": "Action"
   },
   "Code": {
     "Type": "Type",

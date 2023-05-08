@@ -65,8 +65,7 @@
     },
     "button": {
       "New": "Tạo mới",
-      "Role": "Vai trò",
-      "Cancel": "Hủy thao tác"
+      "Role": "Vai trò"
     }
   },
   "titles": {
@@ -75,7 +74,6 @@
     "User": "Người Dùng",
     "User/List": "Quản lý người dùng",
     "User/Add": "Thêm quản trị viên",
-    "User/Edit": "Chỉnh sửa thông tin người dùng",
     "MyProfile": "Thông tin của tôi",
     "Setting": "Thiết lập",
     "Code": "Mã",
@@ -86,11 +84,7 @@
     "Store": "Quản lý cửa hàng",
     "Store/Add": "Thêm cửa hàng",
     "store-managerment/create": "Thêm cửa hàng",
-    "store-managerment/edit": "Thông tin cửa hàng",
-    "merchandise-managerment": "Quản lý hàng hóa",
-    "merchandise-managerment/product": "Sản phẩm",
-    "merchandise-managerment/category": "Danh mục",
-    "merchandise-managerment/tax": "Thuế"
+    "store-managerment/edit": "Thông tin cửa hàng"
   },
   "pages": {
     "Login": "Đăng Nhập",
@@ -102,8 +96,7 @@
     "Sign-in": "Đăng Nhập",
     "Quên Mật Khẩu": "Quên Mật Khẩu",
     "Store": "Quản lý cửa hàng",
-    "store-managerment/edit": "Quản lý cửa hàng",
-    "MyProfile": "Thông tin cá nhân"
+    "store-managerment/edit": "Quản lý cửa hàng"
   },
   "columns": {
     "auth": {
@@ -115,9 +108,7 @@
         "remember": "Ghi nhớ",
         "New password": "Mật khẩu mới",
         "Enter new password": "Nhập mật khẩu mới",
-        "Confirm Password": "Xác nhận mật khẩu",
-        "Password": "Mật khẩu hiện tại",
-        "newPassword": "Mật khẩu mới"
+        "Confirm Password": "Xác nhận mật khẩu"
       },
       "register": {
         "firstName": "Tên",
@@ -127,17 +118,11 @@
       "reset-password": {
         "Recovery Email": "Email khôi phục",
         "Enter Recovery Email": "Nhập Email khôi phục"
-      },
-      "placeholder": {
-        "Confirm Password": "Xác nhận mật khẩu",
-        "Password": "Nhập mật khẩu",
-        "newPassword": "Nhập mật khẩu mới"
       }
     }
   },
   "layout": {
-    "footer": "Bản quyền ©{{year}} Công ty Cổ phần Công nghệ ARI. Đã đăng ký Bản quyền."
-
+    "footer": "Công ty cổ phần Cồng nghệ Ari. ©{{year}}"
   },
   "routes": {
     "auth": {
@@ -151,7 +136,7 @@
         "New password": "Mật khẩu mới",
         "Enter new password": "Nhập mật khẩu mới",
         "Account": "Chưa có tài khoản?",
-        "Welcome": "Chào mừng bạn đã đến với BALANCE!"
+        "Welcome": "Chào mừng bạn đến với Web Member Ari"
       },
       "reset-password": {
         "Recovery Email": "Email khôi phục",
@@ -182,24 +167,24 @@
         "My Profile": "Thông tin cá nhân",
         "No Data": "Trống",
         "Pagination": "Hiển thị {{from}} - {{to}} / Tổng số {{total}} danh mục",
-        "User": "Hiển thị {{from}} - {{to}} / Tổng số {{total}} người dùng",
         "Day": "Ngày phép"
       }
     }
   },
   "user": {
-    "UserId": "Mã người dùng",
+    "Position": "Vị trí",
+    "Team": "Nhóm",
+    "Start Date": "Ngày đầu đi làm",
+    "Remaining Leave Day": "Ngày phép còn lại",
+    "Date of birth": "Ngày sinh",
+    "Name": "Tên",
+    "Is System Admin": "Là quản trị viên hệ thống",
+    "Permissions": "Cho phép",
+    "Description": "Mô tả",
+    "Upload avatar": "Tải ảnh lên",
     "Fullname": "Họ và tên",
     "Phone Number": "Số điện thoại",
-    "Role": "Vai trò",
-    "Note": "Ghi chú",
-    "RoleUser": {
-      "ADMIN": "Quản trị viên",
-      "OWNER_SUPPLIER": "Nhà cung cấp",
-      "OWNER_STORE": "Chủ cửa hàng",
-      "STORE": "Đại diện cửa hàng",
-      "SUPPLIER": "Đại diện NCC"
-    }
+    "Action": "Hoạt động"
   },
   "supplier": {
     "Code": "Mã NCC",
@@ -208,6 +193,12 @@
     "Representative": "Người đại diện",
     "Phone Number": "Số điện thoại",
     "Status": "Trạng thái"
+  },
+  "Code": {
+    "Type": "Loại mã",
+    "Type Code": "Thêm loại mã",
+    "Type Category": "Loại",
+    "Name": "Tên mã"
   },
   "Data": {
     "Type": "Loại dữ liệu",

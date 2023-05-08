@@ -2,7 +2,7 @@ import React from 'react';
 
 import { keyRole } from '@utils';
 import './index.less';
-import { Cog, Buffer, Cart, Store, User, Chart } from '@svgs';
+import { Cog, Buffer, Cart, Store, User } from '@svgs';
 
 const Layout = () => [
   {
@@ -36,27 +36,15 @@ const Layout = () => [
     name: 'Store',
   },
   {
-    icon: <Cart className="icon-menu" />,
-    name: 'Supplier',
-  },
-  {
-    icon: <Chart className="icon-menu" />,
-    name: 'Store',
-  },
-  {
-    icon: <Chart className="icon-menu" />,
-    name: 'merchandise-managerment',
+    icon: <Cog className="icon-menu" />,
+    name: 'Setting',
     child: [
       {
-        name: 'merchandise-managerment/product',
+        name: 'Code',
       //  permission: keyRole.P_CODE_LISTED,
       },
       {
-        name: 'merchandise-managerment/category',
-      //  permission: keyRole.P_DATA_LISTED,
-      },
-      {
-        name: 'merchandise-managerment/tax',
+        name: 'Data',
       //  permission: keyRole.P_DATA_LISTED,
       },
     ],

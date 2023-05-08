@@ -4,9 +4,8 @@ import { useNavigate } from 'react-router';
 
 import { Button } from '@core/button';
 import { DataTable } from '@core/data-table';
-
 import { routerLinks } from '@utils';
-import { UserFacade } from '@store';
+import { UserFacade} from '@store';
 import { Plus } from '@svgs';
 import { DataTableModel, TableRefObject } from '@models';
 
@@ -27,14 +26,14 @@ const Page = () => {
 
   const columns: DataTableModel[] = [
     {
-      title: 'user.UserId',
+      title: t(`Mã người dùng`),
       name: 'code',
       tableItem: {
         width: 140,
       },
     },
     {
-      title: 'user.Fullname',
+      title: t('Họ và tên'),
       name: 'name',
       tableItem: {
         width: 400,
@@ -47,7 +46,7 @@ const Page = () => {
       },
     },
     {
-      title: 'Email',
+      title: t('Email'),
       name: 'email',
       tableItem: {
         width: 130,
@@ -55,25 +54,25 @@ const Page = () => {
       },
     },
     {
-      title: 'user.Phone Number',
+      title: t('Số điện thoại'),
       name: 'phoneNumber',
       tableItem: {
         width: 100,
       },
     },
     {
-      title: 'user.Role',
+      title: t('Vai trò'),
       name: 'userRole',
       tableItem: {
         width: 200,
         filter: { type: 'search' },
         render: (text: any, item: any) => {
           if (text = item.userRole[0].mtRole.code === "ADMIN") {
-            return <div>{t('user.RoleUser.ADMIN')}</div>;
+            return "Quản trị viên";
           } else if (text = item.userRole[0].mtRole.code === "OWNER_SUPPLIER") {
-            return <div>{t('user.RoleUser.SUPPLIER')}</div>;;
+            return "Đại diện NCC";
           } else {
-            return <div>{t('user.RoleUser.STORE')}</div>;;
+            return "Đại diện cửa hàng";
           }
         }
       },
@@ -89,7 +88,7 @@ const Page = () => {
       pageSizeRender={(sizePage: number) => sizePage}
       pageSizeWidth={'50px'}
       paginationDescription={(from: number, to: number, total: number) =>
-        t('routes.admin.Layout.User', { from, to, total })
+        t('routes.admin.Layout.Pagination', { from, to, total })
       }
       columns={columns}
       rightHeader={

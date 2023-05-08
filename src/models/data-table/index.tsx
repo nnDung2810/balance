@@ -33,7 +33,7 @@ export class TableGet {
 
 export class TableItemFilterList {
   label?: string;
-  value?: number | string ;
+  value?: string | number;
 }
 export class TableRefObject {
   onChange?: (request?: any) => void;

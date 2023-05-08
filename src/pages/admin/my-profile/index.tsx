@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 import { Tabs } from 'antd';
@@ -14,6 +14,7 @@ const Page = () => {
   const { t } = useTranslation();
   const { user, isLoading, putProfile, setPassword, profile } = GlobalFacade();
   const navigate = useNavigate();
+  const {TabPane} = Tabs;
 
   useEffect(() => {
     profile();
@@ -28,7 +29,6 @@ const Page = () => {
               className="text-center items-centers text-2xl text-black font-semibold"
               columns={[
                 {
-                  title: '',
                   name: 'profileImage',
                   formItem: {
                     type: 'upload',
@@ -37,7 +37,7 @@ const Page = () => {
                   },
                 },
                 {
-                  title: 'user.Fullname',
+                  title: t('Họ và tên'),
                   name: 'name',
                   formItem: {
                     render: (form, values) => {
@@ -50,7 +50,7 @@ const Page = () => {
                   },
                 },
                 {
-                  title: 'user.role',
+                  title: t('Vai trò'),
                   name: 'userRole',
                   formItem: {
                     render: (text: any, item: any) => {
@@ -58,23 +58,21 @@ const Page = () => {
                         return (
                           <div className='flex w-full flex-row justify-center pt-2'>
                             <div><UserSolid className='w-7 h-7 mr-2 fill-slate-500' /></div>
-                            <div className='text-xl text-gray-500'>
-                            {t('user.RoleUser.ADMIN')}
-                            </div>
+                            <div className='text-xl text-gray-500'>Quản trị viên</div>
                           </div>
                         )
                       } else if (text = item.userRole[0].mtRole.code === "OWNER_SUPPLIER") {
                         return (
                           <div className='flex w-full flex-row justify-center'>
                             <div><UserSolid className='w-7 h-7 mr-2' /></div>
-                            <div>{t('user.RoleUser.SUPPLIER')}</div>
+                            <div>Đại diện NCC</div>
                           </div>
                         )
                       } else {
                         return (
                           <div className='flex w-full flex-row justify-center'>
                             <div><UserSolid className='w-7 h-7 mr-2' /></div>
-                            <div>{t('user.RoleUser.STORE')}</div>
+                            <div>Đại diện cửa hàng</div>
                           </div>
                         )
                       }
@@ -91,11 +89,11 @@ const Page = () => {
         <div className='col-span-2 bg-white p-5 border rounded-xl mr-4 fill-black'>
           <Spin spinning={isLoading}>
               <Tabs defaultActiveKey="1" size="large">
-                <Tabs.TabPane tab={t('routes.admin.Layout.My Profile')} key="1">
+                <TabPane tab="Thông tin cá nhân" key="1">
                   <Form
                     columns={[
                       {
-                        title: 'user.Fullname',
+                        title: ('Họ và tên'),
                         name: 'name',
                         formItem: {
                           col: 12,
@@ -103,7 +101,7 @@ const Page = () => {
                         },
                       },
                       {
-                        title: 'Email',
+                        title: ('Email'),
                         name: 'email',
                         formItem: {
                           tabIndex: 1,
@@ -112,7 +110,7 @@ const Page = () => {
                         },
                       },
                       {
-                        title: 'user.Phone Number',
+                        title: ('Số điện thoại'),
                         name: 'phoneNumber',
                         formItem: {
                           tabIndex: 1,
@@ -121,7 +119,7 @@ const Page = () => {
                         },
                       },
                       {
-                        title: 'user.Note',
+                        title: ('Ghi chú'),
                         name: 'note',
                         formItem: {
                           type: 'textarea',
@@ -132,7 +130,7 @@ const Page = () => {
                     handSubmit={putProfile}
                     extendButton={(form) => (
                       <Button
-                        text={t('components.button.Cancel')}
+                        text={t('Huỷ Thao Tác')}
                         className={'md:min-w-[8rem] justify-center out-line'}
                         onClick={() => {
                           navigate(routerLinks('User/List'))
@@ -141,38 +139,38 @@ const Page = () => {
                     )}
                     values={{ ...user }}
                   />
-                </Tabs.TabPane>
+                </TabPane>
 
-                <Tabs.TabPane tab={t('routes.admin.Layout.Change Password')} key="2">
+                <TabPane tab="Đổi mật khẩu" key="2">
                   <Form
                     columns={[
                       {
-                        title: 'columns.auth.login.Password',
+                        title: ('Mật khẩu hiện tại'),
                         name: 'password',
                         formItem: {
                           col: 12,
                           type: 'password',
                           rules: [{ type: 'required' }, { type: 'min', value: 6 }],
-                          placeholder: t('columns.auth.placeholder.Password').toString(),
+                          placeholder: 'Nhập mật khẩu'
                         },
                       },
                       {
-                        title: 'columns.auth.login.newPassword',
+                        title: ('Mật khẩu mới'),
                         name: 'passwordNew',
                         formItem: {
                           col: 12,
                           type: 'password',
                           rules: [{ type: 'custom' }, { type: 'min', value: 6 }],
-                          placeholder: t('columns.auth.placeholder.newPassword').toString(),
+                          placeholder: 'Nhập mật khẩu mới'
                         },
                       },
                       {
-                        title: 'columns.auth.login.Confirm Password',
+                        title: ('Xác nhận mật khẩu'),
                         name: 'passwordComfirm',
                         formItem: {
                           col: 12,
                           type: 'password',
-                          condition: (values: any) => !values?.id,
+                          condition: (value: string, form: any, index: number, values: any) => !values?.id,
                           rules: [
                             { type: 'required' },
                             {
@@ -187,14 +185,14 @@ const Page = () => {
                               }),
                             },
                           ],
-                          placeholder: t('columns.auth.placeholder.Confirm Password').toString(),
+                          placeholder: 'Xác nhận mật khẩu'
                         },
                       },
                     ]}
                     disableSubmit={isLoading}
                     extendButton={(form) => (
                       <Button
-                        text={t('components.button.Cancel')}
+                        text={t('Huỷ Thao Tác')}
                         className={'md:min-w-[8rem] justify-center out-line'}
                         onClick={() => {
                           navigate(routerLinks('User/List'))
@@ -204,7 +202,7 @@ const Page = () => {
                     extendButtonChangePassword={setPassword}
                     values={{ ...user }}
                   />
-                </Tabs.TabPane>
+                </TabPane>
               </Tabs>
           </Spin>
         </div>

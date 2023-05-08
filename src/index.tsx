@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useEffect } from 'react';
+import React, { lazy, Suspense } from 'react';
 import { createRoot } from 'react-dom/client';
 import i18n from 'i18next';
 import XHR from 'i18next-xhr-backend';
@@ -6,9 +6,15 @@ import { initReactI18next } from 'react-i18next';
 import { Provider } from 'react-redux';
 import { ConfigProvider } from 'antd';
 
+// import AuthProvider from '@globalContext';
+// import Router from '@routes/index';
 import { Spin } from '@core/spin';
 import { GlobalFacade, setupStore } from '@store';
 import { reportWebVitals } from '@utils';
+// import { setupStore } from '@reducers';
+// import { Spin } from '@components/spin';
+
+// const Styling = lazy(() => import('./utils/init/styling'));
 import Router from './router';
 
 const fallbackLng = localStorage.getItem('i18nextLng');
@@ -34,13 +40,6 @@ const Styling = lazy(() => import('./utils/init/styling'));
 
 const Context = () => {
   const { locale } = GlobalFacade();
-  useEffect(() => {
-    for (let i = 0; i < localStorage.length; i++) {
-      if (localStorage.key(i)?.indexOf('temp-') === 0) {
-        localStorage.removeItem(localStorage.key(i) || '');
-      }
-    }
-  }, []);
 
   return (
     <Styling>

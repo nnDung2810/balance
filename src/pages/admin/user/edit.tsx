@@ -6,6 +6,7 @@ import { UserRoleFacade, UserFacade } from '@store';
 import { routerLinks } from '@utils';
 import { Form } from '@core/form';
 import { User } from '../../../store/global';
+
 import { Select } from 'antd';
 
 const Page = () => {
@@ -18,6 +19,7 @@ const Page = () => {
   const isReload = useRef(false);
   const param = JSON.parse(queryParams || '{}');
   const { id } = useParams();
+  const { Option } = Select;
 
   useEffect(() => {
     if (!result?.data) get({});
@@ -59,7 +61,7 @@ const Page = () => {
               values={{ ...data }}
               className="intro-x p-6 pb-4 pt-3 rounded-lg w-full "
               columns={[{
-                title: 'user.UserId',
+                title: t('Mã người dùng'),
                 name: 'code',
                 formItem: {
                   disabled: () => true,
@@ -68,7 +70,7 @@ const Page = () => {
                 },
               },
               {
-                title: 'user.Fullname',
+                title: t('Họ và tên'),
                 name: 'name',
                 formItem: {
                   tabIndex: 1,
@@ -77,7 +79,7 @@ const Page = () => {
                 },
               },
               {
-                title: 'Email',
+                title: t('Email'),
                 name: 'email',
                 formItem: {
                   disabled: () => true,
@@ -86,7 +88,7 @@ const Page = () => {
                 },
               },
               {
-                title: 'user.Phone Number',
+                title: t('Số điện thoại'),
                 name: 'phoneNumber',
                 formItem: {
                   col: 6,
@@ -94,7 +96,7 @@ const Page = () => {
                 },
               },
               {
-                title: 'user.Role',
+                title: 'Vai trò',
                 name: 'roleCode',
                 formItem: {
                   col: 12,
@@ -103,17 +105,11 @@ const Page = () => {
                     const roleCode = values.roleCode;
                     return (
                       <div>
-                         {t('user.Role')}
+                        <div>Vai trò</div>
                         <Select value={roleCode} disabled={true} className="py-2" style={{ width: "100%" }}>
-                          <Select.Option value="ADMIN">
-                          {t('user.RoleUser.ADMIN')}
-                          </Select.Option>
-                          <Select.Option value="OWNER_SUPPLIER">
-                          {t('user.RoleUser.OWNER_SUPPLIER')}
-                          </Select.Option>
-                          <Select.Option value="OWNER_STORE">
-                          {t('user.RoleUser.OWNER_STORE')}
-                          </Select.Option>
+                          <Option value="ADMIN">Quản trị viên</Option>
+                          <Option value="OWNER_SUPPLIER">Nhà cung cấp</Option>
+                          <Option value="OWNER_STORE">Chủ cửa hàng</Option>
                         </Select>
                       </div>
                     );
@@ -121,7 +117,7 @@ const Page = () => {
                 },
               },
               {
-                title: 'user.Note',
+                title: t('Ghi chú'),
                 name: 'note',
                 formItem: {
                   col: 12,
