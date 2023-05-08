@@ -9,6 +9,7 @@ import { Form } from '@core/form';
 import { User } from '../../../store/global';
 
 const Page = () => {
+  const { t } = useTranslation();
   const { result, get } = UserRoleFacade();
   const userFacade = UserFacade();
   const { data, isLoading, queryParams, status } = userFacade;
@@ -45,7 +46,7 @@ const Page = () => {
       <Fragment>
         <div className='bg-white'>
           <div className='text-xl text-green-900 px-6 pt-4 font-mono font-bold'>
-            Thông tin người dùng
+          {t('titles.User')}
           </div>
           {!!result?.data && (
             <Form

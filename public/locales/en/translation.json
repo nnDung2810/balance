@@ -72,9 +72,10 @@
   "titles": {
     "Login": "Login",
     "Dashboard": "Dashboard",
-    "User": "User",
+    "User": "User information",
     "User/List": "List User",
     "User/Add": "Add new User",
+    "UserAdd": "Add new User",
     "User/Edit": "Edit User",
     "MyProfile": "My Profile",
     "Setting": "Setting",

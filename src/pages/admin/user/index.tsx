@@ -96,8 +96,9 @@ const Page = () => {
         <div className={'flex gap-2'}>
           <Button
             icon={<Plus className="icon-cud !h-5 !w-5" />}
-            text={t('titles.User/Add')}
+            text={t('titles.UserAdd')}
             onClick={() => navigate(routerLinks('User/Add'))}
+            className='!rounded-2xl'
           />
         </div>
       }

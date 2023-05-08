@@ -616,11 +616,11 @@ export const Form = ({
       </div>
 
       <div
-        className={classNames('mt-9 gap-2 flex absolute pb-14', {
+        className={classNames('mt-9 gap-2 flex absolute pb-14 pt-4', {
           'justify-center': !extendButton && !handCancel,
           'md:inline-flex w-full justify-between md:float-right': handCancel,
           'md:inline-flex md:float-right right-0': handSubmit || extendButton,
-          'md:inline-flex md:float-right top-[300px]': extendButtonChangePassword,
+          'md:inline-flex md:float-right top-[300px] pt-6': extendButtonChangePassword,
         })}
       >
         {handCancel && (

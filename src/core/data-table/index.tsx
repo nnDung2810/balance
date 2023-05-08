@@ -480,7 +480,7 @@ export const DataTable = forwardRef(
               size="small"
               {...prop}
             />
-            {showPagination && (
+              {showPagination && (
               <Pagination
                 total={result?.pagination?.total}
                 page={+params.page}
@@ -488,8 +488,8 @@ export const DataTable = forwardRef(
                 pageSizeOptions={pageSizeOptions}
                 pageSizeRender={pageSizeRender}
                 pageSizeWidth={pageSizeWidth}
-                queryParams={(pagination: any) =>
-                  handleTableChange(pagination, params[filter], params[sort], params[fullTextSearch])
+                queryParams={(pagination: { page?: number; perPage?: number }) =>
+                  handleTableChange(pagination, params.filter, params.sorts as SorterResult<any>, params.fullTextSearch)
                 }
                 paginationDescription={paginationDescription}
                 idElement={idTable.current}
