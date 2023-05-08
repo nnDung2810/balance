@@ -2,13 +2,17 @@ import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 
-import { Button } from '@core/button';
-import { DataTable } from '@core/data-table';
-import { keyRole, routerLinks } from '@utils';
-import { UserFacade, GlobalFacade, SupplierFacade } from '@store';
+// import { Button } from '@components/button';
+// import { DataTable } from '@components/data-table';
+// import { keyRole, routerLinks } from '@utils';
+// import { UserFacade, GlobalFacade, SupplierFacade } from '@reducers';
 import { Plus } from '@svgs';
 import { ColumnTableSupplier } from './column';
 import { TableRefObject } from '@models';
+import { GlobalFacade, SupplierFacade } from '@store';
+import { Button } from '@core/button';
+import { DataTable } from '@core/data-table';
+import { routerLinks } from '@utils';
 
 const Page = () => {
   const { t } = useTranslation();

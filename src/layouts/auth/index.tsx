@@ -2,7 +2,6 @@ import React, { PropsWithChildren, useEffect } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
-// import { GlobalFacade } from '@reducers';
 import { GlobalFacade } from '@store';
 
 import './index.less'

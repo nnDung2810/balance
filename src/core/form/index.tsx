@@ -13,6 +13,7 @@ import { FormItem, FormModel } from '@models';
 import { GlobalFacade } from '@store';
 // import { GlobalFacade } from '@store';
 import { Chips, SelectTag, Select, TreeSelect, TableTransfer, Password, Mask, Addable, DatePicker, Tab } from './input';
+import { useNavigate } from 'react-router';
 
 export const Form = ({
   className,
@@ -40,6 +41,7 @@ export const Form = ({
   const [_render, set_render] = useState(false);
   const [forms] = AntForm.useForm();
   const form = formAnt || forms;
+  const navigate = useNavigate();
 
   const reRender = () => {
     set_render(!_render);
@@ -113,7 +115,7 @@ export const Form = ({
         return (
           <Password
             tabIndex={formItem.tabIndex || index}
-            placeholder={formItem.placeholder || t('components.form.Enter') + ' ' + item.title!.toString().toLowerCase()}
+            placeholder={formItem.placeholder || t('components.form.Enter') + ' ' + t(item.title!).toString().toLowerCase()}
             disabled={!!formItem.disabled && formItem.disabled(values, form)}
           />
         );
@@ -130,7 +132,7 @@ export const Form = ({
             )}
             rows={4}
             maxLength={1000}
-            placeholder={formItem.placeholder || t('components.form.Enter') + ' ' + item.title!.toString().toLowerCase()}
+            placeholder={formItem.placeholder || t('components.form.Enter') + ' ' + t(item.title!).toString().toLowerCase()}
             onChange={(e) => formItem.onChange && formItem.onChange(e.target.value, form, reRender)}
           />
         );
@@ -216,7 +218,7 @@ export const Form = ({
         return (
           <SelectTag
             maxTagCount={formItem.maxTagCount || 'responsive'}
-            placeholder={formItem.placeholder || t('components.form.Enter') + ' ' + item.title!.toString().toLowerCase()}
+            placeholder={formItem.placeholder || t('components.form.Enter') + ' ' + t(item.title!).toString().toLowerCase()}
             tag={formItem.tag}
             form={form}
             disabled={!!formItem.disabled && formItem.disabled(values, form)}
@@ -225,7 +227,7 @@ export const Form = ({
       case 'chips':
         return (
           <Chips
-            placeholder={formItem.placeholder || t('components.form.Enter') + ' ' + item.title!.toString().toLowerCase()}
+            placeholder={formItem.placeholder || t('components.form.Enter') + ' ' + t(item.title!).toString().toLowerCase()}
             disabled={!!formItem.disabled && formItem.disabled(values, form)}
           />
         );
@@ -236,7 +238,7 @@ export const Form = ({
             showSearch={formItem.showSearch}
             maxTagCount={formItem.maxTagCount || 'responsive'}
             onChange={(value: any) => formItem.onChange && formItem.onChange(value, form, reRender)}
-            placeholder={formItem.placeholder || t('components.form.Enter') + ' ' + item.title!.toString().toLowerCase()}
+            placeholder={formItem.placeholder || t('components.form.Enter') + ' ' + t(item.title!).toString().toLowerCase()}
             formItem={formItem}
             form={form}
             disabled={!!formItem.disabled && formItem.disabled(values, form)}
@@ -250,7 +252,7 @@ export const Form = ({
             showSearch={formItem.showSearch}
             form={form}
             disabled={!!formItem.disabled && formItem.disabled(values, form)}
-            placeholder={formItem.placeholder || t('components.form.Enter') + ' ' + item.title!.toString().toLowerCase()}
+            placeholder={formItem.placeholder || t('components.form.Enter') + ' ' + t(item.title!).toString().toLowerCase()}
           />
         );
       case 'switch':
@@ -271,7 +273,7 @@ export const Form = ({
             addonBefore={formItem.addonBefore}
             addonAfter={formItem.addonAfter}
             maxLength={formItem.maxLength}
-            placeholder={formItem.placeholder || t('components.form.Enter') + ' ' + item.title!.toString().toLowerCase()}
+            placeholder={formItem.placeholder || t('components.form.Enter') + ' ' + t(item.title!).toString().toLowerCase()}
             onBlur={(e: React.FocusEvent<HTMLInputElement, Element>) =>
               formItem.onBlur && formItem.onBlur(e, form, name)
             }
@@ -512,7 +514,7 @@ export const Form = ({
       }
       const otherProps: any = {
         key: index,
-        label: showLabel && item.title,
+        label: showLabel && t(item.title),
         name: name || item.name,
         labelAlign: 'left',
         validateTrigger: 'onBlur',
@@ -582,40 +584,43 @@ export const Form = ({
           'lg:col-span-1 lg:col-span-2 lg:col-span-3 lg:col-span-4 lg:col-span-5 lg:col-span-6 lg:col-span-7 lg:col-span-8 lg:col-span-9 lg:col-span-10 lg:col-span-11 lg:col-span-12 hidden'
         }
       />
-      <div className={'group-input'}>
-        <div className={'grid gap-x-5 grid-cols-12'}>
-          {_columns.map(
-            (column: any, index: number) =>
-              (!column?.formItem?.condition ||
-                !!column?.formItem?.condition(values[column.name], form, index, values)) && (
-                <div
-                  className={classNames(
-                    column?.formItem?.classItem,
-                    'col-span-12' +
-                    (' sm:col-span-' +
-                      (column?.formItem?.colTablet
-                        ? column?.formItem?.colTablet
-                        : column?.formItem?.col
-                          ? column?.formItem?.col
-                          : 12)) +
-                    (' lg:col-span-' + (column?.formItem?.col ? column?.formItem?.col : 12)),
-                  )}
-                  key={index}
-                >
-                  {generateForm(column, index)}
-                </div>
-              ),
-          )}
-        </div>
+      <div className={'flex items-center justify-center'}>
+        <div className={'grow'}>
+          <div className={'grid gap-x-5 grid-cols-12'}>
+            {_columns.map(
+              (column: any, index: number) =>
+                (!column?.formItem?.condition ||
+                  !!column?.formItem?.condition(values[column.name], form, index, values)) && (
+                  <div
+                    className={classNames(
+                      column?.formItem?.classItem,
+                      'col-span-12' +
+                      (' sm:col-span-' +
+                        (column?.formItem?.colTablet
+                          ? column?.formItem?.colTablet
+                          : column?.formItem?.col
+                            ? column?.formItem?.col
+                            : 12)) +
+                      (' lg:col-span-' + (column?.formItem?.col ? column?.formItem?.col : 12)),
+                    )}
+                    key={index}
+                  >
+                    {generateForm(column, index)}
+                  </div>
+                ),
+            )}
+          </div>
 
-        {extendForm && extendForm(values)}
+          {extendForm && extendForm(values)}
+        </div>
       </div>
 
       <div
-        className={classNames('gap-2 flex', {
+        className={classNames('mt-9 gap-2 flex absolute pb-14', {
           'justify-center': !extendButton && !handCancel,
-          'md:inline-flex md:float-right': extendButton || handCancel,
-          'w-full flex max-sm:flex-col max-sm:items-center max-sm:mb-10 justify-between mt-8': handSubmit && handCancel,
+          'md:inline-flex w-full justify-between md:float-right': handCancel,
+          'md:inline-flex md:float-right right-0': handSubmit || extendButton,
+          'md:inline-flex md:float-right top-[300px]': extendButtonChangePassword,
         })}
       >
         {handCancel && (
@@ -636,9 +641,9 @@ export const Form = ({
             type={'submit'}
           />
         )}
-         {extendButtonChangePassword && (
+       {extendButtonChangePassword && (
           <Button
-            text={t('Đổi mật khẩu')}
+            text={t('routes.admin.Layout.Change Password')}
             id={idSubmit}
             onClick={() => {
               if (form) {

@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-// import { Button } from '@components/button';
+
 import { Button } from '../../button';
 import { Times } from '@svgs';
 

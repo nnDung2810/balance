@@ -1,11 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { API, routerLinks } from '@utils';
-// import Action from '../../action';
-// import Slice, { State } from '../../slice';
-// import { useAppDispatch, useTypedSelector } from '@store';
 import { useAppDispatch, useTypedSelector, Action, Slice, State } from '@store';
 import { CommonEntity, PaginationQuery, Responses } from '@models';
-import { User } from '../../global';
 
 const name = 'UserRole';
 export const action = {
@@ -31,10 +27,10 @@ export const UserRoleFacade = () => {
 };
 export class UserRole extends CommonEntity {
   constructor(
+    public id?: string,
+    public code?: string,
     public name?: string,
-    public isSystemAdmin?: boolean,
-    public permissions?: string[],
-    public users?: User[],
+    public description?: string,
   ) {
     super();
   }
