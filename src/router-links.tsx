@@ -34,7 +34,7 @@ const Util = (name: string, type?: string) => {
     User: '/user-admin',
     DataType: '/data-type',
     Data: '/data',
-    'sub-organization': '/sub-organization',
+    Store: '/sub-organization',
     Supplier: '/sub-organization',
     Province: '/province',
     District: '/district',

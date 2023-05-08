@@ -65,7 +65,8 @@
     },
     "button": {
       "New": "New",
-      "Role": "Role"
+      "Role": "Role",
+      "Cancel": "Cancel"
     }
   },
   "titles": {
@@ -74,6 +75,7 @@
     "User": "User",
     "User/List": "List User",
     "User/Add": "Add new User",
+    "User/Edit": "Edit User",
     "MyProfile": "My Profile",
     "Setting": "Setting",
     "Code": "Mã",
@@ -89,7 +91,8 @@
     "User/List": "List User",
     "User/Add": "Add new User",
     "User/Edit": "Edit User",
-    "store-managerment/create":"Thêm cửa hàng"
+    "store-managerment/create":"Thêm cửa hàng",
+    "MyProfile": "My Profile"
   },
   "columns": {
     "auth": {
@@ -101,7 +104,9 @@
         "remember": "Remember Me",
         "New password": "New password",
         "Enter new password": "Enter new password",
-        "Confirm Password": "Confirm Password"
+        "Confirm Password": "Confirm Password",
+        "Password": "Password",
+        "newPassword": "New Password"
       },
       "register": {
         "firstName": "First Name",
@@ -111,6 +116,11 @@
       "reset-password": {
         "Recovery Email": "Recovery Email",
         "Enter Recovery Email": "Enter Recovery Email"
+      },
+      "placeholder": {
+        "Confirm Password": "Confirm Password",
+        "Password": "Enter Password",
+        "newPassword": "Enter New Password"
       }
     }
   },
@@ -129,7 +139,7 @@
         "New password": "New password",
         "Enter new password": "Enter new password",
         "Account": "Don't have an account?",
-        "Welcome": "Welcome to Web Member Ari"
+        "Welcome": "Welcome to BALANCE!"
       },
       "reset-password": {
         "Recovery Email": "Recovery Email",
@@ -159,25 +169,25 @@
         "Change Password": "Change Password",
         "My Profile": "My Profile",
         "No Data": "No Data",
-        "Pagination": "Show {{from}} - {{to}} /Total {{total}} categories",
+        "Pagination": "Show {{from}} - {{to}} / Total {{total}} Categories",
+        "User": "Show {{from}} - {{to}} / Total {{total}} User",
         "Day": "day"
       }
     }
   },
   "user": {
-    "Position": "Position",
-    "Team": "Team",
-    "Start Date": "Start Date",
-    "Remaining Leave Day": "Remaining Leave Day",
-    "Date of birth": "Date of birth",
-    "Name": "Name",
-    "Is System Admin": "Is System Admin",
-    "Permissions": "Permissions",
-    "Description": "Description",
-    "Upload avatar": "Upload avatar",
-    "Fullname": "Full Name",
+    "UserId": "User Id",
+    "Fullname": "Fullname",
     "Phone Number": "Phone Number",
-    "Action": "Action"
+    "Role": "Role",
+    "Note": "Note",
+    "RoleUser": {
+      "ADMIN": "ADMIN",
+      "OWNER_SUPPLIER": "SUPPLIER",
+      "OWNER_STORE": "STORE",
+      "STORE": "Store representative",
+      "SUPPLIER": "Supplier representative"
+    }
   },
   "Code": {
     "Type": "Type",
