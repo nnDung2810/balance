@@ -92,6 +92,11 @@ const pages = [
         component: React.lazy(() => import('@pages/admin/store/edit')),
         title: 'store-managerment/edit',
       },
+      {
+        path: routerLinks('Supplier/Edit') + '/:id',
+        component: React.lazy(() => import('@pages/admin/supplier/edit')),
+        title: 'Supplier/Edit',
+      },
       // {
       //   path: routerLinks('User/Add'),
       //   component: React.lazy(() => import('./admin/user/add')),

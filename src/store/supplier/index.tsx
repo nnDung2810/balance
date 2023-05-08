@@ -6,10 +6,20 @@ import { Message } from '@core/message';
 // import { useAppDispatch, useTypedSelector } from '@reducers';
 import { useAppDispatch, useTypedSelector, Action, Slice, State } from '@store';
 import { CommonEntity, PaginationQuery } from '@models';
+import { District } from '@store/address/district';
+import { Province } from '@store/address';
+import { Ward } from '@store/address/ward';
 
 const name = 'Supplier';
 export const action = {
   ...new Action<Supplier>(name),
+  getById: createAsyncThunk(
+      name + '/getById',
+      async ({ id, keyState = 'isVisible' }: { id: string; keyState: keyof State<Supplier> }) => {
+        const  data  = await API.get<Supplier>(`${routerLinks(name, 'api')}/detail/${id}`);
+        return { data, keyState };
+      },
+    ),
   post: createAsyncThunk(name + '/post', async (values: Supplier) => {
     // if (values.avatar) values.avatar = values.avatar[0].url;
     const { data, message } = await API.post<Supplier>(routerLinks(name, 'api'), values);
@@ -44,20 +54,39 @@ export const SupplierFacade = () => {
 
 export class Supplier extends CommonEntity {
   constructor(
+    public code?: string,
+    public fax?: string,
+    public id?: string,
+    public informationConnect?: boolean,
+    public isActive?: boolean,
     public name?: string,
+    public note?: string,
+    public storeId?: number,
+    public supplierType?: string,
+    public type?: string,
     public address?: {
       id?: number;
       street?: string;
+      district?: District
+      province?: Province
+      ward?: Ward;
     },
-    // public contract?: {},
-    public code?: string,
-    public createOn?: string,
-    public id?: string,
-    public isActive?: boolean,
-    public isMain?: boolean,
-    public note?: string,
-    public updateAt?: string,
-    // public userRole?: {},
+    public userRole?: {
+      0: {
+        createdAt: string;
+        isDeleted: boolean;
+        roleId: number;
+        subOrgId: string;
+        id: string;
+        userAdminId: string;
+        userAdmin: {
+          id: string;
+          email: string;
+          name: string;
+          phoneNumber: string;
+        }
+      }
+    },
   ) {
     super();
   }

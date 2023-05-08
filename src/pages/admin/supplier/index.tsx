@@ -16,6 +16,8 @@ const Page = () => {
   const navigate = useNavigate();
 
   const supplierFacade = SupplierFacade();
+  
+  
   useEffect(() => {
     switch (supplierFacade.status) {
       case 'delete.fulfilled':
@@ -26,13 +28,14 @@ const Page = () => {
 
   const dataTableRef = useRef<TableRefObject>(null);
   return (
-    <div className=' pr-5 h-full pb-10'>
+    <div className=' h-full pb-10'>
       <div className='bg-white rounded-xl p-4 pb-10 relative text-center '>
         <DataTable
           facade={supplierFacade}
           ref={dataTableRef}
-          xScroll='1440px'
-          onRow={() => ({ onDoubleClick: () => null })}
+          defaultRequest={{page: 1, perPage: 10,type: "SUPPLIER"}}
+          xScroll = '1440px'
+          onRow={(data: any) => ({ onDoubleClick: () =>  navigate(routerLinks('Supplier/Edit') + '/' + data.id)})}
           pageSizeRender={(sizePage: number) => sizePage}
           pageSizeWidth={'50px'}
           paginationDescription={(from: number, to: number, total: number) =>
@@ -40,7 +43,6 @@ const Page = () => {
           }
           columns={ColumnTableSupplier({
             t,
-            //  formatDate,
             navigate,
             dataTableRef,
           })}

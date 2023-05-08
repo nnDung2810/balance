@@ -2,16 +2,21 @@ import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router';
 
-import { SupplierRoleFacade, SupplierFacade, UserRoleFacade } from '@reducers';
+import { SupplierFacade } from '@store/supplier';
+import { Form } from '@core/form';
 import { routerLinks } from '@utils';
-import { Form } from '@components/form';
-import { Button } from '@components/button';
-import { ColumnFormSupplier, ColumnFormSupplier1, ColumnFormSupplier2, ColumnFormSupplier3 } from './column';
-import { User } from '../../../reducers/global';
+import { ColumnFormSupplier } from './column';
+import { ProvinceFacade } from '@store/address/province';
+import { User } from '@store';
+import { DistrictFacade } from '@store/address/district';
+import { WardFacade } from '@store/address/ward';
+import { Switch } from 'antd';
 
 const Page = () => {
   const { t } = useTranslation();
-  const { result, get } = SupplierRoleFacade();
+  const districtFacade = DistrictFacade()
+  const wardFacade = WardFacade()
+  const { result, get } = ProvinceFacade();
   const supplierFacade = SupplierFacade();
   const { data, isLoading, queryParams, status } = supplierFacade;
   const navigate = useNavigate();
@@ -19,9 +24,6 @@ const Page = () => {
   const isReload = useRef(false);
   const param = JSON.parse(queryParams || '{}');
   const { id } = useParams();
-
-  // console.log("result",result);
-  // console.log("supplierFacade",supplierFacade);
 
 
   useEffect(() => {
@@ -71,76 +73,168 @@ const Page = () => {
             <div>
               <Form
                 values={{ ...data }}
-                className="intro-x"
-                columns={ColumnFormSupplier({ t, listRole: result?.data || [] })}
-                // extendButton={(form) => (
-                //   <Button
-                //     text={t('components.button.Save and Add new')}
-                //     className={'md:min-w-[12rem] w-full justify-center out-line'}
-                //     onClick={() => {
-                //       form.submit();
-                //       isBack.current = false;
-                //     }}
-                //   />
-                // )}
-                // handSubmit={handleSubmit}
+                className="intro-x p-6 pb-4 pt-3 rounded-lg w-full "
+                columns={[
+                  {
+                    title: '',
+                    name: 'address',
+                    formItem: {
+                      rules: [{ type: 'required' }],
+                      render() {
+                        return (
+                          <h3 className='mb-2.5 text-left text-base text-black font-medium'>Tên nhà cung cấp </h3>
+                        )
+                      },
+                    }
+                  },
+                  {
+                    title: 'Mã cửa hàng',
+                    name: 'code',
+                    formItem: {
+                      tabIndex: 1,
+                      col: 4,
+                      disabled: () => true
+                    },
+                  },
+                  {
+                    title: 'Tên cửa hàng',
+                    name: 'name',
+                    formItem: {
+                      tabIndex: 2,
+                      col: 4,
+                      rules: [{ type: 'required' }],
+                    },
+                  },
+                  {
+                    title: 'Số fax',
+                    name: 'fax',
+                    formItem: {
+                      tabIndex: 3,
+                      col: 4,
+                    },
+                  },
+                  {
+                    title: '',
+                    name: 'address',
+                    formItem: {
+                      rules: [{ type: 'required' }],
+                      render() {
+                        return (
+                          <h3 className='mb-2.5 text-left text-base text-black font-medium'>Địa chỉ nhà cung cấp </h3>
+                        )
+                      },
+                    }
+                  },
+                  {
+                    title: 'Tỉnh/Thành phố',
+                    name: 'provinceId',
+                    formItem: {
+                      tabIndex: 3,
+                      col: 3,
+                      type: 'select',
+                      rules: [{ type: 'required' }],
+                      list: result.data.map((item: any) => ({
+                        label: item?.name,
+                        value: item?.code,
+                      })),
+                      onChange(value, form) {
+                        form.resetFields(['district'])
+                        districtFacade.get(`${value}`)
+                      },
+                    },
+                  },
+                  {
+                    name: 'districtId',
+                    title: 'Quận/Huyện',
+                    formItem: {
+                      type: 'select',
+                      rules: [{ type: 'required' }],
+                      col: 3,
+                      get: {
+                        facade: DistrictFacade,
+                        format: (item: any) => ({
+                          label: item.name,
+                          value: item.code,
+                        }),
+                      },
+                      onChange(value, form) {
+                        form.resetFields(['wardId'])
+                        wardFacade.get(`${value}`)
+                      },
+                    },
+                  },
+                  {
+                    name: 'wardId',
+                    title: 'Phường/Xã',
+                    formItem: {
+                      type: 'select',
+                      rules: [{ type: 'required' }],
+                      col: 3,
+                      get: {
+                        facade: WardFacade,
+                        format: (item: any) => ({
+                          label: item.name,
+                          value: item.code,
+                        }),
+                      }
+                    },
+                  },
+                  {
+                    name: 'street',
+                    title: 'Địa chỉ cụ thể',
+                    formItem: {
+                      rules: [{ type: 'required' }],
+                      col: 3,
+                    },
+                  },
+                  {
+                    title: '',
+                    name: '',
+                    formItem: {
+                      render() {
+                        return (
+                          <div className='text-xl text-left text-teal-900 font-bold mb-2.5'>Thông tin người đại diện</div>
+                        )
+                      }
+                    }
+                  },
+                  {
+                    name: 'nameContact',
+                    title: 'Họ tên đại diện',
+                    formItem: {
+                      col: 4,
+                      rules: [{ type: 'required' }],
+                    },
+                  },
+                  {
+                    name: 'phoneNumber',
+                    title: 'Số điện thoại đại diện',
+                    formItem: {
+                      col: 4,
+                      rules: [{ type: 'required' }],
+                    },
+                  },
+                  {
+                    name: 'emailContact',
+                    title: 'Email đại diện',
+                    formItem: {
+                      col: 4,
+                      rules: [{ type: 'required' }],
+                    },
+                  },
+                  {
+                    name: 'note',
+                    title: 'Ghi chú',
+                    formItem: {
+                      type: 'textarea',
+                    },
+                  },
+
+                ]}
+                handSubmit={handleSubmit}
                 disableSubmit={isLoading}
-                // handCancel={handleBack}
-                extendButton={() => (
-                  <div className='max-w-7xl flex items-center absolute -right-4 -left-4 justify-between mt-4'>
-                    <button className={'text-teal-900 bg-white border-solid border border-teal-900 rounded-xl p-2 w-auto h-11 px-8'}
-                    onClick={handleBack}>
-                      {t('Trở về')}
-                    </button>
-                    <button className={'text-white bg-teal-900 border-solid border rounded-xl p-2 w-auto h-11 px-8'}
-                    onClick={() => handleSubmit}>
-                      {t('Lưu')}
-                    </button>
-                  </div>
-                 )}
+                handCancel={handleBack}
               />
-              {/* <Form
-                values={{ ...data }}
-                className=""
-                columns={ColumnFormSupplier1({ t, listRole: result?.data || [] })}
-              />
-              <p className='text-base text-left mb-4 text-black'>Địa chỉ nhà cung cấp</p>
-              <Form
-                values={{ ...data }}
-                className="intro-x"
-                columns={ColumnFormSupplier2({ t, listRole: result?.data || [] })}
-              />
-              <p className='text-xl font-bold text-left mb-5 text-black'>Thông tin người đại diện</p>
-              <Form
-                values={{ ...data }}
-                className="intro-x"
-                columns={ColumnFormSupplier3({ t, listRole: result?.data || [] })}
-                // extendButton={(form) => (
-                //   <Button
-                //     text={t('components.button.Save and Add new')}
-                //     className={'md:min-w-[12rem] w-full justify-center out-line'}
-                //     onClick={() => {
-                //       form.submit();
-                //       isBack.current = false;
-                //     }}
-                //   />
-                // )}
-                // handSubmit={handleSubmit}
-                disableSubmit={isLoading}
-                // handCancel={handleBack}
-                extendButton={() => (
-                  <div className='w-7xl flex justify-between mt-4'>
-                    <button className={'text-teal-900 bg-white border-solid border border-teal-900 rounded-xl p-2 w-auto h-11 px-8'}
-                    onClick={handleBack}>
-                      {t('Trở về')}
-                    </button>
-                    <button className={'text-white bg-teal-900 border-solid border rounded-xl p-2 w-auto h-11 px-8'}
-                    onClick={() => handleSubmit}>
-                      {t('Lưu')}
-                    </button>
-                  </div>
-                 )}
-              /> */}
             </div>
           )}
         </div>

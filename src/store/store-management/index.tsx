@@ -8,7 +8,7 @@ import { District } from '../address/district';
 import { Province } from '../address/province';
 import { Ward } from '../address/ward';
 
-const name = 'sub-organization';
+const name = 'Store';
 
 export const action = {
   ...new Action<StoreManagement>(name),
