@@ -27,6 +27,7 @@ export const Form = ({
   checkHidden = false,
   extendForm,
   extendButton,
+  extendButtonChangePassword,
   idSubmit = 'idSubmit',
   disableSubmit = false,
   formAnt,
@@ -490,7 +491,7 @@ export const Form = ({
                 rules.forEach((item: any) => item.min && (min = item.min));
                 if (value?.trim().length >= min) {
                   if (/^(?!.* )(?=.*\d)(?=.*[A-Z]).*$/.test(value)) return Promise.resolve();
-                  return Promise.reject(t('components.form.rulePassword'));  
+                  return Promise.reject(t('components.form.rulePassword'));
                 }
                 // return Promise.reject('Mật khẩu yêu cầu có 8 ký tự trở lên');
               } else return Promise.resolve();
@@ -635,6 +636,20 @@ export const Form = ({
             type={'submit'}
           />
         )}
+         {extendButtonChangePassword && (
+          <Button
+            text={t('Đổi mật khẩu')}
+            id={idSubmit}
+            onClick={() => {
+              if (form) {
+                form.submit();
+              }
+            }}
+            disabled={disableSubmit}
+            className={'w-32 justify-center !bg-teal-800 hover:!bg-teal-700 !border !border-teal-900 max-sm:w-3/5'}
+            type={'submit'}
+          />
+        )}
       </div>
     </AntForm>
   );
@@ -654,6 +669,7 @@ type Type = {
   checkHidden?: boolean;
   extendForm?: (values: any) => JSX.Element;
   extendButton?: (values: any) => JSX.Element;
+  extendButtonChangePassword?: (values: any) => void;
   idSubmit?: string;
   disableSubmit?: boolean;
 };

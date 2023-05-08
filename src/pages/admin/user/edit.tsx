@@ -4,11 +4,10 @@ import { useNavigate, useParams } from 'react-router';
 
 import { UserRoleFacade, UserFacade } from '@store';
 import { routerLinks } from '@utils';
-import { Button } from '@core/button';
 import { Form } from '@core/form';
-import { ColumnFormUser, ColumnFormUserEdit } from './column';
 import { User } from '../../../store/global';
-import classNames from 'classnames';
+
+import { Select } from 'antd';
 
 const Page = () => {
   const { t } = useTranslation();
@@ -20,13 +19,13 @@ const Page = () => {
   const isReload = useRef(false);
   const param = JSON.parse(queryParams || '{}');
   const { id } = useParams();
-  const { getPermission } = UserRoleFacade();
+  const { Option } = Select;
+
   useEffect(() => {
     if (!result?.data) get({});
 
     if (id) userFacade.getById({ id });
-    else userFacade.set({ data: {} });
-  //  getPermission();
+
     return () => {
       isReload.current && userFacade.get(param);
     };
@@ -34,16 +33,12 @@ const Page = () => {
 
   useEffect(() => {
     switch (status) {
-      case 'post.fulfilled':
-        navigate(routerLinks('User') + '/' + data?.id);
-        break;
       case 'put.fulfilled':
         if (Object.keys(param).length > 0) isReload.current = true;
 
         if (isBack.current) handleBack();
         else {
           isBack.current = true;
-          if (status === 'put.fulfilled') navigate(routerLinks('User/Add'));
         }
         break;
     }
@@ -51,11 +46,9 @@ const Page = () => {
 
   const handleBack = () => navigate(routerLinks('User/List') + '?' + new URLSearchParams(param).toString());
   const handleSubmit = (values: User) => {
-    if (id) userFacade.put({ ...values, id });
-    else userFacade.post(values);
+    userFacade.put({ ...values, id });
   };
 
-  console.log(data)
   return (
     <div className={'w-full'}>
       <Fragment>
@@ -63,17 +56,81 @@ const Page = () => {
           <div className='text-xl text-green-900 px-6 pt-4 font-mono font-bold'>
             Thông tin người dùng
           </div>
-      {!!result?.data && (
-        <Form
-          values={{ ...data }}
-          className="intro-x p-6 pb-4 pt-3 rounded-lg w-full "
-          columns={ColumnFormUserEdit({ t })}
-          handSubmit={handleSubmit}
-          disableSubmit={isLoading}
-          handCancel={handleBack}
-        />
-      )}
-      </div>
+          {!!result?.data && (
+            <Form
+              values={{ ...data }}
+              className="intro-x p-6 pb-4 pt-3 rounded-lg w-full "
+              columns={[{
+                title: t('Mã người dùng'),
+                name: 'code',
+                formItem: {
+                  disabled: () => true,
+                  tabIndex: 1,
+                  col: 6,
+                },
+              },
+              {
+                title: t('Họ và tên'),
+                name: 'name',
+                formItem: {
+                  tabIndex: 1,
+                  col: 6,
+                  rules: [{ type: 'required' }],
+                },
+              },
+              {
+                title: t('Email'),
+                name: 'email',
+                formItem: {
+                  disabled: () => true,
+                  tabIndex: 1,
+                  col: 6,
+                },
+              },
+              {
+                title: t('Số điện thoại'),
+                name: 'phoneNumber',
+                formItem: {
+                  col: 6,
+                  rules: [{ type: 'required' }, { type: 'phone', min: 10, max: 15 }],
+                },
+              },
+              {
+                title: 'Vai trò',
+                name: 'roleCode',
+                formItem: {
+                  col: 12,
+                  type: 'select',
+                  render: (form, values) => {
+                    const roleCode = values.roleCode;
+                    return (
+                      <div>
+                        <div>Vai trò</div>
+                        <Select value={roleCode} disabled={true} className="py-2" style={{ width: "100%" }}>
+                          <Option value="ADMIN">Quản trị viên</Option>
+                          <Option value="OWNER_SUPPLIER">Nhà cung cấp</Option>
+                          <Option value="OWNER_STORE">Chủ cửa hàng</Option>
+                        </Select>
+                      </div>
+                    );
+                  },
+                },
+              },
+              {
+                title: t('Ghi chú'),
+                name: 'note',
+                formItem: {
+                  col: 12,
+                  type: 'textarea',
+                },
+              },
+              ]}
+              handSubmit={handleSubmit}
+              disableSubmit={isLoading}
+              handCancel={handleBack}
+            />
+          )}
+        </div>
       </Fragment>
     </div>
   );
