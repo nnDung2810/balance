@@ -65,7 +65,8 @@
     },
     "button": {
       "New": "Tạo mới",
-      "Role": "Vai trò"
+      "Role": "Vai trò",
+      "Cancel": "Hủy thao tác"
     }
   },
   "titles": {
@@ -74,6 +75,7 @@
     "User": "Người Dùng",
     "User/List": "Quản lý người dùng",
     "User/Add": "Thêm quản trị viên",
+    "User/Edit": "Chỉnh sửa thông tin người dùng",
     "MyProfile": "Thông tin của tôi",
     "Setting": "Thiết lập",
     "Code": "Mã",
@@ -118,6 +120,11 @@
       "reset-password": {
         "Recovery Email": "Email khôi phục",
         "Enter Recovery Email": "Nhập Email khôi phục"
+      },
+      "placeholder": {
+        "Confirm Password": "Xác nhận mật khẩu",
+        "Password": "Nhập mật khẩu",
+        "newPassword": "Nhập mật khẩu mới"
       }
     }
   },
@@ -136,7 +143,7 @@
         "New password": "Mật khẩu mới",
         "Enter new password": "Nhập mật khẩu mới",
         "Account": "Chưa có tài khoản?",
-        "Welcome": "Chào mừng bạn đến với Web Member Ari"
+        "Welcome": "Chào mừng bạn đã đến với BALANCE!"
       },
       "reset-password": {
         "Recovery Email": "Email khôi phục",
@@ -167,24 +174,24 @@
         "My Profile": "Thông tin cá nhân",
         "No Data": "Trống",
         "Pagination": "Hiển thị {{from}} - {{to}} / Tổng số {{total}} danh mục",
+        "User": "Hiển thị {{from}} - {{to}} /Tổng số {{total}} danh mục",
         "Day": "Ngày phép"
       }
     }
   },
   "user": {
-    "Position": "Vị trí",
-    "Team": "Nhóm",
-    "Start Date": "Ngày đầu đi làm",
-    "Remaining Leave Day": "Ngày phép còn lại",
-    "Date of birth": "Ngày sinh",
-    "Name": "Tên",
-    "Is System Admin": "Là quản trị viên hệ thống",
-    "Permissions": "Cho phép",
-    "Description": "Mô tả",
-    "Upload avatar": "Tải ảnh lên",
+    "UserId": "Mã người dùng",
     "Fullname": "Họ và tên",
     "Phone Number": "Số điện thoại",
-    "Action": "Hoạt động"
+    "Role": "Vai trò",
+    "Note": "Ghi chú",
+    "RoleUser": {
+      "ADMIN": "Quản trị viên",
+      "OWNER_SUPPLIER": "Nhà cung cấp",
+      "OWNER_STORE": "Chủ cửa hàng",
+      "STORE": "Đại diện cửa hàng",
+      "SUPPLIER": "Đại diện NCC"
+    }
   },
   "supplier": {
     "Code": "Mã NCC",
