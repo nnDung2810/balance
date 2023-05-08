@@ -512,7 +512,7 @@ export const Form = ({
       }
       const otherProps: any = {
         key: index,
-        label: showLabel && item.title,
+        label: showLabel && t(item.title),
         name: name || item.name,
         labelAlign: 'left',
         validateTrigger: 'onBlur',

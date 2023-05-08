@@ -165,8 +165,8 @@
         "Change Password": "Change Password",
         "My Profile": "My Profile",
         "No Data": "No Data",
-        "Pagination": "Show {{from}} - {{to}} /Total {{total}} categories",
-        "User": "Show {{from}} - {{to}} /Total {{total}} user",
+        "Pagination": "Show {{from}} - {{to}} / Total {{total}} Categories",
+        "User": "Show {{from}} - {{to}} / Total {{total}} User",
         "Day": "day"
       }
     }

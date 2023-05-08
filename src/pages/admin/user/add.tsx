@@ -6,10 +6,9 @@ import { UserRoleFacade, UserFacade } from '@store';
 import { routerLinks } from '@utils';
 import { Form } from '@core/form';
 
-import { GlobalFacade, User } from '../../../store/global';
+import { User } from '../../../store/global';
 
 const Page = () => {
-  const { t } = useTranslation();
   const { result, get } = UserRoleFacade();
   const userFacade = UserFacade();
   const { data, isLoading, queryParams, status } = userFacade;
@@ -72,7 +71,7 @@ const Page = () => {
                   },
                 },
                 {
-                  title: t('Số điện thoại'),
+                  title: 'user.Phone Number',
                   name: 'phoneNumber',
                   formItem: {
                     col: 6,
@@ -80,7 +79,7 @@ const Page = () => {
                   },
                 },
                 {
-                  title: t('Ghi chú'),
+                  title: 'user.Note',
                   name: 'note',
                   formItem: {
                     col: 12,

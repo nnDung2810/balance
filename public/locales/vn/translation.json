@@ -173,8 +173,8 @@
         "Change Password": "Đổi mật khẩu",
         "My Profile": "Thông tin cá nhân",
         "No Data": "Trống",
-        "Pagination": "Hiển thị {{from}} - {{to}} / Tổng số {{total}} danh mục",
-        "User": "Hiển thị {{from}} - {{to}} /Tổng số {{total}} danh mục",
+        "Pagination": "Hiển thị {{from}} - {{to}} / Tổng số {{total}} Danh mục",
+        "User": "Hiển thị {{from}} - {{to}} / Tổng số {{total}} Người dùng",
         "Day": "Ngày phép"
       }
     }
