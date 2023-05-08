@@ -1,22 +1,22 @@
 import { keyRefreshToken, keyToken, keyUser, linkApi, routerLinks } from '@utils';
-import { Message } from '@components/message';
+import { Message } from '@core/message';
 import { Responses } from '@models';
 
 
 const API = {
   init: () =>
-    ({
-      mode: 'cors',
-      cache: 'no-cache',
-      credentials: 'same-origin',
-      headers: {
-        'Content-Type': 'application/json',
-        authorization: 'Bearer ' + (localStorage.getItem(keyToken) || ''),
-        'Accept-Language': localStorage.getItem('i18nextLng') || '',
-      },
-      redirect: 'follow',
-      referrerPolicy: 'no-referrer',
-    } as RequestInit),
+  ({
+    mode: 'cors',
+    cache: 'no-cache',
+    credentials: 'same-origin',
+    headers: {
+      'Content-Type': 'application/json',
+      authorization: 'Bearer ' + (localStorage.getItem(keyToken) || ''),
+      'Accept-Language': localStorage.getItem('i18nextLng') || '',
+    },
+    redirect: 'follow',
+    referrerPolicy: 'no-referrer',
+  } as RequestInit),
   responsible: async <T>(
     url: string,
     params: { [key: string]: string } = {},
@@ -32,7 +32,8 @@ const API = {
           key + '=' + encodeURIComponent(typeof params[key] === 'object' ? JSON.stringify(params[key]) : params[key]),
       )
       .join('&');
-    const response = await fetch(linkApi + url + (linkParam && '?' + linkParam + '&type=STORE'), config);
+
+    const response = await fetch(linkApi + url + (linkParam && '?' + linkParam), config);
 
     const res: Responses<T> = await response.json();
     if (response.ok) {

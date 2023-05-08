@@ -2,9 +2,10 @@ const Util = (name: string, type?: string) => {
   const array: {
     [selector: string]: string;
   } = {
-    'Sign-in': '/user-admin/sign-in',
     Login: '/auth/login',
-    ResetPassword: '/auth/reset-password',
+    ForgetPassword: '/auth/forgot-password',
+    VerifyForotPassword: '/auth/verify-forgot-password',
+    SetPassword: '/auth/set-password',
     MyProfile: '/my-profile',
     Dashboard: '/',
 
@@ -21,14 +22,8 @@ const Util = (name: string, type?: string) => {
     'User/Add': '/user/add',
     'User/Edit': '/user/edit',
 
-    ForgetPassword: '/user-admin/forgot-password',
-    VerifyForotPassword: '/user-admin/verify-forgot-password',
-
-    SetPassword: '/user-admin/set-password',
     'store-managerment/create': '/store-managerment/create',
-    'merchandise-managerment/product': '/merchandise-managerment/product',
-    'merchandise-managerment/category': '/merchandise-managerment/category',
-    'merchandise-managerment/tax': '/merchandise-managerment/tax',
+    'store-managerment/edit': '/store-managerment/detail'
   }; // 💬 generate link to here
 
   const apis: {
@@ -40,9 +35,9 @@ const Util = (name: string, type?: string) => {
     User: '/user-admin',
     'sub-organization': '/sub-organization',
     Supplier: '/sub-organization',
-    SupplierProvince: '/province',
+    Province: '/province',
     District: '/district',
-
+    Ward: '/ward',
   }; // 💬 generate api to here
 
   switch (type) {
