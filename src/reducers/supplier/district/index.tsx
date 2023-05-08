@@ -10,7 +10,7 @@ export const name = 'District';
 export const action = {
   ...new Action<District>(name),
   getById: createAsyncThunk(
-      name + '/get',
+      name + '/getById',
       async ({ id, keyState = 'isVisible' }: { id: string; keyState: keyof State<District> }) => {
         const { data } = await API.get<District>(`${routerLinks(name, 'api')}/ward/${id}`);
         return { data, keyState };

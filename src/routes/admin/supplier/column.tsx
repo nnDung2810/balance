@@ -499,18 +499,18 @@ export const ColumnFormSupplierRevenue = ({ t, listRole }: any) => {
         col: 3,
         rules: [{ type: 'required' }],
         type: 'select',
-        // get: {
-        //   facade: SupplierFacade,
-        //   params: (form: any, fullTextSearch: string) => ({
-        //     fullTextSearch,
-        //     filter: { roleId: listRole.filter((item: any) => item.name == 'Manager')[0]?.id },
-        //     extend: {},
-        //   }),
-        //   format: (item: any) => ({
-        //     label: item.name,
-        //     value: item.id,
-        //   }),
-        // },
+        get: {
+          facade: WardFacade,
+          params: (form: any, fullTextSearch: string) => ({
+            fullTextSearch,
+            filter: { roleId: listRole.filter((item: any) => item.name == 'Manager')[0]?.id },
+            extend: {},
+          }),
+          format: (item: any) => ({
+            label: item.name,
+            value: item.id,
+          }),
+        },
       },
     },
     {
@@ -692,18 +692,18 @@ export const ColumnFormSupplierContract = ({ t, listRole }: any) => {
         col: 3,
         rules: [{ type: 'required' }],
         type: 'select',
-        // get: {
-        //   facade: SupplierFacade,
-        //   params: (form: any, fullTextSearch: string) => ({
-        //     fullTextSearch,
-        //     filter: { roleId: listRole.filter((item: any) => item.name == 'Manager')[0]?.id },
-        //     extend: {},
-        //   }),
-        //   format: (item: any) => ({
-        //     label: item.name,
-        //     value: item.id,
-        //   }),
-        // },
+        get: {
+          facade: WardFacade,
+          params: (form: any, fullTextSearch: string) => ({
+            fullTextSearch,
+            filter: { roleId: listRole.filter((item: any) => item.name == 'Manager')[0]?.id },
+            extend: {},
+          }),
+          format: (item: any) => ({
+            label: item.name,
+            value: item.id,
+          }),
+        },
       },
     },
     {
