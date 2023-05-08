@@ -74,6 +74,7 @@
     "User": "Người Dùng",
     "User/List": "Quản lý người dùng",
     "User/Add": "Thêm quản trị viên",
+    "User/Edit": "Chỉnh sửa thông tin người dùng",
     "MyProfile": "Thông tin của tôi",
     "Setting": "Thiết lập",
     "Code": "Mã",
@@ -100,7 +101,8 @@
     "Sign-in": "Đăng Nhập",
     "Quên Mật Khẩu": "Quên Mật Khẩu",
     "Store": "Quản lý cửa hàng",
-    "store-managerment/edit": "Quản lý cửa hàng"
+    "store-managerment/edit": "Quản lý cửa hàng",
+    "MyProfile": "Thông tin cá nhân"
   },
   "columns": {
     "auth": {
@@ -112,7 +114,9 @@
         "remember": "Ghi nhớ",
         "New password": "Mật khẩu mới",
         "Enter new password": "Nhập mật khẩu mới",
-        "Confirm Password": "Xác nhận mật khẩu"
+        "Confirm Password": "Xác nhận mật khẩu",
+        "Password": "Mật khẩu hiện tại",
+        "newPassword": "Mật khẩu mới"
       },
       "register": {
         "firstName": "Tên",
@@ -126,7 +130,8 @@
     }
   },
   "layout": {
-    "footer": "Copyright ©{{year} ARI Technology Co ., JSC. All rights reserved.}"
+    "footer": "Bản quyền ©{{year}} Công ty Cổ phần Công nghệ ARI. Đã đăng ký Bản quyền."
+
   },
   "routes": {
     "auth": {
@@ -140,7 +145,7 @@
         "New password": "Mật khẩu mới",
         "Enter new password": "Nhập mật khẩu mới",
         "Account": "Chưa có tài khoản?",
-        "Welcome": "Chào mừng bạn đến với Web Member Ari"
+        "Welcome": "Chào mừng bạn đã đến với BALANCE!"
       },
       "reset-password": {
         "Recovery Email": "Email khôi phục",
@@ -171,6 +176,7 @@
         "My Profile": "Thông tin cá nhân",
         "No Data": "Trống",
         "Pagination": "Hiển thị {{from}} - {{to}} / Tổng số {{total}} danh mục",
+        "User": "Hiển thị {{from}} - {{to}} / Tổng số {{total}} người dùng",
         "Day": "Ngày phép"
       }
     }
@@ -180,7 +186,14 @@
     "Fullname": "Họ và tên",
     "Phone Number": "Số điện thoại",
     "Role": "Vai trò",
-    "Note": "Ghi chú"
+    "Note": "Ghi chú",
+    "RoleUser": {
+      "ADMIN": "Quản trị viên",
+      "OWNER_SUPPLIER": "Nhà cung cấp",
+      "OWNER_STORE": "Chủ cửa hàng",
+      "STORE": "Đại diện cửa hàng",
+      "SUPPLIER": "Đại diện NCC"
+    }
   },
   "supplier": {
     "Code": "Mã NCC",
@@ -189,12 +202,6 @@
     "Representative": "Người đại diện",
     "Phone Number": "Số điện thoại",
     "Status": "Trạng thái"
-  },
-  "Code": {
-    "Type": "Loại mã",
-    "Type Code": "Thêm loại mã",
-    "Type Category": "Loại",
-    "Name": "Tên mã"
   },
   "Data": {
     "Type": "Loại dữ liệu",

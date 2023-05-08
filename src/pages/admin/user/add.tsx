@@ -4,11 +4,9 @@ import { useNavigate, useParams } from 'react-router';
 
 import { UserRoleFacade, UserFacade } from '@store';
 import { routerLinks } from '@utils';
-import { Button } from '@core/button';
 import { Form } from '@core/form';
 
-import { GlobalFacade, User } from '../../../store/global';
-//import { ColumnFormUser } from './column';
+import { User } from '../../../store/global';
 
 const Page = () => {
   const { t } = useTranslation();
@@ -56,7 +54,7 @@ const Page = () => {
               className="intro-x p-6 pb-4 pt-3 rounded-lg w-full"
               columns={[
                 {
-                  title: `user.Fullname`,
+                  title: 'user.Fullname',
                   name: 'name',
                   formItem: {
                     tabIndex: 1,
@@ -74,7 +72,7 @@ const Page = () => {
                   },
                 },
                 {
-                  title: t('Số điện thoại'),
+                  title: 'user.Phone Number',
                   name: 'phoneNumber',
                   formItem: {
                     col: 6,
@@ -82,7 +80,7 @@ const Page = () => {
                   },
                 },
                 {
-                  title: t('Ghi chú'),
+                  title: 'user.Note',
                   name: 'note',
                   formItem: {
                     col: 12,

@@ -352,7 +352,7 @@ export const DataTable = forwardRef(
         }
         // noinspection JSUnusedGlobalSymbols
         return {
-          title: col.title,
+          title: t(col.title || ''),
           dataIndex: col.name,
           ...item,
         };

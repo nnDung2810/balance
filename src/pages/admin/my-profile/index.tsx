@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useRef } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 import { Tabs } from 'antd';
@@ -14,7 +14,6 @@ const Page = () => {
   const { t } = useTranslation();
   const { user, isLoading, putProfile, setPassword, profile } = GlobalFacade();
   const navigate = useNavigate();
-  const {TabPane} = Tabs;
 
   useEffect(() => {
     profile();
@@ -29,15 +28,16 @@ const Page = () => {
               className="text-center items-centers text-2xl text-black font-semibold"
               columns={[
                 {
+                  title: '',
                   name: 'profileImage',
                   formItem: {
                     type: 'upload',
-                    mode: 'multiple',
+                  //  mode: 'multiple',
                     onlyImage: true,
                   },
                 },
                 {
-                  title: t('Họ và tên'),
+                  title: 'user.Fullname',
                   name: 'name',
                   formItem: {
                     render: (form, values) => {
@@ -50,7 +50,7 @@ const Page = () => {
                   },
                 },
                 {
-                  title: t('Vai trò'),
+                  title: 'user.role',
                   name: 'userRole',
                   formItem: {
                     render: (text: any, item: any) => {
@@ -58,21 +58,23 @@ const Page = () => {
                         return (
                           <div className='flex w-full flex-row justify-center pt-2'>
                             <div><UserSolid className='w-7 h-7 mr-2 fill-slate-500' /></div>
-                            <div className='text-xl text-gray-500'>Quản trị viên</div>
+                            <div className='text-xl text-gray-500'>
+                            {t('user.RoleUser.ADMIN')}
+                            </div>
                           </div>
                         )
                       } else if (text = item.userRole[0].mtRole.code === "OWNER_SUPPLIER") {
                         return (
                           <div className='flex w-full flex-row justify-center'>
                             <div><UserSolid className='w-7 h-7 mr-2' /></div>
-                            <div>Đại diện NCC</div>
+                            <div>{t('user.RoleUser.SUPPLIER')}</div>
                           </div>
                         )
                       } else {
                         return (
                           <div className='flex w-full flex-row justify-center'>
                             <div><UserSolid className='w-7 h-7 mr-2' /></div>
-                            <div>Đại diện cửa hàng</div>
+                            <div>{t('user.RoleUser.STORE')}</div>
                           </div>
                         )
                       }
@@ -89,11 +91,11 @@ const Page = () => {
         <div className='col-span-2 bg-white p-5 border rounded-xl mr-4 fill-black'>
           <Spin spinning={isLoading}>
               <Tabs defaultActiveKey="1" size="large">
-                <TabPane tab="Thông tin cá nhân" key="1">
+                <Tabs.TabPane tab="Thông tin cá nhân" key="1">
                   <Form
                     columns={[
                       {
-                        title: ('Họ và tên'),
+                        title: 'user.Fullname',
                         name: 'name',
                         formItem: {
                           col: 12,
@@ -101,7 +103,7 @@ const Page = () => {
                         },
                       },
                       {
-                        title: ('Email'),
+                        title: 'Email',
                         name: 'email',
                         formItem: {
                           tabIndex: 1,
@@ -110,7 +112,7 @@ const Page = () => {
                         },
                       },
                       {
-                        title: ('Số điện thoại'),
+                        title: 'user.PhoneNumber',
                         name: 'phoneNumber',
                         formItem: {
                           tabIndex: 1,
@@ -119,7 +121,7 @@ const Page = () => {
                         },
                       },
                       {
-                        title: ('Ghi chú'),
+                        title: 'user.Note',
                         name: 'note',
                         formItem: {
                           type: 'textarea',
@@ -139,13 +141,13 @@ const Page = () => {
                     )}
                     values={{ ...user }}
                   />
-                </TabPane>
+                </Tabs.TabPane>
 
-                <TabPane tab="Đổi mật khẩu" key="2">
+                <Tabs.TabPane tab="Đổi mật khẩu" key="2">
                   <Form
                     columns={[
                       {
-                        title: ('Mật khẩu hiện tại'),
+                        title: 'columns.auth.login.Password',
                         name: 'password',
                         formItem: {
                           col: 12,
@@ -155,7 +157,7 @@ const Page = () => {
                         },
                       },
                       {
-                        title: ('Mật khẩu mới'),
+                        title: 'columns.auth.login.newPassword',
                         name: 'passwordNew',
                         formItem: {
                           col: 12,
@@ -165,12 +167,12 @@ const Page = () => {
                         },
                       },
                       {
-                        title: ('Xác nhận mật khẩu'),
+                        title: 'columns.auth.login.Confirm Password',
                         name: 'passwordComfirm',
                         formItem: {
                           col: 12,
                           type: 'password',
-                          condition: (value: string, form: any, index: number, values: any) => !values?.id,
+                          condition: (values: any) => !values?.id,
                           rules: [
                             { type: 'required' },
                             {
@@ -202,7 +204,7 @@ const Page = () => {
                     extendButtonChangePassword={setPassword}
                     values={{ ...user }}
                   />
-                </TabPane>
+                </Tabs.TabPane>
               </Tabs>
           </Spin>
         </div>

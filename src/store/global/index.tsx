@@ -7,7 +7,7 @@ import i18n from 'i18next';
 import { API, keyRefreshToken, keyToken, keyUser, routerLinks } from '@utils';
 import { Message } from '@core/message';
 import { useAppDispatch, UserRole, useTypedSelector } from '@store';
-import { CommonEntity, Responses } from '@models';
+import { CommonEntity } from '@models';
 
 const name = 'User-admin';
 const action = {
@@ -77,8 +77,8 @@ export class User extends CommonEntity {
     public note?: string,
     public phoneNumber?: string,
     public status?: string,
-  //  public createdOn?: Date,
-  //  public updatedAt?: Date,
+    public createdOn?: string,
+    public updatedAt?: string,
     public roleId?: number,
     public orgId?: number,
     public subOrgId?: number,
