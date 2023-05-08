@@ -12,7 +12,6 @@ import { convertFormValue } from '@utils';
 import { FormItem, FormModel } from '@models';
 import { GlobalFacade } from '@store';
 // import { GlobalFacade } from '@store';
-import { Check, Times } from '@svgs';
 import { Chips, SelectTag, Select, TreeSelect, TableTransfer, Password, Mask, Addable, DatePicker, Tab } from './input';
 
 export const Form = ({
@@ -257,8 +256,9 @@ export const Form = ({
       case 'switch':
         return (
           <Switch
-            checkedChildren={<Check className="h-5 w-5 fill-white" />}
-            unCheckedChildren={<Times className="h-5 w-5 fill-white" />}
+            className={classNames('bg-gray-500')}
+            // checkedChildren={<Check className="h-5 w-5 fill-white" />}
+            // unCheckedChildren={<Times className="h-5 w-5 fill-white" />}
             defaultChecked={!!values && values[item.name || ''] === 1}
           />
         );
