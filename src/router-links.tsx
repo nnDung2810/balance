@@ -9,13 +9,16 @@ const Util = (name: string, type?: string) => {
     ResetPassword: '/reset-password',
     MyProfile: '/my-profile',
     Dashboard: '/dashboard',
+
     User: '/user',
     'User/List': '/user/list',
     'User/Add': '/user/add',
+    'User/Edit': '/user/edit',
+
     Supplier: '/supplier',
     'Supplier/Add': '/supplier/add',
     'Supplier/Edit': '/supplier/edit',
-    Setting: '/setting',
+
     Store: '/store-managerment',
     'store-managerment/create': '/store-managerment/create',
     'store-managerment/edit': '/store-managerment/detail'

@@ -633,12 +633,13 @@ export const Form = ({
           'justify-center': !extendButton && !handCancel,
           'md:inline-flex md:float-right': extendButton || handCancel,
           'w-full flex max-sm:flex-col max-sm:items-center max-sm:mb-10 justify-between mt-8': handSubmit && handCancel,
+          'md:inline-flex md:float-right top-[300px] pt-6': extendButtonChangePassword,
         })}
       >
         {handCancel && (
           <Button
             text={t(textCancel)}
-            className={'w-32 justify-center out-line !border-black max-sm:w-3/5'}
+            className={'md:min-w-[7rem] w-full justify-center out-line lg:w-64'}
             onClick={handCancel}
           />
         )}
@@ -649,7 +650,21 @@ export const Form = ({
             id={idSubmit}
             onClick={() => form && form.submit()}
             disabled={disableSubmit}
-            className={'w-32 justify-center !bg-teal-800 hover:!bg-teal-700 !border !border-teal-900 max-sm:w-3/5'}
+            className={'md:min-w-[6rem] w-full justify-center lg:w-64'}
+            type={'submit'}
+          />
+        )}
+        {extendButtonChangePassword && (
+          <Button
+            text={t('routes.admin.Layout.Change Password')}
+            id={idSubmit}
+            onClick={() => {
+              if (form) {
+                form.submit();
+              }
+            }}
+            disabled={disableSubmit}
+            className={'md:min-w-[8rem] w-full justify-center'}
             type={'submit'}
           />
         )}

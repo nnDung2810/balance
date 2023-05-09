@@ -33,8 +33,8 @@
       "Enter": "Nhập",
       "Upload": "Tải lên",
       "modal": {
-        "save": "Lưu lại",
-        "cancel": "Huỷ bỏ"
+        "save": "Lưu",
+        "cancel": "Trở về"
       },
       "Select Date": "Chọn ngày"
     },
@@ -72,29 +72,30 @@
   "titles": {
     "Login": "Đăng nhập",
     "Dashboard": "Tra cứu dữ liệu",
-    "User": "Người Dùng",
+    "User": "Thông tin Người Dùng",
     "User/List": "Quản lý người dùng",
+    "UserAdd": "Thêm người dùng",
     "User/Add": "Thêm quản trị viên",
     "User/Edit": "Chỉnh sửa thông tin người dùng",
-    "MyProfile": "Thông tin của tôi",
+    "MyProfile": "Thông tin cá nhân",
     "Setting": "Thiết lập",
-    "Code": "Mã",
-    "Data": "Dữ liệu",
-    "Page": "Trang",
     "Supplier": "Quản lý nhà cung cấp",
     "Supplier/Add": "Thêm nhà cung cấp",
-    "Supplier/Edit": "Thông tin nhà cung cấp",
     "Store": "Quản lý cửa hàng",
     "Store/Add": "Thêm cửa hàng",
     "store-managerment/create": "Thêm cửa hàng",
-    "store-managerment/edit": "Thông tin cửa hàng"
+    "store-managerment/edit": "Thông tin cửa hàng",
+    "merchandise-managerment": "Quản lý hàng hóa",
+    "merchandise-managerment/product": "Sản phẩm",
+    "merchandise-managerment/category": "Danh mục",
+    "merchandise-managerment/tax": "Thuế"
   },
   "pages": {
     "Login": "Đăng Nhập",
     "User/List": "Danh sách Người dùng",
     "User/Add": "Tạo mới người dùng",
     "User/Edit": "Chỉnh sửa người dùng",
-    "store-managerment/create": "Quản lý cửa hàng",
+    "store-managerment/create": "Thêm cửa hàng",
     "Đặt Lại Mật Khẩu": "Đặt Lại Mật Khẩu",
     "Sign-in": "Đăng Nhập",
     "Quên Mật Khẩu": "Quên Mật Khẩu",
@@ -133,7 +134,8 @@
     }
   },
   "layout": {
-    "footer": "Công ty cổ phần Cồng nghệ Ari. ©{{year}}"
+    "footer": "Bản quyền ©{{year}} Công ty Cổ phần Công nghệ ARI. Đã đăng ký Bản quyền."
+
   },
   "routes": {
     "auth": {
@@ -177,8 +179,8 @@
         "Change Password": "Đổi mật khẩu",
         "My Profile": "Thông tin cá nhân",
         "No Data": "Trống",
-        "Pagination": "Hiển thị {{from}} - {{to}} / Tổng số {{total}} Danh mục",
-        "User": "Hiển thị {{from}} - {{to}} / Tổng số {{total}} Người dùng",
+        "Pagination": "Hiển thị {{from}} - {{to}} / Tổng số {{total}} danh mục",
+        "User": "Hiển thị {{from}} - {{to}} / Tổng số {{total}} người dùng",
         "Day": "Ngày phép"
       }
     }
@@ -196,31 +198,6 @@
       "STORE": "Đại diện cửa hàng",
       "SUPPLIER": "Đại diện NCC"
     }
-  },
-  "supplier": {
-    "Code": "Mã NCC",
-    "Name": "Tên nhà cung cấp",
-    "Address": "Địa chỉ",
-    "Representative": "Người đại diện",
-    "Phone Number": "Số điện thoại",
-    "Status": "Trạng thái"
-  },
-  "store": {
-    "Name": "Tên cửa hàng",
-    "Address": "Địa chỉ",
-    "Type": "Loại cửa hàng",
-    "Contact": "Người đại diện",
-    "Phone Number": "Số điện thoại",
-    "Code": "Mã cửa hàng",
-    "Fax": "Số fax",
-    "Province": "Tỉnh/Thành phố",
-    "District": "Quận/Huyện",
-    "Ward": "Phường/Xã",
-    "Street": "Địa chỉ cụ thế",
-    "ContactName": "Họ tên đại diện",
-    "Contact Phone Number": "Số điện thoại đại diện",
-    "Contact Email": "Email đại diện",
-    "Note": "Ghi chú"
   },
   "supplier": {
     "Code": "Mã NCC",
