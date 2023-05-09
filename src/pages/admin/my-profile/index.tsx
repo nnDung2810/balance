@@ -6,18 +6,24 @@ import { Tabs } from 'antd';
 import { Form } from '@core/form';
 import { Spin } from '@core/spin';
 import { Button } from '@core/button';
-import { GlobalFacade } from '@store';
+import { GlobalFacade, User } from '@store';
 import { routerLinks } from '@utils';
 import { UserSolid } from '@svgs';
 
 const Page = () => {
   const { t } = useTranslation();
-  const { user, isLoading, putProfile, setPassword, profile } = GlobalFacade();
+  const { user, status,isLoading, putProfile, setPassword, profile } = GlobalFacade();
   const navigate = useNavigate();
+  const globalFacade = GlobalFacade();
 
   useEffect(() => {
     profile();
   }, []);
+
+  const handleSubmit = (values: User) => {
+    globalFacade.putProfile(values),
+    navigate(routerLinks('MyProfile'));
+  };
 
   return (
     <Fragment>
@@ -90,7 +96,7 @@ const Page = () => {
 
         <div className='col-span-2 bg-white p-5 border rounded-xl mr-4 fill-black'>
           <Spin spinning={isLoading}>
-              <Tabs defaultActiveKey="1" size="large">
+              <Tabs defaultActiveKey="1" size="large" className='font-bold text-gray-500 hover:text-gray-500'>
                 <Tabs.TabPane tab={t('routes.admin.Layout.My Profile')} key="1">
                   <Form
                     columns={[
@@ -129,7 +135,7 @@ const Page = () => {
                       },
                     ]}
                     disableSubmit={isLoading}
-                    handSubmit={putProfile}
+                    handSubmit={handleSubmit}
                     extendButton={(form) => (
                       <Button
                         text={t('components.button.Cancel')}
