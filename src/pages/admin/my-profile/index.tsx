@@ -162,7 +162,7 @@ const Page = () => {
                         formItem: {
                           col: 12,
                           type: 'password',
-                          rules: [{ type: 'custom' }, { type: 'min', value: 6 }],
+                          rules: [{ type: 'required' }, { type: 'custom' }, { type: 'min', value: 6 }],
                           placeholder: t('columns.auth.placeholder.newPassword').toString(),
                         },
                       },
