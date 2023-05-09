@@ -134,7 +134,7 @@ const Layout = ({ children }: PropsWithChildren) => {
                       <div className='flex items-center'>
                         <Key className='w-5 h-5 pr-2 text-black' />
                       </div>
-                      <div onClick={() => navigate(routerLinks('ResetPassword'), { replace: true })}>
+                      <div onClick={() => navigate(routerLinks('MyProfile'), { replace: true })}>
                         {t('routes.admin.Layout.Change Password')}
                       </div>
                     </div>
@@ -153,10 +153,6 @@ const Layout = ({ children }: PropsWithChildren) => {
             placement="bottomRight"
           >
             <section className="flex items-center" id={'dropdown-profile'}>
-              {/* <div className="text-right leading-none mr-3 hidden sm:block">
-                <div className="font-bold text-black text-lg leading-snug mb-0.5">{user?.name}</div>
-                <div className="text-gray-500">{user?.email}</div>
-              </div> */}
               <Avatar src="/assets/images/avatar.jpeg" size={10} />
             </section>
           </Dropdown>
@@ -266,7 +262,6 @@ const Layout = ({ children }: PropsWithChildren) => {
         })}
       >
         <div className={'h-[calc(100vh-9rem)]'}>
-          {/* <h1 className={'text-xl font-bold block sm:hidden pb-5'}>{t('pages.' + title)}</h1> */}
           <h1 className={'text-2xl text-teal-900 font-bold block pb-5'}>{t('titles.' + title)}</h1>
           {children}
         </div>

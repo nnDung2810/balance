@@ -6,7 +6,9 @@ const Util = (name: string, type?: string) => {
     ForgetPassword: '/auth/forgot-password',
     VerifyForotPassword: '/auth/verify-forgot-password',
     SetPassword: '/auth/set-password',
-    MyProfile: '/my-profile',
+    MyProfile: '/profile',
+    'profile/tab1': '/profile/tab1',
+    'profile/tab2': '/profile/tab2',
     Dashboard: '/dashboard',
 
     Supplier: '/supplier',
