@@ -1,6 +1,6 @@
 
 import { Fragment } from 'react';
-import imgDash from '../../../assets/images/dashboardimg.png';
+import imgDash from '../../assets/images/dashboardimg.png';
 import { t } from 'i18next';
 
 const Page = () => {

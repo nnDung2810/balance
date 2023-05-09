@@ -1,6 +1,6 @@
 import { DataTableModel, FormModel } from '@models';
-import { DistrictFacade } from '@store/address/district';
-import { WardFacade } from '@store/address/ward';
+import { DistrictFacade } from 'src/store/address/district';
+import { WardFacade } from 'src/store/address/ward';
 
 export const ColumnTableSupplier = ({ t, navigate, dataTableRef }: any) => {
   const col: DataTableModel[] = [

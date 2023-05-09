@@ -65,34 +65,34 @@
     },
     "button": {
       "New": "New",
-      "Save and Add new": "Save and Add new",
-      "Back": "Back"
+      "Role": "Role",
+      "Cancel": "Cancel"
     }
   },
   "titles": {
     "Login": "Login",
     "Dashboard": "Dashboard",
     "User": "User",
-    "User/List": "List",
-    "User/Add": "Add",
+    "User/List": "List User",
+    "User/Add": "Add new User",
+    "User/Edit": "Edit User",
     "MyProfile": "My Profile",
     "Setting": "Setting",
-    "Code": "Code",
-    "Data": "Data",
-    "Page": "Page"
+    "Code": "Mã",
+    "Data": "Dữ liệu",
+    "Page": "Trang",
+    "Supplier": "Supplier",
+    "Supplier/Add": "Add new Supplier",
+    "Supplier/Edit": "Thông tin nhà cung cấp",
+    "Store": "Store",
+    "Store/Add": "Add new Store"
   },
   "pages": {
     "User/List": "List User",
     "User/Add": "Add new User",
     "User/Edit": "Edit User",
-    "MyProfile": "My Profile",
-    "Login": "Login",
-    "Dashboard": "Dashboard",
-    "User": "User",
-    "Setting": "Setting",
-    "Code": "Code",
-    "Data": "Data",
-    "Page": "Page"
+    "store-managerment/create":"Thêm cửa hàng",
+    "MyProfile": "My Profile"
   },
   "columns": {
     "auth": {
@@ -105,7 +105,8 @@
         "New password": "New password",
         "Enter new password": "Enter new password",
         "Confirm Password": "Confirm Password",
-        "Send": "Send"
+        "Password": "Password",
+        "newPassword": "New Password"
       },
       "register": {
         "firstName": "First Name",
@@ -115,11 +116,16 @@
       "reset-password": {
         "Recovery Email": "Recovery Email",
         "Enter Recovery Email": "Enter Recovery Email"
+      },
+      "placeholder": {
+        "Confirm Password": "Confirm Password",
+        "Password": "Enter Password",
+        "newPassword": "Enter New Password"
       }
     }
   },
   "layout": {
-    "footer": "Ari Technology Company Ltd. ©{{year}}"
+    "footer": "Copyright ©2023 ARI Technology Co ., JSC. All rights reserved."
   },
   "routes": {
     "auth": {
@@ -133,14 +139,16 @@
         "New password": "New password",
         "Enter new password": "Enter new password",
         "Account": "Don't have an account?",
-        "Welcome": "Welcome to Web Member Ari"
+        "Welcome": "Welcome to BALANCE!"
       },
       "reset-password": {
         "Recovery Email": "Recovery Email",
         "Enter Recovery Email": "Enter Recovery Email",
         "title": "Reset Password",
         "Submit": "Submit",
-        "Back To Login": "Submit"
+        "Back To Login": "Submit",
+        "subTitle": "Vui lòng nhập e-mail của bạn. Mã xác minh OTP sẽ được gửi cho bạn",
+        "OTP":"Lấy Mã OTP"
       }
     },
     "admin": {
@@ -158,29 +166,28 @@
         "Add": "Add new",
         "Edit": "Edit",
         "Delete": "Delete",
+        "Change Password": "Change Password",
         "My Profile": "My Profile",
         "No Data": "No Data",
-        "Pagination": "Show {{from}} - {{to}} /Total {{total}} categories",
-        "User": "Show {{from}} - {{to}} /Total {{total}} user",
+        "Pagination": "Show {{from}} - {{to}} / Total {{total}} Categories",
+        "User": "Show {{from}} - {{to}} / Total {{total}} User",
         "Day": "day"
       }
     }
   },
   "user": {
-    "Role": "Role",
-    "Position": "Position",
-    "Team": "Team",
-    "Start Date": "Start Date",
-    "Remaining Leave Day": "Remaining Leave Day",
-    "Date of birth": "Date of birth",
-    "Name": "Name",
-    "Is System Admin": "Is System Admin",
-    "Permissions": "Permissions",
-    "Description": "Description",
-    "Upload avatar": "Upload avatar",
-    "Fullname": "Full Name",
+    "UserId": "User Id",
+    "Fullname": "Fullname",
     "Phone Number": "Phone Number",
-    "Action": "Action"
+    "Role": "Role",
+    "Note": "Note",
+    "RoleUser": {
+      "ADMIN": "ADMIN",
+      "OWNER_SUPPLIER": "SUPPLIER",
+      "OWNER_STORE": "STORE",
+      "STORE": "Store representative",
+      "SUPPLIER": "Supplier representative"
+    }
   },
   "Code": {
     "Type": "Type",

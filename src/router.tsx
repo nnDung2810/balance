@@ -104,7 +104,7 @@ const Page = ({
 
   useEffect(() => {
     document.title = t('pages.' + title || '');
-    // globalFacade.set({ title, formatDate: globalFacade.formatDate });
+    globalFacade.set({ title });
   }, [title]);
   return <Comp />;
 };
