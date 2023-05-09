@@ -32,7 +32,6 @@ const Page = () => {
                   name: 'profileImage',
                   formItem: {
                     type: 'upload',
-                    mode: 'multiple',
                     onlyImage: true,
                   },
                 },
@@ -89,7 +88,7 @@ const Page = () => {
         <div className='col-span-2 bg-white p-5 border rounded-xl mr-4 fill-black'>
           <Spin spinning={isLoading}>
               <Tabs defaultActiveKey="1" size="large">
-                <TabPane tab="Thông tin cá nhân" key="1">
+                <TabPane tab={t('user.My Profile')} key="1">
                   <Form
                     columns={[
                       {
@@ -141,7 +140,7 @@ const Page = () => {
                   />
                 </TabPane>
 
-                <TabPane tab="Đổi mật khẩu" key="2">
+                <TabPane tab={t('user.Change Password')} key="2">
                   <Form
                     columns={[
                       {
@@ -192,7 +191,7 @@ const Page = () => {
                     disableSubmit={isLoading}
                     extendButton={(form) => (
                       <Button
-                        text={t('Huỷ Thao Tác')}
+                        text={t('user.Cancel')}
                         className={'md:min-w-[8rem] justify-center out-line'}
                         onClick={() => {
                           navigate(routerLinks('User/List'))

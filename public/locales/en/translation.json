@@ -176,7 +176,18 @@
     "Upload avatar": "Upload avatar",
     "Fullname": "Full Name",
     "Phone Number": "Phone Number",
-    "Action": "Action"
+    "Action": "Action",
+    "Note": "Note",
+    "Email": "Email",
+    "PhoneNumber":"Phone Number",
+    "ProfileImage":"ProfileImage",
+    "PasswordComfirm":"PasswordComfirm",
+    "New password": "New password",
+    "Password": "Password",
+    "Cancel":"Cancel",
+    "Change Password":"Change Password",
+    "My Profile": "My Profile"
+
   },
   "Code": {
     "Type": "Type",
