@@ -2,7 +2,7 @@ import React from 'react';
 
 import { keyRole } from '@utils';
 import './index.less';
-import { Chart, Cog, Store, User } from '@svgs';
+import { Cart, Chart, Cog, Store, User } from '@svgs';
 
 const Layout = () => [
   {
@@ -22,6 +22,10 @@ const Layout = () => [
         permission: keyRole.P_DATA_LISTED,
       },
     ],
+  },
+  {
+    icon: <Cart className="icon-menu" />,
+    name: 'Store',
   },
   {
     icon: <Store className="icon-menu" />,
