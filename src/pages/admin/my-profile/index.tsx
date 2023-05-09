@@ -32,7 +32,6 @@ const Page = () => {
                   name: 'profileImage',
                   formItem: {
                     type: 'upload',
-                    //mode: 'multiple',
                     onlyImage: true,
                   },
                 },

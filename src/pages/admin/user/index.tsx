@@ -100,6 +100,7 @@ const Page = () => {
             icon={<Plus className="icon-cud !h-5 !w-5" />}
             text={t('titles.User/Button')}
             onClick={() => navigate(routerLinks('User/Add'))}
+            className='!rounded-2xl'
           />
         </div>
       }

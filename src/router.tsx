@@ -11,10 +11,10 @@ const pages = [
     layout: React.lazy(() => import('@layouts/auth')),
     isPublic: true,
     child: [
-      // {
-      //   path: '/',
-      //   component: routerLinks('Dashboard'),
-      // },
+      {
+        path: '/',
+        component: routerLinks('Dashboard'),
+      },
       {
         path: routerLinks('Login'),
         component: React.lazy(() => import('@pages/auth/login')),
@@ -105,8 +105,8 @@ const Layout = ({ layout: Layout, isPublic = false }: {
   isPublic: boolean;
 }) => {
   const { user } = GlobalFacade();
- // if (isPublic === true || !!user?.email || !!JSON.parse(localStorage.getItem(keyUser) || '{}')?.email)
- if (isPublic || !!user?.email || !!JSON.parse(localStorage.getItem(keyUser) || '{}')?.email)
+  // if (isPublic === true || !!user?.email || !!JSON.parse(localStorage.getItem(keyUser) || '{}')?.email)
+  if (isPublic || !!user?.email || !!JSON.parse(localStorage.getItem(keyUser) || '{}')?.email)
     return (
       <Layout>
         <Outlet />
