@@ -12,14 +12,28 @@ const pages = [
     isPublic: true,
     child: [
       {
+        path: '/',
+        component: routerLinks('Dashboard'),
+      },
+      {
         path: routerLinks('Login'),
         component: React.lazy(() => import('@pages/login')),
         title: 'Login',
       },
       {
-        path: routerLinks('ResetPassword'),
-        component: React.lazy(() => import('@pages/reset-password')),
-        title: 'Reset Password',
+        path: routerLinks('ForgetPassword'),
+        component: React.lazy(() => import('@pages/forget-password')),
+        title: 'Quên Mật Khẩu',
+      },
+      {
+        path: routerLinks('VerifyForotPassword'),
+        component: React.lazy(() => import('@pages/forget-password/otp')),
+        title: 'Quên Mật Khẩu',
+      },
+      {
+        path: routerLinks('SetPassword'),
+        component: React.lazy(() => import('@pages/forget-password/otp/set-password')),
+        title: 'Đặt Lại Mật Khẩu',
       },
     ],
   },
@@ -42,16 +56,6 @@ const pages = [
         title: 'Dashboard',
       },
       {
-        path: routerLinks('Code'),
-        component: React.lazy(() => import('@pages/code')),
-        title: 'Code',
-      },
-      {
-        path: routerLinks('Data'),
-        component: React.lazy(() => import('@pages/data')),
-        title: 'Data',
-      },
-      {
         path: routerLinks('User/List'),
         component: React.lazy(() => import('@pages/user')),
         title: 'User/List',
@@ -65,6 +69,21 @@ const pages = [
         path: routerLinks('User') + '/:id',
         component: React.lazy(() => import('@pages/user/add')),
         title: 'User/Edit',
+      },
+      {
+        path: routerLinks('Store'),
+        component: React.lazy(() => import('@pages/store')),
+        title: 'Store',
+      },
+      {
+        path: routerLinks('store-managerment/create'),
+        component: React.lazy(() => import('@pages/store/add')),
+        title: 'store-managerment/create',
+      },
+      {
+        path: routerLinks('store-managerment/edit') + '/:id',
+        component: React.lazy(() => import('@pages/store/edit')),
+        title: 'store-managerment/edit',
       },
     ], // 💬 generate link to here
   },
@@ -99,7 +118,7 @@ const Page = ({
 
   useEffect(() => {
     document.title = t('pages.' + title || '');
-    globalFacade.set({ title, formatDate: globalFacade.formatDate });
+    globalFacade.set({ title });
   }, [title]);
   return <Comp />;
 };

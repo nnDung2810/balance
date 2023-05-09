@@ -24,5 +24,5 @@ export { ReactComponent as Times} from './times.svg'
 export { ReactComponent as Trash } from './trash.svg'
 export { ReactComponent as Twitter } from './twitter.svg'
 export { ReactComponent as UserSolid} from './users.svg'
-
+export { ReactComponent as Store} from './store-alt-solid.svg'
 

@@ -19,8 +19,8 @@ const action = {
     // }
     return true;
   }),
-  profile: createAsyncThunk(name + '/get-my-info', async () => {
-    const { data } = await API.get<User>(`${routerLinks(name, 'api')}/get-my-info`);
+  profile: createAsyncThunk(name + '/profile', async () => {
+    const { data } = await API.get<User>(`${routerLinks(name, 'api')}/profile`);
     return data || {};
   }),
   putProfile: createAsyncThunk(name + '/putProfile', async (values: User) => {
@@ -163,6 +163,10 @@ export const globalSlice = createSlice({
         } else state.status = 'idle';
         state.isLoading = false;
       })
+      .addCase(action.profile.rejected, (state: State) => {
+        state.status = 'profile.rejected';
+        state.isLoading = false;
+      })
 
       .addCase(action.putProfile.pending, (state: State, action) => {
         state.data = action.meta.arg;
@@ -174,6 +178,10 @@ export const globalSlice = createSlice({
           state.user = action.payload;
           state.status = 'putProfile.fulfilled';
         } else state.status = 'idle';
+        state.isLoading = false;
+      })
+      .addCase(action.putProfile.rejected, (state: State) => {
+        state.status = 'putProfile.rejected';
         state.isLoading = false;
       })
 
@@ -200,6 +208,10 @@ export const globalSlice = createSlice({
           state.data = {};
           state.status = 'login.fulfilled';
         } else state.status = 'idle';
+        state.isLoading = false;
+      })
+      .addCase(action.login.rejected, (state: State) => {
+        state.status = 'login.rejected';
         state.isLoading = false;
       })
 
@@ -265,7 +277,7 @@ export const globalSlice = createSlice({
           state.status = 'setPassword.fulfilled';
         } else state.status = 'idle';
         state.isLoading = false;
-      });
+      })
   },
 });
 interface State {

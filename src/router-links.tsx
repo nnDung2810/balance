@@ -2,28 +2,34 @@ const Util = (name: string, type?: string) => {
   const array: {
     [selector: string]: string;
   } = {
-    Login: '/auth/login',
-    ResetPassword: '/auth/reset-password',
+    Login: '/login',
+    ForgetPassword: '/forgot-password',
+    VerifyForotPassword: '/verify-forgot-password',
+    SetPassword: '/set-password',
+    ResetPassword: '/reset-password',
     MyProfile: '/my-profile',
     Dashboard: '/dashboard',
     User: '/user',
     'User/List': '/user/list',
     'User/Add': '/user/add',
     Setting: '/setting',
-    Data: '/setting/data',
-    Code: '/setting/code',
+    Store: '/store-managerment',
+    'store-managerment/create': '/store-managerment/create',
+    'store-managerment/edit': '/store-managerment/detail'
   }; // 💬 generate link to here
 
   const apis: {
     [selector: string]: string;
   } = {
+    'User-admin': '/user-admin',
     Auth: '/auth',
-    CodeType: '/code-type',
-    Code: '/code',
     UserRole: '/user-role',
     User: '/user',
-    DataType: '/data-type',
-    Data: '/data',
+    'sub-organization': '/sub-organization',
+    Supplier: '/sub-organization',
+    Province: '/province',
+    District: '/district',
+    Ward: '/ward',
   }; // 💬 generate api to here
 
   switch (type) {

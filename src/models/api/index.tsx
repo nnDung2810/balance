@@ -20,5 +20,6 @@ export class PaginationQuery<T = object> {
     public extend?: string | T,
     public skip?: string | T,
     public fullTextSearch?: string,
+    public type?: string
   ) {}
 }

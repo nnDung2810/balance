@@ -73,26 +73,23 @@
     "Login": "Login",
     "Dashboard": "Dashboard",
     "User": "User",
-    "User/List": "List",
-    "User/Add": "Add",
+    "User/List": "List User",
+    "User/Add": "Add new User",
     "MyProfile": "My Profile",
     "Setting": "Setting",
-    "Code": "Code",
-    "Data": "Data",
-    "Page": "Page"
+    "Code": "Mã",
+    "Data": "Dữ liệu",
+    "Page": "Trang",
+    "Supplier": "Supplier",
+    "Supplier/Add": "Add new Supplier",
+    "Store": "Store",
+    "Store/Add": "Add new Store"
   },
   "pages": {
     "User/List": "List User",
     "User/Add": "Add new User",
     "User/Edit": "Edit User",
-    "MyProfile": "My Profile",
-    "Login": "Login",
-    "Dashboard": "Dashboard",
-    "User": "User",
-    "Setting": "Setting",
-    "Code": "Code",
-    "Data": "Data",
-    "Page": "Page"
+    "store-managerment/create": "Thêm cửa hàng"
   },
   "columns": {
     "auth": {
@@ -104,8 +101,7 @@
         "remember": "Remember Me",
         "New password": "New password",
         "Enter new password": "Enter new password",
-        "Confirm Password": "Confirm Password",
-        "Send": "Send"
+        "Confirm Password": "Confirm Password"
       },
       "register": {
         "firstName": "First Name",
@@ -119,7 +115,7 @@
     }
   },
   "layout": {
-    "footer": "Ari Technology Company Ltd. ©{{year}}"
+    "footer": "Copyright ©2023 ARI Technology Co ., JSC. All rights reserved."
   },
   "routes": {
     "auth": {
@@ -140,7 +136,9 @@
         "Enter Recovery Email": "Enter Recovery Email",
         "title": "Reset Password",
         "Submit": "Submit",
-        "Back To Login": "Submit"
+        "Back To Login": "Submit",
+        "subTitle": "Vui lòng nhập e-mail của bạn. Mã xác minh OTP sẽ được gửi cho bạn",
+        "OTP": "Lấy Mã OTP"
       }
     },
     "admin": {
@@ -158,6 +156,7 @@
         "Add": "Add new",
         "Edit": "Edit",
         "Delete": "Delete",
+        "Change Password": "Change Password",
         "My Profile": "My Profile",
         "No Data": "No Data",
         "Pagination": "Show {{from}} - {{to}} /Total {{total}} categories",
@@ -197,48 +196,48 @@
     "Image": "Image",
     "Create At": "Create At"
   },
-  "dashboard":{
-    "Active Profile Report":"Active Profile Report",
+  "dashboard": {
+    "Active Profile Report": "Active Profile Report",
     "Total Profile": "Total Profile",
-    "Activated Profile":"Activated Profile",
-    "New Custommers":"New Custommers",
-    "User Purchasing Report":"User Purchasing Report",
-    "Free":"Free",
-    "Silver":"Silver",
-    "Gold":"Gold",
-    "Platinum":"Platinum",
-    "Seller Profiles":"Seller Profiles",
-    "Buyer Profiles":"Buyer Profiles",
-    "Introductions":"Introductions",
-    "Success Deal":"GSuccess Deal",
-    "Total Payment":"Total Payment",
-    "Partner Refund":"Partner Refund",
-    "Reference User":"Reference User",
-    "Sales Stats":"Sales Stats",
-    "Sales":"Sales",
-    "Share of total":"Share of total",
-    "active profiles":"active profiles",
-    "Total":"Total",
-    "active profile in":"active profile in",
-    "Business Profiles Activity":"Business Profiles Activity",
-    "Franchise Profiles Activity":"Franchise Profiles Activity",
-    "Investor Profiles Activity":"nvestor Profiles Activityư",
-    "Monthly Profiles Activity":"Monthly Profiles Activity",
-    "Profile":"Profile",
-    "Package":"Package",
-    "Start Date":"Start Date",
-    "Status":"Status",
-    "Jan":"Jan",
-    "Feb":"Feb",
-    "Mar":"Mar",
-    "Apr":"Apr",
-    "May":"May",
-    "Jun":"Jun",
-    "Jul":"Jul",
-    "Aug":"Aug",
-    "Sep":"Sep",
-    "Oct":"Oct",
-    "Nov":"Nov",
-    "Dev":"Dev"
+    "Activated Profile": "Activated Profile",
+    "New Custommers": "New Custommers",
+    "User Purchasing Report": "User Purchasing Report",
+    "Free": "Free",
+    "Silver": "Silver",
+    "Gold": "Gold",
+    "Platinum": "Platinum",
+    "Seller Profiles": "Seller Profiles",
+    "Buyer Profiles": "Buyer Profiles",
+    "Introductions": "Introductions",
+    "Success Deal": "GSuccess Deal",
+    "Total Payment": "Total Payment",
+    "Partner Refund": "Partner Refund",
+    "Reference User": "Reference User",
+    "Sales Stats": "Sales Stats",
+    "Sales": "Sales",
+    "Share of total": "Share of total",
+    "active profiles": "active profiles",
+    "Total": "Total",
+    "active profile in": "active profile in",
+    "Business Profiles Activity": "Business Profiles Activity",
+    "Franchise Profiles Activity": "Franchise Profiles Activity",
+    "Investor Profiles Activity": "nvestor Profiles Activityư",
+    "Monthly Profiles Activity": "Monthly Profiles Activity",
+    "Profile": "Profile",
+    "Package": "Package",
+    "Start Date": "Start Date",
+    "Status": "Status",
+    "Jan": "Jan",
+    "Feb": "Feb",
+    "Mar": "Mar",
+    "Apr": "Apr",
+    "May": "May",
+    "Jun": "Jun",
+    "Jul": "Jul",
+    "Aug": "Aug",
+    "Sep": "Sep",
+    "Oct": "Oct",
+    "Nov": "Nov",
+    "Dev": "Dev"
   }
 }
