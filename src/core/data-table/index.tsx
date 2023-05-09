@@ -266,9 +266,9 @@ export const DataTable = forwardRef(
           {groupButton(confirm, clearFilters, key, selectedKeys)}
         </div>
       ),
-      filterIcon: (filtered: boolean) => (
-        <Search className={classNames('h-4 w-4', { 'fill-[#3699FF]': filtered, 'fill-gray-600': !filtered })} />
-      ),
+      // filterIcon: (filtered: boolean) => (
+      //   <Search className={classNames('h-4 w-4', { 'fill-[#3699FF]': filtered, 'fill-gray-600': !filtered })} />
+      // ),
       onFilterDropdownOpenChange: (visible: boolean) => {
         if (visible) {
           setTimeout(
@@ -476,7 +476,7 @@ export const DataTable = forwardRef(
             />
             {showPagination && (
               <Pagination
-                total={result?.count}
+                total={result?.pagination?.total}
                 page={+params!.page!}
                 perPage={+params!.perPage!}
                 pageSizeOptions={pageSizeOptions}

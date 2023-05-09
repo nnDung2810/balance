@@ -26,8 +26,8 @@ const Util = (name: string, type?: string) => {
   } = {
     'User-admin': '/user-admin',
     Auth: '/auth',
-    UserRole: '/user-role',
-    User: '/user',
+    UserRole: '/mt-role',
+    User: '/user-admin',
     'sub-organization': '/sub-organization',
     Supplier: '/sub-organization',
     Province: '/province',

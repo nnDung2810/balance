@@ -30,14 +30,14 @@ const Page = () => {
       title: 'user.UserId',
       name: 'code',
       tableItem: {
-        width: 140,
+        width: 100,
       },
     },
     {
       title: 'user.Fullname',
       name: 'name',
       tableItem: {
-        width: 400,
+        width: 150,
         filter: { type: 'search' },
         onCell: () => ({
           style: { paddingTop: '0.25rem', paddingBottom: 0 },
@@ -50,7 +50,7 @@ const Page = () => {
       title: 'Email',
       name: 'email',
       tableItem: {
-        width: 130,
+        width: 300,
         filter: { type: 'search' },
       },
     },
@@ -98,6 +98,7 @@ const Page = () => {
             icon={<Plus className="icon-cud !h-5 !w-5" />}
             text={t('titles.User/Add')}
             onClick={() => navigate(routerLinks('User/Add'))}
+            className='!rounded-xl'
           />
         </div>
       }

@@ -19,15 +19,15 @@ const action = {
     // }
     return true;
   }),
-  profile: createAsyncThunk(name + '/profile', async () => {
-    const { data } = await API.get<User>(`${routerLinks(name, 'api')}/profile`);
+  profile: createAsyncThunk(name + '/get-my-info', async () => {
+    const { data } = await API.get<User>(`${routerLinks(name, 'api')}/get-my-info`);
     return data || {};
   }),
   putProfile: createAsyncThunk(name + '/putProfile', async (values: User) => {
     // if (values.avatar && typeof values.avatar === 'object') {
     //   values.avatar = values.avatar[0].url;
     // }
-    const { data } = await API.put<User>(`${routerLinks(name, 'api')}/profile`, values);
+    const { data } = await API.put<User>(`${routerLinks(name, 'api')}`, values);
     return data || {};
   }),
   login: createAsyncThunk(name + '/sign-in', async (values: { password: string; username: string }) => {
@@ -52,8 +52,8 @@ const action = {
     if (message) await Message.success({ text: message })
     return data;
   }),
-  setPassword: createAsyncThunk(name + '/reset-password', async (values : setPassword) => {
-    const { data, message } = await API.put(`${routerLinks(name, 'api')}/set-password`, values,);
+  setPassword: createAsyncThunk(name + '/update-password-my-acc', async (values : setPassword) => {
+    const { data, message } = await API.put(`${routerLinks(name, 'api')}/update-password-my-acc`, values,);
     if (message) await Message.success({ text: message });
     return data;
   }),
