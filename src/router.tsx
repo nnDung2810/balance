@@ -83,7 +83,22 @@ const pages = [
       {
         path: routerLinks('store-managerment/edit') + '/:id',
         component: React.lazy(() => import('@pages/store/edit')),
-        title: 'store-managerment/edit',
+        title: 'store-managerment/edit'
+      },
+      {
+        path: routerLinks('Supplier'),
+        component: React.lazy(() => import('@pages/supplier')),
+        title: 'Supplier',
+      },
+      {
+        path: routerLinks('Supplier/Add'),
+        component: React.lazy(() => import('@pages/supplier/add')),
+        title: 'Supplier/Add',
+      },
+      {
+        path: routerLinks('Supplier/Edit') + '/:id',
+        component: React.lazy(() => import('@pages/supplier/edit')),
+        title: 'Supplier/Edit',
       },
     ], // 💬 generate link to here
   },
