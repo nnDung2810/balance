@@ -25,7 +25,7 @@ const Layout = () => [
   },
   {
     icon: <Cart className="icon-menu" />,
-    name: 'Store',
+    name: 'Supplier',
   },
   {
     icon: <Store className="icon-menu" />,
