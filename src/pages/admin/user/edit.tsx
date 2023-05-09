@@ -61,7 +61,6 @@ const Page = () => {
               name: 'code',
               formItem: {
                 disabled: () => true,
-                rules: [{ type: 'required' }],
                 tabIndex: 1,
                 col: 6,
               },
@@ -82,7 +81,6 @@ const Page = () => {
                 disabled: () => true,
                 tabIndex: 1,
                 col: 6,
-                rules: [{ type: 'required' }],
               },
             },
             {
