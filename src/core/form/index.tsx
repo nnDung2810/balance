@@ -24,6 +24,7 @@ export const Form = ({
   checkHidden = false,
   extendForm,
   extendButton,
+  extendButtonChangePassword,
   idSubmit = 'idSubmit',
   disableSubmit = false,
   formAnt,
@@ -628,9 +629,11 @@ export const Form = ({
       </div>
 
       <div
-        className={classNames('gap-2 flex mt-5', {
+        className={classNames('gap-2 flex mt-5 absolute pb-14 pt-4', {
           'justify-center': !extendButton && !handCancel,
-          'md:inline-flex md:float-right': extendButton || handCancel,
+          'md:inline-flex w-full justify-between md:float-right': handCancel,
+          'md:inline-flex md:float-right right-0': handSubmit || extendButton,
+          'md:inline-flex md:float-right top-[300px] pt-6': extendButtonChangePassword,
         })}
       >
         {handCancel && (
@@ -648,6 +651,20 @@ export const Form = ({
             onClick={() => form && form.submit()}
             disabled={disableSubmit}
             className={'md:min-w-[12rem] w-full justify-center'}
+            type={'submit'}
+          />
+        )}
+        {extendButtonChangePassword && (
+          <Button
+            text={t('Đổi mật khẩu')}
+            id={idSubmit}
+            onClick={() => {
+              if (form) {
+                form.submit();
+              }
+            }}
+            disabled={disableSubmit}
+            className={'w-32 justify-center !bg-teal-800 hover:!bg-teal-700 !border !border-teal-900 max-sm:w-3/5'}
             type={'submit'}
           />
         )}
@@ -669,6 +686,7 @@ type Type = {
   checkHidden?: boolean;
   extendForm?: (values: any) => JSX.Element;
   extendButton?: (values: any) => JSX.Element;
+  extendButtonChangePassword?: (values: any) => void;
   idSubmit?: string;
   disableSubmit?: boolean;
 };
