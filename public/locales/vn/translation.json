@@ -134,7 +134,7 @@
     }
   },
   "layout": {
-    "footer": "Copyright ©{{year}} ARI Technology Co ., JSC. All rights reserved."
+    "footer": "Bản quyền ©{{year}} ARI Technology Co.,JSC. Đã đăng ký Bản quyền."
   },
   "routes": {
     "auth": {
@@ -179,6 +179,7 @@
         "My Profile": "Thông tin cá nhân",
         "No Data": "Trống",
         "Pagination": "Hiển thị {{from}} - {{to}} / Tổng số {{total}} danh mục",
+        "user": "Hiển thị {{from}} - {{to}} / Tổng số {{total}} người dùng",
         "Day": "Ngày phép"
       }
     }

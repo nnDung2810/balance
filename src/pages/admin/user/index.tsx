@@ -91,7 +91,7 @@ const Page = () => {
       pageSizeRender={(sizePage: number) => sizePage}
       pageSizeWidth={'50px'}
       paginationDescription={(from: number, to: number, total: number) =>
-        t('routes.admin.Layout.Pagination', { from, to, total })
+        t('routes.admin.Layout.user', { from, to, total })
       }
       columns={columns}
       rightHeader={

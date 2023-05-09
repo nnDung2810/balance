@@ -134,7 +134,7 @@ export const Pagination: any = ({
       <div
         className={classNames(className, 'flex flex-col md:flex-row md:items-center justify-between pt-4 pb-7 select-none ')}
       >
-        <div className={'left'}>
+        <div className={'left relative'}>
           <label htmlFor={idElement + '_page_size'}>
             {showSizeChanger && (
               <Select
@@ -144,16 +144,22 @@ export const Pagination: any = ({
                 onChange={(value) => onPageSizeChange(value)}
               >
                 {pageSizeOptions.map((item: any, index: number) => (
-                  <Select.Option key={index} value={item}>
+                  <Select.Option key={index} value={item} >
                     {pageSizeRender(item)}
+
                   </Select.Option>
-                ))}
+                )
+                )
+                }
+
               </Select>
+
             )}
+            <Arrow className={'w-4 h-4 absolute top-1/3 rotate-90 left-10'} />
           </label>
           {showTotal && <span className="ml-3 text-black">{paginationDescription(ranges[0], ranges[1], total)}</span>}
         </div>
-        <div className="mt-3 sm:mt-0 right flex justify-center border border-gray-100 p-1 rounded-xl bg-white">
+        <div className="mt-3 sm:mt-0 right flex justify-center p-1 rounded-xl bg-white">
           <div className="flex sm:flex-wrap justify-center duration-300 transition-all">
             {listOfPageItem.current.map((item: any, index: number) => (
               <button
@@ -164,10 +170,10 @@ export const Pagination: any = ({
                 className={classNames(
                   'text-center duration-300 transition-all p-1 text-sm font-medium leading-normal relative',
                   {
-                    'text-green-700 hover:text-green-700':
+                    'text-teal-700 hover:text-teal-700':
                       page !== item.index && !['next_5', 'prev_5'].includes(item.type),
-                    'bg-green-900 rounded-full text-white hover:bg-green-900 !px-2.5 mx-1': page === item.index,
-                    'text-green-500': item.disabled,
+                    'bg-teal-900 rounded-full text-white hover:bg-teal-900 !px-2.5 mx-1': page === item.index,
+                    'text-gray-500': item.disabled,
                     'text-gray-600 text-xs': ['next_5', 'prev_5'].includes(item.type),
                   },
                 )}

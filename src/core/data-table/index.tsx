@@ -3,14 +3,13 @@ import { v4 } from 'uuid';
 import { Checkbox, CheckboxOptionType, DatePicker, Popover, Radio, Table } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
-import dayjs from 'dayjs';
 import classNames from 'classnames';
 
 import { Button } from '../button';
 import { Pagination } from '../pagination';
 import { DataTableModel, PaginationQuery, TableGet, TableRefObject } from '@models';
 import { cleanObjectKeyNull } from '@utils';
-import { Calendar, CheckCircle, CheckSquare, Search, Times } from '@svgs';
+import { CheckCircle, Search, Times } from '@svgs';
 import { SorterResult } from 'antd/lib/table/interface';
 
 const RadioGroup = Radio.Group;
