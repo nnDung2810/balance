@@ -6,19 +6,19 @@ import { Slice, State } from './slice';
 import { globalSlice, GlobalFacade, User } from './global';
 import { userSlice, UserFacade } from './user';
 import { userRoleSlice, UserRoleFacade, UserRole } from './user/role';
-import { codeSlice, CodeFacade } from './code';
-import { codeTypeSlice, CodeTypeFacade } from './code/type';
-import { dataSlice, DataFacade } from './data';
-import { dataTypeSlice, DataTypeFacade } from './data/type';
+import { SupplierFacade, supplierSlice } from './supplier';
+import { ProvinceFacade, provinceSlice } from './address/province';
+import { DistrictFacade, districtSlice } from './address/district';
+import { WardFacade, wardSlice } from './address/ward';
 
 const rootReducer = combineReducers({
   [globalSlice.name]: globalSlice.reducer,
   [userSlice.name]: userSlice.reducer,
   [userRoleSlice.name]: userRoleSlice.reducer,
-  [codeSlice.name]: codeSlice.reducer,
-  [codeTypeSlice.name]: codeTypeSlice.reducer,
-  [dataSlice.name]: dataSlice.reducer,
-  [dataTypeSlice.name]: dataTypeSlice.reducer,
+  [supplierSlice.name]: supplierSlice.reducer,
+  [provinceSlice.name]: provinceSlice.reducer,
+  [districtSlice.name]: districtSlice.reducer,
+  [wardSlice.name]: wardSlice.reducer,
 });
 
 const setupStore = () => {
@@ -41,9 +41,9 @@ export {
   GlobalFacade,
   UserFacade,
   UserRoleFacade,
-  CodeFacade,
-  CodeTypeFacade,
-  DataFacade,
-  DataTypeFacade,
-};
+  ProvinceFacade,
+  DistrictFacade,
+  WardFacade,
+  SupplierFacade,
+}
 export type { State };

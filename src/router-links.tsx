@@ -9,6 +9,9 @@ const Util = (name: string, type?: string) => {
     User: '/user',
     'User/List': '/user/list',
     'User/Add': '/user/add',
+    Supplier: '/supplier',
+    'Supplier/Add': '/supplier/add',
+    'Supplier/Edit': '/supplier/edit',
     Setting: '/setting',
     Data: '/setting/data',
     Code: '/setting/code',
@@ -24,6 +27,10 @@ const Util = (name: string, type?: string) => {
     User: '/user',
     DataType: '/data-type',
     Data: '/data',
+    Supplier: '/sub-organization',
+    Province: '/province',
+    District: '/district',
+    Ward: '/ward',
   }; // 💬 generate api to here
 
   switch (type) {

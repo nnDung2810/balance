@@ -42,16 +42,6 @@ const pages = [
         title: 'Dashboard',
       },
       {
-        path: routerLinks('Code'),
-        component: React.lazy(() => import('@pages/code')),
-        title: 'Code',
-      },
-      {
-        path: routerLinks('Data'),
-        component: React.lazy(() => import('@pages/data')),
-        title: 'Data',
-      },
-      {
         path: routerLinks('User/List'),
         component: React.lazy(() => import('@pages/user')),
         title: 'User/List',
@@ -65,6 +55,21 @@ const pages = [
         path: routerLinks('User') + '/:id',
         component: React.lazy(() => import('@pages/user/add')),
         title: 'User/Edit',
+      },
+      {
+        path: routerLinks('Supplier'),
+        component: React.lazy(() => import('@pages/supplier')),
+        title: 'Supplier',
+      },
+      {
+        path: routerLinks('Supplier/Add'),
+        component: React.lazy(() => import('@pages/supplier/add')),
+        title: 'Supplier/Add',
+      },
+      {
+        path: routerLinks('Supplier/Edit') + '/:id',
+        component: React.lazy(() => import('@pages/supplier/edit')),
+        title: 'Supplier/Edit',
       },
     ], // 💬 generate link to here
   },
@@ -99,7 +104,7 @@ const Page = ({
 
   useEffect(() => {
     document.title = t('pages.' + title || '');
-    globalFacade.set({ title, formatDate: globalFacade.formatDate });
+    // globalFacade.set({ title, formatDate: globalFacade.formatDate });
   }, [title]);
   return <Comp />;
 };
