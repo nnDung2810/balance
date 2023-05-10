@@ -13,8 +13,8 @@ import { Plus } from '@svgs';
 
 const Page = () => {
   const { t } = useTranslation();
-  const provinceFacade = ProvinceFacade()
-  const { result } = provinceFacade
+  // const provinceFacade = ProvinceFacade()
+  // const { result } = provinceFacade
 
   // const wardFacade = WardFacade()
   // const districtFacade = DistrictFacade()
@@ -32,7 +32,7 @@ const Page = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    if (!result?.data) provinceFacade.get({})
+    // if (!result?.data) provinceFacade.get({})
 
     if (id) storeFacade.getById({ id });
 
@@ -90,7 +90,7 @@ const Page = () => {
             </div>
           </div>
           <div className='bg-white rounded-2xl rounded-t-none'>
-            {tab === 'tab1' && !!result?.data && (
+            {tab === 'tab1' && (
               <Form
                 values={{ ...data }}
                 className="intro-x p-6 pb-4 pt-3 rounded-lg w-full "
@@ -141,13 +141,15 @@ const Page = () => {
                       col: 3,
                       type: 'select',
                       rules: [{ type: 'required' }],
-                      list: result.data.map((item: any) => ({
-                        label: item?.name,
-                        value: item?.code,
-                      })),
+                      get: {
+                        facade: ProvinceFacade,
+                        format: (item: any) => ({
+                          label: item.name,
+                          value: item.id + '|' + item.code,
+                        })
+                      },
                       onChange(value, form) {
-                        form.resetFields(['district'])
-                        DistrictFacade().get(`${value}`)
+                        form.resetFields(['district', 'wardId'])
                       },
                     },
                   },
@@ -162,12 +164,15 @@ const Page = () => {
                         facade: DistrictFacade,
                         format: (item: any) => ({
                           label: item.name,
-                          value: item.code,
+                          value: item.id + '|' + item.code,
                         }),
+                        params: (fullTextSearch, value) => ({
+                          fullTextSearch,
+                          code: value().provinceId.slice(value().provinceId.indexOf('|') + 1),
+                        })
                       },
-                      onChange(value, form, reRender) {
+                      onChange(value, form) {
                         form.resetFields(['wardId'])
-                        WardFacade().get(`${value}`)
                       },
                     },
                   },
@@ -184,6 +189,10 @@ const Page = () => {
                           label: item.name,
                           value: item.code,
                         }),
+                        params: (fullTextSearch, value) => ({
+                          fullTextSearch,
+                          code: value().districtId.slice(value().districtId.indexOf('|') + 1),
+                        })
                       }
                     },
                   },

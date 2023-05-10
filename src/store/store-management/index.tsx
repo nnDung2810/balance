@@ -15,7 +15,15 @@ export const action = {
     return { data, keyState };
   }),
   post: createAsyncThunk(name + '/post', async (values: StoreManagement) => {
-    const { data, message } = await API.post<StoreManagement>(routerLinks(name, 'api'), values);
+    const provinceId = values.provinceId?.slice(0, values.provinceId.indexOf('|'))
+    const districtId = values.districtId?.slice(0, values.districtId.indexOf('|'))
+    const wardId = values.wardId
+    const street = values.street
+    const supplierType = 'BALANCE'
+    const type = 'STORE'
+    const connectKiot = {}
+    const address = { provinceId, districtId, wardId, street }
+    const { data, message } = await API.post<StoreManagement>(routerLinks(name, 'api'), { ...values, address, supplierType, type, connectKiot });
     if (message) await Message.success({ text: message });
     return data;
   }),
