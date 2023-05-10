@@ -255,7 +255,7 @@ export const Form = ({
             maxTagCount={formItem.maxTagCount || 'responsive'}
             onChange={(value: any) => formItem.onChange && formItem.onChange(value, form, reRender)}
             placeholder={
-              t(formItem.placeholder || '') || t('components.form.Enter') + ' ' + t(item.title)!.toLowerCase()
+              t(formItem.placeholder || '') || t('components.form.Choose') + ' ' + t(item.title)!.toLowerCase()
             }
             formItem={formItem}
             form={form}
@@ -599,7 +599,7 @@ export const Form = ({
         }
       }}
     >
-      <div className={'group-input'}>
+      <div className={'group-input px-5'}>
         <div className={'grid gap-x-5 grid-cols-12'}>
           {_columns.map(
             (column: any, index: number) =>
@@ -629,7 +629,7 @@ export const Form = ({
       </div>
 
       <div
-        className={classNames('gap-2 flex', {
+        className={classNames('w-full h-11 mt-10 flex justify-between', {
           'justify-center': !extendButton && !handCancel,
           'md:inline-flex md:float-right': extendButton || handCancel,
           'w-full flex max-sm:flex-col max-sm:items-center max-sm:mb-10 justify-between mt-8': handSubmit && handCancel,

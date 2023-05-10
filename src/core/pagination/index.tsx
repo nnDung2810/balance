@@ -165,9 +165,9 @@ export const Pagination: any = ({
                 className={classNames(
                   'text-center duration-300 transition-all p-1 text-sm font-medium leading-normal relative',
                   {
-                    'text-blue-400 hover:text-blue-600':
+                    'text-teal-900 ':
                       page !== item.index && !['next_5', 'prev_5'].includes(item.type),
-                    'bg-blue-600 rounded-full text-white hover:bg-blue-400 !px-2.5 mx-1': page === item.index,
+                    'bg-teal-800 rounded-full text-white  !px-2.5 mx-1': page === item.index,
                     'text-blue-300': item.disabled,
                     'text-gray-600 text-xs': ['next_5', 'prev_5'].includes(item.type),
                   },

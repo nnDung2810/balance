@@ -31,10 +31,11 @@
       "ruleConfirmPassword": "Hai mật khẩu bạn nhập không nhất quán!",
       "incorrectPathFormat": "Định dạng đường dẫn không đúng",
       "Enter": "Nhập",
+      "Choose": "Chọn",
       "Upload": "Tải lên",
       "modal": {
-        "save": "Lưu lại",
-        "cancel": "Huỷ bỏ"
+        "save": "Lưu",
+        "cancel": "Trở về"
       },
       "Select Date": "Chọn ngày"
     },
