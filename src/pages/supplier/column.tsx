@@ -201,9 +201,9 @@ export const ColumnFormSupplierDetail = ({ t, listRole, districtId, wardId }: an
       title: t('Mã nhà cung cấp'),
       name: 'code',
       formItem: {
+        disabled: () => true,
         tabIndex: 1,
         col: 4,
-        rules: [{ type: 'password' }],
       },
     },
     {
@@ -223,6 +223,18 @@ export const ColumnFormSupplierDetail = ({ t, listRole, districtId, wardId }: an
         col: 4,
         rules: [{ type: 'required' }],
       },
+    },
+    {
+      title: '',
+      name: 'address',
+      formItem: {
+        rules: [{ type: 'required' }],
+        render() {
+          return (
+            <h3 className='mb-2.5 text-base '>Địa chỉ nhà cung cấp </h3>
+          )
+        },
+      }
     },
     {
       title: t('Tỉnh/Thành phố'),
@@ -292,6 +304,17 @@ export const ColumnFormSupplierDetail = ({ t, listRole, districtId, wardId }: an
         col: 3,
         rules: [{ type: 'required' }],
       },
+    },
+    {
+      title: '',
+      name: '',
+      formItem: {
+        render() {
+          return (
+            <div className='text-xl text-teal-900 font-bold mb-2.5'>Thông tin người đại diện</div>
+          )
+        }
+      }
     },
     {
       title: t('Họ tên đại diện'),
@@ -403,29 +426,31 @@ export const ColumnTableSupplierProduct = ({ t, listRole }: any) => {
       name: 'code',
       tableItem: {
         width: 170,
+        render: (value: any,item: any) => item?.code,
       },
     },
     {
       title: t(`Tên sản phẩm`),
       name: 'name',
       tableItem: {
-        width: 255,
+        width: 300,
+        render: (value: any,item: any) => item?.name,
       },
     },
     {
       title: t(`Danh mục`),
       name: ('address'),
       tableItem: {
-        width: 145,
-        render: (value: any,item: any) => item?.address?.street + ', ' + item?.address?.ward?.name + ', ' + item?.address?.district?.name + ', ' + item?.address?.province?.name,
+        width: 205,
+        render: (value: any,item: any) => item?.category?.child?.child?.name,
       }
     },
     {
-      title: t(`Giá bán`),
+      title: t(`Giá bán lẻ (VND)`),
       name: 'contract',
       tableItem: {
-        width: 225  ,
-        render: (value: any,item: any) => item?.contract[0].name,
+        width: 280,
+        render: (value: any,item: any) => item?.productPrice[0]?.price,
       },
     },
     {
@@ -434,9 +459,8 @@ export const ColumnTableSupplierProduct = ({ t, listRole }: any) => {
       tableItem: {
         width: 160,  
         align: 'center',
-        render: (text: string) => text
-        ? (<div className='bg-green-100 text-center p-1 border border-green-500 text-green-600 rounded'>Đang bán</div>) 
-        : (<div className='bg-red-100 text-center p-1 border border-red-500 text-red-600 rounded'>Hết</div>),
+        render: (text: string) => (<div className='bg-green-100 text-center p-1 border border-green-500 text-green-600 rounded'>Đang bán</div>) 
+        
       },
     },
   ];

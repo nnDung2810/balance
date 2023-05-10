@@ -54,9 +54,9 @@ const Page = () => {
             Thông tin nhà cung cấp
           </p>
         </div>
-        <div className='bg-white rounded-2xl'>
+        <div className='bg-white px-5 rounded-2xl w-full'>
             {!!result?.data && (
-              <div>
+              <div className='w-full'>
                 <Form
                   values={{ ...data }}
                   className="rounded-lg w-full "
@@ -214,13 +214,19 @@ const Page = () => {
                     },
 
                   ]}
-                  handSubmit={handleSubmit}
+                  // handSubmit={handleSubmit}
                   disableSubmit={isLoading}
                   extendButton={() => (
-                    <button className='sm:w-28 h-11 rounded-xl bg-white hover:text-teal-600 text-teal-900 border-teal-900 hover:border-teal-600 border'
-                    onClick={handleBack}>
-                      {t('components.form.modal.cancel')}
-                    </button>
+                    <div className='w-full flex mt-8 justify-between'>
+                      <button className='sm:w-28 h-11 rounded-xl bg-white hover:text-teal-700 text-teal-900 border-teal-900 hover:border-teal-600 border'
+                      onClick={handleBack}>
+                        {t('components.form.modal.cancel')}
+                      </button>
+                      <button className='sm:w-44 h-11 rounded-xl text-white bg-teal-900 hover:bg-teal-600'
+                      onClick={handleSubmit}>
+                        {t('components.form.modal.save')}
+                      </button>
+                    </div>
                   )}
                 />
               </div>

@@ -262,7 +262,7 @@ const Layout = ({ children }: PropsWithChildren) => {
       )}
       <section
         id={'main'}
-        className={classNames('px-5 transition-all duration-300 ease-in-out z-10  relative', {
+        className={classNames('px-5 min-h-screen transition-all duration-300 ease-in-out z-10  relative', {
           'ml-64': !isCollapsed && isDesktop,
           'ml-16': isCollapsed && isDesktop,
         })}
@@ -274,12 +274,12 @@ const Layout = ({ children }: PropsWithChildren) => {
           {children}
         </div>
       </section>
-        <footer className={classNames("text-left pt-5 z-50  mt-10  bg-white p-4 !mr-0", {
-          'ml-64': !isCollapsed && isDesktop,
-          'ml-16': isCollapsed && isDesktop,
+      <footer className={classNames("text-left pt-5 z-50  mt-10  bg-white p-4 !mr-0", {
+        'ml-64': !isCollapsed && isDesktop,
+        'ml-16': isCollapsed && isDesktop,
         })}>
-          {t('layout.footer', { year: new Date().getFullYear() })}
-        </footer>
+        {t('layout.footer', { year: new Date().getFullYear() })}
+      </footer>
       <div className="hidden h-7 w-7 leading-7" />
     </main>
   );
