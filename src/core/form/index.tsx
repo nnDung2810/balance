@@ -662,13 +662,14 @@ export const Form = ({
           'justify-center': !extendButton && !handCancel,
           'md:inline-flex md:float-right': extendButton || handCancel,
           'w-full flex max-sm:flex-col max-sm:items-center max-sm:mb-10 justify-between mt-8': handSubmit && handCancel,
+          'md:inline-flex md:float-right sm:block sm:text-center items-center': extendButton || handSubmit,
           'md:inline-flex md:float-right top-[300px] pt-6': extendButtonChangePassword,
         })}
       >
         {handCancel && (
           <Button
             text={t(textCancel)}
-            className={'w-32 justify-center out-line !border-black max-sm:w-3/5'}
+            className={'md:w-32 justify-center out-line !border-black sm:w-80 w-60'}
             onClick={handCancel}
           />
         )}
@@ -679,7 +680,7 @@ export const Form = ({
             id={idSubmit}
             onClick={() => form && form.submit()}
             disabled={disableSubmit}
-            className={'w-32 justify-center max-sm:w-3/5'}
+            className={'md:w-32 justify-center sm:w-80 sm:mt-3 md:mt-0 w-60'}
             type={'submit'}
           />
         )}

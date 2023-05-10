@@ -225,9 +225,9 @@ export const Upload = ({
                 </div>
               ) : (
                 <div className='text-center justify-center'>
-                  <img alt={'Align'} className={'rounded-2xl w-full h-full flex object-cover'} src={listFiles[0][keyImage]} />
+                  <img alt={'Align'} className={'w-full h-full flex object-cover aspect-square rounded-[0.625rem] shadow-md bg-gray-100 cursor-pointer'} src={listFiles[0][keyImage]} />
                   <div
-                    className='w-full h-full flex-col absolute top-0 left-0 right-0 bottom-0 z-10 mx-0 flex justify-center items-center transition-all ease-in-out duration-300 invisible opacity-0'
+                    className='w-[55px] h-[45px] bg-teal-600 opacity-80 absolute right-0 bottom-0 rounded-tl-[0.625rem] rounded-br-[0.625rem] flex items-center justify-center'
                   >
                     {multiple &&
                       listFiles.map((file: any, index: number) => (
