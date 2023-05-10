@@ -200,7 +200,7 @@ const Layout = ({ children }: PropsWithChildren) => {
               <span className="line" />
               <span className="line" /> */}
             </div>
-          <a href="/" className="flex items-center">
+          <a href="/dashboard" className="flex items-center">
             {/* <Logo className={classNames('w-10 h-10 mr-3',
                 {
                   'opacity-100 text-lg': !isCollapsed && isDesktop || isCollapsed && !isDesktop,
