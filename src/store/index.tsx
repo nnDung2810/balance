@@ -10,7 +10,10 @@ import { StoreFacade, StoreManagement, storeSlice } from './store-management';
 import { Province, ProvinceFacade, provinceSlice } from './address/province';
 import { District, DistrictFacade, districtSlice } from './address/district';
 import { Ward, WardFacade, wardSlice } from './address/ward';
-import { SupplierFacade, supplierSlice } from './supplier';;
+import { SupplierFacade, supplierSlice } from './supplier';
+import { CategoryFacade, categorySlice } from './category';
+import { ProductFacade, productSlice } from './product';
+import { SubStoreFacade, subStoreSlice } from './store-management/sub-store';
 
 const rootReducer = combineReducers({
   [globalSlice.name]: globalSlice.reducer,
@@ -21,6 +24,9 @@ const rootReducer = combineReducers({
   [districtSlice.name]: districtSlice.reducer,
   [wardSlice.name]: wardSlice.reducer,
   [supplierSlice.name]: supplierSlice.reducer,
+  [categorySlice.name]: categorySlice.reducer,
+  [productSlice.name]: productSlice.reducer,
+  [subStoreSlice.name]: subStoreSlice.reducer,
 });
 
 const setupStore = () => {
@@ -52,6 +58,9 @@ export {
   DistrictFacade,
   WardFacade,
   SupplierFacade,
+  CategoryFacade,
+  ProductFacade,
+  SubStoreFacade
 };
 
 export type { State };

@@ -88,12 +88,12 @@ const Page = () => {
                     form.resetFields(['district'])
                   },
                   // get: {
-                  //   facade: DistrictFacade,
+                  //   facade: ProvinceFacade,
                   //   format: (item: any) => ({
                   //     label: item.name,
                   //     value: item.code,
                   //   }),
-                  //   params(fullTextSearch, value) {       
+                  //   params(fullTextSearch, value) {
                   //   },
                   // },
                 },
@@ -105,20 +105,19 @@ const Page = () => {
                   type: 'select',
                   rules: [{ type: 'required' }],
                   col: 3,
-                  get: {
-                    facade: DistrictFacade,
-                    format: (item: any) => ({
-                      label: item.name,
-                      value: item.code,
-                    }),
-                    params(fullTextSearch, value) {
-
-                    },
-
-                  },
+                  // get: {
+                  //   facade: DistrictFacade,
+                  //   format: (item: any) => ({
+                  //     label: item.name,
+                  //     value: item.code,
+                  //   }),
+                  //   params: (fullTextSearch, value) => ({
+                  //     fullTextSearch,
+                  //     filter: {}
+                  //   }),
+                  // },
                   onChange(value, form) {
                     form.resetFields(['wardId'])
-                    WardFacade().get(`${value}`)
                   },
                 },
               },

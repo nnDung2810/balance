@@ -21,7 +21,11 @@ const Util = (name: string, type?: string) => {
 
     Store: '/store-managerment',
     'store-managerment/create': '/store-managerment/create',
-    'store-managerment/edit': '/store-managerment/detail'
+    'store-managerment/edit': '/store-managerment/detail',
+
+    Category: '/category',
+
+    Product: '/product'
   }; // 💬 generate link to here
 
   const apis: {
@@ -31,11 +35,13 @@ const Util = (name: string, type?: string) => {
     Auth: '/auth',
     UserRole: '/mt-role',
     User: '/user-admin',
-    'sub-organization': '/sub-organization',
-    Supplier: '/sub-organization',
+    Organization: '/sub-organization',
     Province: '/province',
     District: '/district',
     Ward: '/ward',
+    Category: '/category',
+    Product: '/product',
+    SubStore: '/sub-organization/sub-org-in-store'
   }; // 💬 generate api to here
 
   switch (type) {
