@@ -52,7 +52,8 @@ export const DataTable = forwardRef(
         perPage: 10,
         type: '',
         storeId: '',
-        supplierType: 'BALANCE'
+        supplierType: 'BALANCE',
+        idSuppiler: ''
       },
       showPagination = true,
       leftHeader,

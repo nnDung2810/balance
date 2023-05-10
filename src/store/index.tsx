@@ -14,6 +14,7 @@ import { SupplierFacade, supplierSlice } from './supplier';
 import { CategoryFacade, categorySlice } from './category';
 import { ProductFacade, productSlice } from './product';
 import { SubStoreFacade, subStoreSlice } from './store-management/sub-store';
+import { connectSupplierSlice, ConnectSupplierFacade } from './store-connect-supplier';
 
 const rootReducer = combineReducers({
   [globalSlice.name]: globalSlice.reducer,
@@ -27,6 +28,7 @@ const rootReducer = combineReducers({
   [categorySlice.name]: categorySlice.reducer,
   [productSlice.name]: productSlice.reducer,
   [subStoreSlice.name]: subStoreSlice.reducer,
+  [connectSupplierSlice.name]: connectSupplierSlice.reducer,
 });
 
 const setupStore = () => {
@@ -60,7 +62,8 @@ export {
   SupplierFacade,
   CategoryFacade,
   ProductFacade,
-  SubStoreFacade
+  SubStoreFacade,
+  ConnectSupplierFacade
 };
 
 export type { State };

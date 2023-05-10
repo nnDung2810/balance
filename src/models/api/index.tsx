@@ -22,6 +22,7 @@ export class PaginationQuery<T = object> {
     public fullTextSearch?: string,
     public type?: string,
     public storeId?: string,
+    public idSuppiler?: string,
     public supplierType?: string,
   ) { }
 }
