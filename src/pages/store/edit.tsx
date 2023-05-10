@@ -347,43 +347,45 @@ const Page = () => {
                 pageSizeRender={(sizePage: number) => sizePage}
                 pageSizeWidth={'50px'}
                 paginationDescription={(from: number, to: number, total: number) =>
-                  t('routes.admin.Layout.PaginationSubStore', { from, to, total })
+                  t('routes.admin.Layout.PaginationSupplier', { from, to, total })
                 }
                 columns={[
-                  //  {
-                  //    title: 'store.Code',
-                  //    name: 'code',
-                  //    tableItem: {
-                  //      width: 120,
-                  //    },
-                  //  },
-                  //  {
-                  //    title: 'store.Name',
-                  //    name: 'name',
-                  //    tableItem: {
-                  //    },
-                  //  },
-                  //  {
-                  //    title: 'store.Address',
-                  //    name: 'address',
-                  //    tableItem: {
-                  //      render: (value: any, item: any) => item.address?.street + ', ' + item.address?.wardName + ', ' + item.address?.districtName + ', ' + item.address?.provinceName,
-                  //    },
-                  //  },
-                  //  {
-                  //    title: 'store.ContactName',
-                  //    name: 'peopleContact',
-                  //    tableItem: {
-                  //      render: (value: any, item: any) => item.peopleContact?.name,
-                  //    },
-                  //  },
-                  //  {
-                  //    title: 'store.Phone Number',
-                  //    name: 'userpeopleContactRole',
-                  //    tableItem: {
-                  //      render: (value: any, item: any) => item.peopleContact?.phoneNumber,
-                  //    },
-                  //  },
+                  {
+                    title: 'supplier.CodeName',
+                    name: 'supplier',
+                    tableItem: {
+                      width: 150,
+                      render: (value: any, item: any) => item.supplier?.code,
+                    },
+                  },
+                  {
+                    title: 'supplier.Name',
+                    name: 'supplier',
+                    tableItem: {
+                      render: (value: any, item: any) => item.supplier?.name,
+                    },
+                  },
+                  {
+                    title: 'store.Address',
+                    name: 'supplier',
+                    tableItem: {
+                      render: (value: any, item: any) => item.supplier.address?.street + ', ' + item.supplier.address?.ward.name + ', ' + item.supplier.address?.district.name + ', ' + item.supplier.address?.province.name,
+                    },
+                  },
+                  {
+                    title: 'store.ContactName',
+                    name: 'supplier',
+                    tableItem: {
+                      render: (value: any, item: any) => item.supplier.userRole[0].userAdmin.name,
+                    },
+                  },
+                  {
+                    title: 'store.Phone Number',
+                    name: 'supplier',
+                    tableItem: {
+                      render: (value: any, item: any) => item.supplier.userRole[0].userAdmin.phoneNumber,
+                    },
+                  },
                   //  {
                   //    title: 'Trạng thái',
                   //    name: 'isActive',

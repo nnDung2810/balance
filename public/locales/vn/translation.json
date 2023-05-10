@@ -185,7 +185,8 @@
         "User": "Hiển thị {{from}} - {{to}} / Tổng số {{total}} Người dùng",
         "Day": "Ngày phép",
         "PaginationStore": "Hiển thị {{from}} - {{to}} / Tổng số {{total}} Cửa hàng",
-        "PaginationSubStore": "Hiển thị {{from}} - {{to}} / Tổng số {{total}} Chi nhánh"
+        "PaginationSubStore": "Hiển thị {{from}} - {{to}} / Tổng số {{total}} Chi nhánh",
+        "PaginationSupplier": "Hiển thị {{from}} - {{to}} / Tổng số {{total}} Nhà cung cấp"
       }
     }
   },
@@ -209,7 +210,8 @@
     "Address": "Địa chỉ",
     "Representative": "Người đại diện",
     "Phone Number": "Số điện thoại",
-    "Status": "Trạng thái"
+    "Status": "Trạng thái",
+    "CodeName": "Mã nhà cung cấp"
   },
   "store": {
     "Name": "Tên cửa hàng",

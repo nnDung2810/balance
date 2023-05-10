@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { API, routerLinks } from '@utils';
 import { useAppDispatch, useTypedSelector, Action, Slice, State } from '@store';
-import { CommonEntity } from '@models';
+import { CommonEntity, PaginationQuery } from '@models';
 
 
 const name = 'District';
@@ -10,7 +10,7 @@ export const action = {
   ...new Action<District>(name),
   getDistrict: createAsyncThunk(
     name + '/get',
-    async (provinceCode: string) => await API.get(`${routerLinks(name, 'api')}/${provinceCode}`)
+    async (code: string) => await API.get(routerLinks(name, 'api') + '/' + code)
   )
 };
 
@@ -20,7 +20,7 @@ export const DistrictFacade = () => {
   const dispatch = useAppDispatch();
   return {
     ...useTypedSelector((state) => state[action.name] as State<District>),
-    get: (provinceCode: string) => dispatch(action.getDistrict(provinceCode)),
+    get: ({ fullTextSearch, code }: { fullTextSearch: string, code: string }) => dispatch(action.getDistrict(code)),
   };
 };
 export class District extends CommonEntity {
@@ -28,6 +28,7 @@ export class District extends CommonEntity {
     public id?: string,
     public code?: string,
     public name?: string,
+
   ) {
     super();
   }
