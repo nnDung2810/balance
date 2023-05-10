@@ -34,15 +34,15 @@ export const Upload = ({
   const [listFiles, set_listFiles] = useState(
     multiple && value && typeof value === 'object'
       ? value.map((_item: any) => {
-          if (_item.status) return _item;
-          return {
-            ..._item,
-            status: 'done',
-          };
-        })
+        if (_item.status) return _item;
+        return {
+          ..._item,
+          status: 'done',
+        };
+      })
       : typeof value === 'string'
-      ? [{ [keyImage]: value }]
-      : value || [],
+        ? [{ [keyImage]: value }]
+        : value || [],
   );
 
   // const handleDownload = async (file: any) => {
@@ -58,15 +58,15 @@ export const Upload = ({
     const tempData =
       !multiple && value && typeof value === 'object'
         ? value.map((_item: any) => {
-            if (_item.status) return _item;
-            return {
-              ..._item,
-              status: 'done',
-            };
-          })
+          if (_item.status) return _item;
+          return {
+            ..._item,
+            status: 'done',
+          };
+        })
         : typeof value === 'string'
-        ? [{ [keyImage]: value }]
-        : value || [];
+          ? [{ [keyImage]: value }]
+          : value || [];
     if (
       JSON.stringify(listFiles) !== JSON.stringify(tempData) &&
       listFiles.filter((item: any) => item.status === 'uploading').length === 0
@@ -151,11 +151,11 @@ export const Upload = ({
             // });
             const files = multiple
               ? listFiles.map((item: any) => {
-                  if (item.id === dataFile.id) {
-                    item = { ...item, ...data.data, status: 'done' };
-                  }
-                  return item;
-                })
+                if (item.id === dataFile.id) {
+                  item = { ...item, ...data.data, status: 'done' };
+                }
+                return item;
+              })
               : [{ ...data.data, status: 'done' }];
             set_listFiles(files);
             onChange && (await onChange(files));
@@ -179,11 +179,11 @@ export const Upload = ({
             });
             const files = multiple
               ? listFiles.map((item: any) => {
-                  if (item.id === dataFile.id) {
-                    item = { ...item, ...data.data, status: 'done' };
-                  }
-                  return item;
-                })
+                if (item.id === dataFile.id) {
+                  item = { ...item, ...data.data, status: 'done' };
+                }
+                return item;
+              })
               : [{ ...data.data, status: 'done' }];
             set_listFiles(files);
             onChange && (await onChange(files));
@@ -224,7 +224,82 @@ export const Upload = ({
                   <Plus className="w-12 h-12" />
                 </div>
               ) : (
-                <img alt={'Align'} className={'rounded-2xl w-full h-full flex object-cover'} src={listFiles[0][keyImage]} />
+                <div className='text-center justify-center'>
+                  <img alt={'Align'} className={'rounded-2xl w-full h-full flex object-cover'} src={listFiles[0][keyImage]} />
+                  <div
+                    className='w-full h-full flex-col absolute top-0 left-0 right-0 bottom-0 z-10 mx-0 flex justify-center items-center transition-all ease-in-out duration-300 invisible opacity-0'
+                  >
+                    {multiple &&
+                      listFiles.map((file: any, index: number) => (
+                        <div
+                          key={index}
+                          className={classNames({
+                            'bg-yellow-100': file.status === 'error',
+                            'flex items-center py-1 mb-8 sm:mb-1': !viewGrid,
+                          })}
+                        >
+                          <div className={'relative'}>
+                            <a href={file[keyImage] ? file[keyImage] : file} className="glightbox las la-camera text-white text-xl">
+                              <img
+                                //  className={classNames({ 'object-cover object-center h-20 w-20': !viewGrid })}
+                                //  src={file[keyImage] ? file[keyImage] : file}
+                                className='las la-camera text-white text-xl'
+                                alt={file.name}
+                              />
+                            </a>
+                            <div className={'flex gap-5 absolute bottom-0 justify-center w-full'}>
+                              {listFiles?.length > 0 && (
+                                <Copy
+                                  className={'h-5 w-5 cursor-pointer'}
+                                // onClick={() => copy(file[keyImage] ? file[keyImage] : file)}
+                                />
+                              )}
+                              <Paste
+                                className={'h-5 w-5 cursor-wait'}
+                                onPaste={async (event) => {
+                                  const text = event.clipboardData.getData('text/plain');
+                                  if (text.indexOf('http') === 0) {
+                                    if (!multiple) {
+                                      const files = [{ [keyImage]: text, status: 'done' }];
+                                      set_listFiles(files);
+                                      onChange && (await onChange(files));
+                                    } else {
+                                      listFiles.push(file[keyImage] ? { [keyImage]: text } : text);
+                                      set_listFiles(listFiles);
+                                      onChange && (await onChange(listFiles));
+                                    }
+                                  }
+                                }}
+                              />
+                            </div>
+                            {showBtnDelete(file) && (
+                              // <Popconfirm
+                              //   placement="left"
+                              //   title={t('components.datatable.areYouSureWant')}
+                              //   onConfirm={async () => {
+                              //     if (deleteFile && file?.id) {
+                              //       const data = await deleteFile(file?.id);
+                              //       if (!data) {
+                              //         return false;
+                              //       }
+                              //     }
+                              //     onChange && onChange(listFiles.filter((_item: any) => _item.id !== file.id));
+                              //   }}
+                              //   okText={t('components.datatable.ok')}
+                              //   cancelText={t('components.datatable.cancel')}
+                              // >
+                                <Button
+                                  icon={<Camera className={'h-6 w-6'} />}
+                                  className={'!bg-teal-600 !border-none flex items-center justify-center'}
+                                />
+                            //    </Popconfirm>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                  </div>
+
+                </div>
               )}
             </Fragment>
           </div>
@@ -232,12 +307,14 @@ export const Upload = ({
       ) : (
         <div />
       )}
-      <div
+
+      {/* <div
         className={classNames({
           'grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-8 gap-4':
             viewGrid,
         })}
       >
+
         {multiple &&
           listFiles.map((file: any, index: number) => (
             <div
@@ -305,7 +382,7 @@ export const Upload = ({
               </div>
             </div>
           ))}
-      </div>
+      </div> */}
     </Spin>
   );
 };

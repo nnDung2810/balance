@@ -15,7 +15,7 @@ export class FormItem {
     | 'upload'
     | 'table_transfer'
     | 'password'
-    | 'passwordconfirm'
+    | 'passConfirm'
     | 'textarea'
     | 'slider'
     | 'slider_number'

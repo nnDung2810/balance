@@ -322,7 +322,7 @@ export const Form = ({
             switch (rule.type) {
               case 'required':
                 if (!rule.message) {
-                  rule.message = t('components.form.ruleRequired', { title: item.title }).toLowerCase();
+                  rule.message = t('components.form.ruleRequired', { title: t(item.title) }).toLowerCase();
                 }
                 rules.push({
                   required: true,
@@ -331,7 +331,22 @@ export const Form = ({
                 if (!item.formItem.type) {
                   rules.push({
                     whitespace: true,
-                    message: t('components.form.ruleRequired', { title: item.title }).toLowerCase(),
+                    message: t('components.form.ruleRequired', { title: t(item.title) }).toLowerCase(),
+                  });
+                }
+                break;
+              case 'required1':
+                if (!rule.message) {
+                  rule.message = t('components.form.ruleRequired');
+                }
+                rules.push({
+                  required: true,
+                  message: rule.message,
+                });
+                if (!item.formItem.type) {
+                  rules.push({
+                    whitespace: true,
+                    message: t('components.form.ruleRequired'),
                   });
                 }
                 break;
@@ -521,6 +536,20 @@ export const Form = ({
             },
           }));
           break;
+        case 'passConfirm':
+          rules.push(() => ({
+            validator: async (rule: any, value: any) => {
+              if (value) {
+                let min = 0;
+                rules.forEach((item: any) => item.min && (min = item.min));
+                if (value?.trim().length > min) {
+                  if (/^(?!.* )(?=.*\d)(?=.*[A-Z]).*$/.test(value)) return Promise.resolve();
+                }
+                //  return Promise.reject(t('components.form.rulePassword'));
+              } else return Promise.resolve();
+            },
+          }));
+          break;
         case 'only_number':
           rules.push(() => ({
             validator(_: any, value: any) {
@@ -609,13 +638,13 @@ export const Form = ({
                   className={classNames(
                     column?.formItem?.classItem,
                     'col-span-12' +
-                      (' sm:col-span-' +
-                        (column?.formItem?.colTablet
-                          ? column?.formItem?.colTablet
-                          : column?.formItem?.col
+                    (' sm:col-span-' +
+                      (column?.formItem?.colTablet
+                        ? column?.formItem?.colTablet
+                        : column?.formItem?.col
                           ? column?.formItem?.col
                           : 12)) +
-                      (' lg:col-span-' + (column?.formItem?.col ? column?.formItem?.col : 12)),
+                    (' lg:col-span-' + (column?.formItem?.col ? column?.formItem?.col : 12)),
                   )}
                   key={index}
                 >
@@ -629,7 +658,7 @@ export const Form = ({
       </div>
 
       <div
-        className={classNames('w-full h-11 mt-10 flex justify-between', {
+        className={classNames('gap-2 flex', {
           'justify-center': !extendButton && !handCancel,
           'md:inline-flex md:float-right': extendButton || handCancel,
           'w-full flex max-sm:flex-col max-sm:items-center max-sm:mb-10 justify-between mt-8': handSubmit && handCancel,
@@ -639,7 +668,7 @@ export const Form = ({
         {handCancel && (
           <Button
             text={t(textCancel)}
-            className={'md:min-w-[7rem] w-full justify-center out-line lg:w-64'}
+            className={'w-32 justify-center out-line !border-black max-sm:w-3/5'}
             onClick={handCancel}
           />
         )}
@@ -650,7 +679,7 @@ export const Form = ({
             id={idSubmit}
             onClick={() => form && form.submit()}
             disabled={disableSubmit}
-            className={'md:min-w-[6rem] w-full justify-center lg:w-64'}
+            className={'w-32 justify-center max-sm:w-3/5'}
             type={'submit'}
           />
         )}
