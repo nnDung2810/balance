@@ -105,7 +105,7 @@ export const ColumnFormSupplier= ({ t, listRole }: any) => {
                       onChange(value, form) {
                         const districtFacade = DistrictFacade()
                         form.resetFields(['district'])
-                        districtFacade.get(`${value}`)
+                        districtFacade.get(value)
                       },
                     },
                   },
@@ -126,7 +126,7 @@ export const ColumnFormSupplier= ({ t, listRole }: any) => {
                       onChange(value, form) {
                         const wardFacade = WardFacade()
                         form.resetFields(['wardId'])
-                        wardFacade.get(`${value}`)
+                        wardFacade.get(value)
                       },
                     },
                   },
