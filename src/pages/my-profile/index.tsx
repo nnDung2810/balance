@@ -163,7 +163,7 @@ const Page = () => {
                         col: 12,
                         type: 'password',
                         condition: (value: string, form, index: number, values: any) => !values?.id,
-                        rules: [{ type: 'required' },{ type: 'min', value: 8 }],
+                        rules: [{ type: 'required' }],
                         placeholder: t('columns.auth.placeholder.newPassword').toString(),
                       },
                     },
