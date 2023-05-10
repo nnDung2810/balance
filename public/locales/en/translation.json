@@ -31,6 +31,7 @@
       "ruleConfirmPassword": "Two passwords that you enter is inconsistent!",
       "incorrectPathFormat": "Incorrect path format",
       "Enter": "Enter",
+      "Choose": "Choose",
       "Upload": "Upload",
       "modal": {
         "save": "Save",

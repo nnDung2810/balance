@@ -63,12 +63,47 @@ const Page = () => {
     if (id) supplierFacade.put({ ...values, id });
     else supplierFacade.post(values);
   };
+  const test = [
+    {
+      title: 'Thông tin nhà cung cấp',
+      tab: 'tab1'
+    },
+    {
+      title: 'Danh sách hàng hoá',
+      tab: 'tab2'
+    },
+    {
+      title: 'Quản lý đơn hàng',
+      tab: 'tab3'
+    },
+    {
+      title: 'Doanh thu',
+      tab: 'tab4'
+    },
+    {
+      title: 'Chiết khấu',
+      tab: 'tab5'
+    },
+    {
+      title: 'Hợp đồng',
+      tab: 'tab6'
+    },
+  ]
 
   return (
     <div className={'w-full'}>
       <Fragment>
         <div className='flex'>
           <div className='flex overflow-hidden whitespace-nowrap cursor-pointer select-none'>
+            {test.map((e) => (
+              <div onClick={() => setTab(e.tab)} className={classNames(
+              { 'bg-white text-xl text-teal-900 px-5 py-4 font-bold rounded-t-xl' : tab === e.tab,
+                'bg-gray-100 text-xl text-teal-900 px-5 py-4 font-bold rounded-t-xl' : tab !== e.tab})}>
+              {e.title}
+            </div>
+            ))}
+          </div>
+          {/* <div className='flex overflow-hidden whitespace-nowrap cursor-pointer select-none'>
             <div onClick={() => setTab('tab1')} className={classNames(
               { 'bg-white text-xl text-teal-900 px-5 py-4 font-bold rounded-t-xl' : tab === 'tab1',
                 'bg-gray-100 text-xl text-teal-900 px-5 py-4 font-bold rounded-t-xl' : tab !== 'tab1'})}>
@@ -99,7 +134,7 @@ const Page = () => {
                 'bg-gray-100 text-xl text-teal-900 px-5 py-4 font-bold rounded-t-xl' : tab !== 'tab6'})}>
               Hợp đồng
             </div>
-          </div>
+          </div> */}
           <div className='flex justify-center text-center'>
             <button className='py-2 px-4 cursor-pointer h-full border-l-2 border-l-gray-200 text-xl'>
               ...
@@ -110,13 +145,19 @@ const Page = () => {
         {tab === 'tab1' && (
           !!result?.data && (
             <Form
+              key={'tab1'}
               values={{ ...data, street: data?.address?.street, province: data?.address?.province?.name, district: data?.address?.district?.name, ward: data?.address?.ward?.name,
               username: data?.userRole?.[0].userAdmin.name, email: data?.userRole?.[0].userAdmin.email, phoneNumber: data?.userRole?.[0].userAdmin.phoneNumber  }}
-              className="intro-x p-6 pb-4 pt-6 rounded-lg w-full "
+              className="intro-x pt-6 rounded-lg w-full "
               columns={ColumnFormSupplierDetail({ t, listRole: result?.data || []})}
               handSubmit={handleSubmit}
               disableSubmit={isLoading}
-              handCancel={handleBack}
+              extendButton={() => (
+                <button className='sm:w-28 h-11 rounded-xl bg-white hover:text-teal-600 text-teal-900 border-teal-900 hover:border-teal-600 border'
+                onClick={handleBack}>
+                {t('components.form.modal.cancel')}
+                </button>
+              )}
             />
           ) )
         }
@@ -215,6 +256,8 @@ const Page = () => {
             />
           ) )
         }
+        </div>
+        <div className='h-20'>
         </div>
       </Fragment>
     </div>

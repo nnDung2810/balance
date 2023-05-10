@@ -28,7 +28,7 @@ const Page = () => {
   const dataTableRef = useRef<TableRefObject>(null);
   return (
     <div className=' h-full pb-10'>
-      <div className='bg-white rounded-xl p-4 pb-10 relative text-center '>
+      <div className='bg-white rounded-xl p-6 pb-10 relative text-center '>
         <DataTable
           facade={supplierFacade}
           ref={dataTableRef}
