@@ -10,7 +10,7 @@ import { District } from '../address/district';
 import { Province } from '../address/province';
 import { Ward } from '../address/ward';
 
-const name = 'Supplier';
+const name = 'Organization';
 export const action = {
   ...new Action<Supplier>(name),
   getById: createAsyncThunk(

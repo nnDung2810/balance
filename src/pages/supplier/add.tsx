@@ -98,26 +98,14 @@ const Page = () => {
                         col: 3,
                         type: 'select',
                         rules: [{ type: 'required',message: 'Xin vui lòng chọn tỉnh/thành phố' }],
-                        get: {
-                          facade: ProvinceFacade,
-                          params: (fullTextSearch: string) => ({
-                            fullTextSearch,
-                            filter: { id: '01' },
-                            extend: {},
-                          }),
-                          format: (item) => ({
-                            label: item.name,
-                            value: item.code,
-                          }),
-                        },
-                        // list: result.data.map((item: any) => ({
-                        //   label: item?.name,
-                        //   value: item?.code,
-                        // })),
-                        // onChange(value, form, reRender) {
+                        list: result.data.map((item: any) => ({
+                          label: item?.name,
+                          value: item?.code,
+                        })),
+                        // onChange(value, form) {
+                        //   // districtFacade.get(value)
                         //   form.resetFields(['district'])
-                        //   districtFacade.get(value)
-                        //   reRender(value)
+                        //   // reRender(value)
                         // },
                       },
                     },
@@ -128,20 +116,34 @@ const Page = () => {
                         type: 'select',
                         rules: [{ type: 'required', message: 'Xin vui lòng chọn quận/huyện' }],
                         col: 3,
-                        get: {
-                          facade: DistrictFacade,
-                          format: (item: any) => ({
-                            label: item.name,
-                            value: item.code,
-                          }),
-                        },
-                        onChange(value, form, reRender) {
+                        // get: {
+                        //   facade: DistrictFacade,
+                        //   params: (fullTextSearch: string, value: any) => ({
+                        //     fullTextSearch,
+                        //     filter: { id: '02'},
+                        //     extend: {},
+                        //   }),
+                        //   format: (item: any) => ({
+                        //     label: item.name,
+                        //     value: item.code,
+                        //   }),
+                        // },
+                        onChange(value, form) {
                           form.resetFields(['wardId'])
-                          wardFacade.get(value)
-                          reRender({format: (item:any) => ({
-                            label: item.name,
-                            value: item.code,})})
+                          // wardFacade.get(value)
                         },
+                        // get: {
+                        //   facade: ProvinceFacade,
+                        //   params: (fullTextSearch: string) => ({
+                        //     fullTextSearch,
+                        //     filter: { code: '01' },
+                        //     extend: {},
+                        //   }),
+                        //   format: (item) => ({
+                        //     label: item.name,
+                        //     value: item.code,
+                        //   }),
+                        // },
                       },
                     },
                     {
@@ -151,13 +153,13 @@ const Page = () => {
                         type: 'select',
                         rules: [{ type: 'required', message: 'Xin vui lòng chọn phường/xã' }],
                         col: 3,
-                        get: {
-                          facade: WardFacade,
-                          format: (item: any) => ({
-                            label: item.name,
-                            value: item.code,
-                          }),
-                        }
+                        // get: {
+                        //   facade: WardFacade,
+                        //   format: (item: any) => ({
+                        //     label: item.name,
+                        //     value: item.code,
+                        //   }),
+                        // }
                       },
                     },
                     {

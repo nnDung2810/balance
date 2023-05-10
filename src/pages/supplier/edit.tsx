@@ -14,6 +14,7 @@ import { Form } from '@core/form';
 import { DataTable } from '@core/data-table';
 import { Button } from '@core/button';
 import { ProvinceFacade } from '@store/address/province';
+import { Download } from '@svgs';
 
 const Page = () => {
   const { t } = useTranslation();
@@ -162,9 +163,12 @@ const Page = () => {
           ) )
         }
         {tab === 'tab2' && (
-          !!result?.data && (
-            <DataTable
+          <div className={'w-full mx-auto bg-white rounded-xl'}>
+          {!!result?.data && (
+            <div className='px-6 pt-6 pb-4'>
+              <DataTable
               // facade={supplierFacade}
+              defaultRequest={{page: 1, perPage: 10,type: "BALANCE"}}
               ref={dataTableRef}
               xScroll = '1440px'
               pageSizeRender={(sizePage: number) => sizePage}
@@ -182,16 +186,20 @@ const Page = () => {
                   {user && (
                     <Button
                       className='!bg-white flex justify-between w-full !px-3 !border !border-gray-600 !text-gray-600 hover:!bg-teal-900 hover:!text-white group'
-                      // icon={<Download className="icon-cud !h-6 !w-6 !fill-gray-600 group-hover:!fill-white" />}
+                      icon={<Download className="icon-cud !h-6 !w-6 !fill-gray-600 group-hover:!fill-white" />}
                       text={t('Xuất file excel')}
                       onClick={() => navigate(routerLinks('Supplier/Excel'))}
                     />
                   )}
                 </div>
               }
+              leftHeader={
+                <div>aaaaaaaaaaaaaa</div>
+              }
               showSearch={false}
             />
-          ) )
+            </div>
+          )} </div>)
         }
         {tab === 'tab3' && (
           !!result?.data && (
