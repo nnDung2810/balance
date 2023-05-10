@@ -116,6 +116,16 @@ export const Form = ({
             disabled={!!formItem.disabled && formItem.disabled(values, form)}
           />
         );
+        case 'passConfirm':
+        return (
+          <Password
+            tabIndex={formItem.tabIndex || index}
+            placeholder={
+              t(formItem.placeholder || '') || t('components.form.Enter') + ' ' + t(item.title)!.toLowerCase()
+            }
+            disabled={!!formItem.disabled && formItem.disabled(values, form)}
+          />
+        );
       case 'textarea':
         return (
           <textarea
@@ -522,33 +532,30 @@ export const Form = ({
             },
           }));
           break;
-        case 'password':
+          case 'password':
           rules.push(() => ({
             validator: async (rule: any, value: any) => {
               if (value) {
-                let min = 0;
+                let min = 8;
                 rules.forEach((item: any) => item.min && (min = item.min));
-                if (value?.trim().length > min) {
-                  if (/^(?!.* )(?=.*\d)(?=.*[A-Z]).*$/.test(value)) return Promise.resolve();
+                if (value.trim().length < min) {
+                  return Promise.reject('Mật khẩu yêu cầu có 8 ký tự trở lên');
                 }
-                return Promise.reject(t('components.form.rulePassword'));
-              } else return Promise.resolve();
-            },
+                if (/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?])/.test(value)) {
+                  return Promise.resolve();
+                } else {
+                  return Promise.reject('Mật khẩu yêu cầu có 8 ký tự trở lên, có ít nhất 1 chữ hoa, 1 chữ thường, 1 chữ số và 1 kí tự đặc biệt');
+                }
+              } else {
+                return Promise.resolve();
+            }
+          },
           }));
           break;
         case 'passConfirm':
           rules.push(() => ({
-            validator: async (rule: any, value: any) => {
-              if (value) {
-                let min = 0;
-                rules.forEach((item: any) => item.min && (min = item.min));
-                if (value?.trim().length > min) {
-                  if (/^(?!.* )(?=.*\d)(?=.*[A-Z]).*$/.test(value)) return Promise.resolve();
-                }
-                //  return Promise.reject(t('components.form.rulePassword'));
-              } else return Promise.resolve();
-            },
-          }));
+            }),
+          );
           break;
         case 'only_number':
           rules.push(() => ({
@@ -599,7 +606,7 @@ export const Form = ({
 
   const handFinish = (values: any) => {
     values = convertFormValue(columns, values);
-    handSubmit && handSubmit(values);
+    handSubmit && handSubmit(values) || extendButtonChangePassword && extendButtonChangePassword(values);
   };
 
   return (
@@ -662,14 +669,14 @@ export const Form = ({
           'justify-center': !extendButton && !handCancel,
           'md:inline-flex md:float-right': extendButton || handCancel,
           'w-full flex max-sm:flex-col max-sm:items-center max-sm:mb-10 justify-between mt-8': handSubmit && handCancel,
-          'md:inline-flex md:float-right sm:block sm:text-center items-center': extendButton || handSubmit,
+          'md:inline-flex md:float-right sm:block sm:text-center items-center': extendButton && handSubmit,
           'md:inline-flex md:float-right top-[300px] pt-6': extendButtonChangePassword,
         })}
       >
         {handCancel && (
           <Button
             text={t(textCancel)}
-            className={'md:w-32 justify-center out-line !border-black sm:w-80 w-60'}
+            className={'w-32 justify-center out-line !border-black max-sm:w-3/5'}
             onClick={handCancel}
           />
         )}
@@ -680,7 +687,7 @@ export const Form = ({
             id={idSubmit}
             onClick={() => form && form.submit()}
             disabled={disableSubmit}
-            className={'md:w-32 justify-center sm:w-80 sm:mt-3 md:mt-0 w-60'}
+            className={'w-32 justify-center max-sm:w-3/5'}
             type={'submit'}
           />
         )}

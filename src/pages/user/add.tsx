@@ -1,5 +1,4 @@
-import React, { Fragment, useEffect, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { Fragment, Profiler, useEffect, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router';
 
 import { UserRoleFacade, UserFacade, User } from '@store';
@@ -29,7 +28,7 @@ const Page = () => {
   useEffect(() => {
     switch (status) {
       case 'post.fulfilled':
-        navigate(routerLinks('User') + '/' + data?.id);
+        navigate(routerLinks('User/List'));
         break;
     }
   }, [status]);
@@ -85,28 +84,14 @@ const Page = () => {
                     type: 'textarea',
                   },
                 },
-                {
-                  title: 'fdfdf',
-                  name: 'roleId',
-                  formItem: {
-                     type: 'hidden',
+                // {
+                //   title: 'fdfdf',
+                //   name: 'roleId',
+                //   formItem: {
+                //      type: 'hidden',
 
-                  },
-                },
-                {
-                  title: 'a',
-                  name: 'orgId',
-                  formItem:  {
-                     type: 'hidden',
-                  }
-                },
-                {
-                  title: 'a',
-                  name: 'subOrgId',
-                  formItem: {
-                    type: 'hidden',
-                  },
-                },
+                //   },
+                // },
               ]}
                 handSubmit={handleSubmit}
                 disableSubmit={isLoading}

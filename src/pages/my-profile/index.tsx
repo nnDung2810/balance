@@ -133,7 +133,7 @@ const Page = () => {
                   extendButton={(form) => (
                     <Button
                       text={t('components.button.Cancel')}
-                      className={'md:w-32 justify-center out-line sm:w-80 w-60 min-w-[8rem]'}
+                      className={'md:w-32 justify-center out-line sm:w-80 w-60 '}
                       onClick={() => {
                         navigate(routerLinks('User/List'))
                       }}
@@ -162,13 +162,14 @@ const Page = () => {
                       formItem: {
                         col: 12,
                         type: 'password',
-                        rules: [{ type: 'required1' }],
+                        condition: (value: string, form, index: number, values: any) => !values?.id,
+                        rules: [{ type: 'required' },{ type: 'min', value: 8 }],
                         placeholder: t('columns.auth.placeholder.newPassword').toString(),
                       },
                     },
                     {
                       title: 'columns.auth.login.Confirm Password',
-                      name: 'passwordConfirm',
+                      name: 'passwordComfirm',
                       formItem: {
                         col: 12,
                         type: 'passConfirm',

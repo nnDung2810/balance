@@ -12,7 +12,11 @@ export const action = {
   ...new Action<User>(name),
   post: createAsyncThunk(name + '/post', async (values: User) => {
     // if (values.avatar) values.avatar = values.avatar[0].url;
-    const { data, message } = await API.post<User>(routerLinks(name, 'api'), values);
+    const addressDto = {city:null, country:null, district:null, postCode:null, street:'dien bien phu'}
+    const subOrgId = null;
+    const orgId = null;
+    const roleId = 1;
+    const { data, message } = await API.post<User>(`${routerLinks(name, 'api')}/register`,{ ...values,addressDto,subOrgId,orgId,roleId});
     if (message) await Message.success({ text: message });
     return data;
   }),
