@@ -134,7 +134,7 @@
     }
   },
   "layout": {
-    "footer": "Bản quyền ©{{year}} ARI Technology Co.,JSC. Đã đăng ký Bản quyền."
+    "footer": "Bản quyền ©{{year}} Công Ty Cổ Phần Công Nghệ ARI. Đã đăng ký Bản quyền."
   },
   "routes": {
     "auth": {

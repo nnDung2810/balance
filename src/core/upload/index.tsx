@@ -11,7 +11,7 @@ import { API, linkApi } from '@utils';
 import { Button } from '../button';
 import { Spin } from '../spin';
 import { Message } from '../message';
-import { Plus, Copy, Paste, Times } from '@svgs';
+import { Plus, Copy, Paste, Times, Camera } from '@svgs';
 
 export const Upload = ({
   value = [],
@@ -228,12 +228,9 @@ export const Upload = ({
                 </div>
               ) : (
                 <div className='text-center justify-center'>
-                  <img alt={'Align'} className={'rounded-2xl w-80 h-72 flex object-cover'} src={listFiles[0][keyImage]} />
+                  {/* rounded-2xl w-80 h-72 flex object-cover -----aspect-square object-cover rounded-[0.625rem] shadow-md bg-gray-100 cursor-pointer max-h-[500px]*/}
+                  <img alt={'Align'} className={' rounded-2xl w-80 max-h-[500px] flex object-cover bg-gray-100'} src={listFiles[0][keyImage]} />
                   <div
-                    // className={classNames({
-                    //   'grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-8 gap-4':
-                    //     viewGrid,
-                    // })}
                     className='w-[55px] h-[45px] bg-teal-600 opacity-80 absolute right-0 bottom-0 rounded-tl-[0.625rem] rounded-br-[0.625rem] flex items-center justify-center'
                   >
                     {multiple &&
@@ -280,26 +277,26 @@ export const Upload = ({
                               />
                             </div>
                             {showBtnDelete(file) && (
-                              <Popconfirm
-                                placement="left"
-                                title={t('components.datatable.areYouSureWant')}
-                                onConfirm={async () => {
-                                  if (deleteFile && file?.id) {
-                                    const data = await deleteFile(file?.id);
-                                    if (!data) {
-                                      return false;
-                                    }
-                                  }
-                                  onChange && onChange(listFiles.filter((_item: any) => _item.id !== file.id));
-                                }}
-                                okText={t('components.datatable.ok')}
-                                cancelText={t('components.datatable.cancel')}
-                              >
-                                <Button
-                                  icon={<Eye className={'h-6 w-6'} />}
-                                  className={'!bg-gray-400 !rounded-full flex items-center justify-center'}
-                                />
-                              </Popconfirm>
+                              // <Popconfirm
+                              //   placement="left"
+                              //   title={t('components.datatable.areYouSureWant')}
+                              //   onConfirm={async () => {
+                              //     if (deleteFile && file?.id) {
+                              //       const data = await deleteFile(file?.id);
+                              //       if (!data) {
+                              //         return false;
+                              //       }
+                              //     }
+                              //     onChange && onChange(listFiles.filter((_item: any) => _item.id !== file.id));
+                              //   }}
+                              //   okText={t('components.datatable.ok')}
+                              //   cancelText={t('components.datatable.cancel')}
+                              // >
+                              <Button
+                                icon={<Camera className={'h-6 w-6'} />}
+                                className={'!bg-teal-600 !border-none flex items-center justify-center'}
+                              />
+                              // </Popconfirm>
                             )}
                           </div>
                         </div>
@@ -313,7 +310,7 @@ export const Upload = ({
       ) : (
         <div />
       )}
-      <div
+      {/* <div
         className={classNames({
           'grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-8 gap-4':
             viewGrid,
@@ -386,7 +383,7 @@ export const Upload = ({
               </div>
             </div>
           ))}
-      </div>
+      </div> */}
     </Spin>
   );
 };

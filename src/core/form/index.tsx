@@ -616,17 +616,17 @@ export const Form = ({
       </div>
 
       <div
-        className={classNames('mt-9 gap-2 flex absolute pb-14', {
+        className={classNames('mt-9 gap-2 flex w-full absolute sm:block', {
           'justify-center': !extendButton && !handCancel,
           'md:inline-flex w-full justify-between md:float-right': handCancel,
-          'sm:block sm:text-center md:inline-flex md:float-right right-0': handSubmit || extendButton,
-          'md:inline-flex md:float-right top-[300px]': extendButtonChangePassword,
+          'md:inline-flex md:float-right sm:text-center mt-8': handSubmit && extendButton,
+          'md:inline-flex md:float-right justify-between top-[350px]': extendButtonChangePassword || extendButton,
         })}
       >
         {handCancel && (
           <Button
             text={t(textCancel)}
-            className={'md:min-w-[8rem] justify-center out-line !border-black'}
+            className={'md:w-32 justify-center out-line !border-black sm:w-80 w-60'}
             onClick={handCancel}
           />
         )}
@@ -637,7 +637,7 @@ export const Form = ({
             id={idSubmit}
             onClick={() => form && form.submit()}
             disabled={disableSubmit}
-            className={'md:min-w-[8rem] justify-center !bg-teal-800 hover:!bg-teal-700 !border !border-teal-900'}
+            className={'md:w-32 justify-center !bg-teal-800 hover:!bg-teal-700 !border !border-teal-900 sm:w-80 w-60'}
             type={'submit'}
           />
         )}
@@ -651,7 +651,7 @@ export const Form = ({
               }
             }}
             disabled={disableSubmit}
-            className={'md:min-w-[8rem] justify-center !bg-teal-800 hover:!bg-teal-700 !border !border-teal-900 '}
+            className={'md:w-32 justify-center !bg-teal-800 hover:!bg-teal-700 !border !border-teal-900 sm:w-80 w-60'}
             type={'submit'}
           />
         )}

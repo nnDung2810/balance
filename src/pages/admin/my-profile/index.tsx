@@ -22,8 +22,8 @@ const Page = () => {
 
   return (
     <Fragment>
-      <div className='lg:grid lg:grid-cols-3 gap-5 w-full block'>
-        <div className='col-span-1 bg-white p-5 lg:border lg:rounded-xl'>
+      <div className='flex flex-col bg-white w-full lg:flex-row lg:justify-center lg:bg-gray-100 user-detail-general-form'>
+        <div className='bg-white relative w-auto max-w-[80%] lg:w-[30%] 2xl:w-[25%] p-[24px] rounded-xl '>
           <Spin spinning={isLoading}>
             <Form
               className="text-center items-centers text-2xl text-black font-semibold"
@@ -32,6 +32,7 @@ const Page = () => {
                   name: 'profileImage',
                   formItem: {
                     type: 'upload',
+                    mode: 'multiple',
                     onlyImage: true,
                   },
                 },
@@ -85,7 +86,7 @@ const Page = () => {
           </Spin>
         </div>
 
-        <div className='col-span-2 bg-white p-5 lg:border lg:rounded-xl fill-black'>
+        <div className='bg-white rounded-xl w-[90%] lg:w-[70%] 2xl:w-[75%] ml-0 lg:ml-[20px] p-5'>
           <Spin spinning={isLoading}>
             <Tabs defaultActiveKey="1" size="large">
               <TabPane tab={t('titles.Personalinformation')} key="1">
@@ -130,7 +131,7 @@ const Page = () => {
                   extendButton={(form) => (
                     <Button
                       text={t('components.form.modal.Canceloperation')}
-                      className={'md:min-w-[8rem] justify-center out-line'}
+                      className={'md:w-[8rem] justify-center out-line sm:w-80 w-60'}
                       onClick={() => {
                         navigate(routerLinks('User/List'))
                       }}
