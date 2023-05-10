@@ -599,7 +599,7 @@ export const Form = ({
         }
       }}
     >
-      <div className={'group-input px-5'}>
+      <div className={'group-input'}>
         <div className={'grid gap-x-5 grid-cols-12'}>
           {_columns.map(
             (column: any, index: number) =>
@@ -609,13 +609,13 @@ export const Form = ({
                   className={classNames(
                     column?.formItem?.classItem,
                     'col-span-12' +
-                      (' sm:col-span-' +
-                        (column?.formItem?.colTablet
-                          ? column?.formItem?.colTablet
-                          : column?.formItem?.col
+                    (' sm:col-span-' +
+                      (column?.formItem?.colTablet
+                        ? column?.formItem?.colTablet
+                        : column?.formItem?.col
                           ? column?.formItem?.col
                           : 12)) +
-                      (' lg:col-span-' + (column?.formItem?.col ? column?.formItem?.col : 12)),
+                    (' lg:col-span-' + (column?.formItem?.col ? column?.formItem?.col : 12)),
                   )}
                   key={index}
                 >
@@ -629,7 +629,7 @@ export const Form = ({
       </div>
 
       <div
-        className={classNames('w-full h-11 mt-10 flex justify-between', {
+        className={classNames('gap-2 flex', {
           'justify-center': !extendButton && !handCancel,
           'md:inline-flex md:float-right': extendButton || handCancel,
           'w-full flex max-sm:flex-col max-sm:items-center max-sm:mb-10 justify-between mt-8': handSubmit && handCancel,
