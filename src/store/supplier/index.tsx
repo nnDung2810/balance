@@ -20,14 +20,13 @@ export const action = {
       return { data, keyState };
     },
   ),
-  post: createAsyncThunk(name + '/post', async (values: Supplier) => {
-    const { data, message } = await API.post<Supplier>(routerLinks(name, 'api'), values);
-    console.log("tesssssssss",data);
-    
-    if (message) await Message.success({ text: message });
-    return data;
+  // post: createAsyncThunk(name + '/post', async (values: Supplier) => {
+  //   // if (values.avatar) values.avatar = values.avatar[0].url;
+  //   const { data, message } = await API.post<Supplier>(routerLinks(name, 'api'), values);
+  //   if (message) await Message.success({ text: message });
+  //   return data;
 
-  }),
+  // }),
   // put: createAsyncThunk(name + '/put', async ({ id, ...values }: Supplier) => {
   //   // if (values.avatar) values.avatar = values.avatar[0].url;
   //   const { data, message } = await API.put<Supplier>(`${routerLinks(name, 'api')}/${id}`, values);

@@ -21,8 +21,8 @@ const Page = () => {
 
   return (
     <Fragment>
-      <div className='lg:grid lg:grid-cols-3 lg:gap-5 w-full block'>
-        <div className='lg:col-span-1 lg:border lg:rounded-xl bg-white p-5'>
+      <div className='lg:grid lg:grid-cols-3 gap-5 w-full block '>
+        <div className='col-span-1 lg:border lg:rounded-xl bg-white p-5'>
           <Spin spinning={isLoading}>
             <Form
               className="text-center items-centers text-2xl text-black font-semibold"
@@ -88,7 +88,7 @@ const Page = () => {
           </Spin>
         </div>
 
-        <div className='lg:col-span-2 lg:border lg:rounded-xl bg-white p-5'>
+        <div className='col-span-2 lg:border lg:rounded-xl bg-white p-5'>
           <Spin spinning={isLoading}>
             <Tabs defaultActiveKey="1" size="large">
               <Tabs.TabPane tab={t('routes.admin.Layout.My Profile')} key="1">
@@ -133,7 +133,7 @@ const Page = () => {
                   extendButton={(form) => (
                     <Button
                       text={t('components.button.Cancel')}
-                      className={' md:min-w-[8rem] w-full mt-3 justify-center out-line'}
+                      className={'md:w-32 justify-center out-line sm:w-80 w-60 '}
                       onClick={() => {
                         navigate(routerLinks('User/List'))
                       }}
@@ -151,8 +151,8 @@ const Page = () => {
                       name: 'password',
                       formItem: {
                         col: 12,
-                        type: 'password',
-                        rules: [{ type: 'required' }],
+                        type: 'passConfirm',
+                        rules: [{ type: 'required1' }],
                         placeholder: t('columns.auth.placeholder.Password').toString(),
                       },
                     },
@@ -162,16 +162,17 @@ const Page = () => {
                       formItem: {
                         col: 12,
                         type: 'password',
-                        rules: [{ type: 'required' }],
+                        condition: (value: string, form, index: number, values: any) => !values?.id,
+                        rules: [{ type: 'required' },{ type: 'min', value: 8 }],
                         placeholder: t('columns.auth.placeholder.newPassword').toString(),
                       },
                     },
                     {
                       title: 'columns.auth.login.Confirm Password',
-                      name: 'passwordConfirm',
+                      name: 'passwordComfirm',
                       formItem: {
                         col: 12,
-                        type: 'password',
+                        type: 'passConfirm',
                         rules: [
                           {
                             type: 'custom',
@@ -184,7 +185,7 @@ const Page = () => {
                               },
                             }),
                           },
-                          { type: 'required' },{ type: 'min', value: 1 },
+                          { type: 'required1' },{ type: 'min', value: 1 },
                         ],
                         placeholder: t('columns.auth.placeholder.Confirm Password').toString(),
                       },

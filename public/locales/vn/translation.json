@@ -13,7 +13,7 @@
       "No Data": "Trống"
     },
     "form": {
-      "ruleRequired": "Xin vui lòng nhập {{title}}",
+      "ruleRequired": "Đây là trường bắt buộc!",
       "ruleEmail": "Vui lòng nhập địa chỉ email hợp lệ!",
       "ruleUsername": "Tên người dùng không chứa các ký tự đặc biệt, chỉ bao gồm chữ cái và chữ số!",
       "ruleMinLength": "Vui lòng nhập ít nhất {{min}} ký tự!",
