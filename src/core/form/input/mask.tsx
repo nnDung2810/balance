@@ -38,7 +38,7 @@ const Component = ({
           'rounded-l-xl border-r': !addonBefore && !!addonAfter,
           'rounded-r-xl border-l': !!addonBefore && !addonAfter,
           'border-r border-l': !!addonBefore && !!addonAfter,
-          'bg-gray-100 text-gray-400': disabled,
+          '!bg-gray-100 !text-gray-400': disabled,
         })}
         readOnly={disabled}
         value={value || ''}

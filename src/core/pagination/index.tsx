@@ -163,7 +163,7 @@ export const Pagination: any = ({
                 key={index}
                 id={idElement + '_' + item.type}
                 className={classNames(
-                  'text-center duration-300 transition-all p-1 text-sm font-medium leading-normal relative',
+                  'text-center duration-300 transition-all p-1 px-3 text-sm font-medium leading-normal relative',
                   {
                     'text-teal-900 ':
                       page !== item.index && !['next_5', 'prev_5'].includes(item.type),

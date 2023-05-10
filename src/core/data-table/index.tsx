@@ -334,7 +334,7 @@ export const DataTable = forwardRef(
               item = { ...item, ...getColumnSearchDate(item.filter.name || col.name) };
               break;
             default:
-              item = { ...item, ...getColumnSearchInput(item?.filter?.name || col.name) };
+            //  item = { ...item, ...getColumnSearchInput(item?.filter?.name || col.name) };
           }
           delete item.filter;
         }
@@ -387,13 +387,13 @@ export const DataTable = forwardRef(
     };
     if (!data) data = result?.data;
     return (
-      <div className={classNames(className, 'intro-x rounded-lg bg-white')}>
-        <div className="sm:flex justify-between mb-2.5">
+      <div className={classNames(className, 'intro-x bg-white px-6 rounded-lg')}>
+        <div className="sm:flex justify-between py-2">
           {showSearch ? (
             <div className="relative">
               <input
                 id={idTable.current + '_input_search'}
-                className="w-full sm:w-80 h-10 rounded-xl text-gray-600 bg-white border border-solid border-gray-200 pr-9 pl-9"
+                className="w-full sm:w-80 h-10 rounded-xl text-gray-600 bg-white border border-solid border-gray-500 pr-9 pl-8"
                 defaultValue={params.fullTextSearch}
                 type="text"
                 placeholder={searchPlaceholder || (t('components.datatable.pleaseEnterValueToSearch') as string)}
@@ -421,7 +421,7 @@ export const DataTable = forwardRef(
               />
               {!params.fullTextSearch ? (
                 <Search
-                  className="w-4 h-4 my-1 fill-gray-500 text-lg las absolute top-2 left-2.5 z-10"
+                  className="w-5 h-5 my-1 fill-gray-500 text-lg bg-blue-50 las absolute top-1.5 left-3 z-10"
                   onClick={() => {
                     if (params.fullTextSearch) {
                       (document.getElementById(idTable.current + '_input_search') as HTMLInputElement).value = '';

@@ -136,7 +136,7 @@ const Layout = ({ children }: PropsWithChildren) => {
                       <div className='flex items-center'>
                         <Key className='w-5 h-5 pr-2 text-black'/>
                       </div>
-                      <div onClick={() => navigate(routerLinks('ResetPassword'), { replace: true })}>
+                      <div onClick={() => navigate(routerLinks('MyProfile'), { replace: true })}>
                         {t('routes.admin.Layout.Change Password')}
                       </div>
                     </div>

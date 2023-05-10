@@ -66,34 +66,42 @@
     },
     "button": {
       "New": "New",
-      "Role": "Role",
+      "Back": "Back",
       "Cancel": "Cancel"
     }
   },
   "titles": {
     "Login": "Login",
     "Dashboard": "Dashboard",
-    "User": "User",
+    "User": "User information",
     "User/List": "List User",
     "User/Add": "Add new User",
+    "UserAdd": "Add new User",
     "User/Edit": "Edit User",
     "MyProfile": "My Profile",
     "Setting": "Setting",
-    "Code": "Mã",
-    "Data": "Dữ liệu",
-    "Page": "Trang",
     "Supplier": "Supplier",
     "Supplier/Add": "Add new Supplier",
-    "Supplier/Edit": "Thông tin nhà cung cấp",
     "Store": "Store",
-    "Store/Add": "Add new Store"
+    "Store/Add": "Add new Store",
+    "merchandise-managerment": "Inventory management",
+    "merchandise-managerment/product": "Product",
+    "merchandise-managerment/category": "Category",
+    "merchandise-managerment/tax": "Tax"
+
   },
   "pages": {
+    "Login": "Login",
     "User/List": "List User",
-    "User/Add": "Add new User",
+    "User/Add": "Add User",
     "User/Edit": "Edit User",
-    "store-managerment/create":"Thêm cửa hàng",
-    "MyProfile": "My Profile"
+    "store-managerment/create": "Create Store",
+    "Đặt Lại Mật Khẩu": "Reset Password",
+    "Sign-in": "Sign-in",
+    "Quên Mật Khẩu": "Forgot Password",
+    "Store": "Store",
+    "store-managerment/edit": "Edit Store",
+    "MyProfile": "MyProfile"  
   },
   "columns": {
     "auth": {
@@ -126,7 +134,7 @@
     }
   },
   "layout": {
-    "footer": "Copyright ©2023 ARI Technology Co ., JSC. All rights reserved."
+    "footer": "Copyright ©{{year}} ARI Technology Co ., JSC. All rights reserved."
   },
   "routes": {
     "auth": {
@@ -170,8 +178,8 @@
         "Change Password": "Change Password",
         "My Profile": "My Profile",
         "No Data": "No Data",
-        "Pagination": "Show {{from}} - {{to}} / Total {{total}} Categories",
-        "User": "Show {{from}} - {{to}} / Total {{total}} User",
+        "Pagination": "Show {{from}} - {{to}} / Total {{total}} categories",
+        "User": "Show {{from}} - {{to}} / Total {{total}} user",
         "Day": "day"
       }
     }
@@ -190,63 +198,56 @@
       "SUPPLIER": "Supplier representative"
     }
   },
-  "Code": {
-    "Type": "Type",
-    "Type Code": "Type Code",
-    "Type Category": "Type Category",
-    "Name": "Name"
+  "supplier": {
+    "Code": "Mã NCC",
+    "Name": "Tên nhà cung cấp",
+    "Address": "Địa chỉ",
+    "Representative": "Người đại diện",
+    "Phone Number": "Số điện thoại",
+    "Status": "Trạng thái"
   },
-  "Data": {
-    "Type": "Type",
-    "Type Data": "Type Data",
-    "Name": "Name",
-    "Order": "Order",
-    "Page": "Page",
-    "Image": "Image",
-    "Create At": "Create At"
-  },
-  "dashboard": {
-    "Active Profile Report": "Active Profile Report",
+  "dashboard":{
+    "Active Profile Report":"Active Profile Report",
     "Total Profile": "Total Profile",
-    "Activated Profile": "Activated Profile",
-    "New Custommers": "New Custommers",
-    "User Purchasing Report": "User Purchasing Report",
-    "Free": "Free",
-    "Silver": "Silver",
-    "Gold": "Gold",
-    "Platinum": "Platinum",
-    "Seller Profiles": "Seller Profiles",
-    "Buyer Profiles": "Buyer Profiles",
-    "Introductions": "Introductions",
-    "Success Deal": "GSuccess Deal",
-    "Total Payment": "Total Payment",
-    "Partner Refund": "Partner Refund",
-    "Reference User": "Reference User",
-    "Sales Stats": "Sales Stats",
-    "Sales": "Sales",
-    "Share of total": "Share of total",
-    "active profiles": "active profiles",
-    "Total": "Total",
-    "active profile in": "active profile in",
-    "Business Profiles Activity": "Business Profiles Activity",
-    "Franchise Profiles Activity": "Franchise Profiles Activity",
-    "Investor Profiles Activity": "nvestor Profiles Activityư",
-    "Monthly Profiles Activity": "Monthly Profiles Activity",
-    "Profile": "Profile",
-    "Package": "Package",
-    "Start Date": "Start Date",
-    "Status": "Status",
-    "Jan": "Jan",
-    "Feb": "Feb",
-    "Mar": "Mar",
-    "Apr": "Apr",
-    "May": "May",
-    "Jun": "Jun",
-    "Jul": "Jul",
-    "Aug": "Aug",
-    "Sep": "Sep",
-    "Oct": "Oct",
-    "Nov": "Nov",
-    "Dev": "Dev"
+    "Activated Profile":"Activated Profile",
+    "New Custommers":"New Custommers",
+    "User Purchasing Report":"User Purchasing Report",
+    "Free":"Free",
+    "Silver":"Silver",
+    "Gold":"Gold",
+    "Platinum":"Platinum",
+    "Seller Profiles":"Seller Profiles",
+    "Buyer Profiles":"Buyer Profiles",
+    "Introductions":"Introductions",
+    "Success Deal":"GSuccess Deal",
+    "Total Payment":"Total Payment",
+    "Partner Refund":"Partner Refund",
+    "Reference User":"Reference User",
+    "Sales Stats":"Sales Stats",
+    "Sales":"Sales",
+    "Share of total":"Share of total",
+    "active profiles":"active profiles",
+    "Total":"Total",
+    "active profile in":"active profile in",
+    "Business Profiles Activity":"Business Profiles Activity",
+    "Franchise Profiles Activity":"Franchise Profiles Activity",
+    "Investor Profiles Activity":"nvestor Profiles Activityư",
+    "Monthly Profiles Activity":"Monthly Profiles Activity",
+    "Profile":"Profile",
+    "Package":"Package",
+    "Start Date":"Start Date",
+    "Status":"Status",
+    "Jan":"Jan",
+    "Feb":"Feb",
+    "Mar":"Mar",
+    "Apr":"Apr",
+    "May":"May",
+    "Jun":"Jun",
+    "Jul":"Jul",
+    "Aug":"Aug",
+    "Sep":"Sep",
+    "Oct":"Oct",
+    "Nov":"Nov",
+    "Dev":"Dev"
   }
 }

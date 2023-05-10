@@ -21,8 +21,8 @@ const Page = () => {
 
   return (
     <Fragment>
-      <div className='grid grid-cols-3 gap-5 w-full'>
-        <div className='col-span-1 bg-white p-5 border rounded-xl'>
+      <div className='grid grid-cols-3 gap-5 w-full max-lg:block max-lg:bg-white'>
+        <div className='col-span-1 bg-white p-5 border rounded-xl max-lg:border-none'>
           <Spin spinning={isLoading}>
             <Form
               className="text-center items-centers text-2xl text-black font-semibold"
@@ -32,7 +32,7 @@ const Page = () => {
                   name: 'profileImage',
                   formItem: {
                     type: 'upload',
-                  //  mode: 'multiple',
+                    mode: 'multiple',
                     onlyImage: true,
                   },
                 },
@@ -59,7 +59,7 @@ const Page = () => {
                           <div className='flex w-full flex-row justify-center pt-2'>
                             <div><UserSolid className='w-7 h-7 mr-2 fill-slate-500' /></div>
                             <div className='text-xl text-gray-500'>
-                            {t('user.RoleUser.ADMIN')}
+                              {t('user.RoleUser.ADMIN')}
                             </div>
                           </div>
                         )
@@ -88,124 +88,123 @@ const Page = () => {
           </Spin>
         </div>
 
-        <div className='col-span-2 bg-white p-5 border rounded-xl mr-4 fill-black'>
+        <div className='col-span-2 bg-white p-5 border rounded-xl mr-4 fill-black max-lg:border-none'>
           <Spin spinning={isLoading}>
-              <Tabs defaultActiveKey="1" size="large">
-                <Tabs.TabPane tab={t('routes.admin.Layout.My Profile')} key="1">
-                  <Form
-                    columns={[
-                      {
-                        title: 'user.Fullname',
-                        name: 'name',
-                        formItem: {
-                          col: 12,
-                          rules: [{ type: 'required' }],
-                        },
+            <Tabs defaultActiveKey="1" size="large">
+              <Tabs.TabPane tab={t('routes.admin.Layout.My Profile')} key="1">
+                <Form
+                  columns={[
+                    {
+                      title: 'user.Fullname',
+                      name: 'name',
+                      formItem: {
+                        col: 12,
+                        rules: [{ type: 'required' }],
                       },
-                      {
-                        title: 'Email',
-                        name: 'email',
-                        formItem: {
-                          tabIndex: 1,
-                          col: 6,
-                          rules: [{ type: 'required' }, { type: 'email' }, { type: 'min', value: 6 }],
-                        },
+                    },
+                    {
+                      title: 'Email',
+                      name: 'email',
+                      formItem: {
+                        tabIndex: 1,
+                        col: 6,
+                        rules: [{ type: 'required' }, { type: 'email' }, { type: 'min', value: 6 }],
                       },
-                      {
-                        title: 'user.Phone Number',
-                        name: 'phoneNumber',
-                        formItem: {
-                          tabIndex: 1,
-                          col: 6,
-                          rules: [{ type: 'required' }, { type: 'phone', min: 10, max: 15 }],
-                        },
+                    },
+                    {
+                      title: 'user.Phone Number',
+                      name: 'phoneNumber',
+                      formItem: {
+                        tabIndex: 1,
+                        col: 6,
+                        rules: [{ type: 'required' }, { type: 'phone', min: 10, max: 15 }],
                       },
-                      {
-                        title: 'user.Note',
-                        name: 'note',
-                        formItem: {
-                          type: 'textarea',
-                        },
+                    },
+                    {
+                      title: 'user.Note',
+                      name: 'note',
+                      formItem: {
+                        type: 'textarea',
                       },
-                    ]}
-                    disableSubmit={isLoading}
-                    handSubmit={putProfile}
-                    extendButton={(form) => (
-                      <Button
-                        text={t('components.button.Cancel')}
-                        className={'md:min-w-[8rem] justify-center out-line'}
-                        onClick={() => {
-                          navigate(routerLinks('User/List'))
-                        }}
-                      />
-                    )}
-                    values={{ ...user }}
-                  />
-                </Tabs.TabPane>
+                    },
+                  ]}
+                  disableSubmit={isLoading}
+                  handSubmit={putProfile}
+                  extendButton={(form) => (
+                    <Button
+                      text={t('components.button.Cancel')}
+                      className={'md:min-w-[8rem] justify-center out-line'}
+                      onClick={() => {
+                        navigate(routerLinks('User/List'))
+                      }}
+                    />
+                  )}
+                  values={{ ...user }}
+                />
+              </Tabs.TabPane>
 
-                <Tabs.TabPane tab={t('routes.admin.Layout.Change Password')} key="2">
-                  <Form
-                    columns={[
-                      {
-                        title: 'columns.auth.login.Password',
-                        name: 'password',
-                        formItem: {
-                          col: 12,
-                          type: 'password',
-                          rules: [{ type: 'required' }, { type: 'min', value: 6 }],
-                          placeholder: t('columns.auth.placeholder.Password').toString(),
-                        },
+              <Tabs.TabPane tab={t('routes.admin.Layout.Change Password')} key="2">
+                <Form
+                  columns={[
+                    {
+                      title: 'columns.auth.login.Password',
+                      name: 'password',
+                      formItem: {
+                        col: 12,
+                        type: 'password',
+                        rules: [{ type: 'required' }],
+                        placeholder: t('columns.auth.placeholder.Password').toString(),
                       },
-                      {
-                        title: 'columns.auth.login.newPassword',
-                        name: 'passwordNew',
-                        formItem: {
-                          col: 12,
-                          type: 'password',
-                          rules: [{ type: 'custom' }, { type: 'min', value: 6 }],
-                          placeholder: t('columns.auth.placeholder.newPassword').toString(),
-                        },
+                    },
+                    {
+                      title: 'columns.auth.login.newPassword',
+                      name: 'passwordNew',
+                      formItem: {
+                        col: 12,
+                        type: 'password',
+                        rules: [{ type: 'required' }],
+                        placeholder: t('columns.auth.placeholder.newPassword').toString(),
                       },
-                      {
-                        title: 'columns.auth.login.Confirm Password',
-                        name: 'passwordComfirm',
-                        formItem: {
-                          col: 12,
-                          type: 'password',
-                          condition: (values: any) => !values?.id,
-                          rules: [
-                            { type: 'required' },
-                            {
-                              type: 'custom',
-                              validator: ({ getFieldValue }: any) => ({
-                                validator(rule: any, value: string) {
-                                  if (!value || getFieldValue('passwordNew') === value) {
-                                    return Promise.resolve();
-                                  }
-                                  return Promise.reject(new Error('Hai mật khẩu không giống nhau!'));
-                                },
-                              }),
-                            },
-                          ],
-                          placeholder: t('columns.auth.placeholder.Confirm Password').toString(),
-                        },
+                    },
+                    {
+                      title: 'columns.auth.login.Confirm Password',
+                      name: 'passwordConfirm',
+                      formItem: {
+                        col: 12,
+                        type: 'password',
+                        rules: [
+                          {
+                            type: 'custom',
+                            validator: ({ getFieldValue }) => ({
+                              validator(rule, value: string) {
+                                if (!value || getFieldValue('passwordNew') === value) {
+                                  return Promise.resolve();
+                                }
+                                return Promise.reject(new Error('Hai mật khẩu không giống nhau!'));
+                              },
+                            }),
+                          },
+                          { type: 'required' },{ type: 'min', value: 1 },
+                        ],
+                        placeholder: t('columns.auth.placeholder.Confirm Password').toString(),
                       },
-                    ]}
-                    disableSubmit={isLoading}
-                    extendButton={(form) => (
-                      <Button
-                        text={t('components.button.Cancel')}
-                        className={'md:min-w-[8rem] justify-center out-line'}
-                        onClick={() => {
-                          navigate(routerLinks('User/List'))
-                        }}
-                      />
-                    )}
-                    extendButtonChangePassword={setPassword}
-                    values={{ ...user }}
-                  />
-                </Tabs.TabPane>
-              </Tabs>
+                    },
+                  ]}
+                  disableSubmit={isLoading}
+                  extendButton={(form) => (
+                    <Button
+                      text={t('components.button.Cancel')}
+                      className={'md:min-w-[8rem] justify-center out-line'}
+                      onClick={() => {
+                        navigate(routerLinks('User/List'))
+                      }}
+                    />
+                  )}
+                  extendButtonChangePassword={setPassword}
+                  values={{ ...user }}
+                />
+              </Tabs.TabPane>
+            </Tabs>
           </Spin>
         </div>
         <div>
