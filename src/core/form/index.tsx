@@ -322,7 +322,7 @@ export const Form = ({
             switch (rule.type) {
               case 'required':
                 if (!rule.message) {
-                  rule.message = t('components.form.ruleRequired');
+                  rule.message = t('components.form.ruleRequired', { title: item.title }).toLowerCase();
                 }
                 rules.push({
                   required: true,
@@ -331,7 +331,7 @@ export const Form = ({
                 if (!item.formItem.type) {
                   rules.push({
                     whitespace: true,
-                    message: t('components.form.ruleRequired'),
+                    message: t('components.form.ruleRequired', { title: item.title }).toLowerCase(),
                   });
                 }
                 break;

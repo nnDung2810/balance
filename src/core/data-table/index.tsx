@@ -32,12 +32,12 @@ const checkTextToShort = (text: string) => {
 const getQueryStringParams = (query: string) => {
   return query
     ? (/^[?#]/.test(query) ? query.slice(1) : query)
-        .split('&')
-        .reduce((params: { [selector: string]: string }, param: string) => {
-          const [key, value] = param.split('=');
-          params[key] = value ? decodeURIComponent(value.replace(/\+/g, ' ')) : '';
-          return params;
-        }, {})
+      .split('&')
+      .reduce((params: { [selector: string]: string }, param: string) => {
+        const [key, value] = param.split('=');
+        params[key] = value ? decodeURIComponent(value.replace(/\+/g, ' ')) : '';
+        return params;
+      }, {})
     : {}; // Trim - from end of text
 };
 
@@ -366,11 +366,11 @@ export const DataTable = forwardRef(
       const tempSort =
         sorts && sorts?.field && sorts?.order
           ? {
-              [sorts.field as string]: sorts.order === 'ascend' ? 'ASC' : sorts.order === 'descend' ? 'DESC' : '',
-            }
+            [sorts.field as string]: sorts.order === 'ascend' ? 'ASC' : sorts.order === 'descend' ? 'DESC' : '',
+          }
           : sorts?.field
-          ? null
-          : sorts;
+            ? null
+            : sorts;
 
       if (tempFullTextSearch !== params.fullTextSearch) {
         tempPageIndex = 1;
@@ -387,13 +387,13 @@ export const DataTable = forwardRef(
     };
     if (!data) data = result?.data;
     return (
-      <div className={classNames(className, 'intro-x bg-white px-6 rounded-lg')}>
-        <div className="sm:flex justify-between py-2">
+      <div className={classNames(className, 'intro-x')}>
+        <div className="lg:flex justify-between mb-2.5">
           {showSearch ? (
             <div className="relative">
               <input
                 id={idTable.current + '_input_search'}
-                className="w-full sm:w-80 h-10 rounded-xl text-gray-600 bg-white border border-solid border-gray-500 pr-9 pl-8"
+                className="w-full sm:w-80 h-10 rounded-xl text-gray-600 bg-white border border-solid border-gray-200 pr-9 pl-9"
                 defaultValue={params.fullTextSearch}
                 type="text"
                 placeholder={searchPlaceholder || (t('components.datatable.pleaseEnterValueToSearch') as string)}
@@ -421,7 +421,7 @@ export const DataTable = forwardRef(
               />
               {!params.fullTextSearch ? (
                 <Search
-                  className="w-5 h-5 my-1 fill-gray-500 text-lg las absolute top-1.5 left-3 z-10"
+                  className="w-4 h-4 my-1 fill-gray-500 text-lg las absolute top-2 left-2.5 z-10"
                   onClick={() => {
                     if (params.fullTextSearch) {
                       (document.getElementById(idTable.current + '_input_search') as HTMLInputElement).value = '';

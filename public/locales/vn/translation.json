@@ -13,7 +13,7 @@
       "No Data": "Trống"
     },
     "form": {
-      "ruleRequired": "Đây là trường bắt buộc!",
+      "ruleRequired": "Xin vui lòng nhập {{title}}",
       "ruleEmail": "Vui lòng nhập địa chỉ email hợp lệ!",
       "ruleUsername": "Tên người dùng không chứa các ký tự đặc biệt, chỉ bao gồm chữ cái và chữ số!",
       "ruleMinLength": "Vui lòng nhập ít nhất {{min}} ký tự!",
@@ -136,7 +136,6 @@
   },
   "layout": {
     "footer": "Bản quyền ©{{year}} Công ty Cổ phần Công nghệ ARI. Đã đăng ký Bản quyền."
-
   },
   "routes": {
     "auth": {
@@ -180,9 +179,10 @@
         "Change Password": "Đổi mật khẩu",
         "My Profile": "Thông tin cá nhân",
         "No Data": "Trống",
-        "Pagination": "Hiển thị {{from}} - {{to}} / Tổng số {{total}} danh mục",
-        "User": "Hiển thị {{from}} - {{to}} / Tổng số {{total}} người dùng",
-        "Day": "Ngày phép"
+        "Pagination": "Hiển thị {{from}} - {{to}} / Tổng số {{total}} Danh mục",
+        "User": "Hiển thị {{from}} - {{to}} / Tổng số {{total}} Người dùng",
+        "Day": "Ngày phép",
+        "PaginationStore": "Hiển thị {{from}} - {{to}} / Tổng số {{total}} Cửa hàng"
       }
     }
   },
@@ -207,6 +207,23 @@
     "Representative": "Người đại diện",
     "Phone Number": "Số điện thoại",
     "Status": "Trạng thái"
+  },
+  "store": {
+    "Name": "Tên cửa hàng",
+    "Address": "Địa chỉ",
+    "Type": "Loại cửa hàng",
+    "Contact": "Người đại diện",
+    "Phone Number": "Số điện thoại",
+    "Code": "Mã cửa hàng",
+    "Fax": "Số fax",
+    "Province": "Tỉnh/Thành phố",
+    "District": "Quận/Huyện",
+    "Ward": "Phường/Xã",
+    "Street": "Địa chỉ cụ thế",
+    "ContactName": "Họ tên đại diện",
+    "Contact Phone Number": "Số điện thoại đại diện",
+    "Contact Email": "Email đại diện",
+    "Note": "Ghi chú"
   },
   "dashboard": {
     "Active Profile Report": "Báo cáo hồ sơ đang hoạt động",

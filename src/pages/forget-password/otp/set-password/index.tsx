@@ -41,7 +41,7 @@ const Page = () => {
                     formItem: {
                         placeholder: 'Mật khẩu',
                         type: 'password',
-                        rules: [{ type: 'required' }, { type: 'min', value: 8 }],
+                        rules: [{ type: 'required' },],
                     },
                 },
                 {
@@ -62,7 +62,7 @@ const Page = () => {
                                     },
                                 }),
                             },
-                            { type: 'required' }, { type: 'min', value: 8 }
+                            { type: 'required' },
                         ],
                     },
                 },
