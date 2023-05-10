@@ -8,7 +8,7 @@ import { API, linkApi } from '@utils';
 import { Button } from '../button';
 import { Spin } from '../spin';
 import { Message } from '../message';
-import { Plus, Copy, Paste, Times, Briefcase } from '@svgs';
+import { Plus, Copy, Paste, Camera } from '@svgs';
 
 export const Upload = ({
   value = [],
@@ -297,7 +297,7 @@ export const Upload = ({
                     cancelText={t('components.datatable.cancel')}
                   >
                     <Button
-                      icon={<Briefcase className={'h-6 w-6'} />}
+                      icon={<Camera className={'h-6 w-6'} />}
                       className={'!bg-gray-400 !rounded-full flex items-center justify-center'}
                     />
                   </Popconfirm>

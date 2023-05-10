@@ -21,8 +21,8 @@ const Page = () => {
 
   return (
     <Fragment>
-      <div className='grid grid-cols-3 gap-5 w-full max-lg:block max-lg:bg-white'>
-        <div className='col-span-1 bg-white p-5 border rounded-xl max-lg:border-none'>
+      <div className='lg:grid lg:grid-cols-3 lg:gap-5 w-full block'>
+        <div className='lg:col-span-1 lg:border lg:rounded-xl bg-white p-5'>
           <Spin spinning={isLoading}>
             <Form
               className="text-center items-centers text-2xl text-black font-semibold"
@@ -88,7 +88,7 @@ const Page = () => {
           </Spin>
         </div>
 
-        <div className='col-span-2 bg-white p-5 border rounded-xl mr-4 fill-black max-lg:border-none'>
+        <div className='lg:col-span-2 lg:border lg:rounded-xl bg-white p-5'>
           <Spin spinning={isLoading}>
             <Tabs defaultActiveKey="1" size="large">
               <Tabs.TabPane tab={t('routes.admin.Layout.My Profile')} key="1">
@@ -133,7 +133,7 @@ const Page = () => {
                   extendButton={(form) => (
                     <Button
                       text={t('components.button.Cancel')}
-                      className={'md:min-w-[8rem] justify-center out-line'}
+                      className={' md:min-w-[8rem] w-full mt-3 justify-center out-line'}
                       onClick={() => {
                         navigate(routerLinks('User/List'))
                       }}
