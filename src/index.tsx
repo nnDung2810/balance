@@ -17,7 +17,6 @@ if (!fallbackLng) {
 }
 i18n
   .use(XHR)
-  // .use(LanguageDetector)
   .use(initReactI18next)
   .init({
     backend: {
