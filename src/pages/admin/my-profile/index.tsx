@@ -22,8 +22,8 @@ const Page = () => {
 
   return (
     <Fragment>
-      <div className='grid grid-cols-3 gap-5 w-full'>
-        <div className='col-span-1 bg-white p-5 border rounded-xl'>
+      <div className='lg:grid lg:grid-cols-3 gap-5 w-full block'>
+        <div className='col-span-1 bg-white p-5 lg:border lg:rounded-xl'>
           <Spin spinning={isLoading}>
             <Form
               className="text-center items-centers text-2xl text-black font-semibold"
@@ -85,7 +85,7 @@ const Page = () => {
           </Spin>
         </div>
 
-        <div className='col-span-2 bg-white p-5 border rounded-xl mr-4 fill-black'>
+        <div className='col-span-2 bg-white p-5 lg:border lg:rounded-xl fill-black'>
           <Spin spinning={isLoading}>
             <Tabs defaultActiveKey="1" size="large">
               <TabPane tab={t('titles.Personalinformation')} key="1">

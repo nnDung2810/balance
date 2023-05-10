@@ -619,14 +619,14 @@ export const Form = ({
         className={classNames('mt-9 gap-2 flex absolute pb-14', {
           'justify-center': !extendButton && !handCancel,
           'md:inline-flex w-full justify-between md:float-right': handCancel,
-          'md:inline-flex md:float-right right-0': handSubmit || extendButton,
+          'sm:block sm:text-center md:inline-flex md:float-right right-0': handSubmit || extendButton,
           'md:inline-flex md:float-right top-[300px]': extendButtonChangePassword,
         })}
       >
         {handCancel && (
           <Button
             text={t(textCancel)}
-            className={'w-32 justify-center out-line !border-black max-sm:w-3/5'}
+            className={'md:min-w-[8rem] justify-center out-line !border-black'}
             onClick={handCancel}
           />
         )}
@@ -637,7 +637,7 @@ export const Form = ({
             id={idSubmit}
             onClick={() => form && form.submit()}
             disabled={disableSubmit}
-            className={'w-32 justify-center !bg-teal-800 hover:!bg-teal-700 !border !border-teal-900 max-sm:w-3/5'}
+            className={'md:min-w-[8rem] justify-center !bg-teal-800 hover:!bg-teal-700 !border !border-teal-900'}
             type={'submit'}
           />
         )}
@@ -651,7 +651,7 @@ export const Form = ({
               }
             }}
             disabled={disableSubmit}
-            className={'w-32 justify-center !bg-teal-800 hover:!bg-teal-700 !border !border-teal-900 max-sm:w-3/5'}
+            className={'md:min-w-[8rem] justify-center !bg-teal-800 hover:!bg-teal-700 !border !border-teal-900 '}
             type={'submit'}
           />
         )}
