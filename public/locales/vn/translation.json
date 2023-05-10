@@ -82,8 +82,10 @@
     "Setting": "Thiết lập",
     "Supplier": "Quản lý nhà cung cấp",
     "Supplier/Add": "Thêm nhà cung cấp",
+    "Supplier/Edit": "Chi tiết nhà cung cấp",
     "Store": "Quản lý cửa hàng",
     "Store/Add": "Thêm cửa hàng",
+    "Store/SubStore": "Thêm chi nhánh",
     "store-managerment/create": "Thêm cửa hàng",
     "store-managerment/edit": "Thông tin cửa hàng",
     "merchandise-managerment": "Quản lý hàng hóa",
@@ -182,7 +184,8 @@
         "Pagination": "Hiển thị {{from}} - {{to}} / Tổng số {{total}} Danh mục",
         "User": "Hiển thị {{from}} - {{to}} / Tổng số {{total}} Người dùng",
         "Day": "Ngày phép",
-        "PaginationStore": "Hiển thị {{from}} - {{to}} / Tổng số {{total}} Cửa hàng"
+        "PaginationStore": "Hiển thị {{from}} - {{to}} / Tổng số {{total}} Cửa hàng",
+        "PaginationSubStore": "Hiển thị {{from}} - {{to}} / Tổng số {{total}} Chi nhánh"
       }
     }
   },

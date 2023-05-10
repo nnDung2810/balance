@@ -5,9 +5,11 @@ import { Switch } from 'antd';
 
 import { routerLinks } from '@utils';
 import { Form } from '@core/form';
-import { DistrictFacade, StoreFacade, WardFacade, ProvinceFacade, StoreManagement } from '@store';
+import { DistrictFacade, StoreFacade, WardFacade, ProvinceFacade, StoreManagement, SubStoreFacade, ConnectSupplierFacade } from '@store';
 import classNames from 'classnames';
 import { DataTable } from '@core/data-table';
+import { Button } from '@core/button';
+import { Plus } from '@svgs';
 
 const Page = () => {
   const { t } = useTranslation();
@@ -19,6 +21,9 @@ const Page = () => {
 
   const storeFacade = StoreFacade()
   const { data, isLoading, queryParams, status } = storeFacade;
+
+  const subStoreFacade = SubStoreFacade()
+  const connectSupplierFacade = ConnectSupplierFacade()
 
   const navigate = useNavigate();
   const isBack = useRef(true);
@@ -254,76 +259,142 @@ const Page = () => {
               />
             )}
             {/* Danh sách chi nhánh  */}
-            <DataTable
-              facade={storeFacade}
-              defaultRequest={{ page: 1, perPage: 10, type: 'STORE' }}
-              xScroll='1440px'
-              className=' bg-white p-5 rounded-lg'
-              onRow={(data: any) => ({
-                onDoubleClick: () => {
-                  navigate(routerLinks('store-managerment/edit') + '/' + data.id);
-                },
-              })}
-              pageSizeRender={(sizePage: number) => sizePage}
-              pageSizeWidth={'50px'}
-              paginationDescription={(from: number, to: number, total: number) =>
-                t('routes.admin.Layout.PaginationStore', { from, to, total })
-              }
-              columns={[
-                {
-                  title: 'store.Code',
-                  name: 'code',
-                  tableItem: {
-                    width: 150,
+            {tab === 'tab3' && (
+              <DataTable
+                facade={subStoreFacade}
+                defaultRequest={{ page: 1, perPage: 10, storeId: data?.id, supplierType: 'BALANCE' }}
+                xScroll='1440px'
+                className=' bg-white p-5 rounded-lg'
+                onRow={(data: any) => ({
+                  onDoubleClick: () => {
+                    navigate(routerLinks('store-managerment/edit') + '/' + data.id);
                   },
-                },
-                {
-                  title: 'store.Name',
-                  name: 'name',
-                  tableItem: {
+                })}
+                pageSizeRender={(sizePage: number) => sizePage}
+                pageSizeWidth={'50px'}
+                paginationDescription={(from: number, to: number, total: number) =>
+                  t('routes.admin.Layout.PaginationSubStore', { from, to, total })
+                }
+                columns={[
+                  {
+                    title: 'store.Code',
+                    name: 'code',
+                    tableItem: {
+                      width: 120,
+                    },
                   },
-                },
-                {
-                  title: 'store.Address',
-                  name: 'address',
-                  tableItem: {
-                    render: (value: any, item: any) => item.address?.street + ', ' + item.address?.ward.name + ', ' + item.address?.district.name + ', ' + item.address?.province.name,
+                  {
+                    title: 'store.Name',
+                    name: 'name',
+                    tableItem: {
+                    },
                   },
-                },
-                {
-                  title: 'store.ContactName',
-                  name: 'userRole',
-                  tableItem: {
-                    render: (value: any, item: any) => item.userRole[0]?.userAdmin.name,
+                  {
+                    title: 'store.Address',
+                    name: 'address',
+                    tableItem: {
+                      render: (value: any, item: any) => item.address?.street + ', ' + item.address?.wardName + ', ' + item.address?.districtName + ', ' + item.address?.provinceName,
+                    },
                   },
-                },
-                {
-                  title: 'store.Phone Number',
-                  name: 'userRole',
-                  tableItem: {
-                    render: (value: any, item: any) => item.userRole[0]?.userAdmin.phoneNumber,
+                  {
+                    title: 'store.ContactName',
+                    name: 'peopleContact',
+                    tableItem: {
+                      render: (value: any, item: any) => item.peopleContact?.name,
+                    },
                   },
-                },
-                {
-                  title: 'Trạng thái',
-                  name: 'isMain',
-                  tableItem: {
-                    render: (text: string) => text ? 'Cửa hàng chính' : 'Cửa hàng chi nhánh'
+                  {
+                    title: 'store.Phone Number',
+                    name: 'userpeopleContactRole',
+                    tableItem: {
+                      render: (value: any, item: any) => item.peopleContact?.phoneNumber,
+                    },
                   },
-                },
-              ]}
-            // rightHeader={
-            //   <div className={'flex gap-2 !bg-teal-900 !rounded-lg mt-0 max-lg:mt-2.5 max-lg:w-48'}>
-            //     <Button
-            //       className='!bg-teal-900 !rounded-3xl'
-            //       icon={<Plus className="icon-cud !h-5 !w-5 !fill-slate-200 " />}
-            //       text={t('titles.Store/Add')}
-            //       onClick={() => navigate(routerLinks('store-managerment/create'))}
-            //     />
-            //   </div>
-            // }
-            />
-            {/* end */}
+                  {
+                    title: 'Trạng thái',
+                    name: 'isActive',
+                    tableItem: {
+                      render: (text: string) => text ? (<div className='bg-green-100 text-center p-1 border border-green-500 text-green-600 rounded'>Đang hoạt động</div>)
+                        : (<div className='bg-red-100 text-center p-1 border border-red-500 text-red-600 rounded'></div>),
+                    },
+                  },
+                ]}
+                rightHeader={
+                  <div className={'flex gap-2 !bg-teal-900 !rounded-lg mt-0 max-lg:mt-2.5 max-lg:w-48'}>
+                    <Button
+                      className='!bg-teal-900 !rounded-full !h-9'
+                      icon={<Plus className="icon-cud !h-5 !w-5 !fill-slate-200 " />}
+                      text={t('titles.Store/SubStore')}
+                      onClick={() => navigate(routerLinks('store-managerment/create'))}
+                    />
+                  </div>
+                }
+              />
+            )}
+
+            {/* Quản lý NCC */}
+            {tab === 'tab4' && (
+              <DataTable
+                facade={connectSupplierFacade}
+                defaultRequest={{ page: 1, perPage: 10, idSuppiler: id }}
+                xScroll='1440px'
+                className=' bg-white p-5 rounded-lg'
+                onRow={(data: any) => ({
+                  onDoubleClick: () => {
+                    navigate(routerLinks('store-managerment/edit') + '/' + data.id);
+                  },
+                })}
+                pageSizeRender={(sizePage: number) => sizePage}
+                pageSizeWidth={'50px'}
+                paginationDescription={(from: number, to: number, total: number) =>
+                  t('routes.admin.Layout.PaginationSubStore', { from, to, total })
+                }
+                columns={[
+                  //  {
+                  //    title: 'store.Code',
+                  //    name: 'code',
+                  //    tableItem: {
+                  //      width: 120,
+                  //    },
+                  //  },
+                  //  {
+                  //    title: 'store.Name',
+                  //    name: 'name',
+                  //    tableItem: {
+                  //    },
+                  //  },
+                  //  {
+                  //    title: 'store.Address',
+                  //    name: 'address',
+                  //    tableItem: {
+                  //      render: (value: any, item: any) => item.address?.street + ', ' + item.address?.wardName + ', ' + item.address?.districtName + ', ' + item.address?.provinceName,
+                  //    },
+                  //  },
+                  //  {
+                  //    title: 'store.ContactName',
+                  //    name: 'peopleContact',
+                  //    tableItem: {
+                  //      render: (value: any, item: any) => item.peopleContact?.name,
+                  //    },
+                  //  },
+                  //  {
+                  //    title: 'store.Phone Number',
+                  //    name: 'userpeopleContactRole',
+                  //    tableItem: {
+                  //      render: (value: any, item: any) => item.peopleContact?.phoneNumber,
+                  //    },
+                  //  },
+                  //  {
+                  //    title: 'Trạng thái',
+                  //    name: 'isActive',
+                  //    tableItem: {
+                  //      render: (text: string) => text ? (<div className='bg-green-100 text-center p-1 border border-green-500 text-green-600 rounded'>Đang hoạt động</div>)
+                  //        : (<div className='bg-red-100 text-center p-1 border border-red-500 text-red-600 rounded'></div>),
+                  //    },
+                  //  },
+                ]}
+              />
+            )}
           </div>
           {/* ///// */}
         </div>

@@ -6,7 +6,7 @@ import { useAppDispatch, useTypedSelector, Action, Slice, State } from '@store';
 import { CommonEntity, PaginationQuery } from '@models';
 import { District, Province, Ward } from '@store';
 
-const name = 'sub-organization';
+const name = 'Organization';
 
 export const action = {
   ...new Action<StoreManagement>(name),
@@ -19,14 +19,7 @@ export const action = {
     if (message) await Message.success({ text: message });
     return data;
   }),
-  // put: createAsyncThunk(name + '/put', async ({ id, ...values }: StoreManagement) => {
-  //   // if (values.avatar) values.avatar = values.avatar[0].url;
-  //   const { data, message } = await API.put<StoreManagement>(`${routerLinks(name, 'api')}/${id}`, values);
-  //   if (message) await Message.success({ text: message });
-  //   return data;
-  // }),
 };
-// export const storeSlice = createSlice(new Slice<StoreManagement>(action));
 export const storeSlice = createSlice(
   new Slice<StoreManagement>(action, (builder: any) => {
     builder
