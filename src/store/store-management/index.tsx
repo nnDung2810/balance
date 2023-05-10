@@ -80,17 +80,10 @@ export class StoreManagement extends CommonEntity {
     public isMain?: boolean,
     public name?: string,
     public note?: string,
-    public address?: {
-      districtId?: string,
-      district?: District
-      id?: string,
-      postCode?: string,
-      provinceId?: string,
-      province?: Province,
-      street?: string,
-      ward?: Ward,
-      wardId?: string
-    },
+    public districtId?: string,
+    public provinceId?: string,
+    public street?: string,
+    public wardId?: string
     // public userRole?: string,
     // public contract?: string
   ) {

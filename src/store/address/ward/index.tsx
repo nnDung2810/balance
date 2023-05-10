@@ -9,7 +9,7 @@ export const action = {
   ...new Action<Ward>(name),
   getWard: createAsyncThunk(
     name + '/get',
-    async (districCode: string) => await API.get(`${routerLinks(name, 'api')}/${districCode}`),
+    async (code: string) => await API.get(routerLinks(name, 'api') + '/' + code),
   )
 };
 
@@ -19,7 +19,7 @@ export const WardFacade = () => {
   const dispatch = useAppDispatch();
   return {
     ...useTypedSelector((state) => state[action.name] as State<Ward>),
-    get: (districCode: string) => dispatch(action.getWard(districCode)),
+    get: ({ fullTextSearch, code }: { fullTextSearch: string, code: string }) => dispatch(action.getWard(code)),
   };
 };
 export class Ward extends CommonEntity {

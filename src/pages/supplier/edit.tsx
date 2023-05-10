@@ -8,7 +8,7 @@ import { SupplierFacade } from '@store/supplier';
 import { DistrictFacade } from '@store/address/district';
 import { WardFacade } from '@store/address/ward';
 import { routerLinks } from '@utils';
-import { GlobalFacade, User } from '@store';
+import { GlobalFacade, ProductFacade, User } from '@store';
 import { TableRefObject } from '@models';
 import { Form } from '@core/form';
 import { DataTable } from '@core/data-table';
@@ -58,9 +58,11 @@ const Page = () => {
   const { user } = GlobalFacade();
   const dataTableRef = useRef<TableRefObject>(null);
 
+  const productFacede = ProductFacade();
+
 
   const handleBack = () => navigate(routerLinks('Supplier') + '?' + new URLSearchParams(param).toString());
-  const handleSubmit = (values: User) => {
+  const handleSubmit = (values: any) => {
     if (id) supplierFacade.put({ ...values, id });
     else supplierFacade.post(values);
   };
@@ -136,13 +138,13 @@ const Page = () => {
               Hợp đồng
             </div>
           </div> */}
-          <div className='flex justify-center text-center'>
+          <div className='xl:hidden flex justify-center text-center'>
             <button className='py-2 px-4 cursor-pointer h-full border-l-2 border-l-gray-200 text-xl'>
               ...
             </button>
           </div>
         </div>
-        <div className='bg-white rounded-xl rounded-tl-none'>
+        <div className='bg-white px-5 rounded-xl rounded-tl-none'>
         {tab === 'tab1' && (
           !!result?.data && (
             <Form
@@ -151,26 +153,32 @@ const Page = () => {
               username: data?.userRole?.[0].userAdmin.name, email: data?.userRole?.[0].userAdmin.email, phoneNumber: data?.userRole?.[0].userAdmin.phoneNumber  }}
               className="intro-x pt-6 rounded-lg w-full "
               columns={ColumnFormSupplierDetail({ t, listRole: result?.data || []})}
-              handSubmit={handleSubmit}
+              // handSubmit={handleSubmit}
               disableSubmit={isLoading}
               extendButton={() => (
-                <button className='sm:w-28 h-11 rounded-xl bg-white hover:text-teal-600 text-teal-900 border-teal-900 hover:border-teal-600 border'
-                onClick={handleBack}>
-                {t('components.form.modal.cancel')}
-                </button>
-              )}
+                    <div className='w-full flex mt-8 justify-between'>
+                      <button className='sm:w-28 h-11 rounded-xl bg-white hover:text-teal-700 text-teal-900 border-teal-900 hover:border-teal-600 border'
+                      onClick={handleBack}>
+                        {t('components.form.modal.cancel')}
+                      </button>
+                      <button className='sm:w-44 h-11 rounded-xl text-white bg-teal-900 hover:bg-teal-600'
+                      onClick={handleSubmit}>
+                        {t('components.form.modal.save')}
+                      </button>
+                    </div>
+                  )}
             />
           ) )
         }
         {tab === 'tab2' && (
           <div className={'w-full mx-auto bg-white rounded-xl'}>
           {!!result?.data && (
-            <div className='px-6 pt-6 pb-4'>
+            <div className='px-1 pt-6 pb-4'>
               <DataTable
-              // facade={supplierFacade}
+              facade={productFacede}
               defaultRequest={{page: 1, perPage: 10,type: "BALANCE"}}
               ref={dataTableRef}
-              xScroll = '1440px'
+              xScroll = '895px'
               pageSizeRender={(sizePage: number) => sizePage}
               pageSizeWidth={'50px'}
               paginationDescription={(from: number, to: number, total: number) =>
@@ -185,8 +193,8 @@ const Page = () => {
                 <div className={'flex h-10 w-36'}>
                   {user && (
                     <Button
-                      className='!bg-white flex justify-between w-full !px-3 !border !border-gray-600 !text-gray-600 hover:!bg-teal-900 hover:!text-white group'
-                      icon={<Download className="icon-cud !h-6 !w-6 !fill-gray-600 group-hover:!fill-white" />}
+                      className='!bg-white !font-normal whitespace-nowrap text-left flex justify-between w-full !px-3 !border !border-gray-600 !text-gray-600 hover:!bg-teal-900 hover:!text-white group'
+                      icon={<Download className="icon-cud !p-0 !h-5 !w-5 !fill-gray-600 group-hover:!fill-white" />}
                       text={t('Xuất file excel')}
                       onClick={() => navigate(routerLinks('Supplier/Excel'))}
                     />
@@ -197,7 +205,7 @@ const Page = () => {
                 <div>aaaaaaaaaaaaaa</div>
               }
               showSearch={false}
-            />
+              />
             </div>
           )} </div>)
         }
@@ -223,12 +231,25 @@ const Page = () => {
         {tab === 'tab4' && (
           !!result?.data && (
             <Form
-              values={{ ...data }}
-              className="intro-x p-6 pb-4 pt-6 rounded-lg w-full "
-              columns={ColumnFormSupplierDetail({ t, listRole: result?.data || [] })}
-              handSubmit={handleSubmit}
+              key={'tab1'}
+              values={{ ...data, street: data?.address?.street, province: data?.address?.province?.name, district: data?.address?.district?.name, ward: data?.address?.ward?.name,
+              username: data?.userRole?.[0].userAdmin.name, email: data?.userRole?.[0].userAdmin.email, phoneNumber: data?.userRole?.[0].userAdmin.phoneNumber  }}
+              className="intro-x pt-6 rounded-lg w-full "
+              columns={ColumnFormSupplierDetail({ t, listRole: result?.data || []})}
+              // handSubmit={handleSubmit}
               disableSubmit={isLoading}
-              handCancel={handleBack}
+              extendButton={() => (
+                    <div className='w-full flex mt-8 justify-between'>
+                      <button className='sm:w-28 h-11 rounded-xl bg-white hover:text-teal-700 text-teal-900 border-teal-900 hover:border-teal-600 border'
+                      onClick={handleBack}>
+                        {t('components.form.modal.cancel')}
+                      </button>
+                      <button className='sm:w-44 h-11 rounded-xl text-white bg-teal-900 hover:bg-teal-600'
+                      onClick={handleSubmit}>
+                        {t('components.form.modal.save')}
+                      </button>
+                    </div>
+                  )}
             />
           ) )
         }
@@ -265,6 +286,14 @@ const Page = () => {
           ) )
         }
         </div>
+        { tab !== 'tab1' && tab !== 'tab6' && tab !== 'tab4' && (
+          <div className='w-full flex mt-8 justify-between'>
+          <button className='sm:w-28 h-11 rounded-xl bg-white hover:text-teal-700 text-teal-900 border-teal-900 hover:border-teal-600 border'
+          onClick={handleBack}>
+            {t('components.form.modal.cancel')}
+          </button>
+        </div>
+        )}
         <div className='h-20'>
         </div>
       </Fragment>

@@ -14,12 +14,12 @@ const name = 'Organization';
 export const action = {
   ...new Action<Supplier>(name),
   getById: createAsyncThunk(
-      name + '/getById',
-      async ({ id, keyState = 'isVisible' }: { id: string; keyState: keyof State<Supplier> }) => {
-        const  data  = await API.get<Supplier>(`${routerLinks(name, 'api')}/detail/${id}`);
-        return { data, keyState };
-      },
-    ),
+    name + '/getById',
+    async ({ id, keyState = 'isVisible' }: { id: string; keyState: keyof State<Supplier> }) => {
+      const data = await API.get<Supplier>(`${routerLinks(name, 'api')}/detail/${id}`);
+      return { data, keyState };
+    },
+  ),
   post: createAsyncThunk(name + '/post', async (values: Supplier) => {
     // if (values.avatar) values.avatar = values.avatar[0].url;
     const { data, message } = await API.post<Supplier>(routerLinks(name, 'api'), values);

@@ -17,13 +17,13 @@ const Page = () => {
   const supplierFacade = SupplierFacade();
   
   
-  useEffect(() => {
-    switch (supplierFacade.status) {
-      case 'delete.fulfilled':
-        dataTableRef?.current?.onChange!();
-        break;
-    }
-  }, [supplierFacade.status]);
+  // useEffect(() => {
+  //   switch (supplierFacade.status) {
+  //     case 'delete.fulfilled':
+  //       dataTableRef?.current?.onChange!();
+  //       break;
+  //   }
+  // }, [supplierFacade.status]);
 
   const dataTableRef = useRef<TableRefObject>(null);
   return (
@@ -33,7 +33,7 @@ const Page = () => {
           facade={supplierFacade}
           ref={dataTableRef}
           defaultRequest={{page: 1, perPage: 10,type: "SUPPLIER"}}
-          xScroll = '1440px'
+          xScroll = '1380px'
           onRow={(data: any) => ({ onDoubleClick: () =>  navigate(routerLinks('Supplier/Edit') + '/' + data.id)})}
           pageSizeRender={(sizePage: number) => sizePage}
           pageSizeWidth={'50px'}
