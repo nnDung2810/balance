@@ -32,12 +32,12 @@ const checkTextToShort = (text: string) => {
 const getQueryStringParams = (query: string) => {
   return query
     ? (/^[?#]/.test(query) ? query.slice(1) : query)
-        .split('&')
-        .reduce((params: { [selector: string]: string }, param: string) => {
-          const [key, value] = param.split('=');
-          params[key] = value ? decodeURIComponent(value.replace(/\+/g, ' ')) : '';
-          return params;
-        }, {})
+      .split('&')
+      .reduce((params: { [selector: string]: string }, param: string) => {
+        const [key, value] = param.split('=');
+        params[key] = value ? decodeURIComponent(value.replace(/\+/g, ' ')) : '';
+        return params;
+      }, {})
     : {}; // Trim - from end of text
 };
 
@@ -334,7 +334,7 @@ export const DataTable = forwardRef(
               item = { ...item, ...getColumnSearchDate(item.filter.name || col.name) };
               break;
             default:
-              item = { ...item, ...getColumnSearchInput(item?.filter?.name || col.name) };
+            //  item = { ...item, ...getColumnSearchInput(item?.filter?.name || col.name) };
           }
           delete item.filter;
         }
@@ -366,11 +366,11 @@ export const DataTable = forwardRef(
       const tempSort =
         sorts && sorts?.field && sorts?.order
           ? {
-              [sorts.field as string]: sorts.order === 'ascend' ? 'ASC' : sorts.order === 'descend' ? 'DESC' : '',
-            }
+            [sorts.field as string]: sorts.order === 'ascend' ? 'ASC' : sorts.order === 'descend' ? 'DESC' : '',
+          }
           : sorts?.field
-          ? null
-          : sorts;
+            ? null
+            : sorts;
 
       if (tempFullTextSearch !== params.fullTextSearch) {
         tempPageIndex = 1;

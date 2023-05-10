@@ -8,7 +8,7 @@ import { API, linkApi } from '@utils';
 import { Button } from '../button';
 import { Spin } from '../spin';
 import { Message } from '../message';
-import { Plus, Copy, Paste, Times } from '@svgs';
+import { Plus, Copy, Paste, Times, Briefcase } from '@svgs';
 
 export const Upload = ({
   value = [],
@@ -220,11 +220,11 @@ export const Upload = ({
               {children ? (
                 children
               ) : !listFiles?.length || !listFiles[0][keyImage] ? (
-                <div className="border-dashed border border-gray-300 rounded-2xl w-40 h-40 flex items-center justify-center">
+                <div className="border-dashed border border-gray-300 rounded-2xl w-full h-full flex items-center justify-center">
                   <Plus className="w-12 h-12" />
                 </div>
               ) : (
-                <img alt={'Align'} className={'rounded-2xl w-40 h-40 flex object-cover'} src={listFiles[0][keyImage]} />
+                <img alt={'Align'} className={'rounded-2xl w-full h-full flex object-cover'} src={listFiles[0][keyImage]} />
               )}
             </Fragment>
           </div>
@@ -250,8 +250,8 @@ export const Upload = ({
               <div className={'relative'}>
                 <a href={file[keyImage] ? file[keyImage] : file} className="glightbox">
                   <img
-                    className={classNames({ 'object-cover object-center h-20 w-20': !viewGrid })}
-                    src={file[keyImage] ? file[keyImage] : file}
+                    // className={classNames({ 'object-cover object-center h-20 w-20': !viewGrid })}
+                    // src={file[keyImage] ? file[keyImage] : file}
                     alt={file.name}
                   />
                 </a>
@@ -259,7 +259,7 @@ export const Upload = ({
                   {listFiles?.length > 0 && (
                     <Copy
                       className={'h-5 w-5 cursor-pointer'}
-                      onClick={() => copy(file[keyImage] ? file[keyImage] : file)}
+                     // onClick={() => copy(file[keyImage] ? file[keyImage] : file)}
                     />
                   )}
                   <Paste
@@ -297,8 +297,8 @@ export const Upload = ({
                     cancelText={t('components.datatable.cancel')}
                   >
                     <Button
-                      icon={<Times className={'h-4 w-4'} />}
-                      className={'!bg-gray-400 !rounded-full absolute top-0 right-0'}
+                      icon={<Briefcase className={'h-6 w-6'} />}
+                      className={'!bg-gray-400 !rounded-full flex items-center justify-center'}
                     />
                   </Popconfirm>
                 )}

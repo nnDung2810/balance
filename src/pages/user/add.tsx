@@ -43,7 +43,7 @@ const Page = () => {
     <div className={'w-full'}>
       <Fragment>
         <div className='bg-white'>
-          <div className='text-xl text-green-900 px-6 pt-4 font-mono font-bold'>
+          <div className='text-xl  px-6 pt-4 font-mono font-bold'>
             Thông tin người dùng
           </div>
           {!!result?.data && (

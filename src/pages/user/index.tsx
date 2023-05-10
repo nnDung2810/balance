@@ -58,14 +58,14 @@ const Page = () => {
       title: 'user.Phone Number',
       name: 'phoneNumber',
       tableItem: {
-        width: 100,
+        width: 200,
       },
     },
     {
       title: 'user.Role',
       name: 'userRole',
       tableItem: {
-        width: 200,
+        width: 150,
         filter: { type: 'search' },
         render: (text: any, item: any) => {
           if (text = item.userRole[0].mtRole.code === "ADMIN") {

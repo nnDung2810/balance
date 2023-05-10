@@ -11,17 +11,7 @@ const Layout = () => [
   },
   {
     icon: <User className="icon-menu" />,
-    name: 'User',
-    child: [
-      {
-        name: 'User/List',
-        permission: keyRole.P_USER_LISTED,
-      },
-      {
-        name: 'User/Add',
-        permission: keyRole.P_DATA_LISTED,
-      },
-    ],
+    name: 'User/List',
   },
   {
     icon: <Cart className="icon-menu" />,
@@ -30,20 +20,6 @@ const Layout = () => [
   {
     icon: <Store className="icon-menu" />,
     name: 'Store',
-  },
-  {
-    icon: <Cog className="icon-menu" />,
-    name: 'Setting',
-    child: [
-      {
-        name: 'Code',
-        permission: keyRole.P_CODE_LISTED,
-      },
-      {
-        name: 'Data',
-        permission: keyRole.P_DATA_LISTED,
-      },
-    ],
   },
 ];
 
