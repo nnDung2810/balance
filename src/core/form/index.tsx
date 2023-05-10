@@ -650,7 +650,7 @@ export const Form = ({
             id={idSubmit}
             onClick={() => form && form.submit()}
             disabled={disableSubmit}
-            className={'md:min-w-[6rem] w-full justify-center lg:w-64'}
+            className={' w-44 justify-center'}
             type={'submit'}
           />
         )}

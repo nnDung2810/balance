@@ -10,7 +10,7 @@ import { Button } from '../button';
 import { Pagination } from '../pagination';
 import { DataTableModel, PaginationQuery, TableGet, TableRefObject } from '@models';
 import { cleanObjectKeyNull } from '@utils';
-import { Calendar, CheckCircle, CheckSquare, Search, Times } from '@svgs';
+import { Calendar, CheckCircle, CheckSquare, Download, Search, Times } from '@svgs';
 import { SorterResult } from 'antd/lib/table/interface';
 
 const RadioGroup = Radio.Group;
@@ -447,7 +447,124 @@ export const DataTable = forwardRef(
               )}
             </div>
           ) : (
-            <div />
+            <div className='hidden'></div>
+            // <div className='min-w-min grid-cols-1 grid sm:grid-cols-3 lg:grid-cols-4 sm:gap-4'>
+            //   <div className='mb-4'>
+            //     <div className="relative w-40 h-10">
+            //       <input
+            //         id={idTable.current + '_input_search'}
+            //         className="grid w-full h-full grid-cols-1 py-1.5 px-4 rounded-xl text-gray-600 bg-white border border-solid border-gray-100"
+            //         defaultValue={params.fullTextSearch}
+            //         type="select"
+            //         placeholder={searchPlaceholder || (t('Danh muc chinh') as string)}
+            //         onChange={() => {
+            //           clearTimeout(timeoutSearch.current);
+            //           timeoutSearch.current = setTimeout(() => {
+            //             handleTableChange(
+            //               undefined,
+            //               params.filter,
+            //               params.sorts as SorterResult<any>,
+            //               (document.getElementById(idTable.current + '_input_search') as HTMLInputElement).value,
+            //             );
+            //           }, 500);
+            //         }}
+            //         onKeyUp={(e) => {
+            //           if (e.key === 'Enter') {
+            //             handleTableChange(
+            //               undefined,
+            //               params.filter,
+            //               params.sorts as SorterResult<any>,
+            //               (document.getElementById(idTable.current + '_input_search') as HTMLInputElement).value,
+            //             );
+            //           }
+            //         }}
+            //       />
+            //       {!params.fullTextSearch ? (
+            //         <Download
+            //           className="w-5 h-5 my-1 fill-gray-500 text-lg las absolute top-1.5 right-3 z-10"
+            //           onClick={() => {
+            //             if (params.fullTextSearch) {
+            //               (document.getElementById(idTable.current + '_input_search') as HTMLInputElement).value = '';
+            //               handleTableChange(undefined, params.filter, params.sorts as SorterResult<any>, '');
+            //             }
+            //           }}
+            //         />
+            //       ) : (
+            //         !!params.fullTextSearch && (
+            //           <Times
+            //             className="w-4 h-4 my-1 fill-gray-500 text-lg las absolute top-2 right-3 z-10"
+            //             onClick={() => {
+            //               if (params.fullTextSearch) {
+            //                 (document.getElementById(idTable.current + '_input_search') as HTMLInputElement).value = '';
+            //                 handleTableChange(undefined, params.filter, params.sorts as SorterResult<any>, '');
+            //               }
+            //             }}
+            //           />
+            //         )
+            //       )}
+            //     </div>
+            //   </div>
+            //   {/* <div className='mb-4 hover:cursor-not-allowed'>
+            //     <div className="relative w-40 h-10">
+            //       <div className="grid w-full h-full grid-cols-1 items-center py-1.5 px-4 rounded-xl text-gray-400 bg-gray-200 select-none border border-solid border-gray-100">
+            //         <p>Danh mục cấp 1</p>
+            //       </div>
+            //       {!params[fullTextSearch] ? (
+            //         <Down
+            //           className="w-5 h-5 my-1 fill-gray-500 text-lg las absolute top-1.5 right-3 z-10"
+            //           onClick={() => {
+            //             if (params[fullTextSearch]) {
+            //               (document.getElementById(idTable.current + '_input_search') as HTMLInputElement).value = '';
+            //               handleTableChange(null, params[filter], params[sort], '');
+            //             }
+            //           }}
+            //         />
+            //       ) : (
+            //         !!params[fullTextSearch] && (
+            //           <Times
+            //             className="w-4 h-4 my-1 fill-gray-500 text-lg las absolute top-2 right-3 z-10"
+            //             onClick={() => {
+            //               if (params[fullTextSearch]) {
+            //                 (document.getElementById(idTable.current + '_input_search') as HTMLInputElement).value = '';
+            //                 handleTableChange(null, params[filter], params[sort], '');
+            //               }
+            //             }}
+            //           />
+            //         )
+            //       )}
+            //     </div>
+            //   </div>
+            //   <div className='mb-4 hover:cursor-not-allowed'>
+            //     <div className="relative w-40 h-10">
+            //       <div className="grid w-full h-full grid-cols-1 items-center py-1.5 px-4 rounded-xl text-gray-400 bg-gray-200 select-none border border-solid border-gray-100">
+            //         <p>Danh mục cấp 2</p>
+            //       </div>
+            //       {!params[fullTextSearch] ? (
+            //         <Down
+            //           className="w-5 h-5 my-1 fill-gray-500 text-lg las absolute top-1.5 right-3 z-10"
+            //           onClick={() => {
+            //             if (params[fullTextSearch]) {
+            //               (document.getElementById(idTable.current + '_input_search') as HTMLInputElement).value = '';
+            //               handleTableChange(null, params[filter], params[sort], '');
+            //             }
+            //           }}
+            //         />
+            //       ) : (
+            //         !!params[fullTextSearch] && (
+            //           <Times
+            //             className="w-4 h-4 my-1 fill-gray-500 text-lg las absolute top-2 right-3 z-10"
+            //             onClick={() => {
+            //               if (params[fullTextSearch]) {
+            //                 (document.getElementById(idTable.current + '_input_search') as HTMLInputElement).value = '';
+            //                 handleTableChange(null, params[filter], params[sort], '');
+            //               }
+            //             }}
+            //           />
+            //         )
+            //       )}
+            //     </div>
+            //   </div> */}
+            // </div>
           )}
           {!!leftHeader && <div className={'mt-2 sm:mt-0'}>{leftHeader}</div>}
           {!!rightHeader && <div className={'mt-2 sm:mt-0'}>{rightHeader}</div>}
