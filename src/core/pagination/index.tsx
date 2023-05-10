@@ -153,7 +153,7 @@ export const Pagination: any = ({
           </label>
           {showTotal && <span className="ml-3 text-black">{paginationDescription(ranges[0], ranges[1], total)}</span>}
         </div>
-        <div className="mt-3 sm:mt-0 right flex justify-center border border-gray-100 p-1 rounded-xl bg-white">
+        <div className="mt-3 sm:mt-0 right flex justify-center p-1 rounded-xl bg-white">
           <div className="flex sm:flex-wrap justify-center duration-300 transition-all">
             {/* { disabled: boolean; type: string; index: number;   } */}
             {listOfPageItem.current.map((item: any, index: number) => (
@@ -163,11 +163,11 @@ export const Pagination: any = ({
                 key={index}
                 id={idElement + '_' + item.type}
                 className={classNames(
-                  'text-center duration-300 transition-all p-1 text-sm font-medium leading-normal relative',
+                  'text-center p-1 text-sm font-medium leading-normal relative mx-1',
                   {
-                    'text-blue-400 hover:text-blue-600':
+                    'text-teal-900':
                       page !== item.index && !['next_5', 'prev_5'].includes(item.type),
-                    'bg-blue-600 rounded-full text-white hover:bg-blue-400 !px-2.5 mx-1': page === item.index,
+                    'bg-teal-900 rounded-full text-white !px-2.5 mx-1': page === item.index,
                     'text-blue-300': item.disabled,
                     'text-gray-600 text-xs': ['next_5', 'prev_5'].includes(item.type),
                   },
@@ -175,10 +175,10 @@ export const Pagination: any = ({
                 onClick={() => onPageIndexChange(item)}
                 aria-label={item.type}
               >
-                {item.type === 'prev' && <Arrow className={'w-4 h-4 rotate-180'} />}
-                {item.type === 'next' && <Arrow className={'w-4 h-4'} />}
-                {item.type === 'prev_10' && <DoubleArrow className={'w-4 h-4 rotate-180'} />}
-                {item.type === 'next_10' && <DoubleArrow className={'w-4 h-4'} />}
+                {item.type === 'prev' && <Arrow className={'w-3 h-3 rotate-180'} />}
+                {item.type === 'next' && <Arrow className={'w-3 h-3'} />}
+                {item.type === 'prev_10' && <DoubleArrow className={'w-3 h-3 rotate-180'} />}
+                {item.type === 'next_10' && <DoubleArrow className={'w-3 h-3'} />}
                 {item.type.indexOf('page') === 0 && item.index}
                 {(item.type === 'prev_5' || item.type === 'next_5') && '...'}
               </button>

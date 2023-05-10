@@ -29,6 +29,7 @@ const Page = () => {
       facade={storeFace}
       defaultRequest={{ page: 1, perPage: 10, type: 'STORE' }}
       xScroll='1440px'
+      className=' bg-white p-5 rounded-lg'
       onRow={(data: any) => ({
         onDoubleClick: () => {
           navigate(routerLinks('store-managerment/edit') + '/' + data.id);
@@ -37,11 +38,11 @@ const Page = () => {
       pageSizeRender={(sizePage: number) => sizePage}
       pageSizeWidth={'50px'}
       paginationDescription={(from: number, to: number, total: number) =>
-        t('routes.admin.Layout.Pagination', { from, to, total })
+        t('routes.admin.Layout.PaginationStore', { from, to, total })
       }
       columns={[
         {
-          title: 'user.Fullname',
+          title: 'store.Code',
           name: 'code',
           tableItem: {
             width: 150,

@@ -42,7 +42,6 @@ const Page = () => {
         {!!result?.data &&
           <Form
             values={{ ...result }}
-            className="intro-x "
             columns={[
               {
                 title: 'Tên cửa hàng',
@@ -87,8 +86,16 @@ const Page = () => {
                   })),
                   onChange(value, form) {
                     form.resetFields(['district'])
-                    DistrictFacade().get(`${value}`)
                   },
+                  // get: {
+                  //   facade: DistrictFacade,
+                  //   format: (item: any) => ({
+                  //     label: item.name,
+                  //     value: item.code,
+                  //   }),
+                  //   params(fullTextSearch, value) {       
+                  //   },
+                  // },
                 },
               },
               {
@@ -104,7 +111,10 @@ const Page = () => {
                       label: item.name,
                       value: item.code,
                     }),
-                    
+                    params(fullTextSearch, value) {
+
+                    },
+
                   },
                   onChange(value, form) {
                     form.resetFields(['wardId'])

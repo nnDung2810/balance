@@ -13,7 +13,7 @@
       "No Data": "Trống"
     },
     "form": {
-      "ruleRequired": "Đây là trường bắt buộc!",
+      "ruleRequired": "Xin vui lòng nhập {{title}}",
       "ruleEmail": "Vui lòng nhập địa chỉ email hợp lệ!",
       "ruleUsername": "Tên người dùng không chứa các ký tự đặc biệt, chỉ bao gồm chữ cái và chữ số!",
       "ruleMinLength": "Vui lòng nhập ít nhất {{min}} ký tự!",
@@ -179,7 +179,8 @@
         "No Data": "Trống",
         "Pagination": "Hiển thị {{from}} - {{to}} / Tổng số {{total}} Danh mục",
         "User": "Hiển thị {{from}} - {{to}} / Tổng số {{total}} Người dùng",
-        "Day": "Ngày phép"
+        "Day": "Ngày phép",
+        "PaginationStore": "Hiển thị {{from}} - {{to}} / Tổng số {{total}} Cửa hàng"
       }
     }
   },
@@ -222,14 +223,7 @@
     "Contact Email": "Email đại diện",
     "Note": "Ghi chú"
   },
-  "supplier": {
-    "Code": "Mã NCC",
-    "Name": "Tên nhà cung cấp",
-    "Address": "Địa chỉ",
-    "Representative": "Người đại diện",
-    "Phone Number": "Số điện thoại",
-    "Status": "Trạng thái"
-  },
+
   "dashboard": {
     "Active Profile Report": "Báo cáo hồ sơ đang hoạt động",
     "Total Profile": "Tổng hồ sơ",
