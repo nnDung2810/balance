@@ -91,7 +91,7 @@ const Page = () => {
         <div className='col-span-2 lg:border lg:rounded-xl bg-white p-5'>
           <Spin spinning={isLoading}>
             <Tabs defaultActiveKey="1" size="large">
-              <Tabs.TabPane tab={t('routes.admin.Layout.My Profile')} key="1">
+              <Tabs.TabPane tab={t('routes.admin.Layout.My Profile')} key="1" className='mt-5'>
                 <Form
                   columns={[
                     {
@@ -143,7 +143,7 @@ const Page = () => {
                 />
               </Tabs.TabPane>
 
-              <Tabs.TabPane tab={t('routes.admin.Layout.Change Password')} key="2">
+              <Tabs.TabPane tab={t('routes.admin.Layout.Change Password')} key="2" className='mt-5'>
                 <Form
                   columns={[
                     {

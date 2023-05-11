@@ -130,13 +130,13 @@ const Component = ({
                     className={classNames(
                       col?.formItem?.classItem,
                       'col-span-12' +
-                        (' sm:col-span-' +
-                          (col?.formItem?.colTablet
-                            ? col?.formItem?.colTablet
-                            : col?.formItem?.col
+                      (' sm:col-span-' +
+                        (col?.formItem?.colTablet
+                          ? col?.formItem?.colTablet
+                          : col?.formItem?.col
                             ? col?.formItem?.col
                             : 12)) +
-                        (' lg:col-span-' + (col?.formItem?.col ? col?.formItem?.col : 12)),
+                      (' lg:col-span-' + (col?.formItem?.col ? col?.formItem?.col : 12)),
                     )}
                     key={index}
                   >
