@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useCallback, useState } from 'react';
 import { Select } from 'antd';
 import classNames from 'classnames';
-import { Arrow, DoubleArrow } from '@svgs';
+import { Arrow, DoubleArrow, DownArrow } from '@svgs';
 
 export const Pagination: any = ({
   total = 4,
@@ -134,7 +134,7 @@ export const Pagination: any = ({
       <div
         className={classNames(className, 'flex flex-col md:flex-row md:items-center justify-between mt-3 select-none')}
       >
-        <div className={'left'}>
+        <div className={'left relative'}>
           <label htmlFor={idElement + '_page_size'}>
             {showSizeChanger && (
               <Select
@@ -150,6 +150,7 @@ export const Pagination: any = ({
                 ))}
               </Select>
             )}
+            <Arrow className={'w-4 h-4 absolute top-1/3 rotate-90 left-10'}/>
           </label>
           {showTotal && <span className="ml-3 text-black">{paginationDescription(ranges[0], ranges[1], total)}</span>}
         </div>

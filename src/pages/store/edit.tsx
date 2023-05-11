@@ -10,6 +10,7 @@ import classNames from 'classnames';
 import { DataTable } from '@core/data-table';
 import { Button } from '@core/button';
 import { Plus } from '@svgs';
+import { inventoryProductFacade } from '../../store/product/inventory-product/index';
 
 const Page = () => {
   const { t } = useTranslation();
@@ -26,13 +27,18 @@ const Page = () => {
   const connectSupplierFacade = ConnectSupplierFacade()
 
   const navigate = useNavigate();
+  const provinceFacade = ProvinceFacade()
+  const { result } = provinceFacade;
+
+  const inventoryproductFacade = inventoryProductFacade()
+
   const isBack = useRef(true);
   const isReload = useRef(false);
   const param = JSON.parse(queryParams || '{}');
   const { id } = useParams();
 
   useEffect(() => {
-    // if (!result?.data) provinceFacade.get({})
+    if (!result?.data) provinceFacade.get({})
 
     if (id) storeFacade.getById({ id });
 
@@ -91,182 +97,187 @@ const Page = () => {
           </div>
           <div className='bg-white rounded-2xl rounded-t-none'>
             {tab === 'tab1' && (
-              <Form
-                values={{ ...data }}
-                className="intro-x p-6 pb-4 pt-3 rounded-lg w-full "
-                columns={[
-                  {
-                    title: 'store.Code',
-                    name: 'code',
-                    formItem: {
-                      tabIndex: 1,
-                      col: 4,
-                      disabled: () => true
-                    },
-                  },
-                  {
-                    title: 'store.Name',
-                    name: 'name',
-                    formItem: {
-                      tabIndex: 2,
-                      col: 4,
-                      rules: [{ type: 'required' }],
-                    },
-                  },
-                  {
-                    title: 'store.Fax',
-                    name: 'fax',
-                    formItem: {
-                      tabIndex: 3,
-                      col: 4,
-                    },
-                  },
-                  {
-                    title: '',
-                    name: 'address',
-                    formItem: {
-                      rules: [{ type: 'required' }],
-                      render() {
-                        return (
-                          <h3 className='mb-2.5 text-base text-black font-medium'>Địa chỉ cửa hàng</h3>
-                        )
-                      },
-                    }
-                  },
-                  {
-                    title: 'store.Province',
-                    name: 'provinceId',
-                    formItem: {
-                      tabIndex: 3,
-                      col: 3,
-                      type: 'select',
-                      rules: [{ type: 'required' }],
-                      get: {
-                        facade: ProvinceFacade,
-                        format: (item: any) => ({
-                          label: item.name,
-                          value: item.id + '|' + item.code,
-                        })
-                      },
-                      onChange(value, form) {
-                        form.resetFields(['district', 'wardId'])
+              !!result?.data && (
+                <Form
+                  key={'tab1'}
+                  values={{
+                    ...data, street: data?.address?.street, province: data?.address?.province?.name, district: data?.address?.district?.name, ward: data?.address?.ward?.name,
+                    username: data?.userRole?.[0].userAdmin.name, email: data?.userRole?.[0].userAdmin.email, phoneNumber: data?.userRole?.[0].userAdmin.phoneNumber
+                  }}
+                  className="intro-x p-6 pb-4 pt-3 rounded-lg w-full "
+                  columns={[
+                    {
+                      title: 'store.Code',
+                      name: 'code',
+                      formItem: {
+                        tabIndex: 1,
+                        col: 4,
+                        disabled: () => true
                       },
                     },
-                  },
-                  {
-                    title: 'store.District',
-                    name: 'districtId',
-                    formItem: {
-                      type: 'select',
-                      rules: [{ type: 'required' }],
-                      col: 3,
-                      get: {
-                        facade: DistrictFacade,
-                        format: (item: any) => ({
-                          label: item.name,
-                          value: item.id + '|' + item.code,
-                        }),
-                        params: (fullTextSearch, value) => ({
-                          fullTextSearch,
-                          code: value().provinceId.slice(value().provinceId.indexOf('|') + 1),
-                        })
-                      },
-                      onChange(value, form) {
-                        form.resetFields(['wardId'])
+                    {
+                      title: 'store.Name',
+                      name: 'name',
+                      formItem: {
+                        tabIndex: 2,
+                        col: 4,
+                        rules: [{ type: 'required' }],
                       },
                     },
-                  },
-                  {
-                    title: 'store.Ward',
-                    name: 'wardId',
-                    formItem: {
-                      type: 'select',
-                      rules: [{ type: 'required' }],
-                      col: 3,
-                      get: {
-                        facade: WardFacade,
-                        format: (item: any) => ({
-                          label: item.name,
-                          value: item.code,
-                        }),
-                        params: (fullTextSearch, value) => ({
-                          fullTextSearch,
-                          code: value().districtId.slice(value().districtId.indexOf('|') + 1),
-                        })
+                    {
+                      title: 'store.Fax',
+                      name: 'fax',
+                      formItem: {
+                        tabIndex: 3,
+                        col: 4,
+                      },
+                    },
+                    {
+                      title: '',
+                      name: 'address',
+                      formItem: {
+                        rules: [{ type: 'required' }],
+                        render() {
+                          return (
+                            <h3 className='mb-2.5 text-base text-black font-medium'>Địa chỉ cửa hàng</h3>
+                          )
+                        },
                       }
                     },
-                  },
-                  {
-                    title: 'store.Street',
-                    name: 'street',
-                    formItem: {
-                      rules: [{ type: 'required' }],
-                      col: 3,
+                    {
+                      title: 'store.Province',
+                      name: 'provinceId',
+                      formItem: {
+                        tabIndex: 3,
+                        col: 3,
+                        rules: [{ type: 'required' }],
+                        type: 'select',
+                        get: {
+                          facade: ProvinceFacade,
+                          format: (item: any) => ({
+                            label: item.name,
+                            value: item.id + '|' + item.code,
+                          }),
+                        },
+                        onChange(value, form) {
+                          form.resetFields(['districtId', 'wardId'])
+                        },
+                      },
                     },
-                  },
-                  {
-                    title: '',
-                    name: '',
-                    formItem: {
-                      render() {
-                        return (
-                          <div className='text-xl text-teal-900 font-bold mb-2.5'>Thông tin người đại diện</div>
-                        )
+                    {
+                      title: 'store.District',
+                      name: 'districtId',
+                      formItem: {
+                        type: 'select',
+                        rules: [{ type: 'required' }],
+                        col: 3,
+                        get: {
+                          facade: DistrictFacade,
+                          format: (item: any) => ({
+                            label: item.name,
+                            value: item.id + '|' + item.code,
+                          }),
+                          params: (fullTextSearch, value) => ({
+                            fullTextSearch,
+                            code: value().provinceId.slice(value().provinceId.indexOf('|') + 1),
+                          }),
+                        },
+                        onChange(value, form) {
+                          form.resetFields(['wardId'])
+                        },
+                      },
+                    },
+                    {
+                      title: 'store.Ward',
+                      name: 'wardId',
+                      formItem: {
+                        type: 'select',
+                        rules: [{ type: 'required' }],
+                        col: 3,
+                        get: {
+                          facade: WardFacade,
+                          format: (item: any) => ({
+                            label: item.name,
+                            value: item.id,
+                          }),
+                          params: (fullTextSearch, value) => ({
+                            fullTextSearch,
+                            code: value().districtId.slice(value().districtId.indexOf('|') + 1),
+                          })
+                        }
+                      },
+                    },
+                    {
+                      title: 'store.Street',
+                      name: 'street',
+                      formItem: {
+                        rules: [{ type: 'required' }],
+                        col: 3,
+                      },
+                    },
+                    {
+                      title: '',
+                      name: '',
+                      formItem: {
+                        render() {
+                          return (
+                            <div className='text-xl text-teal-900 font-bold mb-2.5'>Thông tin người đại diện</div>
+                          )
+                        }
                       }
-                    }
-                  },
-                  {
-                    title: 'store.ContactName',
-                    name: 'nameContact',
-                    formItem: {
-                      col: 4,
-                      rules: [{ type: 'required' }],
                     },
-                  },
-                  {
-                    title: 'store.Contact Phone Number',
-                    name: 'phoneNumber',
-                    formItem: {
-                      col: 4,
-                      rules: [{ type: 'required' }],
+                    {
+                      title: 'store.ContactName',
+                      name: 'name',
+                      formItem: {
+                        col: 4,
+                        rules: [{ type: 'required' }],
+                      },
                     },
-                  },
-                  {
-                    title: 'store.Contact Email',
-                    name: 'emailContact',
-                    formItem: {
-                      col: 4,
-                      rules: [{ type: 'required' }],
+                    {
+                      title: 'store.Contact Phone Number',
+                      name: 'phoneNumber',
+                      formItem: {
+                        col: 4,
+                        rules: [{ type: 'required' }],
+                      },
                     },
-                  },
-                  {
-                    title: 'store.Note',
-                    name: 'note',
-                    formItem: {
-                      type: 'textarea',
+                    {
+                      title: 'store.Contact Email',
+                      name: 'email',
+                      formItem: {
+                        col: 4,
+                        rules: [{ type: 'required' }],
+                      },
                     },
-                  },
-                  {
-                    title: '',
-                    name: '',
-                    formItem: {
-                      render() {
-                        return (
-                          <div className='flex items-center mb-2.5'>
-                            <div className='text-xl text-teal-900 font-bold mr-6'>Kết nối KiotViet</div>
-                            <Switch className='bg-gray-500' />
-                          </div>
-                        )
+                    {
+                      title: 'store.Note',
+                      name: 'note',
+                      formItem: {
+                        type: 'textarea',
+                      },
+                    },
+                    {
+                      title: '',
+                      name: '',
+                      formItem: {
+                        render() {
+                          return (
+                            <div className='flex items-center mb-2.5'>
+                              <div className='text-xl text-teal-900 font-bold mr-6'>Kết nối KiotViet</div>
+                              <Switch className='bg-gray-500' />
+                            </div>
+                          )
+                        }
                       }
-                    }
-                  },
+                    },
 
-                ]}
-                handSubmit={handleSubmit}
-                disableSubmit={isLoading}
-                handCancel={handleBack}
-              />
-            )}
+                  ]}
+                  handSubmit={handleSubmit}
+                  disableSubmit={isLoading}
+                  handCancel={handleBack}
+                />
+              ))}
             {/* Danh sách chi nhánh  */}
             {tab === 'tab3' && (
               <DataTable
@@ -382,7 +393,7 @@ const Page = () => {
                     },
                   },
                   {
-                    title: 'store.ContactName',
+                    title: 'store.Name management',
                     name: 'supplier',
                     tableItem: {
                       render: (value: any, item: any) => item.supplier.userRole[0].userAdmin.name,
@@ -393,6 +404,112 @@ const Page = () => {
                     name: 'supplier',
                     tableItem: {
                       render: (value: any, item: any) => item.supplier.userRole[0].userAdmin.phoneNumber,
+                    },
+                  },
+                  //  {
+                  //    title: 'Trạng thái',
+                  //    name: 'isActive',
+                  //    tableItem: {
+                  //      render: (text: string) => text ? (<div className='bg-green-100 text-center p-1 border border-green-500 text-green-600 rounded'>Đang hoạt động</div>)
+                  //        : (<div className='bg-red-100 text-center p-1 border border-red-500 text-red-600 rounded'></div>),
+                  //    },
+                  //  },
+                ]}
+              />
+            )}
+
+            {/* Quản lý kho */}
+            {tab === 'tab6' && (
+              <DataTable
+                facade={inventoryproductFacade}
+              //  defaultRequest={{ page: 1, perPage: 10 }}
+                xScroll='1440px'
+                className=' bg-white p-5 rounded-lg'
+                onRow={(data: any) => ({
+                  onDoubleClick: () => {
+                  },
+                })}
+                pageSizeRender={(sizePage: number) => sizePage}
+                pageSizeWidth={'50px'}
+                paginationDescription={(from: number, to: number, total: number) =>
+                  t('routes.admin.Layout.PaginationSupplier', { from, to, total })
+                }
+                columns={[
+                  {
+                    title: 'store.Inventory management.Product code',
+                    name: 'productCode',
+                    tableItem: {
+                      width: 150,
+
+                    },
+                  },
+                  {
+                    title: 'store.Inventory management.Barcode (Supplier)',
+                    name: 'supplierBarcode',
+                    tableItem: {
+
+                    },
+                  },
+                  {
+                    title: 'store.Inventory management.Barcode (Product)',
+                    name: 'storeBarcode',
+                    tableItem: {
+                    },
+                  },
+                  {
+                    title: 'store.Inventory management.Product name',
+                    name: 'productName',
+                    tableItem: {
+
+                    },
+                  },
+                  {
+                    title: 'store.Inventory management.Category',
+                    name: 'category',
+                    tableItem: {
+
+                    },
+                  },
+                  {
+                    title: 'store.Inventory management.Supplier',
+                    name: 'supplierName',
+                    tableItem: {
+
+                    },
+                  },
+                  {
+                    title: 'store.Inventory management.Unit',
+                    name: 'name',
+                    tableItem: {
+
+                    },
+                  },
+                  {
+                    title: 'store.Inventory management.Quantity on KiotViet',
+                    name: 'numberInKiot',
+                    tableItem: {
+
+                    },
+                  },
+                  {
+                    title: 'store.Inventory management.Quantity on BALANCE',
+                    name: 'numberInBal',
+                    tableItem: {
+
+                    },
+                  },
+                  {
+                    title: 'store.Inventory management.Warehouse price',
+                    name: 'inventoryPrice',
+                    tableItem: {
+
+                    },
+                  },
+                  {
+                    title: 'store.Inventory management.Total amount',
+                    name: 'numberInKiot*numberInBal*inventoryPrice',
+                    tableItem: {
+
                     },
                   },
                   //  {
