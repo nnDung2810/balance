@@ -28,6 +28,10 @@ const Util = (name: string, type?: string) => {
     Product: '/product'
   }; // 💬 generate link to here
 
+//   import { routerLinks } from './router-links';
+
+// const link = routerLinks('MyProfile') + '?tab=1';
+
   const apis: {
     [selector: string]: string;
   } = {
