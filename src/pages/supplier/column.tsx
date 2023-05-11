@@ -1,4 +1,5 @@
 import { DataTableModel, FormModel } from '@models';
+import { ProvinceFacade } from '@store';
 import { DistrictFacade } from 'src/store/address/district';
 import { WardFacade } from 'src/store/address/ward';
 
@@ -195,7 +196,6 @@ export const ColumnFormSupplier= ({ t, listRole }: any) => {
 };
 
 export const ColumnFormSupplierDetail = ({ t, listRole, districtId, wardId }: any) => {
-
  const col: FormModel[] = [
     {
       title: t('Mã nhà cung cấp'),
@@ -237,63 +237,67 @@ export const ColumnFormSupplierDetail = ({ t, listRole, districtId, wardId }: an
       }
     },
     {
-      title: t('Tỉnh/Thành phố'),
-      name: 'province',
+      title: 'Tỉnh/Thành phố',
+      name: 'provinceId',
       formItem: {
+        tabIndex: 3,
         col: 3,
-        rules: [{ type: 'required' }],
         type: 'select',
-        list: listRole.map((item: any) => ({
-          value: item?.id,
-          label: item?.name,
-        })),
-        onChange: (value: any, form: any) => {
-          if(value){
-            
-          }
+        rules: [{ type: 'required',message: 'Xin vui lòng chọn tỉnh/thành phố' }],
+        get: {
+          facade: ProvinceFacade,
+          format: (item: any) => ({
+            label: item.name,
+            value: item.id + '|' + item.code,
+          }),
         },
+        onChange(value, form) {
+          form.resetFields(['districtId', 'wardId']) 
+        },
+        // render: (form: any, )
       },
     },
     {
-      title: t('Quận/Huyện'),
-      name: 'district',
+      name: 'districtId',
+      title: 'Quận/Huyện',  
       formItem: {
-        col: 3,
-        rules: [{ type: 'required' }],
         type: 'select',
+        rules: [{ type: 'required', message: 'Xin vui lòng chọn quận/huyện' }],
+        col: 3,
         get: {
           facade: DistrictFacade,
-          params: (fullTextSearch: string) => ({
-            fullTextSearch,
-            filter: { type: 'SUPPLIER' },
-            extend: {},
-          }),
           format: (item: any) => ({
             label: item.name,
-            value: item.id,
+            value: item.id + '|' + item.code,
           }),
+          params: (fullTextSearch, value) => ({
+            fullTextSearch,
+            code: value().provinceId.slice(value().provinceId.indexOf('|') + 1),
+          }),
+        },
+        onChange(value, form) {
+          form.resetFields(['wardId'])
         },
       },
     },
     {
-      title: t('Phường/Xã'),
-      name: 'ward',
+      name: 'wardId',
+      title: 'Phường/Xã',
       formItem: {
-        col: 3,
-        rules: [{ type: 'required' }],
         type: 'select',
+        rules: [{ type: 'required', message: 'Xin vui lòng chọn phường/xã' }],
+        col: 3,
         get: {
           facade: WardFacade,
-          params: (fullTextSearch: string) => ({
-            fullTextSearch,
-            filter: { type: 'SUPPLIER' },
-            extend: {},
-          }),
           format: (item: any) => ({
             label: item.name,
             value: item.id,
           }),
-        },
+          params: (fullTextSearch, value) => ({
+            fullTextSearch,
+            code: value().districtId.slice(value().districtId.indexOf('|') + 1),
+          })
+        }
       },
     },
     {
@@ -359,25 +363,27 @@ export const ColumnFormSupplierDetail = ({ t, listRole, districtId, wardId }: an
 export const ColumnTableSupplierOrder = ({ t, listRole }: any) => {
  const col: DataTableModel[] = [
     {
-      title: t(`MÃ đơn hàng`),
+      title: t(`Mã đơn hàng`),
       name: 'code',
       tableItem: {
-        width: 300,
+        width: 280,
+        render: (value: any,item: any) => item?.code &&  console.log(item?.code),
       },
     },
     {
       title: t(`Tên cửa hàng`),
       name: 'name',
       tableItem: {
-        width: 150,
+        width: 180,
+        render: (value: any,item: any) => item?.store?.address?.name,
       },
     },
     {
       title: t(`Người nhận`),
       name: ('address'),
       tableItem: {
-        width: 150,
-        render: (value: any,item: any) => item?.address?.street + ', ' + item?.address?.ward?.name + ', ' + item?.address?.district?.name + ', ' + item?.address?.province?.name,
+        width: 180,
+        render: (value: any,item: any) => item?.storeAdmin?.name,
       }
     },
     {
@@ -385,7 +391,7 @@ export const ColumnTableSupplierOrder = ({ t, listRole }: any) => {
       name: 'contract',
       tableItem: {
         width: 300  ,
-        render: (value: any,item: any) => item?.contract[0].name,
+        render: (value: any,item: any) => item?.store?.address?.street + ', ' + item?.store?.address?.ward?.name + ', ' + item?.store?.address?.district?.name + ', ' + item?.store?.address?.province?.name,
       },
     },
     {
@@ -393,7 +399,7 @@ export const ColumnTableSupplierOrder = ({ t, listRole }: any) => {
       name: 'userRole',
       tableItem: {
         width: 150,
-        render: (value: any,item: any) => item?.userRole[0].userAdmin.phoneNumber,
+        render: (value: any,item: any) => item?.total.toLocaleString(),
       },
     },
     {
@@ -426,7 +432,6 @@ export const ColumnTableSupplierProduct = ({ t, listRole }: any) => {
       name: 'code',
       tableItem: {
         width: 170,
-        render: (value: any,item: any) => item?.code,
       },
     },
     {
@@ -450,7 +455,7 @@ export const ColumnTableSupplierProduct = ({ t, listRole }: any) => {
       name: 'contract',
       tableItem: {
         width: 280,
-        render: (value: any,item: any) => item?.productPrice[0]?.price,
+        render: (value: any,item: any) => item?.productPrice[0]?.price.toLocaleString(),
       },
     },
     {

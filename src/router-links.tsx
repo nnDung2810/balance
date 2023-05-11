@@ -41,6 +41,7 @@ const Util = (name: string, type?: string) => {
     Ward: '/ward',
     Category: '/category',
     Product: '/product',
+    Orders: '/orders',
     SubStore: '/sub-organization/sub-org-in-store',
     ConnectSupplier: '/store-connect-supplier/supplier'
   }; // 💬 generate api to here
