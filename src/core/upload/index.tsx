@@ -290,7 +290,7 @@ export const Upload = ({
                               // >
                                 <Button
                                   icon={<Camera className={'h-6 w-6'} />}
-                                  className={'!bg-teal-600 !border-none flex items-center justify-center'}
+                                  className={'!bg-teal-600 !border-none mt-2 flex items-center justify-center'}
                                 />
                             //    </Popconfirm>
                             )}

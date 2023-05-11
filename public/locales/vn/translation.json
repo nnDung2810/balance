@@ -229,7 +229,21 @@
     "ContactName": "Họ tên đại diện",
     "Contact Phone Number": "Số điện thoại đại diện",
     "Contact Email": "Email đại diện",
-    "Note": "Ghi chú"
+    "Note": "Ghi chú",
+    "Name management": "Tên quản lý",
+    "Inventory management": {
+      "Product code": "Mã sản phẩm",
+      "Barcode (Supplier)": "Mã vạch (NCC)",
+      "Barcode (Product)": "Mã vạch (CH)",
+      "Product name": "Tên sản phẩm",
+      "Category": "Danh mục",
+      "Supplier": "Nhà cung cấp",
+      "Unit": "Đơn vị",
+      "Quantity on KiotViet": "Số lượng trên KiotViet",
+      "Quantity on BALANCE": "Số lượng trên BALANCE",
+      "Warehouse price": "Giá kho",
+      "Total amount": "Thành tiền"
+    }
   },
   "product": {
     "Code": "Mã sản phẩm",

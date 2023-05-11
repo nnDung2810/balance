@@ -10,6 +10,7 @@ import classNames from 'classnames';
 import { DataTable } from '@core/data-table';
 import { Button } from '@core/button';
 import { Plus } from '@svgs';
+import { inventoryProductFacade } from '../../store/product/inventory-product/index';
 
 const Page = () => {
   const { t } = useTranslation();
@@ -26,13 +27,18 @@ const Page = () => {
   const connectSupplierFacade = ConnectSupplierFacade()
 
   const navigate = useNavigate();
+  const provinceFacade = ProvinceFacade()
+  const { result } = provinceFacade;
+
+  const inventoryproductFacade = inventoryProductFacade()
+
   const isBack = useRef(true);
   const isReload = useRef(false);
   const param = JSON.parse(queryParams || '{}');
   const { id } = useParams();
 
   useEffect(() => {
-    // if (!result?.data) provinceFacade.get({})
+    if (!result?.data) provinceFacade.get({})
 
     if (id) storeFacade.getById({ id });
 
@@ -133,113 +139,162 @@ const Page = () => {
                       },
                     },
                   },
-                  {
-                    title: 'store.District',
-                    name: 'districtId',
-                    formItem: {
-                      type: 'select',
-                      rules: [{ type: 'required' }],
-                      col: 3,
-                      get: {
-                        facade: DistrictFacade,
-                        format: (item: any) => ({
-                          label: item.name,
-                          value: item.id + '|' + item.code,
-                        }),
-                        params: (fullTextSearch, value) => ({
-                          fullTextSearch,
-                          code: value().provinceId.slice(value().provinceId.indexOf('|') + 1),
-                        })
-                      },
-                      onChange(value, form) {
-                        form.resetFields(['wardId'])
+                    {
+                      title: 'store.Name',
+                      name: 'name',
+                      formItem: {
+                        tabIndex: 2,
+                        col: 4,
+                        rules: [{ type: 'required' }],
                       },
                     },
-                  },
-                  {
-                    title: 'store.Ward',
-                    name: 'wardId',
-                    formItem: {
-                      type: 'select',
-                      rules: [{ type: 'required' }],
-                      col: 3,
-                      get: {
-                        facade: WardFacade,
-                        format: (item: any) => ({
-                          label: item.name,
-                          value: item.code,
-                        }),
-                        params: (fullTextSearch, value) => ({
-                          fullTextSearch,
-                          code: value().districtId.slice(value().districtId.indexOf('|') + 1),
-                        })
+                    {
+                      title: 'store.Fax',
+                      name: 'fax',
+                      formItem: {
+                        tabIndex: 3,
+                        col: 4,
+                      },
+                    },
+                    {
+                      title: '',
+                      name: 'address',
+                      formItem: {
+                        rules: [{ type: 'required' }],
+                        render() {
+                          return (
+                            <h3 className='mb-2.5 text-base text-black font-medium'>Địa chỉ cửa hàng</h3>
+                          )
+                        },
                       }
                     },
-                  },
-                  {
-                    title: 'store.Street',
-                    name: 'street',
-                    formItem: {
-                      rules: [{ type: 'required' }],
-                      col: 3,
+                    {
+                      title: 'store.Province',
+                      name: 'provinceId',
+                      formItem: {
+                        tabIndex: 3,
+                        col: 3,
+                        rules: [{ type: 'required' }],
+                        type: 'select',
+                        get: {
+                          facade: ProvinceFacade,
+                          format: (item: any) => ({
+                            label: item.name,
+                            value: item.id + '|' + item.code,
+                          }),
+                        },
+                        onChange(value, form) {
+                          form.resetFields(['districtId', 'wardId'])
+                        },
+                      },
                     },
-                  },
-                  {
-                    title: '',
-                    name: '',
-                    formItem: {
-                      render() {
-                        return (
-                          <div className='text-xl text-teal-900 font-bold mb-2.5'>Thông tin người đại diện</div>
-                        )
+                    {
+                      title: 'store.District',
+                      name: 'districtId',
+                      formItem: {
+                        type: 'select',
+                        rules: [{ type: 'required' }],
+                        col: 3,
+                        get: {
+                          facade: DistrictFacade,
+                          format: (item: any) => ({
+                            label: item.name,
+                            value: item.id + '|' + item.code,
+                          }),
+                          params: (fullTextSearch, value) => ({
+                            fullTextSearch,
+                            code: value().provinceId.slice(value().provinceId.indexOf('|') + 1),
+                          }),
+                        },
+                        onChange(value, form) {
+                          form.resetFields(['wardId'])
+                        },
+                      },
+                    },
+                    {
+                      title: 'store.Ward',
+                      name: 'wardId',
+                      formItem: {
+                        type: 'select',
+                        rules: [{ type: 'required' }],
+                        col: 3,
+                        get: {
+                          facade: WardFacade,
+                          format: (item: any) => ({
+                            label: item.name,
+                            value: item.id,
+                          }),
+                          params: (fullTextSearch, value) => ({
+                            fullTextSearch,
+                            code: value().districtId.slice(value().districtId.indexOf('|') + 1),
+                          })
+                        }
+                      },
+                    },
+                    {
+                      title: 'store.Street',
+                      name: 'street',
+                      formItem: {
+                        rules: [{ type: 'required' }],
+                        col: 3,
+                      },
+                    },
+                    {
+                      title: '',
+                      name: '',
+                      formItem: {
+                        render() {
+                          return (
+                            <div className='text-xl text-teal-900 font-bold mb-2.5'>Thông tin người đại diện</div>
+                          )
+                        }
                       }
-                    }
-                  },
-                  {
-                    title: 'store.ContactName',
-                    name: 'nameContact',
-                    formItem: {
-                      col: 4,
-                      rules: [{ type: 'required' }],
                     },
-                  },
-                  {
-                    title: 'store.Contact Phone Number',
-                    name: 'phoneNumber',
-                    formItem: {
-                      col: 4,
-                      rules: [{ type: 'required' }],
+                    {
+                      title: 'store.ContactName',
+                      name: 'name',
+                      formItem: {
+                        col: 4,
+                        rules: [{ type: 'required' }],
+                      },
                     },
-                  },
-                  {
-                    title: 'store.Contact Email',
-                    name: 'emailContact',
-                    formItem: {
-                      col: 4,
-                      rules: [{ type: 'required' }],
+                    {
+                      title: 'store.Contact Phone Number',
+                      name: 'phoneNumber',
+                      formItem: {
+                        col: 4,
+                        rules: [{ type: 'required' }],
+                      },
                     },
-                  },
-                  {
-                    title: 'store.Note',
-                    name: 'note',
-                    formItem: {
-                      type: 'textarea',
+                    {
+                      title: 'store.Contact Email',
+                      name: 'email',
+                      formItem: {
+                        col: 4,
+                        rules: [{ type: 'required' }],
+                      },
                     },
-                  },
-                  {
-                    title: '',
-                    name: '',
-                    formItem: {
-                      render() {
-                        return (
-                          <div className='flex items-center mb-2.5'>
-                            <div className='text-xl text-teal-900 font-bold mr-6'>Kết nối KiotViet</div>
-                            <Switch className='bg-gray-500' />
-                          </div>
-                        )
+                    {
+                      title: 'store.Note',
+                      name: 'note',
+                      formItem: {
+                        type: 'textarea',
+                      },
+                    },
+                    {
+                      title: '',
+                      name: '',
+                      formItem: {
+                        render() {
+                          return (
+                            <div className='flex items-center mb-2.5'>
+                              <div className='text-xl text-teal-900 font-bold mr-6'>Kết nối KiotViet</div>
+                              <Switch className='bg-gray-500' />
+                            </div>
+                          )
+                        }
                       }
-                    }
-                  },
+                    },
 
                 ]}
                 handSubmit={handleSubmit}
@@ -439,7 +494,7 @@ const Page = () => {
                     },
                   },
                   {
-                    title: 'store.ContactName',
+                    title: 'store.Name management',
                     name: 'supplier',
                     tableItem: {
                       render: (value: any, item: any) => item.supplier.userRole[0].userAdmin.name,

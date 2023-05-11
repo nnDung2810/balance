@@ -91,9 +91,32 @@ export class StoreManagement extends CommonEntity {
     public districtId?: string,
     public provinceId?: string,
     public street?: string,
-    public wardId?: string
+    public wardId?: string,
     // public userRole?: string,
     // public contract?: string
+    public address?: {
+      id?: number;
+      street?: string;
+      district?: District
+      province?: Province
+      ward?: Ward;
+    },
+    public userRole?: {
+      0: {
+        createdAt: string;
+        isDeleted: boolean;
+        roleId: number;
+        subOrgId: string;
+        id: string;
+        userAdminId: string;
+        userAdmin: {
+          id: string;
+          email: string;
+          name: string;
+          phoneNumber: string;
+        }
+      }
+    },
   ) {
     super();
   }

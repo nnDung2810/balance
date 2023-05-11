@@ -332,7 +332,7 @@ export const Form = ({
             switch (rule.type) {
               case 'required':
                 if (!rule.message) {
-                  rule.message = t('components.form.ruleRequired', { title: t(item.title) }).toLowerCase();
+                  rule.message = t('components.form.ruleRequired');
                 }
                 rules.push({
                   required: true,
@@ -341,7 +341,7 @@ export const Form = ({
                 if (!item.formItem.type) {
                   rules.push({
                     whitespace: true,
-                    message: t('components.form.ruleRequired', { title: t(item.title) }).toLowerCase(),
+                    message: t('components.form.ruleRequired'),
                   });
                 }
                 break;
@@ -667,7 +667,7 @@ export const Form = ({
       <div
         className={classNames('gap-2 flex', {
           'justify-center': !extendButton && !handCancel,
-          'md:inline-flex w-full md:float-right': extendButton || handCancel,
+          'md:inline-flex md:float-right': extendButton || handCancel,
           'w-full flex max-sm:flex-col max-sm:items-center max-sm:mb-10 justify-between mt-8': handSubmit && handCancel,
           'md:inline-flex md:float-right sm:block sm:text-center items-center': extendButton && handSubmit,
           'md:inline-flex md:float-right top-[300px] pt-6': extendButtonChangePassword,
