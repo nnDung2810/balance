@@ -24,5 +24,6 @@ export class PaginationQuery<T = object> {
     public storeId?: string,
     public idSuppiler?: string,
     public supplierType?: string,
+    public idStore?: string,
   ) { }
 }

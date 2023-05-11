@@ -5,12 +5,12 @@ import { Switch } from 'antd';
 
 import { routerLinks } from '@utils';
 import { Form } from '@core/form';
-import { DistrictFacade, StoreFacade, WardFacade, ProvinceFacade, StoreManagement, SubStoreFacade, ConnectSupplierFacade } from '@store';
+import { DistrictFacade, StoreFacade, WardFacade, ProvinceFacade, StoreManagement, SubStoreFacade, ConnectSupplierFacade, invoicekiotvietFacade, inventoryProductFacade } from '@store';
 import classNames from 'classnames';
 import { DataTable } from '@core/data-table';
 import { Button } from '@core/button';
 import { Plus } from '@svgs';
-import { inventoryProductFacade } from '../../store/product/inventory-product/index';
+//import { inventoryProductFacade } from '../../store/store-management/inventory-product/index';
 
 const Page = () => {
   const { t } = useTranslation();
@@ -30,7 +30,8 @@ const Page = () => {
   const provinceFacade = ProvinceFacade()
   const { result } = provinceFacade;
 
-  const inventoryproductFacade = inventoryProductFacade()
+  const inventoryproductFacade = inventoryProductFacade();
+  const invoicevietFacade = invoicekiotvietFacade()
 
   const isBack = useRef(true);
   const isReload = useRef(false);
@@ -406,27 +407,76 @@ const Page = () => {
                       render: (value: any, item: any) => item.supplier.userRole[0].userAdmin.phoneNumber,
                     },
                   },
-                  //  {
-                  //    title: 'Trạng thái',
-                  //    name: 'isActive',
-                  //    tableItem: {
-                  //      render: (text: string) => text ? (<div className='bg-green-100 text-center p-1 border border-green-500 text-green-600 rounded'>Đang hoạt động</div>)
-                  //        : (<div className='bg-red-100 text-center p-1 border border-red-500 text-red-600 rounded'></div>),
-                  //    },
-                  //  },
                 ]}
               />
             )}
 
             {/* Quản lý kho */}
-            {tab === 'tab6' && (
+            {tab === 'tab5' && (
               <DataTable
-                facade={inventoryproductFacade}
-              //  defaultRequest={{ page: 1, perPage: 10 }}
+                facade={invoicevietFacade}
+                defaultRequest={{ page: 1, perPage: 10, idSuppiler: id }}
                 xScroll='1440px'
                 className=' bg-white p-5 rounded-lg'
                 onRow={(data: any) => ({
                   onDoubleClick: () => {
+                    navigate(routerLinks('store-managerment/edit') + '/' + data.id);
+                  },
+                })}
+                pageSizeRender={(sizePage: number) => sizePage}
+                pageSizeWidth={'50px'}
+                paginationDescription={(from: number, to: number, total: number) =>
+                  t('routes.admin.Layout.PaginationSupplier', { from, to, total })
+                }
+                columns={[
+                    // {
+                    //   title: 'supplier.CodeName',
+                    //   name: 'supplier',
+                    //   tableItem: {
+                    //     width: 150,
+                    //     render: (value: any, item: any) => item.supplier?.code,
+                    //   },
+                    // },
+                    // {
+                    //   title: 'supplier.Name',
+                    //   name: 'supplier',
+                    //   tableItem: {
+                    //     render: (value: any, item: any) => item.supplier?.name,
+                    //   },
+                    // },
+                    // {
+                    //   title: 'store.Address',
+                    //   name: 'supplier',
+                    //   tableItem: {
+                    //     render: (value: any, item: any) => item.supplier.address?.street + ', ' + item.supplier.address?.ward.name + ', ' + item.supplier.address?.district.name + ', ' + item.supplier.address?.province.name,
+                    //   },
+                    // },
+                    // {
+                    //   title: 'store.Name management',
+                    //   name: 'supplier',
+                    //   tableItem: {
+                    //     render: (value: any, item: any) => item.supplier.userRole[0].userAdmin.name,
+                    //   },
+                    // },
+                    // {
+                    //   title: 'store.Phone Number',
+                    //   name: 'supplier',
+                    //   tableItem: {
+                    //     render: (value: any, item: any) => item.supplier.userRole[0].userAdmin.phoneNumber,
+                    //   },
+                    // },
+                ]}
+              />
+            )}
+            {/* {tab === 'tab6' && (
+              <DataTable
+                facade={inventoryproductFacade}
+                defaultRequest={{ page: 1, perPage: 10, idStore:id }}
+                xScroll='1440px'
+                className=' bg-white p-5 rounded-lg'
+                onRow={(data: any) => ({
+                  onDoubleClick: () => {
+                    navigate(routerLinks('store-managerment/edit') + '/' + data.id);
                   },
                 })}
                 pageSizeRender={(sizePage: number) => sizePage}
@@ -437,92 +487,84 @@ const Page = () => {
                 columns={[
                   {
                     title: 'store.Inventory management.Product code',
-                    name: 'productCode',
+                    name: 'inventory.productCode',
                     tableItem: {
                       width: 150,
+                      // render
+                    },
+                  },
+                  // {
+                  //   title: 'store.Inventory management.Barcode (Supplier)',
+                  //   name: 'supplierBarcode',
+                  //   tableItem: {
 
-                    },
-                  },
-                  {
-                    title: 'store.Inventory management.Barcode (Supplier)',
-                    name: 'supplierBarcode',
-                    tableItem: {
+                  //   },
+                  // },
+                  // {
+                  //   title: 'store.Inventory management.Barcode (Product)',
+                  //   name: 'storeBarcode',
+                  //   tableItem: {
+                  //   },
+                  // },
+                  // {
+                  //   title: 'store.Inventory management.Product name',
+                  //   name: 'productName',
+                  //   tableItem: {
 
-                    },
-                  },
-                  {
-                    title: 'store.Inventory management.Barcode (Product)',
-                    name: 'storeBarcode',
-                    tableItem: {
-                    },
-                  },
-                  {
-                    title: 'store.Inventory management.Product name',
-                    name: 'productName',
-                    tableItem: {
+                  //   },
+                  // },
+                  // {
+                  //   title: 'store.Inventory management.Category',
+                  //   name: 'category',
+                  //   tableItem: {
 
-                    },
-                  },
-                  {
-                    title: 'store.Inventory management.Category',
-                    name: 'category',
-                    tableItem: {
+                  //   },
+                  // },
+                  // {
+                  //   title: 'store.Inventory management.Supplier',
+                  //   name: 'supplierName',
+                  //   tableItem: {
 
-                    },
-                  },
-                  {
-                    title: 'store.Inventory management.Supplier',
-                    name: 'supplierName',
-                    tableItem: {
+                  //   },
+                  // },
+                  // {
+                  //   title: 'store.Inventory management.Unit',
+                  //   name: 'name',
+                  //   tableItem: {
 
-                    },
-                  },
-                  {
-                    title: 'store.Inventory management.Unit',
-                    name: 'name',
-                    tableItem: {
+                  //   },
+                  // },
+                  // {
+                  //   title: 'store.Inventory management.Quantity on KiotViet',
+                  //   name: 'numberInKiot',
+                  //   tableItem: {
 
-                    },
-                  },
-                  {
-                    title: 'store.Inventory management.Quantity on KiotViet',
-                    name: 'numberInKiot',
-                    tableItem: {
+                  //   },
+                  // },
+                  // {
+                  //   title: 'store.Inventory management.Quantity on BALANCE',
+                  //   name: 'numberInBal',
+                  //   tableItem: {
 
-                    },
-                  },
-                  {
-                    title: 'store.Inventory management.Quantity on BALANCE',
-                    name: 'numberInBal',
-                    tableItem: {
+                  //   },
+                  // },
+                  // {
+                  //   title: 'store.Inventory management.Warehouse price',
+                  //   name: 'inventoryPrice',
+                  //   tableItem: {
 
-                    },
-                  },
-                  {
-                    title: 'store.Inventory management.Warehouse price',
-                    name: 'inventoryPrice',
-                    tableItem: {
+                  //   },
+                  // },
+                  // {
+                  //   title: 'store.Inventory management.Total amount',
+                  //   name: 'numberInKiot*numberInBal*inventoryPrice',
+                  //   tableItem: {
 
-                    },
-                  },
-                  {
-                    title: 'store.Inventory management.Total amount',
-                    name: 'numberInKiot*numberInBal*inventoryPrice',
-                    tableItem: {
-
-                    },
-                  },
-                  //  {
-                  //    title: 'Trạng thái',
-                  //    name: 'isActive',
-                  //    tableItem: {
-                  //      render: (text: string) => text ? (<div className='bg-green-100 text-center p-1 border border-green-500 text-green-600 rounded'>Đang hoạt động</div>)
-                  //        : (<div className='bg-red-100 text-center p-1 border border-red-500 text-red-600 rounded'></div>),
-                  //    },
-                  //  },
+                  //   },
+                  // },
                 ]}
               />
-            )}
+            )} */}
           </div>
           {/* ///// */}
         </div>

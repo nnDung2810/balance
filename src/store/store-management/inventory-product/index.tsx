@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import { useAppDispatch, useTypedSelector, Action, Slice, State } from '@store';
 import { CommonEntity, PaginationQuery } from '@models';
+import { Product } from '@store/product';
 
 const name = 'InventoryProduct';
 
@@ -20,21 +21,23 @@ export const inventoryProductFacade = () => {
 
 export class IventoryProduct extends CommonEntity {
     constructor(
-        public category?: string,
-        public inventoryPrice?: string,
-        public numberInBal?: string,
-        public numberInKiot?: string,
-        public productCode?: string,
-        public productId?: string,
-        public productName?: string,
-        public storeBarcode?: string,
-        public supplierBarcode?: string,
-        public supplierName?: string,
+      //   public category?: string,
+      //   public inventoryPrice?: string,
+      // //  public numberInBal?: string,
+      // //  public numberInKiot?: string,
+      //   public productCode?: string,
+      //   public productId?: string,
+      //   public productName?: string,
+      //   public storeBarcode?: string,
+      //   public supplierBarcode?: string,
+      //   public supplierName?: string,
         public units?: {
           value?: string;
           name?: string;
           isDefault?: boolean
         },
+        public id?: string,
+        public iventory?: Product,
     ) {
         super();
     }

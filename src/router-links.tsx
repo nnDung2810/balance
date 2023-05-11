@@ -43,7 +43,8 @@ const Util = (name: string, type?: string) => {
     Product: '/product',
     SubStore: '/sub-organization/sub-org-in-store',
     ConnectSupplier: '/store-connect-supplier/supplier',
-    InventoryProduct: '/inventory-product'
+    InventoryProduct: '/inventory-product',
+    Invoicekiotviet: '/invoice-kiot-viet/invoice'
   }; // 💬 generate api to here
 
   switch (type) {
