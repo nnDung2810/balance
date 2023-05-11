@@ -22,6 +22,7 @@ const Util = (name: string, type?: string) => {
     Store: '/store-managerment',
     'store-managerment/create': '/store-managerment/create',
     'store-managerment/edit': '/store-managerment/detail',
+    'Store/branch/edit': '/store/branch/edit',
 
     Category: '/category',
 
