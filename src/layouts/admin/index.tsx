@@ -44,28 +44,6 @@ const Layout = ({ children }: PropsWithChildren) => {
     }
     window.addEventListener('resize', handleResize, { passive: true });
 
-    // const init = async () => {
-    //   if (await isSupported()) {
-    //     try {
-    //       const defaultApp = initializeApp(firebaseConfig);
-    //       const messaging = getMessaging(defaultApp);
-    //       const firebaseToken = await getToken(messaging);
-    //       console.log(firebaseToken);
-    //       onMessage(messaging, async (payload) => {
-    //         antNoti.open({
-    //           message: <strong>{payload.notification.title}</strong>,
-    //           description: payload.notification.body,
-    //           icon: <i className="las la-info-circle text-4xl text-blue-600" />,
-    //           // onClick: () => {},
-    //         });
-    //       });
-    //     } catch (e) {
-    //       console.log(e);
-    //     }
-    //   }
-    // };
-    // init();
-
     return () => window.removeEventListener('resize', handleResize, true);
   }, []);
 
@@ -189,23 +167,13 @@ const Layout = ({ children }: PropsWithChildren) => {
           >
             {(isCollapsed && !isDesktop) && <Menu className="w-9 text-black select-none" />}
             {(!isCollapsed && !isDesktop) && <ArrowBack className="w-9 text-black select-none" />}
-
-            {/* <span className="line" />
-              <span className="line" />
-              <span className="line" /> */}
           </div>
           <a href="/" className="flex items-center">
-            {/* <Logo className={classNames('w-10 h-10 mr-3',
-                {
-                  'opacity-100 text-lg': !isCollapsed && isDesktop || isCollapsed && !isDesktop,
-                  'opacity-0 text-[0px] hidden': isCollapsed && isDesktop,
-                },)} /> */}
 
             <img src={Logo1} className={classNames('w-12 mr-3 rounded max-md:',
               {
                 'opacity-100 text-lg w-12': !isCollapsed && isDesktop || isCollapsed && !isDesktop,
                 'opacity-0 text-[0px] hidden': isCollapsed && isDesktop,
-                // 'opacity-100 text-xl': isCollapsed && !isDesktop,
               },)}></img>
             <div
               id={'name-application'}
@@ -261,7 +229,7 @@ const Layout = ({ children }: PropsWithChildren) => {
           'ml-16': isCollapsed && isDesktop,
         })}
       >
-        <div className={'h-[calc(100vh-9rem)]'}>
+        <div className={'min-h-screen'}>
           <h1 className={'text-2xl text-teal-900 font-bold block pb-5'}>{t('titles.' + title)}</h1>
           {children}
         </div>
