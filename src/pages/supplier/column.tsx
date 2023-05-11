@@ -616,21 +616,21 @@ export const ColumnTableSupplierDiscount = ({ t, listRole }: any) => {
       title: t(`STT`),
       name: 'code',
       tableItem: {
-        width: 300,
+        width: 110,
       },
     },
     {
       title: t(`Thời gian`),
       name: 'name',
       tableItem: {
-        width: 150,
+        width: 300,
       },
     },
     {
       title: t(`Chiết khấu (VND)`),
       name: ('address'),
       tableItem: {
-        width: 150,
+        width: 245,
         render: (value: any,item: any) => item?.address?.street + ', ' + item?.address?.ward?.name + ', ' + item?.address?.district?.name + ', ' + item?.address?.province?.name,
       }
     },
@@ -638,7 +638,7 @@ export const ColumnTableSupplierDiscount = ({ t, listRole }: any) => {
       title: t(`Đã thanh toán (VND)`),
       name: 'contract',
       tableItem: {
-        width: 300  ,
+        width: 245  ,
         render: (value: any,item: any) => item?.contract[0].name,
       },
     },
@@ -646,7 +646,7 @@ export const ColumnTableSupplierDiscount = ({ t, listRole }: any) => {
       title: t(`Chưa thanh toán (VND)`),
       name: 'userRole',
       tableItem: {
-        width: 150,
+        width: 245,
         render: (value: any,item: any) => item?.userRole[0].userAdmin.phoneNumber,
       },
     },
@@ -654,7 +654,7 @@ export const ColumnTableSupplierDiscount = ({ t, listRole }: any) => {
       title: t(`Trạng thái`),
       name: "isActive",
       tableItem: {
-        width: 180,  
+        width: 240,  
         align: 'center',
         render: (text: string) => text
         ? (<div className='bg-green-100 text-center p-1 border border-green-500 text-green-600 rounded'>Đã ký</div>) 

@@ -16,6 +16,8 @@ import { ProductFacade, productSlice } from './product';
 import { SubStoreFacade, subStoreSlice } from './store-management/sub-store';
 import { connectSupplierSlice, ConnectSupplierFacade } from './store-connect-supplier';
 import { inventoryProductSlice, inventoryProductFacade } from './product/inventory-product';
+import { OrdersSlice, OrdersFacade  } from './order';
+import { DiscountSlice, DiscountFacade } from './discount';
 
 const rootReducer = combineReducers({
   [globalSlice.name]: globalSlice.reducer,
@@ -31,6 +33,8 @@ const rootReducer = combineReducers({
   [subStoreSlice.name]: subStoreSlice.reducer,
   [connectSupplierSlice.name]: connectSupplierSlice.reducer,
   [inventoryProductSlice.name]: inventoryProductSlice.reducer,
+  [OrdersSlice.name]: OrdersSlice.reducer,
+  [DiscountSlice.name]: DiscountSlice.reducer,
 });
 
 const setupStore = () => {
@@ -66,7 +70,9 @@ export {
   ProductFacade,
   SubStoreFacade,
   ConnectSupplierFacade,
-  inventoryProductFacade
+  inventoryProductFacade,
+  OrdersFacade,
+  DiscountFacade
 };
 
 export type { State };

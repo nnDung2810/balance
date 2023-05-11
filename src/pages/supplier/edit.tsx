@@ -8,7 +8,7 @@ import { SupplierFacade } from '@store/supplier';
 import { DistrictFacade } from '@store/address/district';
 import { WardFacade } from '@store/address/ward';
 import { routerLinks } from '@utils';
-import { CategoryFacade, GlobalFacade, ProductFacade, OrdersFacade } from '@store';
+import { CategoryFacade, GlobalFacade, ProductFacade, OrdersFacade, DiscountFacade } from '@store';
 import { TableRefObject } from '@models';
 import { Form } from '@core/form';
 import { DataTable } from '@core/data-table';
@@ -22,7 +22,6 @@ const Page = () => {
 
   const provinceFacade = ProvinceFacade()
   const { result } = provinceFacade;
-  const category = CategoryFacade();
   const supplierFacade = SupplierFacade();
   const { data, isLoading, queryParams, status } = supplierFacade;
   const navigate = useNavigate();
@@ -30,7 +29,14 @@ const Page = () => {
   const isReload = useRef(false);
   const param = JSON.parse(queryParams || '{}');
   const { id } = useParams();
-  
+  const [tab, setTab] = useState('tab1');
+  const { user } = GlobalFacade();
+  const dataTableRef = useRef<TableRefObject>(null);
+
+  const productFacade = ProductFacade();
+  const ordersFacade = OrdersFacade();
+  const discountFacade = DiscountFacade();
+  const category = CategoryFacade();
 
 
   useEffect(() => {
@@ -41,7 +47,7 @@ const Page = () => {
     return () => {
       isReload.current && supplierFacade.get(param);
     };
-  }, [id, data]);
+  }, [id, data, tab]);
 
   useEffect(() => {
     switch (status) {
@@ -56,13 +62,6 @@ const Page = () => {
     }
   }, [status]);
 
-  const [tab, setTab] = useState('tab1');
-  const { user } = GlobalFacade();
-  const dataTableRef = useRef<TableRefObject>(null);
-
-  const productFacade = ProductFacade();
-  const ordersFacade = OrdersFacade();
-  
 
   const handleBack = () => navigate(routerLinks('Supplier') + '?' + new URLSearchParams(param).toString());
   const handleSubmit = (values: any) => {
@@ -238,49 +237,48 @@ const Page = () => {
                     render: (value: any,item: any) => item?.store?.name,
                   },
                 },
-                // {
-                //   title: t(`Người nhận`),
-                //   name: ('address'),
-                //   tableItem: {
-                //     width: 180,
-                //     render: (value: any,item: any) => item?.storeAdmin?.name,
-                //   }
-                // },
-                // {
-                //   title: t(`Địa chỉ nhận hàng`),
-                //   name: 'contract',
-                //   tableItem: {
-                //     width: 300  ,
-                //     render: (value: any,item: any) => item?.store?.address?.street + ', ' + item?.store?.address?.ward?.name + ', ' + item?.store?.address?.district?.name + ', ' + item?.store?.address?.province?.name,
-                //   },
-                // },
-                // {
-                //   title: t(`Tổng tiền (VND)`),
-                //   name: 'userRole',
-                //   tableItem: {
-                //     width: 150,
-                //     render: (value: any,item: any) => item?.total.toLocaleString(),
-                //   },
-                // },
-                // {
-                //   title: t(`Ngày đặt`),
-                //   name: 'userRole',
-                //   tableItem: {
-                //     width: 150,
-                //     render: (value: any,item: any) => item?.userRole[0].userAdmin.phoneNumber,
-                //   },
-                // },
-                // {
-                //   title: t(`supplier.Status`),
-                //   name: "isActive",
-                //   tableItem: {
-                //     width: 180,  
-                //     align: 'center',
-                //     render: (text: string) => text
-                //     ? (<div className='bg-green-100 text-center p-1 border border-green-500 text-green-600 rounded'>Đã ký</div>) 
-                //     : (<div className='bg-red-100 text-center p-1 border border-red-500 text-red-600 rounded'>Chờ ký</div>),
-                //   },
-                // },
+                {
+                  title: t(`Người nhận`),
+                  name: ('address'),
+                  tableItem: {
+                    width: 180,
+                    render: (value: any,item: any) => item?.storeAdmin?.name,
+                  }
+                },
+                {
+                  title: t(`Địa chỉ nhận hàng`),
+                  name: 'contract',
+                  tableItem: {
+                    width: 300  ,
+                    render: (value: any,item: any) => item?.store?.address?.street + ', ' + item?.store?.address?.ward?.name + ', ' + item?.store?.address?.district?.name + ', ' + item?.store?.address?.province?.name,
+                  },
+                },
+                {
+                  title: t(`Tổng tiền (VND)`),
+                  name: 'total',
+                  tableItem: {
+                    width: 150,
+                    render: (value: any,item: any) => item?.total.toLocaleString(),
+                  },
+                },
+                {
+                  title: t(`Ngày đặt`),
+                  name: 'createdAt',
+                  tableItem: {
+                    width: 150,
+                  },
+                },
+                {
+                  title: t(`supplier.Status`),
+                  name: "isActive",
+                  tableItem: {
+                    width: 180,  
+                    align: 'center',
+                    render: (item: any) => !item?.isApplyTax
+                    ? (<div className='bg-green-100 text-center p-1 border border-green-500 text-green-600 rounded'>Đã giao</div>) 
+                    : (<div className='bg-red-100 text-center p-1 border border-red-500 text-red-600 rounded'>Đang giao</div>),
+                  },
+                },
               ]}
             />
             </div>
@@ -288,9 +286,7 @@ const Page = () => {
           ) 
         }
         {tab === 'tab4' && (
-          
             <Form
-              key={'tab1'}
               values={{ ...data, street: data?.address?.street, province: data?.address?.province?.name, district: data?.address?.district?.name, ward: data?.address?.ward?.name,
               username: data?.userRole?.[0].userAdmin.name, email: data?.userRole?.[0].userAdmin.email, phoneNumber: data?.userRole?.[0].userAdmin.phoneNumber  }}
               className="intro-x pt-6 rounded-lg w-full "
@@ -313,35 +309,39 @@ const Page = () => {
           ) 
         }
         {tab === 'tab5' && (
-          
-            <DataTable
-              // facade={supplierFacade}
-              ref={dataTableRef}
-              xScroll = '1440px'
-              pageSizeRender={(sizePage: number) => sizePage}
-              pageSizeWidth={'50px'}
-              paginationDescription={(from: number, to: number, total: number) =>
-                t('routes.admin.Layout.Pagination', { from, to, total })
-              }
-              columns={ColumnTableSupplierDiscount({
-                t,
-                navigate,
-                dataTableRef,
-              })}
-              showSearch={false}
-              rightHeader={
-                <div className={'flex h-10 w-36'}>
-                  {user && (
-                    <Button
-                      className='!bg-white flex justify-between w-full !px-3 !border !border-gray-600 !text-gray-600 hover:!bg-teal-900 hover:!text-white group'
-                      // icon={<Download className="icon-cud !h-6 !w-6 !fill-gray-600 group-hover:!fill-white" />}
-                      text={t('Xuất file excel')}
-                      onClick={() => navigate(routerLinks('Supplier/Excel'))}
-                    />
-                  )}
-                </div>
-              }
-            />
+          <div className={'w-full mx-auto bg-white rounded-xl'}>
+            <div className='px-1 pt-6 pb-4'>
+              <DataTable
+                facade={discountFacade}
+                ref={dataTableRef}
+                defaultRequest={{page: 1, perPage: 10}}
+                xScroll = '1370px'
+                pageSizeRender={(sizePage: number) => sizePage}
+                pageSizeWidth={'50px'}
+                paginationDescription={(from: number, to: number, total: number) =>
+                  t('routes.admin.Layout.Pagination', { from, to, total })
+                }
+                columns={ColumnTableSupplierDiscount({
+                  t,
+                  navigate,
+                  dataTableRef,
+                })}
+                showSearch={false}
+                rightHeader={
+                  <div className={'flex h-10 w-36'}>
+                    {user && (
+                      <Button
+                        className='!bg-white flex justify-between w-full !px-3 !border !border-gray-600 !text-gray-600 hover:!bg-teal-900 hover:!text-white group'
+                        icon={<Download className="icon-cud !h-6 !w-6 !fill-gray-600 group-hover:!fill-white" />}
+                        text={t('Xuất file excel')}
+                        onClick={() => navigate(routerLinks('Supplier/Excel'))}
+                      />
+                    )}
+                  </div>
+                }
+              />
+            </div>
+          </div>
           ) 
         }
         </div>
