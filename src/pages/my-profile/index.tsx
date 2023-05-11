@@ -152,7 +152,7 @@ const Page = () => {
                       formItem: {
                         col: 12,
                         type: 'passConfirm',
-                        rules: [{ type: 'required1' }],
+                        rules: [{ type: 'required' }],
                         placeholder: t('columns.auth.placeholder.Password').toString(),
                       },
                     },
@@ -185,7 +185,7 @@ const Page = () => {
                               },
                             }),
                           },
-                          { type: 'required1' },{ type: 'min', value: 1 },
+                          { type: 'required' },{ type: 'min', value: 1 },
                         ],
                         placeholder: t('columns.auth.placeholder.Confirm Password').toString(),
                       },
