@@ -186,7 +186,8 @@
         "Day": "Ngày phép",
         "PaginationStore": "Hiển thị {{from}} - {{to}} / Tổng số {{total}} Cửa hàng",
         "PaginationSubStore": "Hiển thị {{from}} - {{to}} / Tổng số {{total}} Chi nhánh",
-        "PaginationSupplier": "Hiển thị {{from}} - {{to}} / Tổng số {{total}} Nhà cung cấp"
+        "PaginationSupplier": "Hiển thị {{from}} - {{to}} / Tổng số {{total}} Nhà cung cấp",
+        "PaginationProduct": "Hiển thị {{from}} - {{to}} / Tổng số {{total}} Sản phẩm"
       }
     }
   },
@@ -229,6 +230,16 @@
     "Contact Phone Number": "Số điện thoại đại diện",
     "Contact Email": "Email đại diện",
     "Note": "Ghi chú"
+  },
+  "product": {
+    "Code": "Mã sản phẩm",
+    "StoreCode": "Mã vạch (CH)",
+    "SupplierCode": "Mã vạch (NCC)",
+    "Name": "Tên sản phẩm",
+    "Category": "Danh mục",
+    "SupplierName": "Nhà cung cấp",
+    "Unit": "Đơn vị",
+    "Price": "Giá bán lẻ (VND)"
   },
   "dashboard": {
     "Active Profile Report": "Báo cáo hồ sơ đang hoạt động",

@@ -1,11 +1,11 @@
 import React, { Fragment, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router';
-import { Switch } from 'antd';
+import { Switch, Tabs } from 'antd';
 
 import { routerLinks } from '@utils';
 import { Form } from '@core/form';
-import { DistrictFacade, StoreFacade, WardFacade, ProvinceFacade, StoreManagement, SubStoreFacade, ConnectSupplierFacade } from '@store';
+import { DistrictFacade, StoreFacade, WardFacade, ProvinceFacade, StoreManagement, SubStoreFacade, ConnectSupplierFacade, ProductFacade } from '@store';
 import classNames from 'classnames';
 import { DataTable } from '@core/data-table';
 import { Button } from '@core/button';
@@ -21,7 +21,7 @@ const Page = () => {
 
   const storeFacade = StoreFacade()
   const { data, isLoading, queryParams, status } = storeFacade;
-
+  const productFacede = ProductFacade()
   const subStoreFacade = SubStoreFacade()
   const connectSupplierFacade = ConnectSupplierFacade()
 
@@ -69,28 +69,8 @@ const Page = () => {
     <div className={'w-full'}>
       <Fragment>
         <div className=''>
-          <div className='flex'>
-            <div className={classNames('text-xl text-teal-900 p-3.5 pt-4 font-bold bg-transparent w-max rounded-t-2xl', { '!bg-white': tab === 'tab1' })}>
-              <button className='' onClick={() => setTab('tab1')}>Thông tin cửa hàng</button>
-            </div>
-            <div className={classNames('text-xl text-teal-900 p-3.5 pt-4 font-bold bg-transparent w-max rounded-t-2xl', { '!bg-white': tab === 'tab2' })}>
-              <button className='' onClick={() => setTab('tab2')}>Danh sách hàng hóa</button>
-            </div>
-            <div className={classNames('text-xl text-teal-900 p-3.5 pt-4 font-bold bg-transparent w-max rounded-t-2xl', { '!bg-white': tab === 'tab3' })}>
-              <button className='' onClick={() => setTab('tab3')}>Danh sách chi nhánh</button>
-            </div>
-            <div className={classNames('text-xl text-teal-900 p-3.5 pt-4 font-bold bg-transparent w-max rounded-t-2xl', { '!bg-white': tab === 'tab4' })}>
-              <button className='' onClick={() => setTab('tab4')}>Quản lý NCC</button>
-            </div>
-            <div className={classNames('text-xl text-teal-900 p-3.5 pt-4 font-bold bg-transparent w-max rounded-t-2xl', { '!bg-white': tab === 'tab5' })}>
-              <button className='' onClick={() => setTab('tab5')}>Doanh thu</button>
-            </div>
-            <div className={classNames('text-xl text-teal-900 p-3.5 pt-4 font-bold bg-transparent w-max rounded-t-2xl', { '!bg-white': tab === 'tab6' })}>
-              <button className='' onClick={() => setTab('tab6')}>Quản lý kho</button>
-            </div>
-          </div>
-          <div className='bg-white rounded-2xl rounded-t-none'>
-            {tab === 'tab1' && (
+          <Tabs defaultActiveKey='1' type='card' size='large' className=''>
+            <Tabs.TabPane tab='Thông tin cửa hàng' key='1' className='bg-white rounded-xl rounded-tl-none' >
               <Form
                 values={{ ...data }}
                 className="intro-x p-6 pb-4 pt-3 rounded-lg w-full "
@@ -266,9 +246,88 @@ const Page = () => {
                 disableSubmit={isLoading}
                 handCancel={handleBack}
               />
-            )}
-            {/* Danh sách chi nhánh  */}
-            {tab === 'tab3' && (
+            </Tabs.TabPane>
+            <Tabs.TabPane tab='Danh sách hàng hóa' key='2' className='rounded-xl'>
+              <DataTable
+                facade={productFacede}
+                defaultRequest={{ page: 1, perPage: 10, storeId: data?.id, type: 'BALANCE' }}
+                xScroll='1440px'
+                className=' bg-white p-5 rounded-lg'
+                onRow={(data: any) => ({
+                  onDoubleClick: () => {
+                    navigate(routerLinks('store-managerment/edit') + '/' + data.id);
+                  },
+                })}
+                pageSizeRender={(sizePage: number) => sizePage}
+                pageSizeWidth={'50px'}
+                paginationDescription={(from: number, to: number, total: number) =>
+                  t('routes.admin.Layout.PaginationProduct', { from, to, total })
+                }
+                columns={[
+                  {
+                    title: 'product.Code',
+                    name: 'code',
+                    tableItem: {
+                      width: 150,
+                      sorter: true,
+                      filter: { type: 'search' }
+                    },
+                  },
+                  {
+                    title: 'product.StoreCode',
+                    name: 'storeBarcode',
+                    tableItem: {
+                      sorter: true,
+                      filter: { type: 'search' }
+                    },
+                  },
+                  {
+                    title: 'product.SupplierCode',
+                    name: 'barcode',
+                    tableItem: {
+                      sorter: true,
+                      filter: { type: 'search' }
+                    },
+                  },
+                  {
+                    title: 'product.Name',
+                    name: 'name',
+                    tableItem: {
+                      sorter: true,
+                      filter: { type: 'search' }
+                    },
+                  },
+                  {
+                    title: 'product.Category',
+                    name: 'category',
+                    tableItem: {
+                      render: (value: any, item: any) => item.category?.child?.name,
+                    },
+                  },
+                  {
+                    title: 'product.SupplierName',
+                    name: 'supplierName',
+                    tableItem: {
+                    },
+                  },
+                  {
+                    title: 'product.Unit',
+                    name: 'basicUnit',
+                    tableItem: {
+
+                    },
+                  },
+                  {
+                    title: 'product.Price',
+                    name: 'productPrice',
+                    tableItem: {
+                      render: (text, item) => item.productPrice[0] ? item.productPrice[0]?.price.toLocaleString() : '0'
+                    },
+                  },
+                ]}
+              />
+            </Tabs.TabPane>
+            <Tabs.TabPane tab='Danh sách chi nhánh' key='3' className='rounded-xl'>
               <DataTable
                 facade={subStoreFacade}
                 defaultRequest={{ page: 1, perPage: 10, storeId: data?.id, supplierType: 'BALANCE' }}
@@ -329,9 +388,9 @@ const Page = () => {
                   },
                 ]}
                 rightHeader={
-                  <div className={'flex gap-2 !bg-teal-900 !rounded-lg mt-0 max-lg:mt-2.5 max-lg:w-48'}>
+                  <div className={'flex gap-2 !bg-teal-900 !rounded-3xl mt-0 max-lg:mt-2.5 max-lg:w-48'}>
                     <Button
-                      className='!bg-teal-900 !rounded-full !h-9'
+                      className='!bg-teal-900 !h-9'
                       icon={<Plus className="icon-cud !h-5 !w-5 !fill-slate-200 " />}
                       text={t('titles.Store/SubStore')}
                       onClick={() => navigate(routerLinks('store-managerment/create'))}
@@ -339,10 +398,8 @@ const Page = () => {
                   </div>
                 }
               />
-            )}
-
-            {/* Quản lý NCC */}
-            {tab === 'tab4' && (
+            </Tabs.TabPane>
+            <Tabs.TabPane tab='Quản lý NCC' key='4' className='rounded-xl'>
               <DataTable
                 facade={connectSupplierFacade}
                 defaultRequest={{ page: 1, perPage: 10, idSuppiler: id }}
@@ -395,19 +452,16 @@ const Page = () => {
                       render: (value: any, item: any) => item.supplier.userRole[0].userAdmin.phoneNumber,
                     },
                   },
-                  //  {
-                  //    title: 'Trạng thái',
-                  //    name: 'isActive',
-                  //    tableItem: {
-                  //      render: (text: string) => text ? (<div className='bg-green-100 text-center p-1 border border-green-500 text-green-600 rounded'>Đang hoạt động</div>)
-                  //        : (<div className='bg-red-100 text-center p-1 border border-red-500 text-red-600 rounded'></div>),
-                  //    },
-                  //  },
                 ]}
               />
-            )}
-          </div>
-          {/* ///// */}
+            </Tabs.TabPane>
+            <Tabs.TabPane tab='Doanh thu' key='5' className='rounded-xl'>
+
+            </Tabs.TabPane>
+            <Tabs.TabPane tab='Quản lý kho' key='6' className='rounded-xl'>
+
+            </Tabs.TabPane>
+          </Tabs>
         </div>
       </Fragment>
     </div>
