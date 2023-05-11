@@ -3,24 +3,26 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router';
 
 import classNames from 'classnames';
-import { ColumnFormSupplier, ColumnFormSupplierDetail, ColumnTableSupplierDiscount, ColumnTableSupplierProduct } from './column';
+import { ColumnFormSupplier, ColumnFormSupplierDetail, ColumnTableSupplierDiscount, ColumnTableSupplierOrder, ColumnTableSupplierProduct } from './column';
 import { SupplierFacade } from '@store/supplier';
 import { DistrictFacade } from '@store/address/district';
 import { WardFacade } from '@store/address/ward';
 import { routerLinks } from '@utils';
-import { GlobalFacade, ProductFacade, User } from '@store';
+import { CategoryFacade, GlobalFacade, ProductFacade, OrdersFacade } from '@store';
 import { TableRefObject } from '@models';
 import { Form } from '@core/form';
 import { DataTable } from '@core/data-table';
 import { Button } from '@core/button';
 import { ProvinceFacade } from '@store/address/province';
 import { Download } from '@svgs';
+import { Tabs } from 'antd';
 
 const Page = () => {
   const { t } = useTranslation();
 
   const provinceFacade = ProvinceFacade()
-  const { result } = provinceFacade
+  const { result } = provinceFacade;
+  const category = CategoryFacade();
   const supplierFacade = SupplierFacade();
   const { data, isLoading, queryParams, status } = supplierFacade;
   const navigate = useNavigate();
@@ -58,8 +60,9 @@ const Page = () => {
   const { user } = GlobalFacade();
   const dataTableRef = useRef<TableRefObject>(null);
 
-  const productFacede = ProductFacade();
-
+  const productFacade = ProductFacade();
+  const ordersFacade = OrdersFacade();
+  
 
   const handleBack = () => navigate(routerLinks('Supplier') + '?' + new URLSearchParams(param).toString());
   const handleSubmit = (values: any) => {
@@ -145,8 +148,8 @@ const Page = () => {
           </div>
         </div>
         <div className='bg-white px-5 rounded-xl rounded-tl-none'>
+          
         {tab === 'tab1' && (
-          !!result?.data && (
             <Form
               key={'tab1'}
               values={{ ...data, street: data?.address?.street, province: data?.address?.province?.name, district: data?.address?.district?.name, ward: data?.address?.ward?.name,
@@ -168,15 +171,14 @@ const Page = () => {
                     </div>
                   )}
             />
-          ) )
+          ) 
         }
         {tab === 'tab2' && (
           <div className={'w-full mx-auto bg-white rounded-xl'}>
-          {!!result?.data && (
             <div className='px-1 pt-6 pb-4'>
               <DataTable
-              facade={productFacede}
-              defaultRequest={{page: 1, perPage: 10,type: "BALANCE"}}
+              facade={productFacade}
+              defaultRequest={{page: 1, perPage: 10, supplierId: id,type: "BALANCE"}}
               ref={dataTableRef}
               xScroll = '895px'
               pageSizeRender={(sizePage: number) => sizePage}
@@ -191,45 +193,102 @@ const Page = () => {
               })}
               rightHeader={
                 <div className={'flex h-10 w-36'}>
-                  {user && (
+                  {
                     <Button
                       className='!bg-white !font-normal whitespace-nowrap text-left flex justify-between w-full !px-3 !border !border-gray-600 !text-gray-600 hover:!bg-teal-900 hover:!text-white group'
                       icon={<Download className="icon-cud !p-0 !h-5 !w-5 !fill-gray-600 group-hover:!fill-white" />}
                       text={t('Xuất file excel')}
                       onClick={() => navigate(routerLinks('Supplier/Excel'))}
                     />
-                  )}
+                  }
                 </div>
-              }
-              leftHeader={
-                <div>aaaaaaaaaaaaaa</div>
               }
               showSearch={false}
               />
             </div>
-          )} </div>)
+          </div>)
         }
         {tab === 'tab3' && (
-          !!result?.data && (
-            <DataTable
-              // facade={supplierFacade}
+          <div className={'w-full mx-auto bg-white rounded-xl'}>
+            <div className='px-1 pt-6 pb-4'>
+              <DataTable
+              facade={ordersFacade}
               ref={dataTableRef}
-              xScroll = '1440px'
+              defaultRequest={{page: 1, perPage: 10, filterSupplier: id}}
+              xScroll = '1400px'
               pageSizeRender={(sizePage: number) => sizePage}
               pageSizeWidth={'50px'}
               paginationDescription={(from: number, to: number, total: number) =>
                 t('routes.admin.Layout.Pagination', { from, to, total })
               }
-              columns={ColumnTableSupplierProduct({
-                t,
-                navigate,
-                dataTableRef,
-              })}
+              columns={[
+                {
+                  title: t(`Mã đơn hàng`),
+                  name: 'code',
+                  tableItem: {
+                    width: 280,
+                  
+                  },
+                },
+                {
+                  title: t(`Tên cửa hàng`),
+                  name: 'name',
+                  tableItem: {
+                    width: 180,
+                    render: (value: any,item: any) => item?.store?.name,
+                  },
+                },
+                // {
+                //   title: t(`Người nhận`),
+                //   name: ('address'),
+                //   tableItem: {
+                //     width: 180,
+                //     render: (value: any,item: any) => item?.storeAdmin?.name,
+                //   }
+                // },
+                // {
+                //   title: t(`Địa chỉ nhận hàng`),
+                //   name: 'contract',
+                //   tableItem: {
+                //     width: 300  ,
+                //     render: (value: any,item: any) => item?.store?.address?.street + ', ' + item?.store?.address?.ward?.name + ', ' + item?.store?.address?.district?.name + ', ' + item?.store?.address?.province?.name,
+                //   },
+                // },
+                // {
+                //   title: t(`Tổng tiền (VND)`),
+                //   name: 'userRole',
+                //   tableItem: {
+                //     width: 150,
+                //     render: (value: any,item: any) => item?.total.toLocaleString(),
+                //   },
+                // },
+                // {
+                //   title: t(`Ngày đặt`),
+                //   name: 'userRole',
+                //   tableItem: {
+                //     width: 150,
+                //     render: (value: any,item: any) => item?.userRole[0].userAdmin.phoneNumber,
+                //   },
+                // },
+                // {
+                //   title: t(`supplier.Status`),
+                //   name: "isActive",
+                //   tableItem: {
+                //     width: 180,  
+                //     align: 'center',
+                //     render: (text: string) => text
+                //     ? (<div className='bg-green-100 text-center p-1 border border-green-500 text-green-600 rounded'>Đã ký</div>) 
+                //     : (<div className='bg-red-100 text-center p-1 border border-red-500 text-red-600 rounded'>Chờ ký</div>),
+                //   },
+                // },
+              ]}
             />
-          ) )
+            </div>
+          </div>
+          ) 
         }
         {tab === 'tab4' && (
-          !!result?.data && (
+          
             <Form
               key={'tab1'}
               values={{ ...data, street: data?.address?.street, province: data?.address?.province?.name, district: data?.address?.district?.name, ward: data?.address?.ward?.name,
@@ -251,10 +310,10 @@ const Page = () => {
                     </div>
                   )}
             />
-          ) )
+          ) 
         }
         {tab === 'tab5' && (
-          !!result?.data && (
+          
             <DataTable
               // facade={supplierFacade}
               ref={dataTableRef}
@@ -283,7 +342,7 @@ const Page = () => {
                 </div>
               }
             />
-          ) )
+          ) 
         }
         </div>
         { tab !== 'tab1' && tab !== 'tab6' && tab !== 'tab4' && (

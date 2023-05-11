@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router';
-import { Switch } from 'antd';
+import { Switch, Tabs } from 'antd';
 
 import { routerLinks } from '@utils';
 import { Form } from '@core/form';
@@ -22,7 +22,7 @@ const Page = () => {
 
   const storeFacade = StoreFacade()
   const { data, isLoading, queryParams, status } = storeFacade;
-
+  const productFacede = ProductFacade()
   const subStoreFacade = SubStoreFacade()
   const connectSupplierFacade = ConnectSupplierFacade()
 
@@ -76,46 +76,70 @@ const Page = () => {
     <div className={'w-full'}>
       <Fragment>
         <div className=''>
-          <div className='flex'>
-            <div className={classNames('text-xl text-teal-900 p-3.5 pt-4 font-bold bg-transparent w-max rounded-t-2xl', { '!bg-white': tab === 'tab1' })}>
-              <button className='' onClick={() => setTab('tab1')}>Thông tin cửa hàng</button>
-            </div>
-            <div className={classNames('text-xl text-teal-900 p-3.5 pt-4 font-bold bg-transparent w-max rounded-t-2xl', { '!bg-white': tab === 'tab2' })}>
-              <button className='' onClick={() => setTab('tab2')}>Danh sách hàng hóa</button>
-            </div>
-            <div className={classNames('text-xl text-teal-900 p-3.5 pt-4 font-bold bg-transparent w-max rounded-t-2xl', { '!bg-white': tab === 'tab3' })}>
-              <button className='' onClick={() => setTab('tab3')}>Danh sách chi nhánh</button>
-            </div>
-            <div className={classNames('text-xl text-teal-900 p-3.5 pt-4 font-bold bg-transparent w-max rounded-t-2xl', { '!bg-white': tab === 'tab4' })}>
-              <button className='' onClick={() => setTab('tab4')}>Quản lý NCC</button>
-            </div>
-            <div className={classNames('text-xl text-teal-900 p-3.5 pt-4 font-bold bg-transparent w-max rounded-t-2xl', { '!bg-white': tab === 'tab5' })}>
-              <button className='' onClick={() => setTab('tab5')}>Doanh thu</button>
-            </div>
-            <div className={classNames('text-xl text-teal-900 p-3.5 pt-4 font-bold bg-transparent w-max rounded-t-2xl', { '!bg-white': tab === 'tab6' })}>
-              <button className='' onClick={() => setTab('tab6')}>Quản lý kho</button>
-            </div>
-          </div>
-          <div className='bg-white rounded-2xl rounded-t-none'>
-            {tab === 'tab1' && (
-              !!result?.data && (
-                <Form
-                  key={'tab1'}
-                  values={{
-                    ...data, street: data?.address?.street, province: data?.address?.province?.name, district: data?.address?.district?.name, ward: data?.address?.ward?.name,
-                    username: data?.userRole?.[0].userAdmin.name, email: data?.userRole?.[0].userAdmin.email, phoneNumber: data?.userRole?.[0].userAdmin.phoneNumber
-                  }}
-                  className="intro-x p-6 pb-4 pt-3 rounded-lg w-full "
-                  columns={[
-                    {
-                      title: 'store.Code',
-                      name: 'code',
-                      formItem: {
-                        tabIndex: 1,
-                        col: 4,
-                        disabled: () => true
+          <Tabs defaultActiveKey='1' type='card' size='large' className=''>
+            <Tabs.TabPane tab='Thông tin cửa hàng' key='1' className='bg-white rounded-xl rounded-tl-none' >
+              <Form
+                values={{ ...data }}
+                className="intro-x p-6 pb-4 pt-3 rounded-lg w-full "
+                columns={[
+                  {
+                    title: 'store.Code',
+                    name: 'code',
+                    formItem: {
+                      tabIndex: 1,
+                      col: 4,
+                      disabled: () => true
+                    },
+                  },
+                  {
+                    title: 'store.Name',
+                    name: 'name',
+                    formItem: {
+                      tabIndex: 2,
+                      col: 4,
+                      rules: [{ type: 'required' }],
+                    },
+                  },
+                  {
+                    title: 'store.Fax',
+                    name: 'fax',
+                    formItem: {
+                      tabIndex: 3,
+                      col: 4,
+                    },
+                  },
+                  {
+                    title: '',
+                    name: 'address',
+                    formItem: {
+                      rules: [{ type: 'required' }],
+                      render() {
+                        return (
+                          <h3 className='mb-2.5 text-base text-black font-medium'>Địa chỉ cửa hàng</h3>
+                        )
+                      },
+                    }
+                  },
+                  {
+                    title: 'store.Province',
+                    name: 'provinceId',
+                    formItem: {
+                      tabIndex: 3,
+                      col: 3,
+                      type: 'select',
+                      rules: [{ type: 'required' }],
+                      get: {
+                        facade: ProvinceFacade,
+                        format: (item: any) => ({
+                          label: item.name,
+                          value: item.id + '|' + item.code,
+                        })
+                      },
+                      onChange(value, form) {
+                        form.resetFields(['district', 'wardId'])
                       },
                     },
+                  },
                     {
                       title: 'store.Name',
                       name: 'name',
@@ -273,14 +297,93 @@ const Page = () => {
                       }
                     },
 
-                  ]}
-                  handSubmit={handleSubmit}
-                  disableSubmit={isLoading}
-                  handCancel={handleBack}
-                />
-              ))}
-            {/* Danh sách chi nhánh  */}
-            {tab === 'tab3' && (
+                ]}
+                handSubmit={handleSubmit}
+                disableSubmit={isLoading}
+                handCancel={handleBack}
+              />
+            </Tabs.TabPane>
+            <Tabs.TabPane tab='Danh sách hàng hóa' key='2' className='rounded-xl'>
+              <DataTable
+                facade={productFacede}
+                defaultRequest={{ page: 1, perPage: 10, storeId: data?.id, type: 'BALANCE' }}
+                xScroll='1440px'
+                className=' bg-white p-5 rounded-lg'
+                onRow={(data: any) => ({
+                  onDoubleClick: () => {
+                    navigate(routerLinks('store-managerment/edit') + '/' + data.id);
+                  },
+                })}
+                pageSizeRender={(sizePage: number) => sizePage}
+                pageSizeWidth={'50px'}
+                paginationDescription={(from: number, to: number, total: number) =>
+                  t('routes.admin.Layout.PaginationProduct', { from, to, total })
+                }
+                columns={[
+                  {
+                    title: 'product.Code',
+                    name: 'code',
+                    tableItem: {
+                      width: 150,
+                      sorter: true,
+                      filter: { type: 'search' }
+                    },
+                  },
+                  {
+                    title: 'product.StoreCode',
+                    name: 'storeBarcode',
+                    tableItem: {
+                      sorter: true,
+                      filter: { type: 'search' }
+                    },
+                  },
+                  {
+                    title: 'product.SupplierCode',
+                    name: 'barcode',
+                    tableItem: {
+                      sorter: true,
+                      filter: { type: 'search' }
+                    },
+                  },
+                  {
+                    title: 'product.Name',
+                    name: 'name',
+                    tableItem: {
+                      sorter: true,
+                      filter: { type: 'search' }
+                    },
+                  },
+                  {
+                    title: 'product.Category',
+                    name: 'category',
+                    tableItem: {
+                      render: (value: any, item: any) => item.category?.child?.name,
+                    },
+                  },
+                  {
+                    title: 'product.SupplierName',
+                    name: 'supplierName',
+                    tableItem: {
+                    },
+                  },
+                  {
+                    title: 'product.Unit',
+                    name: 'basicUnit',
+                    tableItem: {
+
+                    },
+                  },
+                  {
+                    title: 'product.Price',
+                    name: 'productPrice',
+                    tableItem: {
+                      render: (text, item) => item.productPrice[0] ? item.productPrice[0]?.price.toLocaleString() : '0'
+                    },
+                  },
+                ]}
+              />
+            </Tabs.TabPane>
+            <Tabs.TabPane tab='Danh sách chi nhánh' key='3' className='rounded-xl'>
               <DataTable
                 facade={subStoreFacade}
                 defaultRequest={{ page: 1, perPage: 10, storeId: data?.id, supplierType: 'BALANCE' }}
@@ -341,9 +444,9 @@ const Page = () => {
                   },
                 ]}
                 rightHeader={
-                  <div className={'flex gap-2 !bg-teal-900 !rounded-lg mt-0 max-lg:mt-2.5 max-lg:w-48'}>
+                  <div className={'flex gap-2 !bg-teal-900 !rounded-3xl mt-0 max-lg:mt-2.5 max-lg:w-48'}>
                     <Button
-                      className='!bg-teal-900 !rounded-full !h-9'
+                      className='!bg-teal-900 !h-9'
                       icon={<Plus className="icon-cud !h-5 !w-5 !fill-slate-200 " />}
                       text={t('titles.Store/SubStore')}
                       onClick={() => navigate(routerLinks('store-managerment/create'))}
@@ -351,10 +454,8 @@ const Page = () => {
                   </div>
                 }
               />
-            )}
-
-            {/* Quản lý NCC */}
-            {tab === 'tab4' && (
+            </Tabs.TabPane>
+            <Tabs.TabPane tab='Quản lý NCC' key='4' className='rounded-xl'>
               <DataTable
                 facade={connectSupplierFacade}
                 defaultRequest={{ page: 1, perPage: 10, idSuppiler: id }}
@@ -409,164 +510,14 @@ const Page = () => {
                   },
                 ]}
               />
-            )}
+            </Tabs.TabPane>
+            <Tabs.TabPane tab='Doanh thu' key='5' className='rounded-xl'>
 
-            {/* Quản lý kho */}
-            {tab === 'tab5' && (
-              <DataTable
-                facade={invoicevietFacade}
-                defaultRequest={{ page: 1, perPage: 10, idSuppiler: id }}
-                xScroll='1440px'
-                className=' bg-white p-5 rounded-lg'
-                onRow={(data: any) => ({
-                  onDoubleClick: () => {
-                    navigate(routerLinks('store-managerment/edit') + '/' + data.id);
-                  },
-                })}
-                pageSizeRender={(sizePage: number) => sizePage}
-                pageSizeWidth={'50px'}
-                paginationDescription={(from: number, to: number, total: number) =>
-                  t('routes.admin.Layout.PaginationSupplier', { from, to, total })
-                }
-                columns={[
-                    // {
-                    //   title: 'supplier.CodeName',
-                    //   name: 'supplier',
-                    //   tableItem: {
-                    //     width: 150,
-                    //     render: (value: any, item: any) => item.supplier?.code,
-                    //   },
-                    // },
-                    // {
-                    //   title: 'supplier.Name',
-                    //   name: 'supplier',
-                    //   tableItem: {
-                    //     render: (value: any, item: any) => item.supplier?.name,
-                    //   },
-                    // },
-                    // {
-                    //   title: 'store.Address',
-                    //   name: 'supplier',
-                    //   tableItem: {
-                    //     render: (value: any, item: any) => item.supplier.address?.street + ', ' + item.supplier.address?.ward.name + ', ' + item.supplier.address?.district.name + ', ' + item.supplier.address?.province.name,
-                    //   },
-                    // },
-                    // {
-                    //   title: 'store.Name management',
-                    //   name: 'supplier',
-                    //   tableItem: {
-                    //     render: (value: any, item: any) => item.supplier.userRole[0].userAdmin.name,
-                    //   },
-                    // },
-                    // {
-                    //   title: 'store.Phone Number',
-                    //   name: 'supplier',
-                    //   tableItem: {
-                    //     render: (value: any, item: any) => item.supplier.userRole[0].userAdmin.phoneNumber,
-                    //   },
-                    // },
-                ]}
-              />
-            )}
-            {/* {tab === 'tab6' && (
-              <DataTable
-                facade={inventoryproductFacade}
-                defaultRequest={{ page: 1, perPage: 10, idStore:id }}
-                xScroll='1440px'
-                className=' bg-white p-5 rounded-lg'
-                onRow={(data: any) => ({
-                  onDoubleClick: () => {
-                    navigate(routerLinks('store-managerment/edit') + '/' + data.id);
-                  },
-                })}
-                pageSizeRender={(sizePage: number) => sizePage}
-                pageSizeWidth={'50px'}
-                paginationDescription={(from: number, to: number, total: number) =>
-                  t('routes.admin.Layout.PaginationSupplier', { from, to, total })
-                }
-                columns={[
-                  {
-                    title: 'store.Inventory management.Product code',
-                    name: 'inventory.productCode',
-                    tableItem: {
-                      width: 150,
-                      // render
-                    },
-                  },
-                  // {
-                  //   title: 'store.Inventory management.Barcode (Supplier)',
-                  //   name: 'supplierBarcode',
-                  //   tableItem: {
+            </Tabs.TabPane>
+            <Tabs.TabPane tab='Quản lý kho' key='6' className='rounded-xl'>
 
-                  //   },
-                  // },
-                  // {
-                  //   title: 'store.Inventory management.Barcode (Product)',
-                  //   name: 'storeBarcode',
-                  //   tableItem: {
-                  //   },
-                  // },
-                  // {
-                  //   title: 'store.Inventory management.Product name',
-                  //   name: 'productName',
-                  //   tableItem: {
-
-                  //   },
-                  // },
-                  // {
-                  //   title: 'store.Inventory management.Category',
-                  //   name: 'category',
-                  //   tableItem: {
-
-                  //   },
-                  // },
-                  // {
-                  //   title: 'store.Inventory management.Supplier',
-                  //   name: 'supplierName',
-                  //   tableItem: {
-
-                  //   },
-                  // },
-                  // {
-                  //   title: 'store.Inventory management.Unit',
-                  //   name: 'name',
-                  //   tableItem: {
-
-                  //   },
-                  // },
-                  // {
-                  //   title: 'store.Inventory management.Quantity on KiotViet',
-                  //   name: 'numberInKiot',
-                  //   tableItem: {
-
-                  //   },
-                  // },
-                  // {
-                  //   title: 'store.Inventory management.Quantity on BALANCE',
-                  //   name: 'numberInBal',
-                  //   tableItem: {
-
-                  //   },
-                  // },
-                  // {
-                  //   title: 'store.Inventory management.Warehouse price',
-                  //   name: 'inventoryPrice',
-                  //   tableItem: {
-
-                  //   },
-                  // },
-                  // {
-                  //   title: 'store.Inventory management.Total amount',
-                  //   name: 'numberInKiot*numberInBal*inventoryPrice',
-                  //   tableItem: {
-
-                  //   },
-                  // },
-                ]}
-              />
-            )} */}
-          </div>
-          {/* ///// */}
+            </Tabs.TabPane>
+          </Tabs>
         </div>
       </Fragment>
     </div>

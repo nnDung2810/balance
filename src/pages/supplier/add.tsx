@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router';
 
-import { SupplierFacade } from '@store/supplier';
+import { Supplier, SupplierFacade } from '@store/supplier';
 import { Form } from '@core/form';
 import { routerLinks } from '@utils';
 import { ProvinceFacade } from '@store/address/province';
@@ -11,39 +11,17 @@ import { WardFacade } from '@store/address/ward';
 
 const Page = () => {
   const { t } = useTranslation();
-  const districtFacade = DistrictFacade()
-  const wardFacade = WardFacade()
-  const { result, get } = ProvinceFacade();
-  const supplierFacade = SupplierFacade();
-  const { data, isLoading, queryParams, status } = supplierFacade;
   const navigate = useNavigate();
-  const isBack = useRef(true);
-  const isReload = useRef(false);
+  const supplierFace = SupplierFacade();
+  const { isLoading, queryParams } = supplierFace;
   const param = JSON.parse(queryParams || '{}');
-  const { id } = useParams();
 
-
-  useEffect(() => {
-    if (!result?.data) get({});
-  }, []);
-
-  useEffect(() => {
-    switch (status) {
-      case 'post.fulfilled':
-        navigate(routerLinks('Supplier') + '/' + data?.id);
-        break;
-      case 'put.fulfilled':
-        if (Object.keys(param).length > 0) isReload.current = true;
-
-        if (isBack.current) handleBack();
-        break;
-    }
-  }, [status]);
+  const data = Supplier;
+  
 
   const handleBack = () => navigate(routerLinks('Supplier') + '?' + new URLSearchParams(param).toString());
   const handleSubmit = (values: any) => {
-    if (id) supplierFacade.put({ ...values, id });
-    else supplierFacade.post(values);
+    supplierFace.post(values);
   };
 
   return (
@@ -55,7 +33,7 @@ const Page = () => {
           </p>
         </div>
         <div className='bg-white px-5 rounded-2xl w-full'>
-            {!!result?.data && (
+            {/* {!!result?.data && ( */}
               <div className='w-full'>
                 <Form
                   values={{ ...data }}
@@ -98,52 +76,40 @@ const Page = () => {
                         col: 3,
                         type: 'select',
                         rules: [{ type: 'required',message: 'Xin vui lòng chọn tỉnh/thành phố' }],
-                        list: result.data.map((item: any) => ({
-                          label: item?.name,
-                          value: item?.code,
-                        })),
-                        // onChange(value, form) {
-                        //   // districtFacade.get(value)
-                        //   form.resetFields(['district'])
-                        //   // reRender(value)
-                        // },
+                        get: {
+                          facade: ProvinceFacade,
+                          format: (item: any) => ({
+                            label: item.name,
+                            value: item.id + '|' + item.code,
+                          }),
+                        },
+                        onChange(value, form) {
+                          form.resetFields(['districtId', 'wardId'])
+                          
+                        },
                       },
                     },
                     {
                       name: 'districtId',
-                      title: 'Quận/Huyện',
+                      title: 'Quận/Huyện',  
                       formItem: {
                         type: 'select',
                         rules: [{ type: 'required', message: 'Xin vui lòng chọn quận/huyện' }],
                         col: 3,
-                        // get: {
-                        //   facade: DistrictFacade,
-                        //   params: (fullTextSearch: string, value: any) => ({
-                        //     fullTextSearch,
-                        //     filter: { id: '02'},
-                        //     extend: {},
-                        //   }),
-                        //   format: (item: any) => ({
-                        //     label: item.name,
-                        //     value: item.code,
-                        //   }),
-                        // },
+                        get: {
+                          facade: DistrictFacade,
+                          format: (item: any) => ({
+                            label: item.name,
+                            value: item.id + '|' + item.code,
+                          }),
+                          params: (fullTextSearch, value) => ({
+                            fullTextSearch,
+                            code: value().provinceId.slice(value().provinceId.indexOf('|') + 1),
+                          }),
+                        },
                         onChange(value, form) {
                           form.resetFields(['wardId'])
-                          // wardFacade.get(value)
                         },
-                        // get: {
-                        //   facade: ProvinceFacade,
-                        //   params: (fullTextSearch: string) => ({
-                        //     fullTextSearch,
-                        //     filter: { code: '01' },
-                        //     extend: {},
-                        //   }),
-                        //   format: (item) => ({
-                        //     label: item.name,
-                        //     value: item.code,
-                        //   }),
-                        // },
                       },
                     },
                     {
@@ -153,13 +119,17 @@ const Page = () => {
                         type: 'select',
                         rules: [{ type: 'required', message: 'Xin vui lòng chọn phường/xã' }],
                         col: 3,
-                        // get: {
-                        //   facade: WardFacade,
-                        //   format: (item: any) => ({
-                        //     label: item.name,
-                        //     value: item.code,
-                        //   }),
-                        // }
+                        get: {
+                          facade: WardFacade,
+                          format: (item: any) => ({
+                            label: item.name,
+                            value: item.id,
+                          }),
+                          params: (fullTextSearch, value) => ({
+                            fullTextSearch,
+                            code: value().districtId.slice(value().districtId.indexOf('|') + 1),
+                          })
+                        }
                       },
                     },
                     {
@@ -230,7 +200,7 @@ const Page = () => {
                   )}
                 />
               </div>
-            )}
+            {/* } */}
         </div>
       </div>
       <div className='h-20'>
