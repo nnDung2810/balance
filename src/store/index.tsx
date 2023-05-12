@@ -17,7 +17,7 @@ import { SubStoreFacade, subStoreSlice } from './store-management/sub-store';
 import { connectSupplierSlice, ConnectSupplierFacade } from './store-connect-supplier';
 import { OrdersSlice, OrdersFacade  } from './order';
 import { DiscountSlice, DiscountFacade } from './discount';
-import { inventoryProductSlice, inventoryProductFacade } from './store-management/inventory-product';
+import { inventoryProductSlice, InventoryProductFacade } from './store-management/inventory-product';
 import { invoicekiotvietFacade, invoicekiotvietSlice } from './store-management/invoice-kiot-viet';
 
 const rootReducer = combineReducers({
@@ -72,7 +72,7 @@ export {
   ProductFacade,
   SubStoreFacade,
   ConnectSupplierFacade,
-  inventoryProductFacade,
+  InventoryProductFacade,
   OrdersFacade,
   DiscountFacade,
   invoicekiotvietFacade
