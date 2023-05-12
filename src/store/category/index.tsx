@@ -1,11 +1,21 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { useAppDispatch, useTypedSelector, Action, Slice, State } from '@store';
 import { CommonEntity, PaginationQuery } from '@models';
+import { API, routerLinks } from '@utils';
 
 const name = 'Category';
 
-export const action = new Action<Category>(name);
+export const action = {
+    ...new Action<Category>(name),
+    getByIdCategory: createAsyncThunk(
+      name + '/getById',
+      async ({ id, keyState = 'isVisible' }: { id: string; keyState: keyof State<Category>}) => {
+        const data = await API.get<Category>(`${routerLinks(name, 'api')}/${id}`);
+        return { data, keyState };
+      },
+    ),
+}
 
 export const categorySlice = createSlice(new Slice<Category>(action));
 
@@ -16,7 +26,7 @@ export const CategoryFacade = () => {
         set: (values: State<Category>) => dispatch(action.set(values)),
         get: (params: PaginationQuery<Category>) => dispatch(action.get(params)),
         getById: ({ id, keyState = 'isVisible' }: { id: string; keyState?: keyof State<Category> }) =>
-            dispatch(action.getById({ id, keyState })),
+            dispatch(action.getByIdCategory({ id, keyState })),
         post: (values: Category) => dispatch(action.post(values)),
         put: (values: Category) => dispatch(action.put(values)),
         delete: (id: string) => dispatch(action.delete(id)),

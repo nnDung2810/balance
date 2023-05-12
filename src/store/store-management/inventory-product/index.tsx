@@ -1,7 +1,8 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 import { useAppDispatch, useTypedSelector, Action, Slice, State } from '@store';
-import { CommonEntity, PaginationQuery, Responses } from '@models';
+import { CommonEntity, PaginationQuery } from '@models';
+import { Product } from '@store/product';
 
 const name = 'InventoryProduct';
 
@@ -42,6 +43,8 @@ export class IventoryProduct1 extends CommonEntity {
           name?: string;
           isDefault?: boolean
         },
+        public id?: string,
+        public iventory?: Product,
     ) {
         super();
     }

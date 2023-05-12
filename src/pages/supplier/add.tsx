@@ -85,7 +85,6 @@ const Page = () => {
                         },
                         onChange(value, form) {
                           form.resetFields(['districtId', 'wardId'])
-                          
                         },
                       },
                     },

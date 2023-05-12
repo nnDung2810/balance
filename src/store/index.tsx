@@ -15,7 +15,10 @@ import { CategoryFacade, categorySlice } from './category';
 import { ProductFacade, productSlice } from './product';
 import { SubStoreFacade, subStoreSlice } from './store-management/sub-store';
 import { connectSupplierSlice, ConnectSupplierFacade } from './store-connect-supplier';
-import { InventoryProductFacade, inventoryProductSlice } from './product/inventory-product';
+import { OrdersSlice, OrdersFacade  } from './order';
+import { DiscountSlice, DiscountFacade } from './discount';
+import { inventoryProductSlice, InventoryProductFacade } from './store-management/inventory-product';
+import { invoicekiotvietFacade, invoicekiotvietSlice } from './store-management/invoice-kiot-viet';
 
 const rootReducer = combineReducers({
   [globalSlice.name]: globalSlice.reducer,
@@ -31,6 +34,9 @@ const rootReducer = combineReducers({
   [subStoreSlice.name]: subStoreSlice.reducer,
   [connectSupplierSlice.name]: connectSupplierSlice.reducer,
   [inventoryProductSlice.name]: inventoryProductSlice.reducer,
+  [OrdersSlice.name]: OrdersSlice.reducer,
+  [DiscountSlice.name]: DiscountSlice.reducer,
+  [invoicekiotvietSlice.name]: invoicekiotvietSlice.reducer,
 });
 
 const setupStore = () => {
@@ -66,7 +72,10 @@ export {
   ProductFacade,
   SubStoreFacade,
   ConnectSupplierFacade,
-  InventoryProductFacade
+  InventoryProductFacade,
+  OrdersFacade,
+  DiscountFacade,
+  invoicekiotvietFacade
 };
 
 export type { State };

@@ -8,7 +8,7 @@ import { SupplierFacade } from '@store/supplier';
 import { DistrictFacade } from '@store/address/district';
 import { WardFacade } from '@store/address/ward';
 import { routerLinks } from '@utils';
-import { CategoryFacade, GlobalFacade, ProductFacade, OrdersFacade } from '@store';
+import { CategoryFacade, GlobalFacade, ProductFacade, OrdersFacade, DiscountFacade } from '@store';
 import { TableRefObject } from '@models';
 import { Form } from '@core/form';
 import { DataTable } from '@core/data-table';
@@ -22,7 +22,6 @@ const Page = () => {
 
   const provinceFacade = ProvinceFacade()
   const { result } = provinceFacade;
-  const category = CategoryFacade();
   const supplierFacade = SupplierFacade();
   const { data, isLoading, queryParams, status } = supplierFacade;
   const navigate = useNavigate();
@@ -30,7 +29,14 @@ const Page = () => {
   const isReload = useRef(false);
   const param = JSON.parse(queryParams || '{}');
   const { id } = useParams();
-  
+  const [tab, setTab] = useState('tab1');
+  const { user } = GlobalFacade();
+  const dataTableRef = useRef<TableRefObject>(null);
+
+  const productFacade = ProductFacade();
+  const ordersFacade = OrdersFacade();
+  const discountFacade = DiscountFacade();
+  const category = CategoryFacade();
 
 
   useEffect(() => {
@@ -41,7 +47,7 @@ const Page = () => {
     return () => {
       isReload.current && supplierFacade.get(param);
     };
-  }, [id, data]);
+  }, [id, data, tab]);
 
   useEffect(() => {
     switch (status) {
@@ -56,13 +62,6 @@ const Page = () => {
     }
   }, [status]);
 
-  const [tab, setTab] = useState('tab1');
-  const { user } = GlobalFacade();
-  const dataTableRef = useRef<TableRefObject>(null);
-
-  const productFacade = ProductFacade();
-  const ordersFacade = OrdersFacade();
-  
 
   const handleBack = () => navigate(routerLinks('Supplier') + '?' + new URLSearchParams(param).toString());
   const handleSubmit = (values: any) => {
@@ -99,7 +98,317 @@ const Page = () => {
   return (
     <div className={'w-full'}>
       <Fragment>
-        <div className='flex'>
+      <div className=''>
+          <Tabs defaultActiveKey='1' type='card' size='large' className=''>
+            <Tabs.TabPane tab='Thông tin nhà cung cấp' key='1' className='bg-white rounded-xl rounded-tl-none'>
+              <div className='px-5'>
+              <Form
+                values={{ ...data, street: data?.address?.street, province: data?.address?.province?.name, district: data?.address?.district?.name, ward: data?.address?.ward?.name,
+                username: data?.userRole?.[0].userAdmin.name, email: data?.userRole?.[0].userAdmin.email, phoneNumber: data?.userRole?.[0].userAdmin.phoneNumber  }}
+                className="intro-x pt-6 rounded-lg w-full "
+                columns={ColumnFormSupplierDetail({ t, listRole: result?.data || []})}
+                // handSubmit={handleSubmit}
+                disableSubmit={isLoading}
+                extendButton={() => (
+                      <div className='w-full flex mt-8 justify-between'>
+                        <button className='sm:w-28 h-11 rounded-xl bg-white hover:text-teal-700 text-teal-900 border-teal-900 hover:border-teal-600 border'
+                        onClick={handleBack}>
+                          {t('components.form.modal.cancel')}
+                        </button>
+                        <button className='sm:w-44 h-11 rounded-xl text-white bg-teal-900 hover:bg-teal-600'
+                        onClick={handleSubmit}>
+                          {t('components.form.modal.save')}
+                        </button>
+                      </div>
+                    )}
+              />
+              </div>
+            </Tabs.TabPane>
+            <Tabs.TabPane tab='Danh sách hàng hóa' key='2' className='rounded-xl'>
+              <div className={'w-full mx-auto bg-white rounded-xl'}>
+                <div className='px-5 pb-4'>
+                  <DataTable
+                  facade={productFacade}
+                  defaultRequest={{page: 1, perPage: 10, supplierId: id,type: "BALANCE"}}
+                  ref={dataTableRef}
+                  xScroll = '895px'
+                  pageSizeRender={(sizePage: number) => sizePage}
+                  pageSizeWidth={'50px'}
+                  paginationDescription={(from: number, to: number, total: number) =>
+                    t('routes.admin.Layout.Pagination', { from, to, total })
+                  }
+                  columns={ColumnTableSupplierProduct({
+                    t,
+                    navigate,
+                    dataTableRef,
+                  })}
+                  rightHeader={
+                    <div className={'flex h-10 w-36 mt-6'}>
+                      {
+                        <Button
+                          className='!bg-white !font-normal whitespace-nowrap text-left flex justify-between w-full !px-3 !border !border-gray-600 !text-gray-600 hover:!bg-teal-900 hover:!text-white group'
+                          icon={<Download className="icon-cud !p-0 !h-5 !w-5 !fill-gray-600 group-hover:!fill-white" />}
+                          text={t('Xuất file excel')}
+                          onClick={() => navigate(routerLinks('Supplier/Excel'))}
+                        />
+                      }
+                    </div>
+                  }
+                  leftHeader={
+                    <Form
+                      className="intro-x pt-6 rounded-lg w-full "
+                      columns={
+                        [
+                          {
+                            title: '',
+                            name: 'cap1',
+                            formItem: {
+                              tabIndex: 3,
+                              placeholder: 'Danh mục chính',
+                              col: 3,
+                              type: 'select',
+                              get: {
+                                facade: CategoryFacade,
+                                format: (item: any) => ({
+                                  label: item.name,
+                                  value: item.id,
+                                }),
+                              },
+                              onChange(value, form) {
+                                form.resetFields(['cap2', 'cap3'])
+                              },
+                            },
+                          },
+                          {
+                            name: 'cap2',
+                            title: '',  
+                            formItem: {
+                              // disabled:() => true,
+                              placeholder: 'Danh mục cấp 1',
+                              type: 'select',
+                              col: 3,
+                              get: {
+                                facade: CategoryFacade,
+                                format: (item: any) => ({
+                                  label: item.name,
+                                  value: item.id,
+                                }),
+                                params: (fullTextSearch, value) => ({
+                                  fullTextSearch,
+                                  code: value().id,
+                                }),
+                              },
+                              onChange(value, form) {
+                                form.resetFields(['cap2'])
+                              },
+                            },
+                          },
+                          {
+                            name: 'cap3',
+                            title: '',
+                            formItem: {
+                              // disabled:() => true,
+                              placeholder: 'Danh mục cấp 2',
+                              type: 'select',
+                              col: 3,
+                              get: {
+                                facade: CategoryFacade,
+                                format: (item: any) => ({
+                                  label: item.name,
+                                  value: item.id,
+                                }),
+                                params: (fullTextSearch, value) => ({
+                                  fullTextSearch,
+                                  code: value().id,
+                                })
+                              }
+                            },
+                          },
+                        ]
+                      }
+                      // handSubmit={handleSubmit}
+                      disableSubmit={isLoading}
+                    />
+                  }
+                  showSearch={false}
+                  />
+                </div>
+              </div>
+            </Tabs.TabPane>
+            <Tabs.TabPane tab='Quản lý đơn hàng' key='3' className='rounded-xl'>
+              <div className={'w-full mx-auto bg-white rounded-xl'}>
+                <div className='px-5 pt-6 pb-4'>
+                  <DataTable
+                  facade={ordersFacade}
+                  ref={dataTableRef}
+                  defaultRequest={{page: 1, perPage: 10, filterSupplier: id}}
+                  xScroll = '1400px'
+                  pageSizeRender={(sizePage: number) => sizePage}
+                  pageSizeWidth={'50px'}
+                  paginationDescription={(from: number, to: number, total: number) =>
+                    t('routes.admin.Layout.Pagination', { from, to, total })
+                  }
+                  columns={[
+                    {
+                      title: t(`Mã đơn hàng`),
+                      name: 'code',
+                      tableItem: {
+                        width: 280,
+                      
+                      },
+                    },
+                    {
+                      title: t(`Tên cửa hàng`),
+                      name: 'name',
+                      tableItem: {
+                        width: 180,
+                        render: (value: any,item: any) => item?.store?.name,
+                      },
+                    },
+                    {
+                      title: t(`Người nhận`),
+                      name: ('address'),
+                      tableItem: {
+                        width: 180,
+                        render: (value: any,item: any) => item?.storeAdmin?.name,
+                      }
+                    },
+                    {
+                      title: t(`Địa chỉ nhận hàng`),
+                      name: 'contract',
+                      tableItem: {
+                        width: 300  ,
+                        render: (value: any,item: any) => item?.store?.address?.street + ', ' + item?.store?.address?.ward?.name + ', ' + item?.store?.address?.district?.name + ', ' + item?.store?.address?.province?.name,
+                      },
+                    },
+                    {
+                      title: t(`Tổng tiền (VND)`),
+                      name: 'total',
+                      tableItem: {
+                        width: 150,
+                        render: (value: any,item: any) => item?.total.toLocaleString(),
+                      },
+                    },
+                    {
+                      title: t(`Ngày đặt`),
+                      name: 'createdAt',
+                      tableItem: {
+                        width: 150,
+                      },
+                    },
+                    {
+                      title: t(`supplier.Status`),
+                      name: "isActive",
+                      tableItem: {
+                        width: 180,  
+                        align: 'center',
+                        render: (item: any) => !item?.isApplyTax
+                        ? (<div className='bg-green-100 text-center p-1 border border-green-500 text-green-600 rounded'>Đã giao</div>) 
+                        : (<div className='bg-red-100 text-center p-1 border border-red-500 text-red-600 rounded'>Đang giao</div>),
+                      },
+                    },
+                  ]}
+                />
+                </div>
+              </div>
+            </Tabs.TabPane>
+            <Tabs.TabPane tab='Doanh thu' key='4' className='rounded-xl bg-white'>
+              <div className='px-5'>
+                <Form
+                  values={{ ...data, street: data?.address?.street, province: data?.address?.province?.name, district: data?.address?.district?.name, ward: data?.address?.ward?.name,
+                  username: data?.userRole?.[0].userAdmin.name, email: data?.userRole?.[0].userAdmin.email, phoneNumber: data?.userRole?.[0].userAdmin.phoneNumber  }}
+                  className="intro-x pt-6 rounded-lg w-full "
+                  columns={ColumnFormSupplierDetail({ t, listRole: result?.data || []})}
+                  // handSubmit={handleSubmit}
+                  disableSubmit={isLoading}
+                  extendButton={() => (
+                        <div className='w-full flex mt-8 justify-between'>
+                          <button className='sm:w-28 h-11 rounded-xl bg-white hover:text-teal-700 text-teal-900 border-teal-900 hover:border-teal-600 border'
+                          onClick={handleBack}>
+                            {t('components.form.modal.cancel')}
+                          </button>
+                          <button className='sm:w-44 h-11 rounded-xl text-white bg-teal-900 hover:bg-teal-600'
+                          onClick={handleSubmit}>
+                            {t('components.form.modal.save')}
+                          </button>
+                        </div>
+                      )}
+                />
+              </div>
+            </Tabs.TabPane>
+            <Tabs.TabPane tab='Chiết khấu' key='5' className='rounded-xl'>
+              <div className={'w-full mx-auto bg-white rounded-xl'}>
+                <div className='px-5 pt-6 pb-4'>
+                  <DataTable
+                    facade={discountFacade}
+                    ref={dataTableRef}
+                    defaultRequest={{page: 1, perPage: 10}}
+                    xScroll = '1370px'
+                    pageSizeRender={(sizePage: number) => sizePage}
+                    pageSizeWidth={'50px'}
+                    paginationDescription={(from: number, to: number, total: number) =>
+                      t('routes.admin.Layout.Pagination', { from, to, total })
+                    }
+                    columns={ColumnTableSupplierDiscount({
+                      t,
+                      navigate,
+                      dataTableRef,
+                    })}
+                    showSearch={false}
+                    rightHeader={
+                      <div className={'flex h-10 w-36'}>
+                        {user && (
+                          <Button
+                            className='!bg-white flex justify-between w-full !px-3 !border !border-gray-600 !text-gray-600 hover:!bg-teal-900 hover:!text-white group'
+                            icon={<Download className="icon-cud !h-6 !w-6 !fill-gray-600 group-hover:!fill-white" />}
+                            text={t('Xuất file excel')}
+                            onClick={() => navigate(routerLinks('Supplier/Excel'))}
+                          />
+                        )}
+                      </div>
+                    }
+                  />
+                </div>
+              </div>
+            </Tabs.TabPane>
+            <Tabs.TabPane tab='Hợp đồng' key='6' className='rounded-xl'>
+              <div className={'w-full mx-auto bg-white rounded-xl'}>
+                <div className='px-5 pt-6 pb-4'>
+                  <DataTable
+                    facade={discountFacade}
+                    ref={dataTableRef}
+                    defaultRequest={{page: 1, perPage: 10}}
+                    xScroll = '1370px'
+                    pageSizeRender={(sizePage: number) => sizePage}
+                    pageSizeWidth={'50px'}
+                    paginationDescription={(from: number, to: number, total: number) =>
+                      t('routes.admin.Layout.Pagination', { from, to, total })
+                    }
+                    columns={ColumnTableSupplierDiscount({
+                      t,
+                      navigate,
+                      dataTableRef,
+                    })}
+                    showSearch={false}
+                    rightHeader={
+                      <div className={'flex h-10 w-36'}>
+                        {user && (
+                          <Button
+                            className='!bg-white flex justify-between w-full !px-3 !border !border-gray-600 !text-gray-600 hover:!bg-teal-900 hover:!text-white group'
+                            icon={<Download className="icon-cud !h-6 !w-6 !fill-gray-600 group-hover:!fill-white" />}
+                            text={t('Xuất file excel')}
+                            onClick={() => navigate(routerLinks('Supplier/Excel'))}
+                          />
+                        )}
+                      </div>
+                    }
+                  />
+                </div>
+              </div>
+            </Tabs.TabPane>
+          </Tabs>
+        </div>
+        {/* <div className='flex'>
           <div className='flex overflow-hidden whitespace-nowrap cursor-pointer select-none'>
             {test.map((e) => (
               <div onClick={() => setTab(e.tab)} className={classNames(
@@ -109,38 +418,6 @@ const Page = () => {
             </div>
             ))}
           </div>
-          {/* <div className='flex overflow-hidden whitespace-nowrap cursor-pointer select-none'>
-            <div onClick={() => setTab('tab1')} className={classNames(
-              { 'bg-white text-xl text-teal-900 px-5 py-4 font-bold rounded-t-xl' : tab === 'tab1',
-                'bg-gray-100 text-xl text-teal-900 px-5 py-4 font-bold rounded-t-xl' : tab !== 'tab1'})}>
-              Thông tin nhà cung cấp
-            </div>
-            <div onClick={() => setTab('tab2')} className={classNames(
-              { 'bg-white text-xl text-teal-900 px-5 py-4 font-bold rounded-t-xl' : tab === 'tab2',
-                'bg-gray-100 text-xl text-teal-900 px-5 py-4 font-bold rounded-t-xl' : tab !== 'tab2'})}>
-              Danh sách hàng hoá
-            </div>
-            <div onClick={() => setTab('tab3')} className={classNames(
-              { 'bg-white text-xl text-teal-900 px-5 py-4 font-bold rounded-t-xl' : tab === 'tab3',
-                'bg-gray-100 text-xl text-teal-900 px-5 py-4 font-bold rounded-t-xl' : tab !== 'tab3'})}>
-              Quản lý đơn hàng
-            </div>
-            <div onClick={() => setTab('tab4')} className={classNames(
-              { 'bg-white text-xl text-teal-900 px-5 py-4 font-bold rounded-t-xl' : tab === 'tab4',
-                'bg-gray-100 text-xl text-teal-900 px-5 py-4 font-bold rounded-t-xl' : tab !== 'tab4'})}>
-              Doanh thu
-            </div>
-            <div onClick={() => setTab('tab5')} className={classNames(
-              { 'bg-white text-xl text-teal-900 px-5 py-4 font-bold rounded-t-xl' : tab === 'tab5',
-                'bg-gray-100 text-xl text-teal-900 px-5 py-4 font-bold rounded-t-xl' : tab !== 'tab5'})}>
-              Chiết khấu
-            </div>
-            <div onClick={() => setTab('tab6')} className={classNames(
-              { 'bg-white text-xl text-teal-900 px-5 py-4 font-bold rounded-t-xl' : tab === 'tab6',
-                'bg-gray-100 text-xl text-teal-900 px-5 py-4 font-bold rounded-t-xl' : tab !== 'tab6'})}>
-              Hợp đồng
-            </div>
-          </div> */}
           <div className='xl:hidden flex justify-center text-center'>
             <button className='py-2 px-4 cursor-pointer h-full border-l-2 border-l-gray-200 text-xl'>
               ...
@@ -238,49 +515,48 @@ const Page = () => {
                     render: (value: any,item: any) => item?.store?.name,
                   },
                 },
-                // {
-                //   title: t(`Người nhận`),
-                //   name: ('address'),
-                //   tableItem: {
-                //     width: 180,
-                //     render: (value: any,item: any) => item?.storeAdmin?.name,
-                //   }
-                // },
-                // {
-                //   title: t(`Địa chỉ nhận hàng`),
-                //   name: 'contract',
-                //   tableItem: {
-                //     width: 300  ,
-                //     render: (value: any,item: any) => item?.store?.address?.street + ', ' + item?.store?.address?.ward?.name + ', ' + item?.store?.address?.district?.name + ', ' + item?.store?.address?.province?.name,
-                //   },
-                // },
-                // {
-                //   title: t(`Tổng tiền (VND)`),
-                //   name: 'userRole',
-                //   tableItem: {
-                //     width: 150,
-                //     render: (value: any,item: any) => item?.total.toLocaleString(),
-                //   },
-                // },
-                // {
-                //   title: t(`Ngày đặt`),
-                //   name: 'userRole',
-                //   tableItem: {
-                //     width: 150,
-                //     render: (value: any,item: any) => item?.userRole[0].userAdmin.phoneNumber,
-                //   },
-                // },
-                // {
-                //   title: t(`supplier.Status`),
-                //   name: "isActive",
-                //   tableItem: {
-                //     width: 180,  
-                //     align: 'center',
-                //     render: (text: string) => text
-                //     ? (<div className='bg-green-100 text-center p-1 border border-green-500 text-green-600 rounded'>Đã ký</div>) 
-                //     : (<div className='bg-red-100 text-center p-1 border border-red-500 text-red-600 rounded'>Chờ ký</div>),
-                //   },
-                // },
+                {
+                  title: t(`Người nhận`),
+                  name: ('address'),
+                  tableItem: {
+                    width: 180,
+                    render: (value: any,item: any) => item?.storeAdmin?.name,
+                  }
+                },
+                {
+                  title: t(`Địa chỉ nhận hàng`),
+                  name: 'contract',
+                  tableItem: {
+                    width: 300  ,
+                    render: (value: any,item: any) => item?.store?.address?.street + ', ' + item?.store?.address?.ward?.name + ', ' + item?.store?.address?.district?.name + ', ' + item?.store?.address?.province?.name,
+                  },
+                },
+                {
+                  title: t(`Tổng tiền (VND)`),
+                  name: 'total',
+                  tableItem: {
+                    width: 150,
+                    render: (value: any,item: any) => item?.total.toLocaleString(),
+                  },
+                },
+                {
+                  title: t(`Ngày đặt`),
+                  name: 'createdAt',
+                  tableItem: {
+                    width: 150,
+                  },
+                },
+                {
+                  title: t(`supplier.Status`),
+                  name: "isActive",
+                  tableItem: {
+                    width: 180,  
+                    align: 'center',
+                    render: (item: any) => !item?.isApplyTax
+                    ? (<div className='bg-green-100 text-center p-1 border border-green-500 text-green-600 rounded'>Đã giao</div>) 
+                    : (<div className='bg-red-100 text-center p-1 border border-red-500 text-red-600 rounded'>Đang giao</div>),
+                  },
+                },
               ]}
             />
             </div>
@@ -288,9 +564,7 @@ const Page = () => {
           ) 
         }
         {tab === 'tab4' && (
-          
             <Form
-              key={'tab1'}
               values={{ ...data, street: data?.address?.street, province: data?.address?.province?.name, district: data?.address?.district?.name, ward: data?.address?.ward?.name,
               username: data?.userRole?.[0].userAdmin.name, email: data?.userRole?.[0].userAdmin.email, phoneNumber: data?.userRole?.[0].userAdmin.phoneNumber  }}
               className="intro-x pt-6 rounded-lg w-full "
@@ -313,35 +587,39 @@ const Page = () => {
           ) 
         }
         {tab === 'tab5' && (
-          
-            <DataTable
-              // facade={supplierFacade}
-              ref={dataTableRef}
-              xScroll = '1440px'
-              pageSizeRender={(sizePage: number) => sizePage}
-              pageSizeWidth={'50px'}
-              paginationDescription={(from: number, to: number, total: number) =>
-                t('routes.admin.Layout.Pagination', { from, to, total })
-              }
-              columns={ColumnTableSupplierDiscount({
-                t,
-                navigate,
-                dataTableRef,
-              })}
-              showSearch={false}
-              rightHeader={
-                <div className={'flex h-10 w-36'}>
-                  {user && (
-                    <Button
-                      className='!bg-white flex justify-between w-full !px-3 !border !border-gray-600 !text-gray-600 hover:!bg-teal-900 hover:!text-white group'
-                      // icon={<Download className="icon-cud !h-6 !w-6 !fill-gray-600 group-hover:!fill-white" />}
-                      text={t('Xuất file excel')}
-                      onClick={() => navigate(routerLinks('Supplier/Excel'))}
-                    />
-                  )}
-                </div>
-              }
-            />
+          <div className={'w-full mx-auto bg-white rounded-xl'}>
+            <div className='px-1 pt-6 pb-4'>
+              <DataTable
+                facade={discountFacade}
+                ref={dataTableRef}
+                defaultRequest={{page: 1, perPage: 10}}
+                xScroll = '1370px'
+                pageSizeRender={(sizePage: number) => sizePage}
+                pageSizeWidth={'50px'}
+                paginationDescription={(from: number, to: number, total: number) =>
+                  t('routes.admin.Layout.Pagination', { from, to, total })
+                }
+                columns={ColumnTableSupplierDiscount({
+                  t,
+                  navigate,
+                  dataTableRef,
+                })}
+                showSearch={false}
+                rightHeader={
+                  <div className={'flex h-10 w-36'}>
+                    {user && (
+                      <Button
+                        className='!bg-white flex justify-between w-full !px-3 !border !border-gray-600 !text-gray-600 hover:!bg-teal-900 hover:!text-white group'
+                        icon={<Download className="icon-cud !h-6 !w-6 !fill-gray-600 group-hover:!fill-white" />}
+                        text={t('Xuất file excel')}
+                        onClick={() => navigate(routerLinks('Supplier/Excel'))}
+                      />
+                    )}
+                  </div>
+                }
+              />
+            </div>
+          </div>
           ) 
         }
         </div>
@@ -354,7 +632,7 @@ const Page = () => {
         </div>
         )}
         <div className='h-20'>
-        </div>
+        </div> */}
       </Fragment>
     </div>
     // <div className={'max-w-7xl mx-auto'}>

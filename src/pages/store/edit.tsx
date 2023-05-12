@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router';
-import { Switch, Tabs } from 'antd';
+import { Dropdown, Select, Switch, Tabs } from 'antd';
 
 import { routerLinks } from '@utils';
 import { Form } from '@core/form';
@@ -43,8 +43,8 @@ const Page = () => {
     <div className={'w-full'}>
       <Fragment>
         <div className=''>
-          <Tabs defaultActiveKey='1' type='card' size='large' className=''>
-            <Tabs.TabPane tab='Thông tin cửa hàng' key='1' className='bg-white rounded-xl rounded-tl-none' >
+          <Tabs defaultActiveKey='1' type='card' size='large'>
+          <Tabs.TabPane tab={'Thông tin cửa hàng'} key='1' className='bg-white rounded-xl rounded-tl-none '>
               <Form
                 values={{ ...data }}
                 className="intro-x p-6 pb-4 pt-3 rounded-lg w-full "
@@ -232,6 +232,7 @@ const Page = () => {
                     navigate(routerLinks('store-managerment/edit') + '/' + data.id);
                   },
                 })}
+                showSearch={false}
                 pageSizeRender={(sizePage: number) => sizePage}
                 pageSizeWidth={'50px'}
                 paginationDescription={(from: number, to: number, total: number) =>
@@ -309,7 +310,7 @@ const Page = () => {
                 className=' bg-white p-5 rounded-lg'
                 onRow={(data: any) => ({
                   onDoubleClick: () => {
-                    navigate(routerLinks('store-managerment/edit') + '/' + data.id);
+                    navigate(routerLinks('store/branch/edit') + '/' + data.id);
                   },
                 })}
                 pageSizeRender={(sizePage: number) => sizePage}
@@ -430,7 +431,60 @@ const Page = () => {
               />
             </Tabs.TabPane>
             <Tabs.TabPane tab='Doanh thu' key='5' className='rounded-xl'>
-
+              <DataTable
+                facade={invoicevietFacade}
+                defaultRequest={{ page: 1, perPage: 10, idSuppiler: id }}
+                xScroll='1440px'
+                className=' bg-white p-5 rounded-lg'
+                onRow={(data: any) => ({
+                  onDoubleClick: () => {
+                    navigate(routerLinks('store-managerment/edit') + '/' + data.id);
+                  },
+                })}
+                pageSizeRender={(sizePage: number) => sizePage}
+                pageSizeWidth={'50px'}
+                paginationDescription={(from: number, to: number, total: number) =>
+                  t('routes.admin.Layout.PaginationSupplier', { from, to, total })
+                }
+                columns={[
+                  // {
+                  //   title: 'supplier.CodeName',
+                  //   name: 'supplier',
+                  //   tableItem: {
+                  //     width: 150,
+                  //     render: (value: any, item: any) => item.supplier?.code,
+                  //   },
+                  // },
+                  // {
+                  //   title: 'supplier.Name',
+                  //   name: 'supplier',
+                  //   tableItem: {
+                  //     render: (value: any, item: any) => item.supplier?.name,
+                  //   },
+                  // },
+                  // {
+                  //   title: 'store.Address',
+                  //   name: 'supplier',
+                  //   tableItem: {
+                  //     render: (value: any, item: any) => item.supplier.address?.street + ', ' + item.supplier.address?.ward.name + ', ' + item.supplier.address?.district.name + ', ' + item.supplier.address?.province.name,
+                  //   },
+                  // },
+                  // {
+                  //   title: 'store.Name management',
+                  //   name: 'supplier',
+                  //   tableItem: {
+                  //     render: (value: any, item: any) => item.supplier.userRole[0].userAdmin.name,
+                  //   },
+                  // },
+                  // {
+                  //   title: 'store.Phone Number',
+                  //   name: 'supplier',
+                  //   tableItem: {
+                  //     render: (value: any, item: any) => item.supplier.userRole[0].userAdmin.phoneNumber,
+                  //   },
+                  // },
+                ]}
+              />
             </Tabs.TabPane>
             <Tabs.TabPane tab='Quản lý kho' key='6' className='rounded-xl'>
             <DataTable
