@@ -23,7 +23,21 @@ export const action = {
     const type = 'STORE'
     const connectKiot = {}
     const address = { provinceId, districtId, wardId, street }
-    const { data, message } = await API.post<StoreManagement>(routerLinks(name, 'api'), { ...values, address, supplierType, type, connectKiot });
+    const { data, message } = await API.post<StoreManagement>(routerLinks(name, 'api'), {
+     ...values, address, supplierType, type, connectKiot });
+    if (message) await Message.success({ text: message });
+    return data;
+  }),
+  put: createAsyncThunk(name + '/put', async ({ id, ...values }: StoreManagement) => {
+    const provinceId = values.provinceId?.slice(0, values.provinceId.indexOf('|'))
+    const districtId = values.districtId?.slice(0, values.districtId.indexOf('|'))
+    const wardId = values.wardId
+    const street = values.street
+    const supplierType = 'BALANCE'
+    const connectKiot = {}
+    const type = 'STORE'
+    const address = { provinceId, districtId, wardId, street }
+    const { data, message } = await API.put<StoreManagement>(`${routerLinks(name, 'api')}/${id}`, {...values, address, supplierType, type, connectKiot });
     if (message) await Message.success({ text: message });
     return data;
   }),

@@ -5,10 +5,10 @@ import { Dropdown, Select, Switch, Tabs } from 'antd';
 
 import { routerLinks } from '@utils';
 import { Form } from '@core/form';
-import { DistrictFacade, StoreFacade, WardFacade, ProvinceFacade, StoreManagement, SubStoreFacade, ConnectSupplierFacade, invoicekiotvietFacade, inventoryProductFacade, ProductFacade } from '@store';
+import { DistrictFacade, StoreFacade, WardFacade, ProvinceFacade, StoreManagement, SubStoreFacade, ConnectSupplierFacade, invoicekiotvietFacade, inventoryProductFacade, ProductFacade, CategoryFacade, SupplierFacade } from '@store';
 import { DataTable } from '@core/data-table';
 import { Button } from '@core/button';
-import { Arrow, Plus } from '@svgs';
+import { Download } from '@svgs';
 //import { inventoryProductFacade } from '../../store/store-management/inventory-product/index';
 import classNames from 'classnames';
 
@@ -65,7 +65,7 @@ const Page = () => {
 
   const handleBack = () => navigate(routerLinks('Store') + '?' + new URLSearchParams(param).toString());
   const handleSubmit = (values: StoreManagement) => {
-    storeFacade.put(values);
+    storeFacade.put({ ...values, id });
   };
 
   return (
@@ -75,8 +75,8 @@ const Page = () => {
           <Tabs defaultActiveKey='1' type='card' size='large'>
           <Tabs.TabPane tab={'Thông tin cửa hàng'} key='1' className='bg-white rounded-xl rounded-tl-none '>
               <Form
-                values={{ ...data }}
-                className="intro-x p-6 pb-4 pt-3 rounded-lg w-full "
+                values={{ ...data, street: data?.address?.street,emailContact: data?.userRole?.[0].userAdmin.email, phoneNumber: data?.userRole?.[0].userAdmin.phoneNumber, nameContact: data?.name }}
+                className="intro-x p-6 pb-4 pt-3 rounded-lg w-full"
                 columns={[
                   {
                     title: 'store.Code',
@@ -200,7 +200,7 @@ const Page = () => {
                   },
                   {
                     title: 'store.ContactName',
-                    name: 'name',
+                    name: 'nameContact',
                     formItem: {
                       col: 4,
                       rules: [{ type: 'required' }],
@@ -216,7 +216,7 @@ const Page = () => {
                   },
                   {
                     title: 'store.Contact Email',
-                    name: 'email',
+                    name: 'emailContact',
                     formItem: {
                       col: 4,
                       rules: [{ type: 'required' }],
@@ -266,6 +266,115 @@ const Page = () => {
                 pageSizeWidth={'50px'}
                 paginationDescription={(from: number, to: number, total: number) =>
                   t('routes.admin.Layout.PaginationProduct', { from, to, total })
+                }
+                rightHeader={
+                  <div className={'flex h-10 w-36 mt-6'}>
+                    {
+                      <Button
+                        className='!bg-white !font-normal whitespace-nowrap text-left flex justify-between w-full !px-3 !border !border-gray-600 !text-gray-600 hover:!bg-teal-900 hover:!text-white group'
+                        icon={<Download className="icon-cud !p-0 !h-5 !w-5 !fill-gray-600 group-hover:!fill-white" />}
+                        text={t('Xuất file excel')}
+                        onClick={() => navigate(routerLinks('Supplier/Excel'))}
+                      />
+                    }
+                  </div>
+                }
+                leftHeader={
+                  <Form
+                    className="intro-x pt-6 rounded-lg w-full "
+                    columns={
+                      [
+                        {
+                          title: '',
+                          name: 'supplierName',
+                          formItem: {
+                          //  tabIndex: 1,
+                            placeholder: 'Chọn nhà cung cấp',
+                            col: 5,
+                            type: 'select',
+                            // get: {
+                            //   facade: SupplierFacade,
+                            //   format: (item: any) => ({
+                            //     label: item.name,
+                            //     value: item.id,
+                            //   }),
+                            //   params: (fullTextSearch: string, getFieldValue: any) => ({
+                            //     fullTextSearch,
+                            //     extend: { name: getFieldValue('supplierName') || undefined },
+                            //   }),
+                            // }
+                          },
+                        },
+                        {
+                          title: '',
+                          name: 'cap1',
+                          formItem: {
+                            tabIndex: 3,
+                            placeholder: 'Danh mục chính',
+                            col: 3,
+                            type: 'select',
+                            get: {
+                              facade: CategoryFacade,
+                              format: (item: any) => ({
+                                label: item.name,
+                                value: item.id,
+                              }),
+                            },
+                            onChange(value, form) {
+                              form.resetFields(['cap2', 'cap3'])
+                            },
+                          },
+                        },
+                        {
+                          name: 'cap2',
+                          title: '',
+                          formItem: {
+                            // disabled:() => true,
+                            placeholder: 'Danh mục cấp 1',
+                            type: 'select',
+                            col: 3,
+                            get: {
+                              facade: CategoryFacade,
+                              format: (item: any) => ({
+                                label: item.name,
+                                value: item.id,
+                              }),
+                              params: (fullTextSearch, value) => ({
+                                fullTextSearch,
+                                code: value().id,
+                              }),
+                            },
+                            onChange(value, form) {
+                              form.resetFields(['cap2'])
+                            },
+                          },
+                        },
+                        {
+                          name: 'cap3',
+                          title: '',
+                          formItem: {
+                            // disabled:() => true,
+                            placeholder: 'Danh mục cấp 2',
+                            type: 'select',
+                            col: 3,
+                            get: {
+                              facade: CategoryFacade,
+                              format: (item: any) => ({
+                                label: item.name,
+                                value: item.id,
+                              }),
+                              params: (fullTextSearch, value) => ({
+                                fullTextSearch,
+                                code: value().id,
+                              })
+                            }
+                          },
+                        },
+                      ]
+                    }
+                    // handSubmit={handleSubmit}
+                    disableSubmit={isLoading}
+                  />
                 }
                 columns={[
                   {

@@ -181,7 +181,7 @@ const Page = () => {
                           },
                           {
                             name: 'cap2',
-                            title: '',  
+                            title: '',
                             formItem: {
                               // disabled:() => true,
                               placeholder: 'Danh mục cấp 1',
@@ -254,7 +254,7 @@ const Page = () => {
                       name: 'code',
                       tableItem: {
                         width: 280,
-                      
+
                       },
                     },
                     {
@@ -300,10 +300,10 @@ const Page = () => {
                       title: t(`supplier.Status`),
                       name: "isActive",
                       tableItem: {
-                        width: 180,  
+                        width: 180,
                         align: 'center',
                         render: (item: any) => !item?.isApplyTax
-                        ? (<div className='bg-green-100 text-center p-1 border border-green-500 text-green-600 rounded'>Đã giao</div>) 
+                        ? (<div className='bg-green-100 text-center p-1 border border-green-500 text-green-600 rounded'>Đã giao</div>)
                         : (<div className='bg-red-100 text-center p-1 border border-red-500 text-red-600 rounded'>Đang giao</div>),
                       },
                     },
@@ -425,7 +425,7 @@ const Page = () => {
           </div>
         </div>
         <div className='bg-white px-5 rounded-xl rounded-tl-none'>
-          
+
         {tab === 'tab1' && (
             <Form
               key={'tab1'}
@@ -448,7 +448,7 @@ const Page = () => {
                     </div>
                   )}
             />
-          ) 
+          )
         }
         {tab === 'tab2' && (
           <div className={'w-full mx-auto bg-white rounded-xl'}>
@@ -504,7 +504,7 @@ const Page = () => {
                   name: 'code',
                   tableItem: {
                     width: 280,
-                  
+
                   },
                 },
                 {
@@ -550,10 +550,10 @@ const Page = () => {
                   title: t(`supplier.Status`),
                   name: "isActive",
                   tableItem: {
-                    width: 180,  
+                    width: 180,
                     align: 'center',
                     render: (item: any) => !item?.isApplyTax
-                    ? (<div className='bg-green-100 text-center p-1 border border-green-500 text-green-600 rounded'>Đã giao</div>) 
+                    ? (<div className='bg-green-100 text-center p-1 border border-green-500 text-green-600 rounded'>Đã giao</div>)
                     : (<div className='bg-red-100 text-center p-1 border border-red-500 text-red-600 rounded'>Đang giao</div>),
                   },
                 },
@@ -561,7 +561,7 @@ const Page = () => {
             />
             </div>
           </div>
-          ) 
+          )
         }
         {tab === 'tab4' && (
             <Form
@@ -584,7 +584,7 @@ const Page = () => {
                     </div>
                   )}
             />
-          ) 
+          )
         }
         {tab === 'tab5' && (
           <div className={'w-full mx-auto bg-white rounded-xl'}>
@@ -620,7 +620,7 @@ const Page = () => {
               />
             </div>
           </div>
-          ) 
+          )
         }
         </div>
         { tab !== 'tab1' && tab !== 'tab6' && tab !== 'tab4' && (
@@ -640,7 +640,7 @@ const Page = () => {
     //     <div className='bg-white rounded-xl px-4 relative text-center '>
     //       <div>
     //         <p className='text-xl text-left font-bold text-teal-900 py-5'>
-    //           Thông tin nhà cung cấp  
+    //           Thông tin nhà cung cấp
     //         </p>
     //       </div>
     //       {!!result?.data && (
@@ -652,11 +652,11 @@ const Page = () => {
     //             disableSubmit={isLoading}
     //             extendButton={() => (
     //               <div className='max-w-7xl flex items-center absolute -right-4 -left-4 justify-between mt-4'>
-    //                 <button className={'text-teal-900 bg-white border-solid border border-teal-900 rounded-xl p-2 w-auto h-11 px-8'} 
+    //                 <button className={'text-teal-900 bg-white border-solid border border-teal-900 rounded-xl p-2 w-auto h-11 px-8'}
     //                 onClick={handleBack}>
     //                   {t('Trở về')}
     //                 </button>
-    //                 <button className={'text-white bg-teal-900 border-solid border rounded-xl p-2 w-auto h-11 px-8'} 
+    //                 <button className={'text-white bg-teal-900 border-solid border rounded-xl p-2 w-auto h-11 px-8'}
     //                 onClick={() => handleSubmit}>
     //                   {t('Lưu')}
     //                 </button>
