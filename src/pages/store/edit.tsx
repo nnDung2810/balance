@@ -430,7 +430,7 @@ const Page = () => {
                 ]}
               />
             </Tabs.TabPane>
-            <Tabs.TabPane tab='Doanh thu' key='5' className='rounded-xl'>
+            {/* <Tabs.TabPane tab='Doanh thu' key='5' className='rounded-xl'>
               <DataTable
                 facade={invoicevietFacade}
                 defaultRequest={{ page: 1, perPage: 10, idSuppiler: id }}
@@ -485,7 +485,7 @@ const Page = () => {
                   // },
                 ]}
               />
-            </Tabs.TabPane>
+            </Tabs.TabPane> */}
             <Tabs.TabPane tab='Quản lý kho' key='6' className='rounded-xl'>
             <DataTable
                 facade={inventoryProductFacade.data}
