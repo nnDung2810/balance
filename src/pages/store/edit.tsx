@@ -262,20 +262,21 @@ const Page = () => {
                           formItem: {
                           //  tabIndex: 1,
                             placeholder: 'Chọn nhà cung cấp',
-                            col: 5,
+                            col: 7,
                             type: 'select',
-                            // get: {
-                            //   facade: SupplierFacade,
-                            //   format: (item: any) => ({
-                            //     label: item.name,
-                            //     value: item.id,
-                            //   }),
+                            get: {
+                              facade:  ConnectSupplierFacade,
+                              format: (item: any) => ({
+                                label: item.supplier?.name,
+                                value: item.supplier?.id,
+                              }),
                             //   params: (fullTextSearch: string, getFieldValue: any) => ({
                             //     fullTextSearch,
                             //     extend: { name: getFieldValue('supplierName') || undefined },
                             //   }),
                             // }
                           },
+                        }
                         },
                         {
                           title: '',
@@ -472,16 +473,6 @@ const Page = () => {
                     },
                   },
                 ]}
-                // rightHeader={
-                //   <div className={'block sm:flex gap-2 !bg-teal-900 !rounded-2xl mt-0 max-lg:mt-2.5 w-48 lg:w-auto'}>
-                //     <Button
-                //       className='!bg-teal-900 !h-9 !rounded-2xl'
-                //       icon={<Plus className="icon-cud !h-5 !w-5 !fill-slate-200 " />}
-                //       text={t('titles.Store/SubStore')}
-                //       onClick={() => navigate(routerLinks('store-managerment/create'))}
-                //     />
-                //   </div>
-                // }
               />
             </Tabs.TabPane>
             <Tabs.TabPane tab='Quản lý NCC' key='4' className='rounded-xl'>
@@ -555,6 +546,38 @@ const Page = () => {
                 pageSizeWidth={'50px'}
                 paginationDescription={(from: number, to: number, total: number) =>
                   t('routes.admin.Layout.PaginationSupplier', { from, to, total })
+                }
+                leftHeader={
+                  <Form
+                  className="intro-x rounded-lg w-full "
+                  columns={
+                    [
+                      {
+                        title: '',
+                        name: 'supplierName',
+                        formItem: {
+                        //  tabIndex: 1,
+                          placeholder: 'Chọn loại đơn hàng',
+                          col: 7,
+                          type: 'select',
+                          get: {
+                            facade:  ConnectSupplierFacade,
+                            format: (item: any) => ({
+                              label: item.supplier?.name,
+                              value: item.supplier?.id,
+                            }),
+                            // params: (fullTextSearch: string, getFieldValue: any) => ({
+                            //   fullTextSearch,
+                            //   extend: { name: getFieldValue('supplierName') || undefined },
+                            // }),
+                          }
+                        },
+                      },
+                    ]
+                  }
+                  // handSubmit={handleSubmit}
+                  disableSubmit={isLoading}
+                />
                 }
                 columns={[
                   {
@@ -730,25 +753,7 @@ const Page = () => {
                       render: (value: any, item: any) => item.inventory?.category,
                     },
                   },
-                  // {
-                  //   title: 'Trạng thái',
-                  //   name: 'isActive',
-                  //   tableItem: {
-                  //     render: (text: string) => text ? (<div className='bg-green-100 text-center p-1 border border-green-500 text-green-600 rounded'>Đang hoạt động</div>)
-                  //       : (<div className='bg-red-100 text-center p-1 border border-red-500 text-red-600 rounded'></div>),
-                  //   },
-                  // },
                 ]}
-                // rightHeader={
-                //   <div className={'block sm:flex gap-2 !bg-teal-900 !rounded-2xl mt-0 max-lg:mt-2.5 w-48 lg:w-auto'}>
-                //     <Button
-                //       className='!bg-teal-900 !h-9 !rounded-2xl'
-                //       icon={<Plus className="icon-cud !h-5 !w-5 !fill-slate-200 " />}
-                //       text={t('titles.Store/SubStore')}
-                //       onClick={() => navigate(routerLinks('store-managerment/create'))}
-                //     />
-                //   </div>
-                // }
               />
             </Tabs.TabPane>
           </Tabs>
