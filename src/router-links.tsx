@@ -22,11 +22,16 @@ const Util = (name: string, type?: string) => {
     Store: '/store-managerment',
     'store-managerment/create': '/store-managerment/create',
     'store-managerment/edit': '/store-managerment/detail',
+    'Store/branch/edit': '/store/branch/edit',
 
     Category: '/category',
 
     Product: '/product'
   }; // 💬 generate link to here
+
+//   import { routerLinks } from './router-links';
+
+// const link = routerLinks('MyProfile') + '?tab=1';
 
   const apis: {
     [selector: string]: string;
@@ -46,6 +51,7 @@ const Util = (name: string, type?: string) => {
     ConnectSupplier: '/store-connect-supplier/supplier',
     InventoryProduct: '/inventory-product',
     Suborgcommision:'/sub-org-commision',
+    Invoicekiotviet: '/invoice-kiot-viet/invoice'
   }; // 💬 generate api to here
 
   switch (type) {
