@@ -69,8 +69,11 @@
 }
 
 
-.ant-tabs .ant-tabs-tab .ant-tabs-tab-btn:hover {
+.ant-tabs .ant-tabs-tab{
+  &:hover {@apply !text-teal-900;}
+ .ant-tabs-tab-btn:hover {
   color: #060706;
+  }
 }
 .ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
   color: #0b8d21;
@@ -79,12 +82,12 @@
   background-color: #0b8d21;
 }
 
-
-.ant-switch-inner{
-  background-color: #0b8d21;
-}
-
 .ant-switch {
-  background-color: #c2cfc4;
+  @apply bg-gray-400;
+  &:hover {@apply !bg-gray-400;}
+}
+.ant-switch-checked {
+  @apply !bg-green-600;
+  &:hover {@apply !bg-green-600;}
 }
 

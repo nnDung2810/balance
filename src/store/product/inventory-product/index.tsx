@@ -1,7 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 import { useAppDispatch, useTypedSelector, Action, Slice, State } from '@store';
-import { CommonEntity, PaginationQuery } from '@models';
+import { CommonEntity, PaginationQuery, Responses } from '@models';
 
 const name = 'InventoryProduct';
 
@@ -9,7 +9,7 @@ export const action = new Action<IventoryProduct>(name);
 
 export const inventoryProductSlice = createSlice(new Slice<IventoryProduct>(action));
 
-export const inventoryProductFacade = () => {
+export const InventoryProductFacade = () => {
     const dispatch = useAppDispatch();
     return {
         ...(useTypedSelector((state) => state[action.name]) as State<IventoryProduct>),
@@ -19,6 +19,13 @@ export const inventoryProductFacade = () => {
 };
 
 export class IventoryProduct extends CommonEntity {
+    constructor(
+        public inventory: IventoryProduct1[]
+    ) {
+        super();
+    }
+}
+export class IventoryProduct1 extends CommonEntity {
     constructor(
         public category?: string,
         public inventoryPrice?: string,
@@ -39,4 +46,5 @@ export class IventoryProduct extends CommonEntity {
         super();
     }
 }
+
 
