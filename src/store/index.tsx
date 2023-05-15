@@ -19,6 +19,7 @@ import { OrdersSlice, OrdersFacade  } from './order';
 import { DiscountSlice, DiscountFacade } from './discount';
 import { inventoryProductSlice, InventoryProductFacade } from './store-management/inventory-product';
 import { invoicekiotvietFacade, invoicekiotvietSlice } from './store-management/invoice-kiot-viet';
+import { SupplierStoreFacade, supplierStoreSlice } from './store-management/all-supplier-store';
 
 const rootReducer = combineReducers({
   [globalSlice.name]: globalSlice.reducer,
@@ -37,6 +38,7 @@ const rootReducer = combineReducers({
   [OrdersSlice.name]: OrdersSlice.reducer,
   [DiscountSlice.name]: DiscountSlice.reducer,
   [invoicekiotvietSlice.name]: invoicekiotvietSlice.reducer,
+  [supplierStoreSlice.name] : supplierStoreSlice.reducer,
 });
 
 const setupStore = () => {
@@ -75,7 +77,8 @@ export {
   InventoryProductFacade,
   OrdersFacade,
   DiscountFacade,
-  invoicekiotvietFacade
+  invoicekiotvietFacade,
+  SupplierStoreFacade,
 };
 
 export type { State };

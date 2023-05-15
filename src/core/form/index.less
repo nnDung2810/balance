@@ -69,20 +69,17 @@
 }
 
 
-.ant-tabs .ant-tabs-tab{
+.ant-tabs-tab{
+  @apply !bg-transparent;
   &:hover {@apply !text-teal-900;}
   .ant-tabs-tab-btn {
    @apply text-xl !text-teal-900 font-medium;
  }
 }
 .ant-tabs-tab-active {
-  @apply !text-teal-900;
+  @apply !text-teal-900 !bg-white;
 }
 .ant-tabs .ant-tabs-ink-bar {
-  background-color: #0b8d21;
-}
-
-.ant-switch-inner{
   background-color: #0b8d21;
 }
 
