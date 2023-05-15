@@ -1,41 +1,32 @@
-import React, { Fragment, useEffect, useRef, useState } from 'react';
+import React, { Fragment, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router';
-import { Dropdown, Select, Switch, Tabs } from 'antd';
+import { Switch, Tabs } from 'antd';
 
 import { routerLinks } from '@utils';
 import { Form } from '@core/form';
-import { DistrictFacade, StoreFacade, WardFacade, ProvinceFacade, StoreManagement, SubStoreFacade, ConnectSupplierFacade, invoicekiotvietFacade, inventoryProductFacade, ProductFacade } from '@store';
+import { DistrictFacade, StoreFacade, WardFacade, ProvinceFacade, StoreManagement, SubStoreFacade, ConnectSupplierFacade, ProductFacade, InventoryProductFacade, CategoryFacade, SupplierStoreFacade, invoicekiotvietFacade } from '@store';
 import { DataTable } from '@core/data-table';
 import { Button } from '@core/button';
-import { Arrow, Plus } from '@svgs';
-//import { inventoryProductFacade } from '../../store/store-management/inventory-product/index';
-import classNames from 'classnames';
+import { Download } from '@svgs';
 
 const Page = () => {
   const { t } = useTranslation();
-  // const provinceFacade = ProvinceFacade()
-  // const { result } = provinceFacade
-
-  // const wardFacade = WardFacade()
-  // const districtFacade = DistrictFacade()
+  const navigate = useNavigate();
 
   const storeFacade = StoreFacade()
   const { data, isLoading, queryParams, status } = storeFacade;
   const productFacede = ProductFacade()
   const subStoreFacade = SubStoreFacade()
   const connectSupplierFacade = ConnectSupplierFacade()
-
-  const navigate = useNavigate();
-
-  const inventoryproductFacade = inventoryProductFacade();
+  const inventoryProductFacade = InventoryProductFacade()
   const invoicevietFacade = invoicekiotvietFacade()
 
   const isBack = useRef(true);
   const isReload = useRef(false);
   const param = JSON.parse(queryParams || '{}');
   const { id } = useParams();
-
+ 
   useEffect(() => {
     if (id) storeFacade.getById({ id });
 
@@ -44,39 +35,20 @@ const Page = () => {
     };
   }, [id, data]);
 
-  // useEffect(() => {
-  //   switch (status) {
-  //     case 'post.fulfilled':
-  //       navigate(routerLinks('User') + '/' + data?.id);
-  //       break;
-  //     case 'put.fulfilled':
-  //       if (Object.keys(param).length > 0) isReload.current = true;
-
-  //       if (isBack.current) handleBack();
-  //       else {
-  //         isBack.current = true;
-  //         if (status === 'put.fulfilled') navigate(routerLinks('User/Add'));
-  //       }
-  //       break;
-  //   }
-  // }, [status]);
-
-  const [tab, setTab] = useState('tab1')
-
   const handleBack = () => navigate(routerLinks('Store') + '?' + new URLSearchParams(param).toString());
   const handleSubmit = (values: StoreManagement) => {
-    storeFacade.put(values);
+    storeFacade.put({ ...values, id });
   };
 
   return (
     <div className={'w-full'}>
       <Fragment>
-        <div className=''>
+        <div>
           <Tabs defaultActiveKey='1' type='card' size='large'>
-          <Tabs.TabPane tab={'Thông tin cửa hàng'} key='1' className='bg-white rounded-xl rounded-tl-none '>
+          <Tabs.TabPane tab={'Thông tin cửa hàng'} key='1' className='bg-white rounded-xl rounded-tl-none'>
               <Form
-                values={{ ...data }}
-                className="intro-x p-6 pb-4 pt-3 rounded-lg w-full "
+                values={{ ...data, street: data?.address?.street,emailContact: data?.userRole?.[0].userAdmin.email, phoneNumber: data?.userRole?.[0].userAdmin.phoneNumber, nameContact: data?.name }}
+                className="intro-x p-6 pb-4 pt-3 rounded-lg w-full"
                 columns={[
                   {
                     title: 'store.Code',
@@ -122,17 +94,17 @@ const Page = () => {
                     formItem: {
                       tabIndex: 3,
                       col: 3,
-                      type: 'select',
                       rules: [{ type: 'required' }],
+                      type: 'select',
                       get: {
                         facade: ProvinceFacade,
                         format: (item: any) => ({
                           label: item.name,
                           value: item.id + '|' + item.code,
-                        })
+                        }),
                       },
                       onChange(value, form) {
-                        form.resetFields(['district', 'wardId'])
+                        form.resetFields(['districtId', 'wardId'])
                       },
                     },
                   },
@@ -200,7 +172,7 @@ const Page = () => {
                   },
                   {
                     title: 'store.ContactName',
-                    name: 'name',
+                    name: 'nameContact',
                     formItem: {
                       col: 4,
                       rules: [{ type: 'required' }],
@@ -216,7 +188,7 @@ const Page = () => {
                   },
                   {
                     title: 'store.Contact Email',
-                    name: 'email',
+                    name: 'emailContact',
                     formItem: {
                       col: 4,
                       rules: [{ type: 'required' }],
@@ -261,12 +233,6 @@ const Page = () => {
                     navigate(routerLinks('store-managerment/edit') + '/' + data.id);
                   },
                 })}
-                showSearch={false}
-                pageSizeRender={(sizePage: number) => sizePage}
-                pageSizeWidth={'50px'}
-                paginationDescription={(from: number, to: number, total: number) =>
-                  t('routes.admin.Layout.PaginationProduct', { from, to, total })
-                }
                 columns={[
                   {
                     title: 'product.Code',
@@ -305,7 +271,7 @@ const Page = () => {
                     title: 'product.Category',
                     name: 'category',
                     tableItem: {
-                      render: (value: any, item: any) => item.category?.child?.name,
+                      render: (value: any, item: any) => item.category?.child?.name
                     },
                   },
                   {
@@ -329,6 +295,133 @@ const Page = () => {
                     },
                   },
                 ]}
+                showSearch={false}
+                pageSizeRender={(sizePage: number) => sizePage}
+                pageSizeWidth={'50px'}
+                paginationDescription={(from: number, to: number, total: number) =>
+                  t('routes.admin.Layout.PaginationProduct', { from, to, total })
+                }
+                rightHeader={
+                  <div className={'flex h-10 w-36 mt-6'}>
+                    {
+                      <Button
+                        className='!bg-white !font-normal whitespace-nowrap text-left flex justify-between w-full !px-3 !border !border-gray-600 !text-gray-600 hover:!bg-teal-900 hover:!text-white group'
+                        icon={<Download className="icon-cud !p-0 !h-5 !w-5 !fill-gray-600 group-hover:!fill-white" />}
+                        text={t('Xuất file excel')}
+                        onClick={() => navigate(routerLinks('Supplier/Excel'))}
+                      />
+                    }
+                  </div>
+                }
+                leftHeader={
+                  <>
+                   <Form
+                    className="intro-x pt-5 rounded-lg w-full "
+                    columns={
+                      [
+                        {
+                          title: '',
+                          name: 'supplierName',
+                          formItem: {
+                            placeholder: 'Chọn nhà cung cấp',
+                            col: 5,
+                            type: 'select',
+                            get: {
+                              facade: SupplierStoreFacade,
+                              format: (item: any) => ({
+                                label: item.name,
+                                value: item.id,
+                              }),
+                              params: (fullTextSearch) => ({
+                                fullTextSearch,
+                                storeId: id,
+                                type : 'BALANCE',
+                              }),
+                            },
+                          },
+                        },
+                      ]
+                    }
+                    // handSubmit={handleSubmit}
+                    disableSubmit={isLoading}
+                  />
+                  <Form
+                    className="intro-x pt-5 rounded-lg w-full "
+                    columns={
+                      [
+                        {
+                          title: '',
+                          name: 'cap1',
+                          formItem: {
+                            tabIndex: 3,
+                            placeholder: 'Danh mục chính',
+                            col: 3,
+                            type: 'select',
+                            get: {
+                              facade: CategoryFacade,
+                              format: (item: any) => ({
+                                label: item.name,
+                                value: item.id,
+                              }),
+                            },
+                            onChange(value, form) {
+                              form.resetFields(['cap2', 'cap3'])
+                            },
+                          },
+                        },
+                        {
+                          name: 'cap2',
+                          title: '',
+                          formItem: {
+                            // disabled:() => true,
+                            placeholder: 'Danh mục cấp 1',
+                            type: 'select',
+                            col: 3,
+                            get: {
+                              facade: CategoryFacade,
+                              format: (item: any) => ({
+                                label: item.name,
+                                value: item.id,
+                              }),
+                              params: (fullTextSearch, value) => ({
+                                fullTextSearch,
+                                id: value().cap1,
+                              }),
+                            },
+                            onChange(value, form) {
+                              form.resetFields(['cap3'])
+                            },
+                          },
+                        },
+                        {
+                          name: 'cap3',
+                          title: '',
+                          formItem: {
+                            // disabled:() => true,
+                            placeholder: 'Danh mục cấp 2',
+                            type: 'select',
+                            col: 3,
+                            get: {
+                              facade: CategoryFacade,
+                              format: (item: any) => ({
+                                label: item.name,
+                                value: item.id,
+                              }),
+                              params: (fullTextSearch, value) => ({
+                                fullTextSearch,
+                                id: value().cap2,
+                              })
+                            }
+                          },
+                        },
+                      ]
+                    }
+                    // handSubmit={handleSubmit}
+                    disableSubmit={isLoading}
+                  />
+                  </>
+                }
+                
               />
             </Tabs.TabPane>
             <Tabs.TabPane tab='Danh sách chi nhánh' key='3' className='rounded-xl'>
@@ -391,16 +484,6 @@ const Page = () => {
                     },
                   },
                 ]}
-                  // rightHeader={
-                  //   <div className={'flex gap-2 !bg-teal-900 !rounded-3xl mt-0 max-lg:mt-2.5 max-lg:w-48'}>
-                  //     <Button
-                  //       className='!bg-teal-900 !h-9'
-                  //       icon={<Plus className="icon-cud !h-5 !w-5 !fill-slate-200 " />}
-                  //       text={t('titles.Store/SubStore')}
-                  //       onClick={() => navigate(routerLinks('store-managerment/create'))}
-                  //     />
-                  //   </div>
-                  // }
               />
             </Tabs.TabPane>
             <Tabs.TabPane tab='Quản lý NCC' key='4' className='rounded-xl'>
@@ -461,7 +544,7 @@ const Page = () => {
             </Tabs.TabPane>
             <Tabs.TabPane tab='Doanh thu' key='5' className='rounded-xl'>
               <DataTable
-                facade={invoicevietFacade}
+                facade={invoicevietFacade.data}
                 defaultRequest={{ page: 1, perPage: 10, idSuppiler: id }}
                 xScroll='1440px'
                 className=' bg-white p-5 rounded-lg'
@@ -475,140 +558,212 @@ const Page = () => {
                 paginationDescription={(from: number, to: number, total: number) =>
                   t('routes.admin.Layout.PaginationSupplier', { from, to, total })
                 }
+                leftHeader={
+                  <Form
+                  className="intro-x rounded-lg w-full "
+                  columns={
+                    [
+                      {
+                        title: '',
+                        name: 'supplierName',
+                        formItem: {
+                        //  tabIndex: 1,
+                          placeholder: 'Chọn loại đơn hàng',
+                          col: 7,
+                          type: 'select',
+                          get: {
+                            facade:  ConnectSupplierFacade,
+                            format: (item: any) => ({
+                              label: item.supplier?.name,
+                              value: item.supplier?.id,
+                            }),
+                            // params: (fullTextSearch: string, getFieldValue: any) => ({
+                            //   fullTextSearch,
+                            //   extend: { name: getFieldValue('supplierName') || undefined },
+                            // }),
+                          }
+                        },
+                      },
+                    ]
+                  }
+                  // handSubmit={handleSubmit}
+                  disableSubmit={isLoading}
+                />
+                }
                 columns={[
-                  // {
-                  //   title: 'supplier.CodeName',
-                  //   name: 'supplier',
-                  //   tableItem: {
-                  //     width: 150,
-                  //     render: (value: any, item: any) => item.supplier?.code,
-                  //   },
-                  // },
-                  // {
-                  //   title: 'supplier.Name',
-                  //   name: 'supplier',
-                  //   tableItem: {
-                  //     render: (value: any, item: any) => item.supplier?.name,
-                  //   },
-                  // },
-                  // {
-                  //   title: 'store.Address',
-                  //   name: 'supplier',
-                  //   tableItem: {
-                  //     render: (value: any, item: any) => item.supplier.address?.street + ', ' + item.supplier.address?.ward.name + ', ' + item.supplier.address?.district.name + ', ' + item.supplier.address?.province.name,
-                  //   },
-                  // },
-                  // {
-                  //   title: 'store.Name management',
-                  //   name: 'supplier',
-                  //   tableItem: {
-                  //     render: (value: any, item: any) => item.supplier.userRole[0].userAdmin.name,
-                  //   },
-                  // },
-                  // {
-                  //   title: 'store.Phone Number',
-                  //   name: 'supplier',
-                  //   tableItem: {
-                  //     render: (value: any, item: any) => item.supplier.userRole[0].userAdmin.phoneNumber,
-                  //   },
-                  // },
+                  {
+                    title: 'supplier.CodeName',
+                    name: 'supplier',
+                    tableItem: {
+                      width: 150,
+                      render: (value: any, item: any) => item.supplier?.code,
+                    },
+                  },
+                  {
+                    title: 'supplier.Name',
+                    name: 'supplier',
+                    tableItem: {
+                      render: (value: any, item: any) => item.supplier?.name,
+                    },
+                  },
+                  {
+                    title: 'store.Address',
+                    name: 'supplier',
+                    tableItem: {
+                      render: (value: any, item: any) => item.supplier.address?.street + ', ' + item.supplier.address?.ward.name + ', ' + item.supplier.address?.district.name + ', ' + item.supplier.address?.province.name,
+                    },
+                  },
+                  {
+                    title: 'store.Name management',
+                    name: 'supplier',
+                    tableItem: {
+                      render: (value: any, item: any) => item.supplier.userRole[0].userAdmin.name,
+                    },
+                  },
+                  {
+                    title: 'store.Phone Number',
+                    name: 'supplier',
+                    tableItem: {
+                      render: (value: any, item: any) => item.supplier.userRole[0].userAdmin.phoneNumber,
+                    },
+                  },
                 ]}
               />
             </Tabs.TabPane>
             <Tabs.TabPane tab='Quản lý kho' key='6' className='rounded-xl'>
-              <DataTable
-                facade={inventoryproductFacade}
+            <DataTable
+                facade={inventoryProductFacade.data?.inventory}
                 defaultRequest={{ page: 1, perPage: 10, idStore: id }}
                 xScroll='1440px'
                 className=' bg-white p-5 rounded-lg'
-                onRow={(data: any) => ({
-                  onDoubleClick: () => {
-                    navigate(routerLinks('store-managerment/edit') + '/' + data.id);
-                  },
-                })}
                 pageSizeRender={(sizePage: number) => sizePage}
                 pageSizeWidth={'50px'}
                 paginationDescription={(from: number, to: number, total: number) =>
-                  t('routes.admin.Layout.PaginationSupplier', { from, to, total })
+                  t('routes.admin.Layout.PaginationSubStore', { from, to, total })
+                }
+                showSearch={false}
+                rightHeader={
+                  <div className={'h-10 w-24 '}>
+                    {
+                      <Button
+                        className='!bg-teal-800 !font-normal w-full !text-white hover:!bg-teal-700 group'
+                        text={t('Đồng bộ')}
+                        onClick={() => navigate(routerLinks('Supplier/Excel'))}
+                      />
+                    }
+                  </div>
+                }
+                leftHeader={
+                  <Form
+                    className="intro-x rounded-lg w-full "
+                    columns={
+                      [
+                        {
+                          title: '',
+                          name: 'supplierName',
+                          formItem: {
+                          //  tabIndex: 1,
+                            placeholder: 'Chọn nhà cung cấp',
+                            col: 7,
+                            type: 'select',
+                            get: {
+                              facade:  ConnectSupplierFacade,
+                              format: (item: any) => ({
+                                label: item.supplier?.name,
+                                value: item.supplier?.id,
+                              }),
+                              // params: (fullTextSearch: string, getFieldValue: any) => ({
+                              //   fullTextSearch,
+                              //   extend: { name: getFieldValue('supplierName') || undefined },
+                              // }),
+                            }
+                          },
+                        },
+                      ]
+                    }
+                    // handSubmit={handleSubmit}
+                    disableSubmit={isLoading}
+                  />
                 }
                 columns={[
                   {
                     title: 'store.Inventory management.Product code',
-                    name: 'inventory.productCode',
+                    name: 'productCode',
                     tableItem: {
-                      width: 150,
-                      // render
+                      width: 120,
+                      render: (text: string, item: any) => text,
                     },
                   },
-                  // {
-                  //   title: 'store.Inventory management.Barcode (Supplier)',
-                  //   name: 'supplierBarcode',
-                  //   tableItem: {
-
-                  //   },
-                  // },
-                  // {
-                  //   title: 'store.Inventory management.Barcode (Product)',
-                  //   name: 'storeBarcode',
-                  //   tableItem: {
-                  //   },
-                  // },
-                  // {
-                  //   title: 'store.Inventory management.Product name',
-                  //   name: 'productName',
-                  //   tableItem: {
-
-                  //   },
-                  // },
-                  // {
-                  //   title: 'store.Inventory management.Category',
-                  //   name: 'category',
-                  //   tableItem: {
-
-                  //   },
-                  // },
-                  // {
-                  //   title: 'store.Inventory management.Supplier',
-                  //   name: 'supplierName',
-                  //   tableItem: {
-
-                  //   },
-                  // },
-                  // {
-                  //   title: 'store.Inventory management.Unit',
-                  //   name: 'name',
-                  //   tableItem: {
-
-                  //   },
-                  // },
-                  // {
-                  //   title: 'store.Inventory management.Quantity on KiotViet',
-                  //   name: 'numberInKiot',
-                  //   tableItem: {
-
-                  //   },
-                  // },
-                  // {
-                  //   title: 'store.Inventory management.Quantity on BALANCE',
-                  //   name: 'numberInBal',
-                  //   tableItem: {
-
-                  //   },
-                  // },
-                  // {
-                  //   title: 'store.Inventory management.Warehouse price',
-                  //   name: 'inventoryPrice',
-                  //   tableItem: {
-
-                  //   },
-                  // },
-                  // {
-                  //   title: 'store.Inventory management.Total amount',
-                  //   name: 'numberInKiot*numberInBal*inventoryPrice',
-                  //   tableItem: {
-
-                  //   },
-                  // },
+                  {
+                    title: 'store.Inventory management.Barcode (Supplier)',
+                    name: 'supplierBarcode',
+                    tableItem: {
+                      render: (value: any, item: any) => item.inventory?.supplierBarcode,
+                    },
+                  },
+                  {
+                    title: 'store.Inventory management.Barcode (Product)',
+                    name: 'storeBarcode',
+                    tableItem: {
+                      render: (value: any, item: any) => item.inventory?.storeBarcode,
+                    },
+                  },
+                  {
+                    title: 'store.Inventory management.Product name',
+                    name: 'productName',
+                    tableItem: {
+                      render: (value: any, item: any) => item.inventory?.productName,
+                    },
+                  },
+                  {
+                    title: 'store.Inventory management.Category',
+                    name: 'category',
+                    tableItem: {
+                      render: (value: any, item: any) => item.inventory?.category,
+                    },
+                  },
+                  {
+                    title: 'store.Inventory management.Supplier',
+                    name: 'supplierName',
+                    tableItem: {
+                      render: (value: any, item: any) => item.inventory?.category,
+                    },
+                  },
+                  {
+                    title: 'store.Inventory management.Unit',
+                    name: 'name',
+                    tableItem: {
+                      render: (value: any, item: any) => item.inventory?.category,
+                    },
+                  },
+                  {
+                    title: 'store.Inventory management.Quantity on KiotViet',
+                    name: 'numberInKiot',
+                    tableItem: {
+                      render: (value: any, item: any) => item.inventory?.category,
+                    },
+                  },
+                  {
+                    title: 'store.Inventory management.Quantity on BALANCE',
+                    name: 'numberInBal',
+                    tableItem: {
+                      render: (value: any, item: any) => item.inventory?.category,
+                    },
+                  },
+                  {
+                    title: 'store.Inventory management.Warehouse price',
+                    name: 'inventoryPrice',
+                    tableItem: {
+                      render: (value: any, item: any) => item.inventory?.category,
+                    },
+                  },
+                  {
+                    title: 'store.Inventory management.Total amount',
+                    name: 'inventoryPrice',
+                    tableItem: {
+                      render: (value: any, item: any) => item.inventory?.category,
+                    },
+                  },
                 ]}
               />
             </Tabs.TabPane>

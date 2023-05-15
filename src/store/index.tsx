@@ -17,9 +17,10 @@ import { SubStoreFacade, subStoreSlice } from './store-management/sub-store';
 import { connectSupplierSlice, ConnectSupplierFacade } from './store-connect-supplier';
 import { OrdersSlice, OrdersFacade  } from './order';
 import { DiscountSlice, DiscountFacade } from './discount';
-import { inventoryProductSlice, inventoryProductFacade } from './store-management/inventory-product';
+import { inventoryProductSlice, InventoryProductFacade } from './store-management/inventory-product';
 import { invoicekiotvietFacade, invoicekiotvietSlice } from './store-management/invoice-kiot-viet';
 import { inventoryOrdersSlice, inventoryOrdersFacade } from './supplier/inventory-order';
+import { SupplierStoreFacade, supplierStoreSlice } from './store-management/all-supplier-store';
 
 const rootReducer = combineReducers({
   [globalSlice.name]: globalSlice.reducer,
@@ -39,6 +40,7 @@ const rootReducer = combineReducers({
   [DiscountSlice.name]: DiscountSlice.reducer,
   [invoicekiotvietSlice.name]: invoicekiotvietSlice.reducer,
   [inventoryOrdersSlice.name]: inventoryOrdersSlice.reducer,
+  [supplierStoreSlice.name] : supplierStoreSlice.reducer,
 });
 
 const setupStore = () => {
@@ -74,11 +76,12 @@ export {
   ProductFacade,
   SubStoreFacade,
   ConnectSupplierFacade,
-  inventoryProductFacade,
+  InventoryProductFacade,
   OrdersFacade,
   DiscountFacade,
   invoicekiotvietFacade,
-  inventoryOrdersFacade
+  inventoryOrdersFacade,
+  SupplierStoreFacade,
 };
 
 export type { State };

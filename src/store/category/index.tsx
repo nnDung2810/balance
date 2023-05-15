@@ -10,9 +10,9 @@ export const action = {
     ...new Action<Category>(name),
     getByIdCategory: createAsyncThunk(
       name + '/getById',
-      async ({ id, keyState = 'isVisible' }: { id: string; keyState: keyof State<Category>}) => {
+      async (id:string) => {
         const data = await API.get<Category>(`${routerLinks(name, 'api')}/${id}`);
-        return { data, keyState };
+        return { data };
       },
     ),
 }
@@ -25,8 +25,8 @@ export const CategoryFacade = () => {
         ...(useTypedSelector((state) => state[action.name]) as State<Category>),
         set: (values: State<Category>) => dispatch(action.set(values)),
         get: (params: PaginationQuery<Category>) => dispatch(action.get(params)),
-        getById: ({ id, keyState = 'isVisible' }: { id: string; keyState?: keyof State<Category> }) =>
-            dispatch(action.getByIdCategory({ id, keyState })),
+        getById: ({ fullTextSearch, id }: { fullTextSearch: string; id: string;}) =>
+            dispatch(action.getByIdCategory(id)),
         post: (values: Category) => dispatch(action.post(values)),
         put: (values: Category) => dispatch(action.put(values)),
         delete: (id: string) => dispatch(action.delete(id)),

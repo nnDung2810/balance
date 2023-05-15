@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 import { useAppDispatch, useTypedSelector, Action, Slice, State } from '@store';
 import { CommonEntity, PaginationQuery } from '@models';
@@ -10,7 +10,7 @@ export const action = new Action<IventoryProduct>(name);
 
 export const inventoryProductSlice = createSlice(new Slice<IventoryProduct>(action));
 
-export const inventoryProductFacade = () => {
+export const InventoryProductFacade = () => {
     const dispatch = useAppDispatch();
     return {
         ...(useTypedSelector((state) => state[action.name]) as State<IventoryProduct>),
@@ -21,16 +21,23 @@ export const inventoryProductFacade = () => {
 
 export class IventoryProduct extends CommonEntity {
     constructor(
-      //   public category?: string,
-      //   public inventoryPrice?: string,
-      // //  public numberInBal?: string,
-      // //  public numberInKiot?: string,
-      //   public productCode?: string,
-      //   public productId?: string,
-      //   public productName?: string,
-      //   public storeBarcode?: string,
-      //   public supplierBarcode?: string,
-      //   public supplierName?: string,
+        public inventory: IventoryProduct1[]
+    ) {
+        super();
+    }
+}
+export class IventoryProduct1 extends CommonEntity {
+    constructor(
+        public category?: string,
+        public inventoryPrice?: string,
+        public numberInBal?: string,
+        public numberInKiot?: string,
+        public productCode?: string,
+        public productId?: string,
+        public productName?: string,
+        public storeBarcode?: string,
+        public supplierBarcode?: string,
+        public supplierName?: string,
         public units?: {
           value?: string;
           name?: string;
@@ -42,4 +49,5 @@ export class IventoryProduct extends CommonEntity {
         super();
     }
 }
+
 
