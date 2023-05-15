@@ -27,5 +27,9 @@ export class PaginationQuery<T = object> {
     public supplierType?: string,
     public idSuppiler?: string,
     public idStore?: string,
+    // public filterDate?: {
+    //   dateFrom?: string,
+    //   dateTo?: string,
+    // },
   ) { }
 }

@@ -8,7 +8,7 @@ import { SupplierFacade } from '@store/supplier';
 import { DistrictFacade } from '@store/address/district';
 import { WardFacade } from '@store/address/ward';
 import { routerLinks } from '@utils';
-import { CategoryFacade, GlobalFacade, ProductFacade, OrdersFacade, DiscountFacade } from '@store';
+import { CategoryFacade, GlobalFacade, ProductFacade, OrdersFacade, DiscountFacade, inventoryOrdersFacade } from '@store';
 import { TableRefObject } from '@models';
 import { Form } from '@core/form';
 import { DataTable } from '@core/data-table';
@@ -36,7 +36,7 @@ const Page = () => {
   const productFacade = ProductFacade();
   const ordersFacade = OrdersFacade();
   const discountFacade = DiscountFacade();
-  const category = CategoryFacade();
+  const inventoryOrders = inventoryOrdersFacade();
 
 
   useEffect(() => {
@@ -68,32 +68,6 @@ const Page = () => {
     if (id) supplierFacade.put({ ...values, id });
     else supplierFacade.post(values);
   };
-  const test = [
-    {
-      title: 'Thông tin nhà cung cấp',
-      tab: 'tab1'
-    },
-    {
-      title: 'Danh sách hàng hoá',
-      tab: 'tab2'
-    },
-    {
-      title: 'Quản lý đơn hàng',
-      tab: 'tab3'
-    },
-    {
-      title: 'Doanh thu',
-      tab: 'tab4'
-    },
-    {
-      title: 'Chiết khấu',
-      tab: 'tab5'
-    },
-    {
-      title: 'Hợp đồng',
-      tab: 'tab6'
-    },
-  ]
 
   return (
     <div className={'w-full'}>
@@ -130,7 +104,7 @@ const Page = () => {
                   <DataTable
                   facade={productFacade}
                   defaultRequest={{page: 1, perPage: 10, supplierId: id,type: "BALANCE"}}
-                  ref={dataTableRef}
+                  
                   xScroll = '895px'
                   pageSizeRender={(sizePage: number) => sizePage}
                   pageSizeWidth={'50px'}
@@ -183,7 +157,7 @@ const Page = () => {
                             name: 'cap2',
                             title: '',  
                             formItem: {
-                              // disabled:() => true,
+                              disabled:() => true,
                               placeholder: 'Danh mục cấp 1',
                               type: 'select',
                               col: 3,
@@ -195,11 +169,11 @@ const Page = () => {
                                 }),
                                 params: (fullTextSearch, value) => ({
                                   fullTextSearch,
-                                  code: value().id,
+                                  id: value().cap1,
                                 }),
                               },
                               onChange(value, form) {
-                                form.resetFields(['cap2'])
+                                form.resetFields(['cap3'])
                               },
                             },
                           },
@@ -207,7 +181,7 @@ const Page = () => {
                             name: 'cap3',
                             title: '',
                             formItem: {
-                              // disabled:() => true,
+                              disabled:() => true,
                               placeholder: 'Danh mục cấp 2',
                               type: 'select',
                               col: 3,
@@ -219,7 +193,7 @@ const Page = () => {
                                 }),
                                 params: (fullTextSearch, value) => ({
                                   fullTextSearch,
-                                  code: value().id,
+                                  id: value().cap2,
                                 })
                               }
                             },
@@ -240,7 +214,6 @@ const Page = () => {
                 <div className='px-5 pt-6 pb-4'>
                   <DataTable
                   facade={ordersFacade}
-                  ref={dataTableRef}
                   defaultRequest={{page: 1, perPage: 10, filterSupplier: id}}
                   xScroll = '1400px'
                   pageSizeRender={(sizePage: number) => sizePage}
@@ -313,27 +286,204 @@ const Page = () => {
               </div>
             </Tabs.TabPane>
             <Tabs.TabPane tab='Doanh thu' key='4' className='rounded-xl bg-white'>
-              <div className='px-5'>
-                <Form
-                  values={{ ...data, street: data?.address?.street, province: data?.address?.province?.name, district: data?.address?.district?.name, ward: data?.address?.ward?.name,
-                  username: data?.userRole?.[0].userAdmin.name, email: data?.userRole?.[0].userAdmin.email, phoneNumber: data?.userRole?.[0].userAdmin.phoneNumber  }}
-                  className="intro-x pt-6 rounded-lg w-full "
-                  columns={ColumnFormSupplierDetail({ t, listRole: result?.data || []})}
-                  // handSubmit={handleSubmit}
-                  disableSubmit={isLoading}
-                  extendButton={() => (
-                        <div className='w-full flex mt-8 justify-between'>
-                          <button className='sm:w-28 h-11 rounded-xl bg-white hover:text-teal-700 text-teal-900 border-teal-900 hover:border-teal-600 border'
-                          onClick={handleBack}>
-                            {t('components.form.modal.cancel')}
-                          </button>
-                          <button className='sm:w-44 h-11 rounded-xl text-white bg-teal-900 hover:bg-teal-600'
-                          onClick={handleSubmit}>
-                            {t('components.form.modal.save')}
-                          </button>
-                        </div>
-                      )}
-                />
+              <div className={'w-full mx-auto bg-white rounded-xl'}>
+                <div className='px-5 pt-6 pb-4'>
+                  <DataTable
+                  facade={inventoryOrders}
+                  defaultRequest={{page: 1, perPage: 10, idSuppiler: id}}
+                  xScroll = '1400px'
+                  pageSizeRender={(sizePage: number) => sizePage}
+                  pageSizeWidth={'50px'}
+                  paginationDescription={(from: number, to: number, total: number) =>
+                    t('routes.admin.Layout.Pagination', { from, to, total })
+                  }
+                  rightHeader={
+                    <div className='flex items-end justify-between'>
+                      <Form
+                        className="intro-x items-end rounded-lg w-full flex justify-between"
+                        columns={
+                          [
+                            {
+                              title: '',
+                              name: '',
+                              formItem: {
+                                tabIndex: 3,
+                                col: 2,
+                                render: () => (<div className='flex h-10 items-center'><p></p></div>)
+                              },
+                            },
+                            {
+                              title: '',
+                              name: 'Category',
+                              formItem: {
+                                tabIndex: 3,
+                                placeholder: 'Chọn loại đơn hàng',
+                                col: 5,
+                                type: 'select',
+                                get: {
+                                  facade: CategoryFacade,
+                                  format: (item: any) => ({
+                                    label: item.name,
+                                    value: item.id,
+                                  }),
+                                },
+                                onChange(value, form) {
+                                  form.resetFields(['cap2', 'cap3'])
+                                },
+                              },
+                            },
+                            {
+                              name: 'Store',
+                              title: '',  
+                              formItem: {
+                                // disabled:() => true,
+                                placeholder: 'Chọn cửa hàng',
+                                type: 'select',
+                                col: 5,
+                                get: {
+                                  facade: CategoryFacade,
+                                  format: (item: any) => ({
+                                    label: item.name,
+                                    value: item.id,
+                                  }),
+                                  params: (fullTextSearch, value) => ({
+                                    fullTextSearch,
+                                    code: value().id,
+                                  }),
+                                },
+                                onChange(value, form) {
+                                  form.resetFields(['cap2'])
+                                },
+                              },
+                            },
+                            {
+                              title: '',
+                              name: '',
+                              formItem: {
+                                tabIndex: 3,
+                                col: 2,
+                                render: () => (<div className='flex h-10 items-center'><p>Từ Ngày</p></div>)
+                              },
+                            },
+                            {
+                              title: '',
+                              name: 'StartDate',
+                              formItem: {
+                                tabIndex: 3,
+                                col: 4,
+                                type: 'date',
+                              },
+                            },
+                            {
+                              title: '',
+                              name: '',
+                              formItem: {
+                                tabIndex: 3,
+                                col: 2,
+                                render: () => (<div className='flex h-10 items-center'><p>Đến ngày</p></div>)
+                              },
+                            },
+                            {
+                              title: '',
+                              name: 'EndDate',
+                              formItem: {
+                                tabIndex: 3,
+                                col: 4,
+                                type: 'date',
+                              },
+                            },
+                          ]
+                        }
+                        // handSubmit={handleSubmit}
+                        disableSubmit={isLoading}
+                      />
+                    </div>
+                  }
+                  searchPlaceholder='Tìm kiếm theo mã đơn hàng'
+                  columns={[
+                    {
+                      title: t(`STT`),
+                      name: 'code',
+                      tableItem: {
+                        width: 70,
+                      
+                      },
+                    },
+                    {
+                      title: t(`Mã đơn hàng`),
+                      name: 'code',
+                      tableItem: {
+                        width: 175,
+                      
+                      },
+                    },
+                    {
+                      title: t(`Tên cửa hàng`),
+                      name: 'name',
+                      tableItem: {
+                        width: 180,
+                        render: (value: any,item: any) => item?.store?.name,
+                      },
+                    },
+                    {
+                      title: t(`Ngày đặt`),
+                      name: 'name',
+                      tableItem: {
+                        width: 135,
+                        render: (value: any,item: any) => item?.store?.name,
+                      },
+                    },
+                    {
+                      title: t(`Ngày nhận`),
+                      name: ('address'),
+                      tableItem: {
+                        width: 150,
+                        render: (value: any,item: any) => item?.storeAdmin?.name,
+                      }
+                    },
+                    {
+                      title: t(`Trước thuế`),
+                      name: 'name',
+                      tableItem: {
+                        width: 145,
+                        render: (value: any,item: any) => item?.store?.name,
+                      },
+                    },
+                    {
+                      title: t(`Sau thuế`),
+                      name: 'name',
+                      tableItem: {
+                        width: 130,
+                        render: (value: any,item: any) => item?.store?.name,
+                      },
+                    },
+                    {
+                      title: t(`Khuyến mãi`),
+                      name: 'name',
+                      tableItem: {
+                        width: 160,
+                        render: (value: any,item: any) => item?.store?.name,
+                      },
+                    },
+                    {
+                      title: t(`Thành tiền`),
+                      name: 'total',
+                      tableItem: {
+                        width: 145  ,
+                        render: (value: any,item: any) => item?.store?.address?.street + ', ' + item?.store?.address?.ward?.name + ', ' + item?.store?.address?.district?.name + ', ' + item?.store?.address?.province?.name,
+                      },
+                    },
+                    {
+                      title: t(`Loại đơn`),
+                      name: 'total',
+                      tableItem: {
+                        width: 100,
+                        render: (value: any,item: any) => item?.total.toLocaleString(),
+                      },
+                    },
+                  ]}
+                  />
+                </div>
               </div>
             </Tabs.TabPane>
             <Tabs.TabPane tab='Chiết khấu' key='5' className='rounded-xl'>
@@ -341,7 +491,7 @@ const Page = () => {
                 <div className='px-5 pt-6 pb-4'>
                   <DataTable
                     facade={discountFacade}
-                    ref={dataTableRef}
+                    
                     defaultRequest={{page: 1, perPage: 10}}
                     xScroll = '1370px'
                     pageSizeRender={(sizePage: number) => sizePage}
@@ -376,7 +526,7 @@ const Page = () => {
                 <div className='px-5 pt-6 pb-4'>
                   <DataTable
                     facade={discountFacade}
-                    ref={dataTableRef}
+                    
                     defaultRequest={{page: 1, perPage: 10}}
                     xScroll = '1370px'
                     pageSizeRender={(sizePage: number) => sizePage}
@@ -456,7 +606,7 @@ const Page = () => {
               <DataTable
               facade={productFacade}
               defaultRequest={{page: 1, perPage: 10, supplierId: id,type: "BALANCE"}}
-              ref={dataTableRef}
+              
               xScroll = '895px'
               pageSizeRender={(sizePage: number) => sizePage}
               pageSizeWidth={'50px'}
@@ -490,7 +640,7 @@ const Page = () => {
             <div className='px-1 pt-6 pb-4'>
               <DataTable
               facade={ordersFacade}
-              ref={dataTableRef}
+              
               defaultRequest={{page: 1, perPage: 10, filterSupplier: id}}
               xScroll = '1400px'
               pageSizeRender={(sizePage: number) => sizePage}
@@ -591,7 +741,7 @@ const Page = () => {
             <div className='px-1 pt-6 pb-4'>
               <DataTable
                 facade={discountFacade}
-                ref={dataTableRef}
+                
                 defaultRequest={{page: 1, perPage: 10}}
                 xScroll = '1370px'
                 pageSizeRender={(sizePage: number) => sizePage}

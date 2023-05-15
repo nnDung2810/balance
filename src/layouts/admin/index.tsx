@@ -26,7 +26,7 @@ const Layout = ({ children }: PropsWithChildren) => {
   const location = useLocation();
 
   const [isCollapsed, set_isCollapsed] = useState(window.innerWidth < 1025);
-  const [isDesktop, set_isDesktop] = useState(window.innerWidth > 767);
+  const [isDesktop, set_isDesktop] = useState(window.innerWidth > 640);
 
   useEffect(() => {
     if (window.innerWidth < 1025 && !isCollapsed) {
@@ -40,7 +40,7 @@ const Layout = ({ children }: PropsWithChildren) => {
       if (window.innerWidth < 1025 && !isCollapsed) {
         set_isCollapsed(true);
       }
-      set_isDesktop(window.innerWidth > 767);
+      set_isDesktop(window.innerWidth > 640);
     }
     window.addEventListener('resize', handleResize, { passive: true });
 
@@ -78,7 +78,7 @@ const Layout = ({ children }: PropsWithChildren) => {
   const Header = ({ isCollapsed, isDesktop }: any) => (
     <header
       className={classNames(
-        'bg-gray-100 w-full header h-20 transition-all duration-300 ease-in-out sticky  top-0 block z-10 max-md:bg-white max-md:z-20 max-md:fixed max-md:top-0',
+        'bg-white w-full header h-20 transition-all duration-300 ease-in-out top-0 block sm:bg-gray-100 z-20 fixed',
         {
           'pl-64': !isCollapsed && isDesktop,
           'pl-32': isCollapsed && isDesktop,
@@ -176,7 +176,7 @@ const Layout = ({ children }: PropsWithChildren) => {
       </div>
       <div
         className={classNames(
-          'flex items-center justify-between text-gray-800 hover:text-gray-500 h-20 fixed top-0 left-0 px-5 font-bold transition-all duration-300 ease-in-out z-10 rounded-tr-3xl max-md:bg-white max-md:z-20',
+          'flex items-center justify-between bg-white sm:bg-teal-900 text-gray-800 hover:text-gray-500 h-20 fixed top-0 left-0 px-5 font-bold transition-all duration-300 ease-in-out rounded-tr-3xl z-20',
           {
             'w-64': !isCollapsed && isDesktop,
             'w-16': isCollapsed && isDesktop,
@@ -207,7 +207,7 @@ const Layout = ({ children }: PropsWithChildren) => {
                   'opacity-0 text-[0px] hidden': isCollapsed && isDesktop,
                 },)} /> */}
 
-            <img src={Logo1} className={classNames('w-12 mr-3 rounded max-md:',
+            <img src={Logo1} className={classNames('w-12 mr-3 rounded ',
                 {
                   'opacity-100 text-lg w-12': !isCollapsed && isDesktop || isCollapsed && !isDesktop,
                   'opacity-0 text-[0px] hidden': isCollapsed && isDesktop,
