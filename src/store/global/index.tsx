@@ -43,16 +43,16 @@ const action = {
     return data!.userInfor;
   }),
   forgotPassword: createAsyncThunk(name + '/forgot-password', async (values: { email: string }) => {
-    const { data, message } = await API.put< verify >(`${routerLinks(name, 'api')}/forgot-password`, values);
+    const { data, message } = await API.put<verify>(`${routerLinks(name, 'api')}/forgot-password`, values);
     if (message) await Message.success({ text: message });
     return data?.uuid;
   }),
   verifyForgotPassword: createAsyncThunk(name + '/verify-forgot-password', async (values: verify) => {
-    const { data, message } = await API.put<{email: string; uuid: string}>(`${routerLinks(name, 'api')}/verify-forgot-password`, values);
+    const { data, message } = await API.put<{ email: string; uuid: string }>(`${routerLinks(name, 'api')}/verify-forgot-password`, values);
     if (message) await Message.success({ text: message })
     return data;
   }),
-  setPassword: createAsyncThunk(name + '/update-password-my-acc', async (values : setPassword) => {
+  setPassword: createAsyncThunk(name + '/update-password-my-acc', async (values: setPassword) => {
     const { data, message } = await API.put(`${routerLinks(name, 'api')}/update-password-my-acc`, values,);
     if (message) await Message.success({ text: message });
     return data;
@@ -90,7 +90,7 @@ export class User extends CommonEntity {
     public status?: string,
     public subOrgId?: number,
     public userRoleId?: number,
-    // public profileImage?: string,
+    public profileImage?: string,
     // public subOrgName?: string,
     // public roleName?: string,
   ) {
@@ -232,7 +232,7 @@ export const globalSlice = createSlice({
       )
       .addCase(action.forgotPassword.fulfilled, (state: State, action) => {
         if (action.payload) {
-          state.data = {...action,uuid: action.payload,email: state.data?.email};
+          state.data = { ...action, uuid: action.payload, email: state.data?.email };
           state.status = 'forgotPassword.fulfilled';
         } else state.status = 'idle';
         state.isLoading = false;
@@ -283,7 +283,7 @@ export const globalSlice = createSlice({
 interface State {
   [selector: string]: any;
   user?: User;
-  data?: setPassword | verify | { email?: string } | { password?: string; email?: string } ;
+  data?: setPassword | verify | { email?: string } | { password?: string; email?: string };
   isLoading?: boolean;
   isVisible?: boolean;
   status?: string;
