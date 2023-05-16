@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useRef } from 'react';
+import React, { Fragment, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router';
 import { Switch, Tabs } from 'antd';
@@ -26,7 +26,15 @@ const Page = () => {
   const isReload = useRef(false);
   const param = JSON.parse(queryParams || '{}');
   const { id } = useParams();
- 
+  const [supplier, setSupplier] = useState('')
+  useEffect(() => {
+    console.log(supplier)
+    productFacede.get({ page: 1, perPage: 10, storeId: data?.id, type: 'BALANCE', supplierId: supplier })
+    // return () => {
+    //   isReload.current && storeFacade.get(param);
+    // };
+  }, [supplier]);
+
   useEffect(() => {
     if (id) storeFacade.getById({ id });
 
@@ -338,6 +346,9 @@ const Page = () => {
                                 type : 'BALANCE',
                               }),
                             },
+                            onChange(value, form) {
+                              setSupplier(`${value}`)
+                            },
                           },
                         },
                       ]
@@ -418,10 +429,10 @@ const Page = () => {
                     }
                     // handSubmit={handleSubmit}
                     disableSubmit={isLoading}
+
                   />
                   </>
                 }
-                
               />
             </Tabs.TabPane>
             <Tabs.TabPane tab='Danh sách chi nhánh' key='3' className='rounded-xl'>
