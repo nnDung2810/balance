@@ -87,8 +87,6 @@ const Layout = ({ children }: PropsWithChildren) => {
       )}
     >
       <div className="flex items-center justify-end sm:justify-between px-5 h-20">
-        {/* <h1 className={'text-xl font-bold hidden sm:block'}>{t('pages.' + title)}</h1> */}
-
         <div className="flex items-center gap-5 absolute right-6">
           <Select value={globalFacade?.language} onChange={(e: 'vn' | 'en') => globalFacade.setLanguage(e)}>
             <Select.Option value="en">
@@ -111,7 +109,7 @@ const Layout = ({ children }: PropsWithChildren) => {
                       <Avatar src={user?.profileImage} size={8} />
                       <div className="text-left leading-none mr-3 hidden sm:block pl-2">
                         <div className="font-bold text-black text-lg leading-snug mb-0.5">{user?.name}</div>
-                        <div className="text-gray-500">{user?.email}</div>
+                        <div className="text-gray-500 text-[10px]">{user?.email}</div>
                       </div>
                     </div>
                   ),

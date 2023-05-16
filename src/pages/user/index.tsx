@@ -91,14 +91,15 @@ const Page = () => {
       paginationDescription={(from: number, to: number, total: number) =>
         t('routes.admin.Layout.User', { from, to, total })
       }
+      className='bg-white p-4 rounded-xl'
       columns={columns}
       rightHeader={
-        <div className={'flex gap-2'}>
+        <div className={'flex gap-2 pb-3'}>
           <Button
             icon={<Plus className="icon-cud !h-5 !w-5" />}
-            text={t('titles.User/Add')}
+            text={t('titles.User/Button')}
             onClick={() => navigate(routerLinks('User/Add'))}
-            className='!rounded-xl'
+            className='!rounded-xl !font-normal'
           />
         </div>
       }

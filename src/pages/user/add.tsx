@@ -4,9 +4,11 @@ import { useNavigate, useParams } from 'react-router';
 import { UserRoleFacade, UserFacade, User } from '@store';
 import { routerLinks } from '@utils';
 import { Form } from '@core/form';
+import { useTranslation } from 'react-i18next';
 
 
 const Page = () => {
+  const { t } = useTranslation();
   const { result, get } = UserRoleFacade();
   const userFacade = UserFacade();
   const { data, isLoading, queryParams, status } = userFacade;
@@ -41,14 +43,12 @@ const Page = () => {
   return (
     <div className={'w-full'}>
       <Fragment>
-        <div className='bg-white'>
-          <div className='text-xl  px-6 pt-4 font-mono font-bold'>
-            Thông tin người dùng
-          </div>
+        <div className='bg-white rounded-xl p-4'>
+          <div className={'text-xl text-teal-900 font-bold block pb-5'}>{t('titles.Userinformation')}</div>
           {!!result?.data && (
             <Form
               values={{ ...data }}
-              className="intro-x p-6 pb-4 pt-3 rounded-lg w-full"
+              className="intro-x"
               columns={[
                 {
                   title: 'user.Fullname',
@@ -93,9 +93,9 @@ const Page = () => {
                 //   },
                 // },
               ]}
-                handSubmit={handleSubmit}
-                disableSubmit={isLoading}
-                handCancel={handleBack}
+              handSubmit={handleSubmit}
+              disableSubmit={isLoading}
+              handCancel={handleBack}
             />
           )}
         </div>
