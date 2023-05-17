@@ -195,7 +195,7 @@ export const ColumnFormSupplier= ({ t, listRole }: any) => {
   return col;
 };
 
-export const ColumnFormSupplierDetail = ({ t, listRole, districtId, wardId }: any) => {
+export const ColumnFormSupplierDetail = ({ t }: any) => {
  const col: FormModel[] = [
     {
       title: t('Mã nhà cung cấp'),
@@ -221,7 +221,6 @@ export const ColumnFormSupplierDetail = ({ t, listRole, districtId, wardId }: an
       formItem: {
         tabIndex: 2,
         col: 4,
-        rules: [{ type: 'required' }],
       },
     },
     {
@@ -254,7 +253,6 @@ export const ColumnFormSupplierDetail = ({ t, listRole, districtId, wardId }: an
         onChange(value, form) {
           form.resetFields(['districtId', 'wardId']) 
         },
-        // render: (form: any, )
       },
     },
     {
@@ -322,7 +320,7 @@ export const ColumnFormSupplierDetail = ({ t, listRole, districtId, wardId }: an
     },
     {
       title: t('Họ tên đại diện'),
-      name: 'username',
+      name: 'nameContact',
       formItem: {
         tabIndex: 1,
         col: 4,
@@ -340,7 +338,7 @@ export const ColumnFormSupplierDetail = ({ t, listRole, districtId, wardId }: an
     },
     {
       title: t('Email đại diện'),
-      name: 'email',
+      name: 'emailContact',
       formItem: {
         tabIndex: 1,
         col: 4,

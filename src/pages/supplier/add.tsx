@@ -15,6 +15,10 @@ const Page = () => {
   const supplierFace = SupplierFacade();
   const { isLoading, queryParams, status } = supplierFace;
   const param = JSON.parse(queryParams || '{}');
+  
+
+  console.log("statusSupplier",status);
+  
 
   const data = Supplier;
 

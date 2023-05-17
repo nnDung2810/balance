@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router';
 
 import classNames from 'classnames';
 import { ColumnFormSupplier, ColumnFormSupplierDetail, ColumnTableSupplierDiscount, ColumnTableSupplierOrder, ColumnTableSupplierProduct } from './column';
-import { SupplierFacade } from '@store/supplier';
+import { Supplier, SupplierFacade } from '@store/supplier';
 import { DistrictFacade } from '@store/address/district';
 import { WardFacade } from '@store/address/ward';
 import { routerLinks } from '@utils';
@@ -29,7 +29,6 @@ const Page = () => {
   const isReload = useRef(false);
   const param = JSON.parse(queryParams || '{}');
   const { id } = useParams();
-  const [tab, setTab] = useState('tab1');
   const { user } = GlobalFacade();
   const dataTableRef = useRef<TableRefObject>(null);
 
@@ -47,26 +46,24 @@ const Page = () => {
     return () => {
       isReload.current && supplierFacade.get(param);
     };
-  }, [id, data, tab]);
-
+  }, [id, data]);
   useEffect(() => {
     switch (status) {
-      case 'post.fulfilled':
-        navigate(routerLinks('Supplier') + '/' + data?.id);
-        break;
       case 'put.fulfilled':
         if (Object.keys(param).length > 0) isReload.current = true;
 
         if (isBack.current) handleBack();
+        else {
+          isBack.current = true;
+        }
         break;
     }
   }, [status]);
 
 
   const handleBack = () => navigate(routerLinks('Supplier') + '?' + new URLSearchParams(param).toString());
-  const handleSubmit = (values: any) => {
-    if (id) supplierFacade.put({ ...values, id });
-    else supplierFacade.post(values);
+  const handleSubmit = (values: Supplier) => {
+    supplierFacade.put({ ...values, id });
   };
 
   return (
@@ -77,25 +74,14 @@ const Page = () => {
             <Tabs.TabPane tab='Thông tin nhà cung cấp' key='1' className='bg-white rounded-xl rounded-tl-none'>
               <div className='px-5'>
               <Form
-                values={{ ...data, street: data?.address?.street, provinceId: data?.address?.province?.name, district: data?.address?.district?.name, ward: data?.address?.ward?.name,
-                username: data?.userRole?.[0].userAdmin.name, email: data?.userRole?.[0].userAdmin.email, phoneNumber: data?.userRole?.[0].userAdmin.phoneNumber  }}
-                className="intro-x pt-6 rounded-lg w-full "
-                columns={ColumnFormSupplierDetail({ t, listRole: result?.data || []})}
+              // provinceId: data?.address?.province?.name, district: data?.address?.district?.name, ward: data?.address?.ward?.name,
+                values={{ ...data, street: data?.address?.street, province: data?.address?.province?.name, district: data?.address?.district?.name, ward: data?.address?.ward?.name,
+                  nameContact: data?.userRole?.[0].userAdmin.name, emailContact: data?.userRole?.[0].userAdmin.email, phoneNumber: data?.userRole?.[0].userAdmin.phoneNumber  }}
+                className="intro-x pt-6 rounded-lg w-full"
+                columns={ColumnFormSupplierDetail({ t })}
                 handSubmit={handleSubmit}
                 disableSubmit={isLoading}
                 handCancel={handleBack}
-                // extendButton={() => (
-                //       <div className='w-full flex mt-8 justify-between'>
-                //         <button className='sm:w-28 h-11 rounded-xl bg-white hover:text-teal-700 text-teal-900 border-teal-900 hover:border-teal-600 border'
-                //         onClick={handleBack}>
-                //           {t('components.form.modal.cancel')}
-                //         </button>
-                //         <button className='sm:w-44 h-11 rounded-xl text-white bg-teal-900 hover:bg-teal-600'
-                //         onClick={handleSubmit}>
-                //           {t('components.form.modal.save')}
-                //         </button>
-                //       </div>
-                //     )}
               />
               </div>
             </Tabs.TabPane>

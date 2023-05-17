@@ -32,12 +32,18 @@ export const action = {
     if (message) await Message.success({ text: message });
     return data;
   }),
-  // put: createAsyncThunk(name + '/put', async ({ id, ...values }: Supplier) => {
-  //   // if (values.avatar) values.avatar = values.avatar[0].url;
-  //   const { data, message } = await API.put<Supplier>(`${routerLinks(name, 'api')}/${id}`, values);
-  //   if (message) await Message.success({ text: message });
-  //   return data;
-  // }),
+  put: createAsyncThunk(name + '/put', async ({ id, ...values }: Supplier) => {
+    const provinceId = values.provinceId?.slice(0, values.provinceId.indexOf('|'))
+    const districtId = values.districtId?.slice(0, values.districtId.indexOf('|'))
+    const wardId = values.wardId
+    const street = values.street
+    const supplierType = 'BALANCE'
+    const type = 'SUPPLIER'
+    const address = { provinceId, districtId, wardId, street }
+    const { data, message } = await API.put<Supplier>(`${routerLinks(name, 'api')}/${id}`, { ...values, address, supplierType, type});
+    if (message) await Message.success({ text: message });
+    return data;
+  }),
 };
 export const supplierSlice = createSlice(new Slice<Supplier>(action));
 
