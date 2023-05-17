@@ -37,7 +37,13 @@ export const action = {
     const connectKiot = {}
     const type = 'STORE'
     const address = { provinceId, districtId, wardId, street }
-    const { data, message } = await API.put<StoreManagement>(`${routerLinks(name, 'api')}/${id}`, {...values, address, supplierType, type, connectKiot });
+    const rs = {...values, address, supplierType, type, connectKiot }
+    delete(rs.provinceId)
+    delete(rs.districtId)
+    delete(rs.wardId)
+    console.log(rs)
+    const { data, message } = await API.put<StoreManagement>(`${routerLinks(name, 'api')}/${id}`, rs);
+    console.log(data)
     if (message) await Message.success({ text: message });
     return data;
   }),
@@ -59,22 +65,25 @@ export const storeSlice = createSlice(
         state.isLoading = false;
       })
       .addCase(
-        action.post.pending,
+        action.put.pending,
         (
           state: State<StoreManagement>,
           action: PayloadAction<undefined, string, { arg: StoreManagement; requestId: string; requestStatus: 'pending' }>,
         ) => {
           state.data = action.meta.arg;
           state.isLoading = true;
-          state.status = 'post.pending';
+          state.status = 'put.pending';
+          console.log(state.status)
         },
       )
-      .addCase(action.post.fulfilled, (state: State<StoreManagement>, action: PayloadAction<StoreManagement>) => {
+      .addCase(action.put.fulfilled, (state: State<StoreManagement>, action: PayloadAction<StoreManagement>) => {
+        console.log(action)
         if (action.payload) {
           if (JSON.stringify(state.data) !== JSON.stringify(action.payload)) state.data = action.payload;
           state.isVisible = false;
-          state.status = 'post.fulfilled';
+          state.status = 'put.fulfilled';
         } else state.status = 'idle';
+        console.log(state.status)
         state.isLoading = false;
       })
   }),

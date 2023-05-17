@@ -16,13 +16,13 @@ const Page = () => {
   const { result, queryParams } = storeFace;
   const param = JSON.parse(queryParams || '{}');
 
-  // useEffect(() => {
-  //   if (!result?.data) storeFace.get({})
+  useEffect(() => {
+    if (!result?.data) storeFace.get({ page: 1, perPage: 10, type: 'STORE' })
 
-  //   return () => {
-  //     isReload.current && storeFace.get(param);
-  //   };
-  // }, [result?.data]);
+    return () => {
+      isReload.current && storeFace.get(param);
+    };
+  }, [result?.data]);
 
   return (
     <DataTable

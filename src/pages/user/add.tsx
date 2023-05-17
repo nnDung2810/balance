@@ -26,6 +26,7 @@ const Page = () => {
   }, [id]);
 
   useEffect(() => {
+    console.log(status)
     switch (status) {
       case 'post.fulfilled':
         navigate(routerLinks('User/List'));
