@@ -14,7 +14,7 @@ import { GlobalFacade } from '@store';
 import Menu1 from './menu';
 // import { firebaseConfig } from 'variable';
 import './index.less';
-import { Chevronleft, LeftArrow, Logo, RightArrow, Menu, ArrowBack, User1, Key, Out } from '@svgs';
+import { Chevronleft, LeftArrow, Logo, RightArrow, Menu, ArrowBack, User1, Key, Out, User } from '@svgs';
 import Logo1 from '../../assets/images/logo.png';
 
 const Layout = ({ children }: PropsWithChildren) => {
@@ -104,6 +104,7 @@ const Layout = ({ children }: PropsWithChildren) => {
               items: [
                 {
                   key: '0',
+                  className: 'hover:!bg-white',
                   label: (
                     <div className='flex'>
                       <Avatar src={user?.profileImage} size={8} />
@@ -116,10 +117,11 @@ const Layout = ({ children }: PropsWithChildren) => {
                 },
                 {
                   key: '1',
+                  className: 'h-11',
                   label: (
                     <div className='flex'>
                       <div className='flex items-center'>
-                        <User1 className='w-5 h-5 pr-2 text-black' />
+                        <User className='w-6 h-6 pr-2 text-black' />
                       </div>
                       <div onClick={() => navigate(routerLinks('MyProfile'), { replace: true })}>
                         {t('routes.admin.Layout.My Profile')}
@@ -128,11 +130,12 @@ const Layout = ({ children }: PropsWithChildren) => {
                   ),
                 },
                 {
-                  key: '3',
+                  key: '2',
+                  className: 'h-11',
                   label: (
                     <div className='flex'>
                       <div className='flex items-center'>
-                        <Key className='w-5 h-5 pr-2 text-black' />
+                        <Key className='w-6 h-6 pr-2 text-black' />
                       </div>
                       <div onClick={() => navigate(routerLinks('MyProfile'), { replace: true })}>
                         {t('routes.admin.Layout.Change Password')}
@@ -141,10 +144,16 @@ const Layout = ({ children }: PropsWithChildren) => {
                   ),
                 },
                 {
-                  key: '2',
+                  key: '3',
+                  className: 'h-11',
                   label: (
-                    <div onClick={() => navigate(routerLinks('Login'), { replace: true })}>
-                      {t('routes.admin.Layout.Sign out')}
+                    <div className='flex'>
+                      <div className='flex items-center'>
+                        <Out className='w-6 h-6 pr-2 text-black' />
+                      </div>
+                      <div onClick={() => navigate(routerLinks('Login'), { replace: true })}>
+                        {t('routes.admin.Layout.Sign out')}
+                      </div>
                     </div>
                   ),
                 },
