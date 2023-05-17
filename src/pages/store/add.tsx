@@ -19,16 +19,21 @@ const Page = () => {
   // const districtFacade = DistrictFacade()
   // const wardFacade = WardFacade()
 
-  const data = StoreManagement
-
   const storeFace = StoreFacade();
-  const { isLoading, queryParams } = storeFace;
+  const { isLoading, queryParams, status, data } = storeFace;
   const param = JSON.parse(queryParams || '{}');
 
-  // useEffect(() => {
-  //   if (!result?.data) provinceFacade.get({})
-  //   // districtFacade.get('12')
-  // }, []);
+  useEffect(() => {
+    storeFace.set({ data: undefined });
+    return () => {
+      isReload.current && storeFace.get(param);
+    };
+  }, []);
+
+  useEffect(() => {
+    if(status === 'post.fulfilled')
+    navigate(routerLinks('Store'))
+  }, [status]);
 
   const handleBack = () => navigate(routerLinks('Store') + '?' + new URLSearchParams(param).toString());
   const handleSubmit = (values: any) => {
@@ -51,7 +56,7 @@ const Page = () => {
               formItem: {
                 tabIndex: 1,
                 col: 6,
-                rules: [{ type: 'required' }],
+                rules: [{ type: 'required' },],
               },
             },
             {
@@ -81,7 +86,7 @@ const Page = () => {
                 tabIndex: 3,
                 col: 3,
                 type: 'select',
-                rules: [{ type: 'required' }],
+                rules: [{ type: 'requiredSelect' }],
                 get: {
                   facade: ProvinceFacade,
                   format: (item: any) => ({

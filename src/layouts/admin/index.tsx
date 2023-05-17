@@ -87,8 +87,6 @@ const Layout = ({ children }: PropsWithChildren) => {
       )}
     >
       <div className="flex items-center justify-end sm:justify-between px-5 h-20">
-        {/* <h1 className={'text-xl font-bold hidden sm:block'}>{t('pages.' + title)}</h1> */}
-
         <div className="flex items-center gap-5 absolute right-6">
           <Select value={globalFacade?.language} onChange={(e: 'vn' | 'en') => globalFacade.setLanguage(e)}>
             <Select.Option value="en">
@@ -111,8 +109,8 @@ const Layout = ({ children }: PropsWithChildren) => {
                     <div className='flex'>
                       <Avatar src={user?.profileImage} size={8} />
                       <div className="text-left leading-none mr-3 hidden sm:block pl-2">
-                        <div className="font-bold text-sm mb-0.5">{user?.name}</div>
-                        <div className="text-[0.6rem] text-gray-500">{user?.email}</div>
+                        <div className="font-bold text-black text-lg leading-snug mb-0.5">{user?.name}</div>
+                        <div className="text-gray-500 text-[10px]">{user?.email}</div>
                       </div>
                     </div>
                   ),
@@ -123,7 +121,7 @@ const Layout = ({ children }: PropsWithChildren) => {
                   label: (
                     <div className='flex'>
                       <div className='flex items-center'>
-                        <User className='w-6 h-6 pr-2 text-black'/>
+                        <User className='w-6 h-6 pr-2 text-black' />
                       </div>
                       <div onClick={() => navigate(routerLinks('MyProfile'), { replace: true })}>
                         {t('routes.admin.Layout.My Profile')}
@@ -137,7 +135,7 @@ const Layout = ({ children }: PropsWithChildren) => {
                   label: (
                     <div className='flex'>
                       <div className='flex items-center'>
-                        <Key className='w-6 h-6 pr-2 text-black'/>
+                        <Key className='w-6 h-6 pr-2 text-black' />
                       </div>
                       <div onClick={() => navigate(routerLinks('MyProfile'), { replace: true })}>
                         {t('routes.admin.Layout.Change Password')}
@@ -151,7 +149,7 @@ const Layout = ({ children }: PropsWithChildren) => {
                   label: (
                     <div className='flex'>
                       <div className='flex items-center'>
-                        <Out className='w-6 h-6 pr-2 text-black'/>
+                        <Out className='w-6 h-6 pr-2 text-black' />
                       </div>
                       <div onClick={() => navigate(routerLinks('Login'), { replace: true })}>
                         {t('routes.admin.Layout.Sign out')}

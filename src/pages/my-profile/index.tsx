@@ -86,6 +86,7 @@ const Page = () => {
               values={{ ...user }}
             />
           </Spin>
+
         </div>
 
         <div className='col-span-2 lg:border lg:rounded-xl bg-white p-5'>
@@ -185,7 +186,7 @@ const Page = () => {
                               },
                             }),
                           },
-                          { type: 'required' },{ type: 'min', value: 1 },
+                          { type: 'required' }, { type: 'min', value: 1 },
                         ],
                         placeholder: t('columns.auth.placeholder.Confirm Password').toString(),
                       },

@@ -27,13 +27,19 @@ const Page = () => {
   const param = JSON.parse(queryParams || '{}');
   const { id } = useParams();
   const [supplier, setSupplier] = useState('')
+  // useEffect(() => {
+  //   console.log(supplier)
+  //   productFacede.get({ page: 1, perPage: 10, storeId: data?.id, type: 'BALANCE', supplierId: supplier })
+  //   // return () => {
+  //   //   isReload.current && storeFacade.get(param);
+  //   // };
+  // }, [supplier]);
+
   useEffect(() => {
-    console.log(supplier)
-    productFacede.get({ page: 1, perPage: 10, storeId: data?.id, type: 'BALANCE', supplierId: supplier })
-    // return () => {
-    //   isReload.current && storeFacade.get(param);
-    // };
-  }, [supplier]);
+    // console.log(status)
+    if(status === 'put.fulfilled')
+    navigate(routerLinks('Store'))
+  }, [status]);
 
   useEffect(() => {
     if (id) storeFacade.getById({ id });
@@ -41,11 +47,12 @@ const Page = () => {
     return () => {
       isReload.current && storeFacade.get(param);
     };
-  }, [id, data]);
+  }, [id]);
 
   const handleBack = () => navigate(routerLinks('Store') + '?' + new URLSearchParams(param).toString());
   const handleSubmit = (values: StoreManagement) => {
     storeFacade.put({ ...values, id });
+    // navigate(routerLinks('Store'))
   };
 
   return (
@@ -55,7 +62,7 @@ const Page = () => {
           <Tabs defaultActiveKey='1' type='card' size='large'>
           <Tabs.TabPane tab={'Thông tin cửa hàng'} key='1' className='bg-white rounded-xl rounded-tl-none'>
               <Form
-                values={{ ...data, street: data?.address?.street,emailContact: data?.userRole?.[0].userAdmin.email, phoneNumber: data?.userRole?.[0].userAdmin.phoneNumber, nameContact: data?.name }}
+                values={{ ...data, street: data?.address?.street,emailContact: data?.userRole?.[0].userAdmin.email, phoneNumber: data?.userRole?.[0].userAdmin.phoneNumber, nameContact: data?.userRole?.[0].userAdmin.name }}
                 className="intro-x p-6 pb-4 pt-3 rounded-lg w-full"
                 columns={[
                   {
