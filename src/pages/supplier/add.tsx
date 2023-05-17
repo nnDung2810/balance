@@ -13,10 +13,18 @@ const Page = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const supplierFace = SupplierFacade();
-  const { isLoading, queryParams } = supplierFace;
+  const { isLoading, queryParams, status } = supplierFace;
   const param = JSON.parse(queryParams || '{}');
 
   const data = Supplier;
+
+  useEffect(() => {
+    switch (status) {
+      case 'post.fulfilled':
+        navigate(routerLinks('Supplier'));
+        break;
+    }
+  }, [status]);
   
 
   const handleBack = () => navigate(routerLinks('Supplier') + '?' + new URLSearchParams(param).toString());
@@ -183,20 +191,21 @@ const Page = () => {
                     },
 
                   ]}
-                  // handSubmit={handleSubmit}
+                  handSubmit={handleSubmit}
+                  handCancel={handleBack}
                   disableSubmit={isLoading}
-                  extendButton={() => (
-                    <div className='w-full flex mt-8 justify-between'>
-                      <button className='sm:w-28 h-11 rounded-xl bg-white hover:text-teal-700 text-teal-900 border-teal-900 hover:border-teal-600 border'
-                      onClick={handleBack}>
-                        {t('components.form.modal.cancel')}
-                      </button>
-                      <button className='sm:w-44 h-11 rounded-xl text-white bg-teal-900 hover:bg-teal-600'
-                      onClick={handleSubmit}>
-                        {t('components.form.modal.save')}
-                      </button>
-                    </div>
-                  )}
+                  // extendButton={() => (
+                  //   <div className='w-full flex mt-8 justify-between'>
+                  //     <button className='sm:w-28 h-11 rounded-xl bg-white hover:text-teal-700 text-teal-900 border-teal-900 hover:border-teal-600 border'
+                  //     onClick={handleBack}>
+                  //       {t('components.form.modal.cancel')}
+                  //     </button>
+                  //     <button className='sm:w-44 h-11 rounded-xl text-white bg-teal-900 hover:bg-teal-600'
+                  //     onClick={handleSubmit}>
+                  //       {t('components.form.modal.save')}
+                  //     </button>
+                  //   </div>
+                  // )}
                 />
               </div>
             {/* } */}

@@ -12,12 +12,13 @@ const Page = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const globalFacade = GlobalFacade();
-  const { isLoading, status, user, data, login } = globalFacade;
+  const { isLoading, status, user, data, login, profile } = globalFacade;
 
   useEffect(() => {
     if (status === 'login.fulfilled' && user && Object.keys(user).length > 0) {
       // navigate(routerLinks('Dashboard'));
       navigate('/', { replace: true });
+      profile();
     }
   }, [status]);
 

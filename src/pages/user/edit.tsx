@@ -50,14 +50,12 @@ const Page = () => {
   return (
     <div className={'w-full'}>
       <Fragment>
-        <div className='bg-white'>
-          <div className='text-xl text-green-900 px-6 pt-4 font-mono font-bold'>
-            Thông tin người dùng
-          </div>
+        <div className='bg-white rounded-2xl p-4'>
+          <div className={'text-xl text-teal-900 font-bold block pb-5'}>{t('titles.Userinformation')}</div>
           {!!result?.data && (
             <Form
               values={{ ...data }}
-              className="intro-x p-6 pb-4 pt-3 rounded-lg w-full "
+              className="intro-x"
               columns={[{
                 title: 'user.UserId',
                 name: 'code',
@@ -103,16 +101,16 @@ const Page = () => {
                     const roleCode = values.roleCode;
                     return (
                       <div>
-                         {t('user.Role')}
+                        {t('user.Role')}
                         <Select value={roleCode} disabled={true} className="py-2" style={{ width: "100%" }}>
                           <Select.Option value="ADMIN">
-                          {t('user.RoleUser.ADMIN')}
+                            {t('user.RoleUser.ADMIN')}
                           </Select.Option>
                           <Select.Option value="OWNER_SUPPLIER">
-                          {t('user.RoleUser.OWNER_SUPPLIER')}
+                            {t('user.RoleUser.OWNER_SUPPLIER')}
                           </Select.Option>
                           <Select.Option value="OWNER_STORE">
-                          {t('user.RoleUser.OWNER_STORE')}
+                            {t('user.RoleUser.OWNER_STORE')}
                           </Select.Option>
                         </Select>
                       </div>
