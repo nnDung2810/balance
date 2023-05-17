@@ -14,7 +14,7 @@ export const action = {
     const data = await API.get<StoreManagement>(`${routerLinks(name, 'api')}/detail/${id}`);
     return { data, keyState };
   }),
-  post: createAsyncThunk(name + '/post', async (values: StoreManagement) => {
+  postStore: createAsyncThunk(name + '/post', async (values: StoreManagement) => {
     const provinceId = values.provinceId?.slice(0, values.provinceId.indexOf('|'))
     const districtId = values.districtId?.slice(0, values.districtId.indexOf('|'))
     const wardId = values.wardId
@@ -23,12 +23,12 @@ export const action = {
     const type = 'STORE'
     const connectKiot = {}
     const address = { provinceId, districtId, wardId, street }
-    const { data, message } = await API.post<StoreManagement>(routerLinks(name, 'api'), {
+    const { statusCode, message } = await API.post<StoreManagement>(routerLinks(name, 'api'), {
      ...values, address, supplierType, type, connectKiot });
     if (message) await Message.success({ text: message });
-    return data;
+    return statusCode;
   }),
-  put: createAsyncThunk(name + '/put', async ({ id, ...values }: StoreManagement) => {
+  putStore: createAsyncThunk(name + '/put', async ({ id, ...values }: StoreManagement) => {
     const provinceId = values.provinceId?.slice(0, values.provinceId.indexOf('|'))
     const districtId = values.districtId?.slice(0, values.districtId.indexOf('|'))
     const wardId = values.wardId
@@ -42,10 +42,9 @@ export const action = {
     delete(rs.districtId)
     delete(rs.wardId)
     console.log(rs)
-    const { data, message } = await API.put<StoreManagement>(`${routerLinks(name, 'api')}/${id}`, rs);
-    console.log(data)
+    const { statusCode, message } = await API.put<StoreManagement>(`${routerLinks(name, 'api')}/${id}`, rs);
     if (message) await Message.success({ text: message });
-    return data;
+    return statusCode;
   }),
 };
 export const storeSlice = createSlice(
@@ -65,6 +64,24 @@ export const storeSlice = createSlice(
         state.isLoading = false;
       })
       .addCase(
+        action.postStore.pending,
+        (
+          state: State<StoreManagement>,
+          action: PayloadAction<undefined, string, { arg: StoreManagement; requestId: string; requestStatus: 'pending' }>,
+        ) => {
+          state.data = action.meta.arg;
+          state.isLoading = true;
+          state.status = 'post.pending';
+        },
+      )
+      .addCase(action.postStore.fulfilled, (state: State<StoreManagement>, action: PayloadAction<StoreManagement>) => {
+        if (action.payload.toString() === '200') {
+          state.isVisible = false;
+          state.status = 'post.fulfilled';
+        } else state.status = 'idle';
+        state.isLoading = false;
+      })
+      .addCase(
         action.put.pending,
         (
           state: State<StoreManagement>,
@@ -77,13 +94,10 @@ export const storeSlice = createSlice(
         },
       )
       .addCase(action.put.fulfilled, (state: State<StoreManagement>, action: PayloadAction<StoreManagement>) => {
-        console.log(action)
-        if (action.payload) {
-          if (JSON.stringify(state.data) !== JSON.stringify(action.payload)) state.data = action.payload;
+        if (action.payload.toString() === '200') {
           state.isVisible = false;
           state.status = 'put.fulfilled';
         } else state.status = 'idle';
-        console.log(state.status)
         state.isLoading = false;
       })
   }),
@@ -97,8 +111,8 @@ export const StoreFacade = () => {
     get: (params: PaginationQuery<StoreManagement>) => dispatch(action.get(params)),
     getById: ({ id, keyState = 'isVisible' }: { id: string; keyState?: keyof State<StoreManagement> }) =>
       dispatch(action.getByIdStore({ id, keyState })),
-    post: (values: StoreManagement) => dispatch(action.post(values)),
-    put: (values: StoreManagement) => dispatch(action.put(values)),
+    post: (values: StoreManagement) => dispatch(action.postStore(values)),
+    put: (values: StoreManagement) => dispatch(action.putStore(values)),
     delete: (id: string) => dispatch(action.delete(id)),
   };
 };

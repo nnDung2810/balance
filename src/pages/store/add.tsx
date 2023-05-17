@@ -25,14 +25,13 @@ const Page = () => {
 
   useEffect(() => {
     storeFace.set({ data: undefined });
-
     return () => {
       isReload.current && storeFace.get(param);
     };
   }, []);
+
   useEffect(() => {
-    console.log(status)
-    if(status === 'post.fullfilled')
+    if(status === 'post.fulfilled')
     navigate(routerLinks('Store'))
   }, [status]);
 
@@ -57,7 +56,7 @@ const Page = () => {
               formItem: {
                 tabIndex: 1,
                 col: 6,
-                rules: [{ type: 'required' }, {type: ''}],
+                rules: [{ type: 'required' },],
               },
             },
             {
@@ -87,7 +86,7 @@ const Page = () => {
                 tabIndex: 3,
                 col: 3,
                 type: 'select',
-                rules: [{ type: 'required' }],
+                rules: [{ type: 'requiredSelect' }],
                 get: {
                   facade: ProvinceFacade,
                   format: (item: any) => ({
