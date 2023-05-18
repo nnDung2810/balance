@@ -54,6 +54,7 @@ const Page = () => {
                   name: 'userRole',
                   formItem: {
                     render: (text: any, item: any) => {
+                      // eslint-disable-next-line no-cond-assign
                       if (text = item.userRole[0].mtRole.code === "ADMIN") {
                         return (
                           <div className='flex w-full flex-row justify-center pt-2'>
@@ -63,6 +64,7 @@ const Page = () => {
                             </div>
                           </div>
                         )
+                      // eslint-disable-next-line no-cond-assign
                       } else if (text = item.userRole[0].mtRole.code === "OWNER_SUPPLIER") {
                         return (
                           <div className='flex w-full flex-row justify-center'>

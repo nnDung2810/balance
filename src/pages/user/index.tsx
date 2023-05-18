@@ -43,7 +43,7 @@ const Page = () => {
           style: { paddingTop: '0.25rem', paddingBottom: 0 },
           onClick: async () => null,
         }),
-        render: (text: string, item: any) => text,
+        render: (text: string) => text,
       },
     },
     {
@@ -68,12 +68,14 @@ const Page = () => {
         width: 150,
         filter: { type: 'search' },
         render: (text: any, item: any) => {
+          // eslint-disable-next-line no-cond-assign
           if (text = item.userRole[0].mtRole.code === "ADMIN") {
             return <div>{t('user.RoleUser.ADMIN')}</div>;
+          // eslint-disable-next-line no-cond-assign
           } else if (text = item.userRole[0].mtRole.code === "OWNER_SUPPLIER") {
-            return <div>{t('user.RoleUser.SUPPLIER')}</div>;;
+            return <div>{t('user.RoleUser.SUPPLIER')}</div>;
           } else {
-            return <div>{t('user.RoleUser.STORE')}</div>;;
+            return <div>{t('user.RoleUser.STORE')}</div>;
           }
         }
       },
